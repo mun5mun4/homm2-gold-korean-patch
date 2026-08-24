@@ -3,9 +3,10 @@
 
 from __future__ import annotations
 
-import unittest
+import os
 import shutil
 import tempfile
+import unittest
 from unittest import mock
 from pathlib import Path
 
@@ -15,9 +16,7 @@ from tools.release import homm2_font as font
 ROOT = Path(__file__).resolve().parents[1]
 MAPPING = ROOT / "translations" / "font" / "mapping874.fixed-interface-font.txt"
 DEFAULT_FONT = ROOT / "packaging" / "release_assets" / "fonts" / "NanumGothicCoding-Regular.ttf"
-LOCAL_GOG_ORIGINAL_AGG = (
-    ROOT.parent.parent / "_codex_probe" / "release_staging" / "originals" / "DATA" / "HEROES2.AGG"
-)
+LOCAL_GOG_ORIGINAL_AGG_ENV = "HOMM2_TEST_GOG_ORIGINAL_AGG"
 
 LOCALIZED_BIN_RESOURCES = (
     "THIEFWIN.BIN",
@@ -507,10 +506,14 @@ class FontLayoutTests(unittest.TestCase):
             font.rebuild_agg_fonts(base_raw, rendered, label="synthetic-recruit-wrong-source")
 
     def test_local_gog_main_agg_rebuilds_only_fonts_and_recruit_cost_raster(self) -> None:
-        if not LOCAL_GOG_ORIGINAL_AGG.is_file():
-            self.skipTest("local pristine GOG HEROES2.AGG fixture is unavailable")
+        fixture_value = os.environ.get(LOCAL_GOG_ORIGINAL_AGG_ENV)
+        if not fixture_value:
+            self.skipTest(f"set {LOCAL_GOG_ORIGINAL_AGG_ENV} to a pristine GOG HEROES2.AGG")
+        fixture = Path(fixture_value)
+        if not fixture.is_file():
+            self.skipTest(f"configured pristine GOG HEROES2.AGG is unavailable: {fixture}")
 
-        base_raw = LOCAL_GOG_ORIGINAL_AGG.read_bytes()
+        base_raw = fixture.read_bytes()
         plan = font.make_font_plan(MAPPING, DEFAULT_FONT, mode="default")
         rendered = font.render_font(plan)
         rebuilt_raw = font.rebuild_agg_fonts(base_raw, rendered, label="local-gog-main")
