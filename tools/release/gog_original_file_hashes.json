@@ -1,0 +1,411 @@
+{
+  "files": [
+    {
+      "path": "HEROES2.EXE",
+      "source": {
+        "md5": "0DAC1B70B74331DE3F54A245CA9AAF0D",
+        "sha256": "255A6ACA4C40F32DECE105A65BEA9AE5B3D83FBCF41A25DD139D2F1EF19E943F",
+        "size": 1503974
+      }
+    },
+    {
+      "path": "DATA/HEROES2.AGG",
+      "source": {
+        "md5": "12A9CFE97AD563B0BDC9CCC894958F47",
+        "sha256": "7A11C86DB8EC8FBF19D810C1F7EBF9D8520F63FBDC42D6F51F7538654004315D",
+        "size": 43363026
+      }
+    },
+    {
+      "path": "DATA/HEROES2X.AGG",
+      "source": {
+        "md5": "70B10454571D84C47373BEE8AA404AC6",
+        "sha256": "1F3EDAD1BB88052DA50B3FAE5D00E8F7E73DD977F356463022AAB132B54F4D41",
+        "size": 2598847
+      }
+    },
+    {
+      "path": "MAPS/CAMPE01.H2C",
+      "source": {
+        "md5": "B01EE04030B7F86CD257DAADEC47EA05",
+        "sha256": "BA1D02F75D9A86A5BBB853C53C648E1C871E65815818D71FA150349FB9726A7C",
+        "size": 144439
+      }
+    },
+    {
+      "path": "MAPS/CAMPE02.H2C",
+      "source": {
+        "md5": "CC651CFFE3BE1A339077278826ED3C85",
+        "sha256": "D0B6AD3E84D593C85B5A4C287D1603994254F4879559E0AEF17EC212716EAFB7",
+        "size": 41225
+      }
+    },
+    {
+      "path": "MAPS/CAMPE03.H2C",
+      "source": {
+        "md5": "E9ACED0625F1312D625B60223133B2A8",
+        "sha256": "5216D7E485970DF598BBDC09D401753CA414CDD3B11DDD3CD0B8962710688145",
+        "size": 214743
+      }
+    },
+    {
+      "path": "MAPS/CAMPE04.H2C",
+      "source": {
+        "md5": "D8C9870A8D3CC9C79406BA607FD374FF",
+        "sha256": "DC6ABB1C7F8DD670FA5952D975702A746CF02236C5673CC9DBB5C592E4D1443B",
+        "size": 153469
+      }
+    },
+    {
+      "path": "MAPS/CAMPE05.H2C",
+      "source": {
+        "md5": "A1EE78024979D9C2277A08B3DB9FE73A",
+        "sha256": "A6046EB0A373451DC5BDC2D0F3D913F09BF7D89FD0D011235F2B732170957A1E",
+        "size": 41081
+      }
+    },
+    {
+      "path": "MAPS/CAMPE05B.H2C",
+      "source": {
+        "md5": "2C5B1EA09A6D70D75E098B6164DE16AF",
+        "sha256": "BD45065081699C8C9CDE38122C0928E0566059498308B31D8A38B3FA6359A160",
+        "size": 40638
+      }
+    },
+    {
+      "path": "MAPS/CAMPE06.H2C",
+      "source": {
+        "md5": "9F83997E7F2CB45194D83A628FE18D24",
+        "sha256": "74006AC87C4361C58BB77918C2AAB05E2D864E539B253C8A8D7975BE01155791",
+        "size": 132980
+      }
+    },
+    {
+      "path": "MAPS/CAMPE07.H2C",
+      "source": {
+        "md5": "F445F4F97963880AF3346EF94C72F136",
+        "sha256": "844E8DE02A130DC3B8A599A2D974A4CEA08E6F6B22CD41E5452A24E84FB5109D",
+        "size": 161513
+      }
+    },
+    {
+      "path": "MAPS/CAMPE08.H2C",
+      "source": {
+        "md5": "3AB6259D41064311A002FAE264240292",
+        "sha256": "8C3C7AAF84C0DC8D06820ED257A304456DC4752B2E410C85A538E069A8CFD3C7",
+        "size": 141575
+      }
+    },
+    {
+      "path": "MAPS/CAMPE09.H2C",
+      "source": {
+        "md5": "D00286A7478E58049A9AE1E4CDA55941",
+        "sha256": "0C0319895A4803A49D99B887D1C33F2BEC365EC7FEFE0A4F8D745FC9A6F0EDAE",
+        "size": 133376
+      }
+    },
+    {
+      "path": "MAPS/CAMPE10.H2C",
+      "source": {
+        "md5": "F574B4E54B35D10989FB92314311FF43",
+        "sha256": "5D6AE75485C6215AD097C72BD72622AE9192993C526618678BCDE1CB06498B46",
+        "size": 203367
+      }
+    },
+    {
+      "path": "MAPS/CAMPE11.H2C",
+      "source": {
+        "md5": "8FA54674253668BE211354E1A8FAA28E",
+        "sha256": "7FC839F6F3F6A1CEB9CB0C196DE63293DF68F35F1A07C2090533168CEB822271",
+        "size": 443041
+      }
+    },
+    {
+      "path": "MAPS/CAMPG01.H2C",
+      "source": {
+        "md5": "322A0D21E4ECA6BE364D723E7F10C113",
+        "sha256": "E6F39D8E2D100A34BB34949A06E2AB84C6CA10EC4D8ABE16458DA6443BA605A2",
+        "size": 163614
+      }
+    },
+    {
+      "path": "MAPS/CAMPG02.H2C",
+      "source": {
+        "md5": "F73376070FE714CCEE80AFBF7A32F84A",
+        "sha256": "B3A8158756E9F0F576295F63B8C15B44BDA4B62B046214225531F674090915F8",
+        "size": 45165
+      }
+    },
+    {
+      "path": "MAPS/CAMPG03.H2C",
+      "source": {
+        "md5": "60EA8EABC893719853A029E2D7551382",
+        "sha256": "20463B8C843FD39C44B5F5BF7506A0033B46702E4E08E049AA974883A4201A1F",
+        "size": 153477
+      }
+    },
+    {
+      "path": "MAPS/CAMPG04.H2C",
+      "source": {
+        "md5": "EF993732851BC5553E47A3DF038C3229",
+        "sha256": "27F130EA4C22A1123437188CD7AC8BF77ED85D7A35BB6B9BB9E1FCB5C246A4EE",
+        "size": 146498
+      }
+    },
+    {
+      "path": "MAPS/CAMPG05.H2C",
+      "source": {
+        "md5": "BE4695929BEA9B4A8FF9FA904EDB8BF8",
+        "sha256": "DBBB6D7D37A024EC5AE97D7E36E8ACACF21708FAD62968AF5CBCF208FF8E5D6B",
+        "size": 41006
+      }
+    },
+    {
+      "path": "MAPS/CAMPG05B.H2C",
+      "source": {
+        "md5": "0D51F993F65E1641226B0EC87FC89A5C",
+        "sha256": "394228BE33FE02200B992B8C79B4E31AD80B7651C71655A660B00C89AADF9635",
+        "size": 40631
+      }
+    },
+    {
+      "path": "MAPS/CAMPG06.H2C",
+      "source": {
+        "md5": "25AF41BAB83A89D74DCC4043F549E385",
+        "sha256": "9D8F9C3DEA3582E519BE724D7D4DD38B18E6BD35BAC658621C1050F80C3C7EE8",
+        "size": 125743
+      }
+    },
+    {
+      "path": "MAPS/CAMPG07.H2C",
+      "source": {
+        "md5": "79B5860DA61A666B39F8833E635F6F0F",
+        "sha256": "11E66EE883BE59D50C054C2A7FB26FEB4ECF8C081184CA93EE53CDF80C34D615",
+        "size": 203196
+      }
+    },
+    {
+      "path": "MAPS/CAMPG08.H2C",
+      "source": {
+        "md5": "429ADB1F3CEC5448C5BF1FE03E98B08E",
+        "sha256": "153FD501513DC3DD94705CF26E837EA71AF4317D462A6B8D7F66DD6A269233C7",
+        "size": 133387
+      }
+    },
+    {
+      "path": "MAPS/CAMPG09.H2C",
+      "source": {
+        "md5": "D430976D41481084B6099D8E201647E1",
+        "sha256": "47EC521EF057ADA2E279F17553143E9F0154369F7CAF1C6B9BD9EAF9DB937747",
+        "size": 158357
+      }
+    },
+    {
+      "path": "MAPS/CAMPG10.H2C",
+      "source": {
+        "md5": "2D8677ED22B1AECC0E9D24602107E5CB",
+        "sha256": "8A52D6F77E9B125E9F20D1B247707E75B43F1A6F8A4789F03BA2FE483BA08817",
+        "size": 423254
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_01.HXC",
+      "source": {
+        "md5": "6471618D69162A9163A92CEC7286ED16",
+        "sha256": "498C1DD3DDE4901F6310BA3235D77B0426CCBB9521C90135221CE282415390B9",
+        "size": 48167
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_02.HXC",
+      "source": {
+        "md5": "912E5A4B6F3391515A5B864799CA02E3",
+        "sha256": "154E993BA81960BE04EC57199CC2D9427086A1EB013ABC434B4762F5B5E9BC81",
+        "size": 153838
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_03.HXC",
+      "source": {
+        "md5": "69C4DD9ED0611B7A29B0C4A36CF1219D",
+        "sha256": "F78089B0AD8A4EA519D1DAAC562783CEEC80AC48CE24BDB8F05DA524890A4813",
+        "size": 150549
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_04.HXC",
+      "source": {
+        "md5": "52FC7DE4D12B8724AE6C2C0710A9B7AA",
+        "sha256": "E719DFD47A9D43CECBA91D3044A37F2A94E80EC52C4D6841D7F853DA04D9FA1A",
+        "size": 47443
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_05.HXC",
+      "source": {
+        "md5": "0ABDEAC50CCA8F5CE2181926BFA5AB64",
+        "sha256": "7549F1497AC18EB3418E82626F12C3C8D9888034E43096142C03E4A0531DE495",
+        "size": 46170
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_06.HXC",
+      "source": {
+        "md5": "D1E62D43F5A40F66FAA0CBB53F548E4F",
+        "sha256": "B99F99FDFD5DC682D5128081916ADD1F6A64BD754F610A41C1A6E40F94898E29",
+        "size": 130302
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_07.HXC",
+      "source": {
+        "md5": "897DB29A93DF09BC228DB4F462075149",
+        "sha256": "D4607FF564C9BB697FC8E2A5A7A5DC8AB053AA17C23360E21F865479906E9A6F",
+        "size": 177122
+      }
+    },
+    {
+      "path": "MAPS/CAMP1_08.HXC",
+      "source": {
+        "md5": "00BC59668F981DCC90A044AB973DB6BF",
+        "sha256": "4C826ED02255E50A95AC04430EE0F14CCC3FA8A5FC0DE6D5DA5B7D63332ACC92",
+        "size": 310407
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_01.HXC",
+      "source": {
+        "md5": "3449180E1F156D361833E636EE9C8831",
+        "sha256": "215A7737326627906E952F5FBB17C6BC7F548CF0C0182B909BAC5ED59216F4A9",
+        "size": 41541
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_02.HXC",
+      "source": {
+        "md5": "F7B730E50D41DA881C840557A84DE60C",
+        "sha256": "7472EF6180DC4F4A4E714D7079E77F5ACF7CA0B9BF6E02DEE811AFEB110D1502",
+        "size": 144933
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_03.HXC",
+      "source": {
+        "md5": "5E882BBC13C23B8D449BB475E86B1DD7",
+        "sha256": "ABFAD66CB95E5BB30D8F1792FE637223434CFEEE569128F2B00113A8137CCDCE",
+        "size": 130866
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_04.HXC",
+      "source": {
+        "md5": "AB537528FBA23A1DDD1B8537E2F73BDD",
+        "sha256": "9B05CAC4ABC2A8E1D119EBD1E34F3BD8C78DAACB963427314DB945203670C3C8",
+        "size": 147724
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_05.HXC",
+      "source": {
+        "md5": "CFDC4E72974CE97F8CDF73FA4DBE1339",
+        "sha256": "96DE0BD7FC858D754ECE9A573BDC568B8797E431AD4C82EC7861BCEE035EE6DB",
+        "size": 330877
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_06.HXC",
+      "source": {
+        "md5": "EBF014DA1D487069930389CD77C7D409",
+        "sha256": "FF740A1E35819258A5D4F9A693C23D190F41256BF0C8C21DF62203F928BAE9ED",
+        "size": 162770
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_07.HXC",
+      "source": {
+        "md5": "3FA8560DCAEF80BFC6DED8A43D5EBC40",
+        "sha256": "DF5600A0ED1D8D6A5067162372C73AD0ED4F1E407E49ABF8E6EB1899BA4C8FA6",
+        "size": 171196
+      }
+    },
+    {
+      "path": "MAPS/CAMP2_08.HXC",
+      "source": {
+        "md5": "62A156F72DDBA86DC91EF1ED9D8BBC17",
+        "sha256": "1F9502568B76BDFE56FF3E344526ABFC509F2A6624EE04E62312831B0403E50E",
+        "size": 326042
+      }
+    },
+    {
+      "path": "MAPS/CAMP3_01.HXC",
+      "source": {
+        "md5": "AFEDAA69CAB1E3523BBE9587AEF7E48F",
+        "sha256": "522FCDDBCCBD59036B380A5FBB25E7E53AB55AB3CD967E19E6D935400A1CAC81",
+        "size": 141440
+      }
+    },
+    {
+      "path": "MAPS/CAMP3_02.HXC",
+      "source": {
+        "md5": "4D16EBA7D9E859931075DF8A54427720",
+        "sha256": "3ED511E83C39CCA316FF656A08DB7CDE967E8844EE3ED78422BFD1BA14E8C274",
+        "size": 145547
+      }
+    },
+    {
+      "path": "MAPS/CAMP3_03.HXC",
+      "source": {
+        "md5": "9A432C40FCF642C487459A4DA0C7E059",
+        "sha256": "F6BAA2A52D193418AFDB4AD067A36A6476386B2705359B9E8D6C5C2D5F6A659B",
+        "size": 222534
+      }
+    },
+    {
+      "path": "MAPS/CAMP3_04.HXC",
+      "source": {
+        "md5": "736B77895127D5D4B09C3AC4BCF68A20",
+        "sha256": "005BDA5D9AA97693239F571D5C9106247001666EE25FD319007930B3BF6B5DE9",
+        "size": 325736
+      }
+    },
+    {
+      "path": "MAPS/CAMP4_01.HXC",
+      "source": {
+        "md5": "42C11F4B9D5DA24597A3D5CF42FD5727",
+        "sha256": "32B6C3F8356F75C3079B0F7174F1DD05F27AF1930F9669C8678C9A99B043F1CA",
+        "size": 37829
+      }
+    },
+    {
+      "path": "MAPS/CAMP4_02.HXC",
+      "source": {
+        "md5": "3767A9AEED6F8BA24AD4DD1A20FFE232",
+        "sha256": "D2A0F791B19DFC2AE42376D709DB9C21E9C65F7795BCB6E216ACA79C6284BFCF",
+        "size": 254327
+      }
+    },
+    {
+      "path": "MAPS/CAMP4_03.HXC",
+      "source": {
+        "md5": "AF26DCBA5952C0CA1A5F27902B1F6824",
+        "sha256": "9C5BE1E81B29A8C9895926341043DB3468C55FD91FDB670CE7BEAEE501515E6D",
+        "size": 317933
+      }
+    },
+    {
+      "path": "MAPS/CAMP4_04.HXC",
+      "source": {
+        "md5": "ACE25511E650FA17A1B50EA6D69188F9",
+        "sha256": "0FE37AFC9BC455821B1EFD823BC0C0CF203FBF32A85870C024BCC27D2764A2BD",
+        "size": 324383
+      }
+    }
+  ],
+  "game": {
+    "build_id": "52745329670822422",
+    "edition": "Heroes of Might and Magic 2 Gold (GOG DOS)",
+    "game_id": "1207658785",
+    "language": "English"
+  },
+  "schema": "homm2-gog-source-baseline-v1"
+}

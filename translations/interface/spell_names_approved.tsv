@@ -1,0 +1,66 @@
+id	source	ko	status	note
+0	Fireball	화염구	approved_user_20260815	기존 설명 번역과 일치
+1	Fireblast	화염 폭발	approved_user_20260815	Fireball과 구분
+2	Lightning Bolt	번개 화살	approved_user_20260815	번개 계열
+3	Chain Lightning	연쇄 번개	approved_user_20260815	번개 계열
+4	Teleport	순간이동	approved_user_20260815	기존 설명 번역과 일치
+5	Cure	치료	approved_user_20260815	치유 계열 기본형
+6	Mass Cure	집단 치료	approved_user_20260815	Mass는 집단으로 통일
+7	Resurrect	부활	approved_user_20260815	생명체 부활 기본형
+8	Resurrect True	완전 부활	approved_user_20260815	일시 부활과 기능 구분
+9	Haste	신속	approved_user_20260815	행동 속도 증가
+10	Mass Haste	집단 신속	approved_user_20260815	Mass는 집단으로 통일
+11	Slow	둔화	approved_user_20260815	행동 속도 감소
+12	Mass Slow	집단 둔화	approved_user_20260815	Mass는 집단으로 통일
+13	Blind 	실명	approved_user_20260815	원문 끝 공백을 source에 보존
+14	Bless	축복	approved_user_20260815	기존 설명 번역과 일치
+15	Mass Bless	집단 축복	approved_user_20260815	Mass는 집단으로 통일
+16	Stoneskin	돌가죽	approved_user_20260815	Steelskin과 계열 통일
+17	Steelskin	강철가죽	approved_user_20260815	Stoneskin과 계열 통일
+18	Curse	저주	approved_user_20260815	기존 설명 번역과 일치
+19	Mass Curse	집단 저주	approved_user_20260815	Mass는 집단으로 통일
+20	Holy Word	신성한 언령	approved_user_20260815	Holy 계열 통일
+21	Holy Shout	신성한 외침	approved_user_20260815	Holy 계열 통일
+22	Anti-Magic	마법 면역	approved_user_20260815	기능 중심 번역
+23	Dispel Magic	마법 해제	approved_user_20260815	기존 설명 번역과 일치
+24	Mass Dispel	집단 마법 해제	approved_user_20260815	Mass는 집단으로 통일
+25	Magic Arrow	마법 화살	approved_user_20260815	직역
+26	Berzerker	광폭화	approved_user_20260815	원본 철자는 source에 보존
+27	Armageddon	아마겟돈	approved_user_20260815	기존 설명 표기 채택
+28	Elemental Storm	원소 폭풍	approved_user_20260815	원소 계열 표기 채택
+29	Meteor Shower	유성우	approved_user_20260815	기존 설명 번역과 일치
+30	Paralyze	마비	approved_user_20260815	기존 설명 번역과 일치
+31	Hypnotize	최면	approved_user_20260815	기존 설명 번역과 일치
+32	Cold Ray	냉기 광선	approved_user_20260815	Cold 계열은 냉기로 통일
+33	Cold Ring	냉기 고리	approved_user_20260815	기존 설명 번역과 일치
+34	Disrupting Ray	파괴 광선	approved_user_20260815	기존 설명 번역과 일치
+35	Death Ripple	죽음의 파문	approved_user_20260815	Death Wave와 구분
+36	Death Wave	죽음의 물결	approved_user_20260815	Death Ripple과 구분
+37	Dragon Slayer	용 사냥꾼	approved_user_20260815	기능 중심 번역
+38	Blood Lust	피의 욕망	approved_user_20260815	전투 강화 주문명
+39	Animate Dead	시체 되살리기	approved_user_20260815	언데드 부활 기능 명시
+40	Mirror Image	거울상	approved_user_20260815	거울상 표기 채택
+41	Shield	방패	approved_user_20260815	방어 주문 기본형
+42	Mass Shield	집단 방패	approved_user_20260815	Mass는 집단으로 통일
+43	Summon Earth Elemental	대지의 정령 소환	approved_user_20260815	사용자 검토: 관형격 의 포함
+44	Summon Air Elemental	공기의 정령 소환	approved_user_20260815	사용자 검토: 관형격 의 포함
+45	Summon Fire Elemental	불의 정령 소환	approved_user_20260815	사용자 검토: 관형격 의 포함
+46	Summon Water Elemental	물의 정령 소환	approved_user_20260815	사용자 검토: 관형격 의 포함
+47	Earthquake	지진	approved_user_20260815	기존 설명 번역과 일치
+48	View Mines	광산 탐지	approved_user_20260815	View 계열은 탐지로 통일
+49	View Resources	자원 탐지	approved_user_20260815	View 계열은 탐지로 통일
+50	View Artifacts	유물 탐지	approved_user_20260815	View 계열은 탐지로 통일
+51	View Towns	마을 탐지	approved_user_20260815	View 계열은 탐지로 통일
+52	View Heroes	영웅 탐지	approved_user_20260815	View 계열은 탐지로 통일
+53	View All	전체 탐지	approved_user_20260815	View 계열은 탐지로 통일
+54	Identify Hero	영웅 식별	approved_user_20260815	정보 확인 기능
+55	Summon Boat	배 소환	approved_user_20260815	기존 실패 문구 번역과 일치
+56	Dimension Door	차원문	approved_user_20260815	기존 실패 문구 번역과 일치
+57	Town Gate	마을 귀환	approved_user_20260815	가까운 마을 이동 기능 반영
+58	Town Portal	마을 이동	approved_user_20260815	선택한 마을 이동 기능 반영
+59	Visions	예지	approved_user_20260815	기능 중심 번역
+60	Haunt	유령 출몰	approved_user_20260815	광산 유령 배치 기능 반영
+61	Set Earth Guardian	대지의 수호자 배치	approved_user_20260815	사용자 검토: 관형격 의 포함
+62	Set Air Guardian	공기의 수호자 배치	approved_user_20260815	사용자 검토: 관형격 의 포함
+63	Set Fire Guardian	불의 수호자 배치	approved_user_20260815	사용자 검토: 관형격 의 포함
+64	Set Water Guardian	물의 수호자 배치	approved_user_20260815	사용자 검토: 관형격 의 포함

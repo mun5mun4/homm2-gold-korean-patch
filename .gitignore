@@ -1,0 +1,41 @@
+# Original game, save, and runtime files
+*.[eE][xX][eE]
+*.[aA][gG][gG]
+*.[dD][lL][lL]
+*.[bB][iI][nN]
+*.[bB][aA][kK]
+*.[gG][oO][gG]
+*.[iI][cC][nN]
+*.[mM][pP]2
+*.[mM][xX]2
+*.[hH]2[cC]
+*.[hH][xX][cC]
+*.[gG][mM]1
+*.[hH][sS]
+*.[iI][sS][oO]
+
+# Generated assets and caches
+*.[pP][nN][gG]
+*.[pP][yY][cC]
+*.zip
+*.batang*
+*.gungseo*
+*.shinmyeongjo*
+__pycache__/
+dist/
+build/
+release_output/
+*.egg-info/
+
+# Local state and logs
+*.tmp
+*.temp
+*.log
+.pytest_cache/
+.coverage
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

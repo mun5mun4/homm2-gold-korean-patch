@@ -1,0 +1,1042 @@
+Mission 1 extended Korean mapping.
+Encoding format: ASCII is preserved; Hangul syllables are encoded as two-byte lead/trail pairs such as 80 xx or 81 xx.
+Glyph index range: 0x100..0x469
+Hangul slots used: 874
+[slots]
+index 0x100 escape 82 80 = U+D55C 한
+index 0x101 escape 82 81 = U+AE00 글
+index 0x102 escape 82 82 = U+D14C 테
+index 0x103 escape 82 83 = U+C2A4 스
+index 0x104 escape 82 84 = U+D2B8 트
+index 0x105 escape 82 85 = U+C545 악
+index 0x106 escape 82 86 = U+D3B8 편
+index 0x107 escape 82 87 = U+CCAB 첫
+index 0x108 escape 82 88 = U+D53C 피
+index 0x109 escape 82 89 = U+C7A5 장
+index 0x10A escape 82 8A = U+C801 적
+index 0x10B escape 82 8B = U+C131 성
+index 0x10C escape 82 8C = U+C810 점
+index 0x10D escape 82 8D = U+B839 령
+index 0x10E escape 82 8E = U+C14B 셋
+index 0x10F escape 82 8F = U+C601 영
+index 0x110 escape 82 90 = U+C6C5 웅
+index 0x111 escape 82 91 = U+ACA9 격
+index 0x112 escape 82 92 = U+D30C 파
+index 0x113 escape 82 93 = U+C120 선
+index 0x114 escape 82 94 = U+BB34 무
+index 0x115 escape 82 95 = U+B825 력
+index 0x116 escape 82 96 = U+BD81 북
+index 0x117 escape 82 97 = U+CABD 쪽
+index 0x118 escape 82 98 = U+B864 롤
+index 0x119 escape 82 99 = U+B79C 랜
+index 0x11A escape 82 9A = U+B4DC 드
+index 0x11B escape 82 9B = U+B18D 농
+index 0x11C escape 82 9C = U+BBFC 민
+index 0x11D escape 82 9D = U+B4E4 들
+index 0x11E escape 82 9E = U+AD81 궁
+index 0x11F escape 82 9F = U+C218 수
+index 0x120 escape 82 A0 = U+BA85 명
+index 0x121 escape 82 A1 = U+CC3D 창
+index 0x122 escape 82 A2 = U+BCD1 병
+index 0x123 escape 82 A3 = U+C815 정
+index 0x124 escape 82 A4 = U+C608 예
+index 0x125 escape 82 A5 = U+AC80 검
+index 0x126 escape 82 A6 = U+AE30 기
+index 0x127 escape 82 A7 = U+C6A9 용
+index 0x128 escape 82 A8 = U+C0AC 사
+index 0x129 escape 82 A9 = U+C804 전
+index 0x12A escape 82 AA = U+ACE0 고
+index 0x12B escape 82 AB = U+BE14 블
+index 0x12C escape 82 AC = U+B9B0 린
+index 0x12D escape 82 AD = U+C624 오
+index 0x12E escape 82 AE = U+D06C 크
+index 0x12F escape 82 AF = U+B300 대
+index 0x130 escape 82 B0 = U+B291 늑
+index 0x131 escape 82 B1 = U+AC70 거
+index 0x132 escape 82 B2 = U+AD70 군
+index 0x133 escape 82 B3 = U+C8FC 주
+index 0x134 escape 82 B4 = U+C7C1 쟁
+index 0x135 escape 82 B5 = U+C678 외
+index 0x136 escape 82 B6 = U+B208 눈
+index 0x137 escape 82 B7 = U+C694 요
+index 0x138 escape 82 B8 = U+C6CC 워
+index 0x139 escape 82 B9 = U+D504 프
+index 0x13A escape 82 BA = U+D22C 투
+index 0x13B escape 82 BB = U+C5D8 엘
+index 0x13C escape 82 BC = U+B8E8 루
+index 0x13D escape 82 BD = U+C774 이
+index 0x13E escape 82 BE = U+C720 유
+index 0x13F escape 82 BF = U+B2C8 니
+index 0x140 escape 82 C0 = U+CF58 콘
+index 0x141 escape 82 C1 = U+B2C9 닉
+index 0x142 escape 82 C2 = U+CF04 켄
+index 0x143 escape 82 C3 = U+D0C0 타
+index 0x144 escape 82 C4 = U+C6B0 우
+index 0x145 escape 82 C5 = U+B85C 로
+index 0x146 escape 82 C6 = U+AC00 가
+index 0x147 escape 82 C7 = U+C77C 일
+index 0x148 escape 82 C8 = U+ADF8 그
+index 0x149 escape 82 C9 = U+B9AC 리
+index 0x14A escape 82 CA = U+D540 핀
+index 0x14B escape 82 CB = U+BBF8 미
+index 0x14C escape 82 CC = U+B178 노
+index 0x14D escape 82 CD = U+C655 왕
+index 0x14E escape 82 CE = U+D788 히
+index 0x14F escape 82 CF = U+B77C 라
+index 0x150 escape 82 D0 = U+B179 녹
+index 0x151 escape 82 D1 = U+B8E1 룡
+index 0x152 escape 82 D2 = U+D751 흑
+index 0x153 escape 82 D3 = U+D558 하
+index 0x154 escape 82 D4 = U+D50C 플
+index 0x155 escape 82 D5 = U+B9C1 링
+index 0x156 escape 82 D6 = U+BA67 멧
+index 0x157 escape 82 D7 = U+B3FC 돼
+index 0x158 escape 82 D8 = U+C9C0 지
+index 0x159 escape 82 D9 = U+CCA0 철
+index 0x15A escape 82 DA = U+ACE8 골
+index 0x15B escape 82 DB = U+B818 렘
+index 0x15C escape 82 DC = U+AC15 강
+index 0x15D escape 82 DD = U+B9C8 마
+index 0x15E escape 82 DE = U+BC95 법
+index 0x15F escape 82 DF = U+C778 인
+index 0x160 escape 82 E0 = U+C2E0 신
+index 0x161 escape 82 E1 = U+D574 해
+index 0x162 escape 82 E2 = U+C880 좀
+index 0x163 escape 82 E3 = U+BE44 비
+index 0x164 escape 82 E4 = U+BCC0 변
+index 0x165 escape 82 E5 = U+D761 흡
+index 0x166 escape 82 E6 = U+D608 혈
+index 0x167 escape 82 E7 = U+ADC0 귀
+index 0x168 escape 82 E8 = U+CE58 치
+index 0x169 escape 82 E9 = U+D654 화
+index 0x16A escape 82 EA = U+B3C4 도
+index 0x16B escape 82 EB = U+BAA9 목
+index 0x16C escape 82 EC = U+BA54 메
+index 0x16D escape 82 ED = U+B450 두
+index 0x16E escape 82 EE = U+ACF5 공
+index 0x16F escape 82 EF = U+BD88 불
+index 0x170 escape 82 F0 = U+BB3C 물
+index 0x171 escape 82 F1 = U+AE38 길
+index 0x172 escape 82 F2 = U+CC9C 천
+index 0x173 escape 82 F3 = U+B9C9 막
+index 0x174 escape 82 F4 = U+CC44 채
+index 0x175 escape 82 F5 = U+C11D 석
+index 0x176 escape 82 F6 = U+C0C1 상
+index 0x177 escape 82 F7 = U+C88C 좌
+index 0x178 escape 82 F8 = U+D3EC 포
+index 0x179 escape 82 F9 = U+D0D1 탑
+index 0x17A escape 82 FA = U+C2DC 시
+index 0x17B escape 82 FB = U+C790 자
+index 0x17C escape 82 FC = U+AC04 간
+index 0x17D escape 82 FD = U+B2F9 당
+index 0x17E escape 82 FE = U+CD08 초
+index 0x17F escape 82 FF = U+C9D1 집
+index 0x180 escape 83 80 = U+C220 술
+index 0x181 escape 83 81 = U+ACBD 경
+index 0x182 escape 83 82 = U+C740 은
+index 0x183 escape 83 83 = U+AC01 각
+index 0x184 escape 83 84 = U+BD80 부
+index 0x185 escape 83 85 = U+C758 의
+index 0x186 escape 83 86 = U+C5D0 에
+index 0x187 escape 83 87 = U+B354 더
+index 0x188 escape 83 88 = U+B294 는
+index 0x189 escape 83 89 = U+BCF4 보
+index 0x18A escape 83 8A = U+B108 너
+index 0x18B escape 83 8B = U+C785 입
+index 0x18C escape 83 8C = U+B2E4 다
+index 0x18D escape 83 8D = U+BC29 방
+index 0x18E escape 83 8E = U+C5B4 어
+index 0x18F escape 83 8F = U+BB38 문
+index 0x190 escape 83 90 = U+C18D 속
+index 0x191 escape 83 91 = U+B098 나
+index 0x192 escape 83 92 = U+C704 위
+index 0x193 escape 83 93 = U+C744 을
+index 0x194 escape 83 94 = U+ACB0 결
+index 0x195 escape 83 95 = U+D569 합
+index 0x196 escape 83 96 = U+C9C8 질
+index 0x197 escape 83 97 = U+C788 있
+index 0x198 escape 83 98 = U+B97C 를
+index 0x199 escape 83 99 = U+D1B5 통
+index 0x19A escape 83 9A = U+C5BB 얻
+index 0x19B escape 83 9B = U+C2B5 습
+index 0x19C escape 83 9C = U+AE09 급
+index 0x19D escape 83 9D = U+CC38 참
+index 0x19E escape 83 9E = U+B3D9 동
+index 0x19F escape 83 9F = U+B298 늘
+index 0x1A0 escape 83 A0 = U+B9BD 립
+index 0x1A1 escape 83 A1 = U+C911 중
+index 0x1A2 escape 83 A2 = U+CC30 찰
+index 0x1A3 escape 83 A3 = U+C57C 야
+index 0x1A4 escape 83 A4 = U+CE78 칸
+index 0x1A5 escape 83 A5 = U+B113 넓
+index 0x1A6 escape 83 A6 = U+D799 힙
+index 0x1A7 escape 83 A7 = U+AD50 교
+index 0x1A8 escape 83 A8 = U+C544 아
+index 0x1A9 escape 83 A9 = U+C57D 약
+index 0x1AA escape 83 AA = U+BAAC 몬
+index 0x1AB escape 83 AB = U+D130 터
+index 0x1AC escape 83 AC = U+C640 와
+index 0x1AD escape 83 AD = U+D611 협
+index 0x1AE escape 83 AE = U+D560 할
+index 0x1AF escape 83 AF = U+AC8C 게
+index 0x1B0 escape 83 B0 = U+B958 류
+index 0x1B1 escape 83 B1 = U+C6D0 원
+index 0x1B2 escape 83 B2 = U+D56D 항
+index 0x1B3 escape 83 B3 = U+BC30 배
+index 0x1B4 escape 83 B4 = U+C194 솔
+index 0x1B5 escape 83 B5 = U+C62C 올
+index 0x1B6 escape 83 B6 = U+D61C 혜
+index 0x1B7 escape 83 B7 = U+B808 레
+index 0x1B8 escape 83 B8 = U+BCA8 벨
+index 0x1B9 escape 83 B9 = U+C6B8 울
+index 0x1BA escape 83 BA = U+D68C 회
+index 0x1BB escape 83 BB = U+BCF5 복
+index 0x1BC escape 83 BC = U+D589 행
+index 0x1BD escape 83 BD = U+C6B4 운
+index 0x1BE escape 83 BE = U+D0C4 탄
+index 0x1BF escape 83 BF = U+BCBD 벽
+index 0x1C0 escape 83 C0 = U+B9DE 맞
+index 0x1C1 escape 83 C1 = U+C904 줄
+index 0x1C2 escape 83 C2 = U+D655 확
+index 0x1C3 escape 83 C3 = U+B960 률
+index 0x1C4 escape 83 C4 = U+B192 높
+index 0x1C5 escape 83 C5 = U+BC88 번
+index 0x1C6 escape 83 C6 = U+C3D8 쏘
+index 0x1C7 escape 83 C7 = U+ACFC 과
+index 0x1C8 escape 83 C8 = U+BA70 며
+index 0x1C9 escape 83 C9 = U+BE7C 빼
+index 0x1CA escape 83 CA = U+AD34 괴
+index 0x1CB escape 83 CB = U+B3C5 독
+index 0x1CC escape 83 CC = U+C11C 서
+index 0x1CD escape 83 CD = U+C4F4 쓴
+index 0x1CE escape 83 CE = U+C6C1 웁
+index 0x1CF escape 83 CF = U+C8FD 죽
+index 0x1D0 escape 83 D0 = U+C0DD 생
+index 0x1D1 escape 83 D1 = U+B418 되
+index 0x1D2 escape 83 D2 = U+C0B4 살
+index 0x1D3 escape 83 D3 = U+C73C 으
+index 0x1D4 escape 83 D4 = U+D134 턴
+index 0x1D5 escape 83 D5 = U+AE08 금
+index 0x1D6 escape 83 D6 = U+C81C 제
+index 0x1D7 escape 83 D7 = U+B9CE 많
+index 0x1D8 escape 83 D8 = U+B85D 록
+index 0x1D9 escape 83 D9 = U+B0A9 납
+index 0x1DA escape 83 DA = U+C870 조
+index 0x1DB escape 83 DB = U+C18C 소
+index 0x1DC escape 83 DC = U+B9CC 만
+index 0x1DD escape 83 DD = U+BAA8 모
+index 0x1DE escape 83 DE = U+B4E0 든
+index 0x1DF escape 83 DF = U+CC98 처
+index 0x1E0 escape 83 E0 = U+B7C9 량
+index 0x1E1 escape 83 E1 = U+C7AC 재
+index 0x1E2 escape 83 E2 = U+B54C 때
+index 0x1E3 escape 83 E3 = U+AFBC 꾼
+index 0x1E4 escape 83 E4 = U+CD94 추
+index 0x1E5 escape 83 E5 = U+B978 른
+index 0x1E6 escape 83 E6 = U+BC14 바
+index 0x1E7 escape 83 E7 = U+AFC0 꿀
+index 0x1E8 escape 83 E8 = U+D658 환
+index 0x1E9 escape 83 E9 = U+C728 율
+index 0x1EA escape 83 EA = U+C88B 좋
+index 0x1EB escape 83 EB = U+B2A6 늦
+index 0x1EC escape 83 EC = U+CDA5 춥
+index 0x1ED escape 83 ED = U+B05D 끝
+index 0x1EE escape 83 EE = U+B0B4 내
+index 0x1EF escape 83 EF = U+CDE8 취
+index 0x1F0 escape 83 F0 = U+C219 숙
+index 0x1F1 escape 83 F1 = U+C5C6 없
+index 0x1F2 escape 83 F2 = U+B3D5 돕
+index 0x1F3 escape 83 F3 = U+C0C8 새
+index 0x1F4 escape 83 F4 = U+D2BC 튼
+index 0x1F5 escape 83 F5 = U+B728 뜨
+index 0x1F6 escape 83 F6 = U+B370 데
+index 0x1F7 escape 83 F7 = U+D544 필
+index 0x1F8 escape 83 F8 = U+D615 형
+index 0x1F9 escape 83 F9 = U+BCFC 볼
+index 0x1FA escape 83 FA = U+AC1C 개
+index 0x1FB escape 83 FB = U+B358 던
+index 0x1FC escape 83 FC = U+AD00 관
+index 0x1FD escape 83 FD = U+C529 씩
+index 0x1FE escape 83 FE = U+D3ED 폭
+index 0x1FF escape 83 FF = U+D48D 풍
+index 0x200 escape 84 80 = U+ADF9 극
+index 0x201 escape 84 81 = U+C2DD 식
+index 0x202 escape 84 82 = U+D638 호
+index 0x203 escape 84 83 = U+B9DD 망
+index 0x204 escape 84 84 = U+D1A0 토
+index 0x205 escape 84 85 = U+BD09 봉
+index 0x206 escape 84 86 = U+D328 패
+index 0x207 escape 84 87 = U+D321 팡
+index 0x208 escape 84 88 = U+BCF8 본
+index 0x209 escape 84 89 = U+B2A5 능
+index 0x20A escape 84 8A = U+D669 황
+index 0x20B escape 84 8B = U+C90D 줍
+index 0x20C escape 84 8C = U+AC78 걸
+index 0x20D escape 84 8D = U+D314 팔
+index 0x20E escape 84 8E = U+CC0C 찌
+index 0x20F escape 84 8F = U+D798 힘
+index 0x210 escape 84 90 = U+BC18 반
+index 0x211 escape 84 91 = U+B140 녀
+index 0x212 escape 84 92 = U+BE0C 브
+index 0x213 escape 84 93 = U+B9F9 맹
+index 0x214 escape 84 94 = U+B2EC 달
+index 0x215 escape 84 95 = U+D6C8 훈
+index 0x216 escape 84 96 = U+C988 즈
+index 0x217 escape 84 97 = U+BE48 빈
+index 0x218 escape 84 98 = U+B0AE 낮
+index 0x219 escape 84 99 = U+B465 둥
+index 0x21A escape 84 9A = U+D1F4 퇴
+index 0x21B escape 84 9B = U+AC11 갑
+index 0x21C escape 84 9C = U+AD6C 구
+index 0x21D escape 84 9D = U+AE68 깨
+index 0x21E escape 84 9E = U+BC1C 발
+index 0x21F escape 84 9F = U+B07C 끼
+index 0x220 escape 84 A0 = U+D749 흉
+index 0x221 escape 84 A1 = U+CD5C 최
+index 0x222 escape 84 A2 = U+BA38 머
+index 0x223 escape 84 A3 = U+CC3E 찾
+index 0x224 escape 84 A4 = U+D5D8 험
+index 0x225 escape 84 A5 = U+C775 익
+index 0x226 escape 84 A6 = U+C571 앱
+index 0x227 escape 84 A7 = U+C138 세
+index 0x228 escape 84 A8 = U+ACC4 계
+index 0x229 escape 84 A9 = U+C5ED 역
+index 0x22A escape 84 AA = U+C2E4 실
+index 0x22B escape 84 AB = U+C84C 졌
+index 0x22C escape 84 AC = U+BE5B 빛
+index 0x22D escape 84 AD = U+D2B9 특
+index 0x22E escape 84 AE = U+AC74 건
+index 0x22F escape 84 AF = U+B118 넘
+index 0x230 escape 84 B0 = U+D37C 퍼
+index 0x231 escape 84 B1 = U+C13C 센
+index 0x232 escape 84 B2 = U+C548 안
+index 0x233 escape 84 B3 = U+B780 란
+index 0x234 escape 84 B4 = U+B7FC 럼
+index 0x235 escape 84 B5 = U+CCD0 쳐
+index 0x236 escape 84 B6 = U+C0D8 샘
+index 0x237 escape 84 B7 = U+D07C 큼
+index 0x238 escape 84 B8 = U+B4DD 득
+index 0x239 escape 84 B9 = U+CC28 차
+index 0x23A escape 84 BA = U+B985 릅
+index 0x23B escape 84 BB = U+D3C9 평
+index 0x23C escape 84 BC = U+B429 됩
+index 0x23D escape 84 BD = U+CF1C 켜
+index 0x23E escape 84 BE = U+C154 셔
+index 0x23F escape 84 BF = U+C5C8 었
+index 0x240 escape 84 C0 = U+B0A1 낡
+index 0x241 escape 84 C1 = U+ACAC 견
+index 0x242 escape 84 C2 = U+D588 했
+index 0x243 escape 84 C3 = U+C900 준
+index 0x244 escape 84 C4 = U+CDA9 충
+index 0x245 escape 84 C5 = U+BD84 분
+index 0x246 escape 84 C6 = U+BA74 면
+index 0x247 escape 84 C7 = U+C628 온
+index 0x248 escape 84 C8 = U+B3CC 돌
+index 0x249 escape 84 C9 = U+AC10 감
+index 0x24A escape 84 CA = U+CD09 촉
+index 0x24B escape 84 CB = U+B290 느
+index 0x24C escape 84 CC = U+AEF4 껴
+index 0x24D escape 84 CD = U+B790 랐
+index 0x24E escape 84 CE = U+BC84 버
+index 0x24F escape 84 CF = U+B824 려
+index 0x250 escape 84 D0 = U+C9C4 진
+index 0x251 escape 84 D1 = U+B4A4 뒤
+index 0x252 escape 84 D2 = U+C838 져
+index 0x253 escape 84 D3 = U+ADFC 근
+index 0x254 escape 84 D4 = U+C228 숨
+index 0x255 escape 84 D5 = U+ACA8 겨
+index 0x256 escape 84 D6 = U+AD74 굴
+index 0x257 escape 84 D7 = U+B461 둡
+index 0x258 escape 84 D8 = U+B0C4 냄
+index 0x259 escape 84 D9 = U+ACA0 겠
+index 0x25A escape 84 DA = U+AE4C 까
+index 0x25B escape 84 DB = U+B054 끔
+index 0x25C escape 84 DC = U+CC0D 찍
+index 0x25D escape 84 DD = U+D754 흔
+index 0x25E escape 84 DE = U+B0A8 남
+index 0x25F escape 84 DF = U+C558 았
+index 0x260 escape 84 E0 = U+CE21 측
+index 0x261 escape 84 E1 = U+B9D0 말
+index 0x262 escape 84 E2 = U+C2F8 싸
+index 0x263 escape 84 E3 = U+C74C 음
+index 0x264 escape 84 E4 = U+B974 르
+index 0x265 escape 84 E5 = U+B0D0 냐
+index 0x266 escape 84 E6 = U+C885 종
+index 0x267 escape 84 E7 = U+D6A8 효
+index 0x268 escape 84 E8 = U+B364 덤
+index 0x269 escape 84 E9 = U+BCBC 벼
+index 0x26A escape 84 EA = U+B4ED 듭
+index 0x26B escape 84 EB = U+C5F4 열
+index 0x26C escape 84 EC = U+C4F0 쓰
+index 0x26D escape 84 ED = U+B7EC 러
+index 0x26E escape 84 EE = U+C21C 순
+index 0x26F escape 84 EF = U+B36E 덮
+index 0x270 escape 84 F0 = U+D1B1 톱
+index 0x271 escape 84 F1 = U+B311 댑
+index 0x272 escape 84 F2 = U+B124 네
+index 0x273 escape 84 F3 = U+AC83 것
+index 0x274 escape 84 F4 = U+D718 휘
+index 0x275 escape 84 F5 = U+BD89 붉
+index 0x276 escape 84 F6 = U+C369 썩
+index 0x277 escape 84 F7 = U+C794 잔
+index 0x278 escape 84 F8 = U+BC00 밀
+index 0x279 escape 84 F9 = U+C090 삐
+index 0x27A escape 84 FA = U+AC71 걱
+index 0x27B escape 84 FB = U+B09C 난
+index 0x27C escape 84 FC = U+C0C9 색
+index 0x27D escape 84 FD = U+CE5C 친
+index 0x27E escape 84 FE = U+D0D3 탓
+index 0x27F escape 84 FF = U+B5A8 떨
+index 0x280 escape 85 80 = U+C5B8 언
+index 0x281 escape 85 81 = U+C2F6 싶
+index 0x282 escape 85 82 = U+C124 설
+index 0x283 escape 85 83 = U+C800 저
+index 0x284 escape 85 84 = U+D3B4 펴
+index 0x285 escape 85 85 = U+C644 완
+index 0x286 escape 85 86 = U+AD11 광
+index 0x287 escape 85 87 = U+AE43 깃
+index 0x288 escape 85 88 = U+B4EF 듯
+index 0x289 escape 85 89 = U+C0B0 산
+index 0x28A escape 85 8A = U+B8EC 룬
+index 0x28B escape 85 8B = U+C1E0 쇠
+index 0x28C escape 85 8C = U+D600 혀
+index 0x28D escape 85 8D = U+CCE4 쳤
+index 0x28E escape 85 8E = U+CD95 축
+index 0x28F escape 85 8F = U+BC1B 받
+index 0x290 escape 85 90 = U+C190 손
+index 0x291 escape 85 91 = U+C9D3 짓
+index 0x292 escape 85 92 = U+B984 름
+index 0x293 escape 85 93 = U+C309 쌉
+index 0x294 escape 85 94 = U+C7A0 잠
+index 0x295 escape 85 95 = U+C78A 잊
+index 0x296 escape 85 96 = U+C5EC 여
+index 0x297 escape 85 97 = U+C6C0 움
+index 0x298 escape 85 98 = U+B420 될
+index 0x299 escape 85 99 = U+BA3C 먼
+index 0x29A escape 85 9A = U+ACF3 곳
+index 0x29B escape 85 9B = U+C54C 알
+index 0x29C escape 85 9C = U+BE64 빤
+index 0x29D escape 85 9D = U+B80C 렌
+index 0x29E escape 85 9E = U+B798 래
+index 0x29F escape 85 9F = U+D639 혹
+index 0x2A0 escape 85 A0 = U+B78D 랍
+index 0x2A1 escape 85 A1 = U+B6F0 뛰
+index 0x2A2 escape 85 A2 = U+AD73 굳
+index 0x2A3 escape 85 A3 = U+B0C5 냅
+index 0x2A4 escape 85 A4 = U+B454 둔
+index 0x2A5 escape 85 A5 = U+D480 풀
+index 0x2A6 escape 85 A6 = U+B0AC 났
+index 0x2A7 escape 85 A7 = U+AE5D 깝
+index 0x2A8 escape 85 A8 = U+C8C4 죄
+index 0x2A9 escape 85 A9 = U+C625 옥
+index 0x2AA escape 85 AA = U+AC07 갇
+index 0x2AB escape 85 AB = U+D78C 힌
+index 0x2AC escape 85 AC = U+B2F5 답
+index 0x2AD escape 85 AD = U+BED7 뻗
+index 0x2AE escape 85 AE = U+B86D 롭
+index 0x2AF escape 85 AF = U+C606 옆
+index 0x2B0 escape 85 B0 = U+B0C9 냉
+index 0x2B1 escape 85 B1 = U+C5FC 염
+index 0x2B2 escape 85 B2 = U+AC9F 겟
+index 0x2B3 escape 85 B3 = U+B3C8 돈
+index 0x2B4 escape 85 B4 = U+ACF1 곱
+index 0x2B5 escape 85 B5 = U+C784 임
+index 0x2B6 escape 85 B6 = U+D0C8 탈
+index 0x2B7 escape 85 B7 = U+B77D 락
+index 0x2B8 escape 85 B8 = U+C2B9 승
+index 0x2B9 escape 85 B9 = U+D568 함
+index 0x2BA escape 85 BA = U+C7A1 잡
+index 0x2BB escape 85 BB = U+B8CC 료
+index 0x2BC escape 85 BC = U+C783 잃
+index 0x2BD escape 85 BD = U+BABB 못
+index 0x2BE escape 85 BE = U+D604 현
+index 0x2BF escape 85 BF = U+D0DD 택
+index 0x2C0 escape 85 C0 = U+C791 작
+index 0x2C1 escape 85 C1 = U+AD6D 국
+index 0x2C2 escape 85 C2 = U+D65C 활
+index 0x2C3 escape 85 C3 = U+D0A4 키
+index 0x2C4 escape 85 C4 = U+C2ED 십
+index 0x2C5 escape 85 C5 = U+C871 족
+index 0x2C6 escape 85 C6 = U+D6C4 후
+index 0x2C7 escape 85 C7 = U+CF54 코
+index 0x2C8 escape 85 C8 = U+B41C 된
+index 0x2C9 escape 85 C9 = U+BC8C 벌
+index 0x2CA escape 85 CA = U+B860 론
+index 0x2CB escape 85 CB = U+B9E4 매
+index 0x2CC escape 85 CC = U+D759 흙
+index 0x2CD escape 85 CD = U+B369 덩
+index 0x2CE escape 85 CE = U+B053 끓
+index 0x2CF escape 85 CF = U+C580 얀
+index 0x2D0 escape 85 D0 = U+AC14 갔
+index 0x2D1 escape 85 D1 = U+C554 암
+index 0x2D2 escape 85 D2 = U+C54A 않
+index 0x2D3 escape 85 D3 = U+C5BC 얼
+index 0x2D4 escape 85 D4 = U+B5A0 떠
+index 0x2D5 escape 85 D5 = U+D63C 혼
+index 0x2D6 escape 85 D6 = U+CCAD 청
+index 0x2D7 escape 85 D7 = U+AFC9 꿉
+index 0x2D8 escape 85 D8 = U+C4F8 쓸
+index 0x2D9 escape 85 D9 = U+B0A0 날
+index 0x2DA escape 85 DA = U+C74D 읍
+index 0x2DB escape 85 DB = U+D551 핑
+index 0x2DC escape 85 DC = U+AED8 께
+index 0x2DD escape 85 DD = U+C26C 쉬
+index 0x2DE escape 85 DE = U+C27D 쉽
+index 0x2DF escape 85 DF = U+C9DC 짜
+index 0x2E0 escape 85 E0 = U+CE69 칩
+index 0x2E1 escape 85 E1 = U+BA87 몇
+index 0x2E2 escape 85 E2 = U+D45C 표
+index 0x2E3 escape 85 E3 = U+B73B 뜻
+index 0x2E4 escape 85 E4 = U+C555 압
+index 0x2E5 escape 85 E5 = U+D3D0 폐
+index 0x2E6 escape 85 E6 = U+D5C8 허
+index 0x2E7 escape 85 E7 = U+B180 놀
+index 0x2E8 escape 85 E8 = U+B739 뜹
+index 0x2E9 escape 85 E9 = U+D070 큰
+index 0x2EA escape 85 EA = U+D0B5 킵
+index 0x2EB escape 85 EB = U+AE34 긴
+index 0x2EC escape 85 EC = U+B9E1 맡
+index 0x2ED escape 85 ED = U+C058 쁘
+index 0x2EE escape 85 EE = U+B801 렁
+index 0x2EF escape 85 EF = U+C55E 앞
+index 0x2F0 escape 85 F0 = U+AC81 겁
+index 0x2F1 escape 85 F1 = U+AFD4 꿔
+index 0x2F2 escape 85 F2 = U+B0BC 낼
+index 0x2F3 escape 85 F3 = U+B545 땅
+index 0x2F4 escape 85 F4 = U+B828 련
+index 0x2F5 escape 85 F5 = U+B838 렸
+index 0x2F6 escape 85 F6 = U+BBC0 므
+index 0x2F7 escape 85 F7 = U+BD99 붙
+index 0x2F8 escape 85 F8 = U+BE55 빕
+index 0x2F9 escape 85 F9 = U+C05C 쁜
+index 0x2FA escape 85 FA = U+C0BD 삽
+index 0x2FB escape 85 FB = U+C37C 썼
+index 0x2FC escape 85 FC = U+C3E9 쏩
+index 0x2FD escape 85 FD = U+C591 양
+index 0x2FE escape 85 FE = U+C5C5 업
+index 0x2FF escape 85 FF = U+C600 였
+index 0x300 escape 86 80 = U+C6E0 웠
+index 0x301 escape 86 81 = U+CCB4 체
+index 0x302 escape 86 82 = U+D640 홀
+index 0x303 escape 86 83 = U+B0E5 냥
+index 0x304 escape 86 84 = U+B2E8 단
+index 0x305 escape 86 85 = U+BAB0 몰
+index 0x306 escape 86 86 = U+BCC4 별
+index 0x307 escape 86 87 = U+C1C4 쇄
+index 0x308 escape 86 88 = U+C5F0 연
+index 0x309 escape 86 89 = U+C695 욕
+index 0x30A escape 86 8A = U+CD9C 출
+index 0x30B escape 86 8B = U+CE68 침
+index 0x30C escape 86 8C = U+D0D0 탐
+index 0x30D escape 86 8D = U+B2AA 늪
+index 0x30E escape 86 8E = U+B744 띄
+index 0x30F escape 86 8F = U+BE60 빠
+index 0x310 escape 86 90 = U+C559 앙
+index 0x311 escape 86 91 = U+AC19 같
+index 0x312 escape 86 92 = U+B204 누
+index 0x313 escape 86 93 = U+B2E5 닥
+index 0x314 escape 86 94 = U+B9BC 림
+index 0x315 escape 86 95 = U+BB18 묘
+index 0x316 escape 86 96 = U+C068 쁨
+index 0x317 escape 86 97 = U+C808 절
+index 0x318 escape 86 98 = U+C989 즉
+index 0x319 escape 86 99 = U+CE60 칠
+index 0x31A escape 86 9A = U+ADDC 규
+index 0x31B escape 86 9B = U+AF43 꽃
+index 0x31C escape 86 9C = U+AFB8 꾸
+index 0x31D escape 86 9D = U+B274 뉴
+index 0x31E escape 86 9E = U+B355 덕
+index 0x31F escape 86 9F = U+B4F1 등
+index 0x320 escape 86 A0 = U+B530 따
+index 0x321 escape 86 A1 = U+B7A8 램
+index 0x322 escape 86 A2 = U+BCA4 벤
+index 0x323 escape 86 A3 = U+C27C 쉼
+index 0x324 escape 86 A4 = U+C5C4 엄
+index 0x325 escape 86 A5 = U+C5FD 엽
+index 0x326 escape 86 A6 = U+C824 젤
+index 0x327 escape 86 A7 = U+C874 존
+index 0x328 escape 86 A8 = U+CEF4 컴
+index 0x329 escape 86 A9 = U+D0C1 탁
+index 0x32A escape 86 AA = U+D15C 템
+index 0x32B escape 86 AB = U+D310 판
+index 0x32C escape 86 AC = U+D4E8 퓨
+index 0x32D escape 86 AD = U+AC08 갈
+index 0x32E escape 86 AE = U+B8B0 뢰
+index 0x32F escape 86 AF = U+BA48 멈
+index 0x330 escape 86 B0 = U+BA78 멸
+index 0x331 escape 86 B1 = U+BB36 묶
+index 0x332 escape 86 B2 = U+BC15 박
+index 0x333 escape 86 B3 = U+BC1D 밝
+index 0x334 escape 86 B4 = U+BC31 백
+index 0x335 escape 86 B5 = U+BC40 뱀
+index 0x336 escape 86 B6 = U+BC94 범
+index 0x337 escape 86 B7 = U+C2EC 심
+index 0x338 escape 86 B8 = U+C557 앗
+index 0x339 escape 86 B9 = U+C560 애
+index 0x33A escape 86 BA = U+C62E 옮
+index 0x33B escape 86 BB = U+C721 육
+index 0x33C escape 86 BC = U+C78E 잎
+index 0x33D escape 86 BD = U+C811 접
+index 0x33E escape 86 BE = U+C99D 증
+index 0x33F escape 86 BF = U+C9C1 직
+index 0x340 escape 86 C0 = U+CC45 책
+index 0x341 escape 86 C1 = U+CD1D 총
+index 0x342 escape 86 C2 = U+D074 클
+index 0x343 escape 86 C3 = U+D0D4 탔
+index 0x344 escape 86 C4 = U+D39C 펜
+index 0x345 escape 86 C5 = U+D5A5 향
+index 0x346 escape 86 C6 = U+AC12 값
+index 0x347 escape 86 C7 = U+AC1A 갚
+index 0x348 escape 86 C8 = U+AC77 걷
+index 0x349 escape 86 C9 = U+ACBC 겼
+index 0x34A escape 86 CA = U+ACC1 곁
+index 0x34B escape 86 CB = U+ACE4 곤
+index 0x34C escape 86 CC = U+ACF0 곰
+index 0x34D escape 86 CD = U+ACFD 곽
+index 0x34E escape 86 CE = U+AD76 굶
+index 0x34F escape 86 CF = U+AD8C 권
+index 0x350 escape 86 D0 = U+AE41 깁
+index 0x351 escape 86 D1 = U+AE4A 깊
+index 0x352 escape 86 D2 = U+AEBC 꺼
+index 0x353 escape 86 D3 = U+AED1 껑
+index 0x354 escape 86 D4 = U+AF2C 꼬
+index 0x355 escape 86 D5 = U+AF42 꽂
+index 0x356 escape 86 D6 = U+AFC7 꿇
+index 0x357 escape 86 D7 = U+AFC8 꿈
+index 0x358 escape 86 D8 = U+B01D 뀝
+index 0x359 escape 86 D9 = U+B04C 끌
+index 0x35A escape 86 DA = U+B055 끕
+index 0x35B escape 86 DB = U+B091 낑
+index 0x35C escape 86 DC = U+B0AD 낭
+index 0x35D escape 86 DD = U+B0B8 낸
+index 0x35E escape 86 DE = U+B110 널
+index 0x35F escape 86 DF = U+B123 넣
+index 0x360 escape 86 E0 = U+B128 넨
+index 0x361 escape 86 E1 = U+B135 넵
+index 0x362 escape 86 E2 = U+B144 년
+index 0x363 escape 86 E3 = U+B150 념
+index 0x364 escape 86 E4 = U+B193 놓
+index 0x365 escape 86 E5 = U+B1CC 뇌
+index 0x366 escape 86 E6 = U+B299 늙
+index 0x367 escape 86 E7 = U+B2D0 닐
+index 0x368 escape 86 E8 = U+B2D9 닙
+index 0x369 escape 86 E9 = U+B2EB 닫
+index 0x36A escape 86 EA = U+B2EE 닮
+index 0x36B escape 86 EB = U+B2F4 담
+index 0x36C escape 86 EC = U+B2FF 닿
+index 0x36D escape 86 ED = U+B35F 덟
+index 0x36E escape 86 EE = U+B365 덥
+index 0x36F escape 86 EF = U+B36B 덫
+index 0x370 escape 86 F0 = U+B3CB 돋
+index 0x371 escape 86 F1 = U+B451 둑
+index 0x372 escape 86 F2 = U+B460 둠
+index 0x373 escape 86 F3 = U+B531 딱
+index 0x374 escape 86 F4 = U+B55C 땜
+index 0x375 escape 86 F5 = U+B5BC 떼
+index 0x376 escape 86 F6 = U+B69C 뚜
+index 0x377 escape 86 F7 = U+B755 띕
+index 0x378 escape 86 F8 = U+B78C 람
+index 0x379 escape 86 F9 = U+B791 랑
+index 0x37A escape 86 FA = U+B7AB 랫
+index 0x37B escape 86 FB = U+B7ED 럭
+index 0x37C escape 86 FC = U+B7F0 런
+index 0x37D escape 86 FD = U+B7FD 럽
+index 0x37E escape 86 FE = U+B807 렇
+index 0x37F escape 86 FF = U+B82C 렬
+index 0x380 escape 87 80 = U+B840 례
+index 0x381 escape 87 81 = U+B86C 롬
+index 0x382 escape 87 82 = U+B8F0 룰
+index 0x383 escape 87 83 = U+B98E 릎
+index 0x384 escape 87 84 = U+B9B4 릴
+index 0x385 escape 87 85 = U+BA39 먹
+index 0x386 escape 87 86 = U+BA40 멀
+index 0x387 escape 87 87 = U+BA4B 멋
+index 0x388 escape 87 88 = U+BA4D 멍
+index 0x389 escape 87 89 = U+BAB8 몸
+index 0x38A escape 87 8A = U+BB3B 묻
+index 0x38B escape 87 8B = U+BB4D 뭍
+index 0x38C escape 87 8C = U+BBFF 믿
+index 0x38D escape 87 8D = U+BC09 밉
+index 0x38E escape 87 8E = U+BC16 밖
+index 0x38F escape 87 8F = U+BC2D 밭
+index 0x390 escape 87 90 = U+BC97 벗
+index 0x391 escape 87 91 = U+BCB3 벳
+index 0x392 escape 87 92 = U+BCCD 볍
+index 0x393 escape 87 93 = U+BCD5 볕
+index 0x394 escape 87 94 = U+BD05 봅
+index 0x395 escape 87 95 = U+BE68 빨
+index 0x396 escape 87 96 = U+BF08 뼈
+index 0x397 escape 87 97 = U+BF51 뽑
+index 0x398 escape 87 98 = U+C12D 섭
+index 0x399 escape 87 99 = U+C168 셨
+index 0x39A escape 87 9A = U+C19C 솜
+index 0x39B escape 87 9B = U+C232 숲
+index 0x39C escape 87 9C = U+C2AC 슬
+index 0x39D escape 87 9D = U+C2B4 슴
+index 0x39E escape 87 9E = U+C2F1 싱
+index 0x39F escape 87 9F = U+C30D 쌍
+index 0x3A0 escape 87 A0 = U+C313 쌓
+index 0x3A1 escape 87 A1 = U+C368 써
+index 0x3A2 escape 87 A2 = U+C500 씀
+index 0x3A3 escape 87 A3 = U+C528 씨
+index 0x3A4 escape 87 A4 = U+C52C 씬
+index 0x3A5 escape 87 A5 = U+C549 앉
+index 0x3A6 escape 87 A6 = U+C5C7 엇
+index 0x3A7 escape 87 A7 = U+C5FE 엾
+index 0x3A8 escape 87 A8 = U+C61B 옛
+index 0x3A9 escape 87 A9 = U+C635 옵
+index 0x3AA escape 87 AA = U+C637 옷
+index 0x3AB escape 87 AB = U+C6C3 웃
+index 0x3AC escape 87 AC = U+C798 잘
+index 0x3AD escape 87 AD = U+C80A 젊
+index 0x3AE escape 87 AE = U+C881 좁
+index 0x3AF escape 87 AF = U+C950 쥐
+index 0x3B0 escape 87 B0 = U+C9D0 짐
+index 0x3B1 escape 87 B1 = U+C9DD 짝
+index 0x3B2 escape 87 B2 = U+C9E7 짧
+index 0x3B3 escape 87 B3 = U+C9F8 째
+index 0x3B4 escape 87 B4 = U+CA61 쩡
+index 0x3B5 escape 87 B5 = U+CABC 쪼
+index 0x3B6 escape 87 B6 = U+CAD3 쫓
+index 0x3B7 escape 87 B7 = U+CC2C 찬
+index 0x3B8 escape 87 B8 = U+CC39 찹
+index 0x3B9 escape 87 B9 = U+CC3C 찼
+index 0x3BA escape 87 BA = U+CC59 챙
+index 0x3BB escape 87 BB = U+CDA4 춤
+index 0x3BC escape 87 BC = U+CDB0 춰
+index 0x3BD escape 87 BD = U+CE74 카
+index 0x3BE escape 87 BE = U+CEE4 커
+index 0x3BF escape 87 BF = U+CF24 켤
+index 0x3C0 escape 87 C0 = U+CFA1 쾡
+index 0x3C1 escape 87 C1 = U+D0A8 킨
+index 0x3C2 escape 87 C2 = U+D0D5 탕
+index 0x3C3 escape 87 C3 = U+D0DC 태
+index 0x3C4 escape 87 C4 = U+D138 털
+index 0x3C5 escape 87 C5 = U+D280 튀
+index 0x3C6 escape 87 C6 = U+D2C0 틀
+index 0x3C7 escape 87 C7 = U+D3BC 펼
+index 0x3C8 escape 87 C8 = U+D488 품
+index 0x3C9 escape 87 C9 = U+D587 햇
+index 0x3CA escape 87 CA = U+D610 혐
+index 0x3CB escape 87 CB = U+D64D 홍
+index 0x3CC escape 87 CC = U+D6E8 훨
+index 0x3CD escape 87 CD = U+D750 흐
+index 0x3CE escape 87 CE = U+D758 흘
+index 0x3CF escape 87 CF = U+D760 흠
+index 0x3D0 escape 87 D0 = U+D765 흥
+index 0x3D1 escape 87 D1 = U+D790 힐
+
+index 0x3D2 escape 87 D2 = U+AC16 갖
+index 0x3D3 escape 87 D3 = U+AC24 갤
+index 0x3D4 escape 87 D4 = U+AC90 겐
+index 0x3D5 escape 87 D5 = U+ACE1 곡
+index 0x3D6 escape 87 D6 = U+ACE7 곧
+index 0x3D7 escape 87 D7 = U+AD7F 굿
+index 0x3D8 escape 87 D8 = U+ADA4 궤
+index 0x3D9 escape 87 D9 = U+AE01 긁
+index 0x3DA escape 87 DA = U+AF2D 꼭
+index 0x3DB escape 87 DB = U+B044 끄
+index 0x3DC escape 87 DC = U+B080 낀
+index 0x3DD escape 87 DD = U+B0C8 냈
+index 0x3DE escape 87 DE = U+B137 넷
+index 0x3DF escape 87 DF = U+B188 놈
+index 0x3E0 escape 87 E0 = U+B220 눠
+index 0x3E1 escape 87 E1 = U+B2AC 늬
+index 0x3E2 escape 87 E2 = U+B371 덱
+index 0x3E3 escape 87 E3 = U+B378 델
+index 0x3E4 escape 87 E4 = U+B3DB 돛
+index 0x3E5 escape 87 E5 = U+B410 됐
+index 0x3E6 escape 87 E6 = U+B458 둘
+index 0x3E7 escape 87 E7 = U+B4B7 뒷
+index 0x3E8 escape 87 E8 = U+B4C4 듄
+index 0x3E9 escape 87 E9 = U+B4E3 듣
+index 0x3EA escape 87 EA = U+B514 디
+index 0x3EB escape 87 EB = U+B518 딘
+index 0x3EC escape 87 EC = U+B529 딩
+index 0x3ED escape 87 ED = U+B5A4 떤
+index 0x3EE escape 87 EE = U+B610 또
+index 0x3EF escape 87 EF = U+B611 똑
+index 0x3F0 escape 87 F0 = U+B748 띈
+index 0x3F1 escape 87 F1 = U+B784 랄
+index 0x3F2 escape 87 F2 = U+B799 랙
+index 0x3F3 escape 87 F3 = U+B7AD 랭
+index 0x3F4 escape 87 F4 = U+B7F4 럴
+index 0x3F5 escape 87 F5 = U+B7FF 럿
+index 0x3F6 escape 87 F6 = U+B809 렉
+index 0x3F7 escape 87 F7 = U+B86F 롯
+index 0x3F8 escape 87 F8 = U+B871 롱
+index 0x3F9 escape 87 F9 = U+B959 륙
+index 0x3FA escape 87 FA = U+B96D 륭
+index 0x3FB escape 87 FB = U+B9BF 릿
+index 0x3FC escape 87 FC = U+B9D9 맙
+index 0x3FD escape 87 FD = U+B9E8 맨
+index 0x3FE escape 87 FE = U+B9FA 맺
+index 0x3FF escape 87 FF = U+BA55 멕
+index 0x400 escape 88 80 = U+BAB9 몹
+index 0x401 escape 88 81 = U+BB50 뭐
+index 0x402 escape 88 82 = U+BC1F 밟
+index 0x403 escape 88 83 = U+BCA0 베
+index 0x404 escape 88 84 = U+BD10 봐
+index 0x405 escape 88 85 = U+BD24 봤
+index 0x406 escape 88 86 = U+BE10 븐
+index 0x407 escape 88 87 = U+BE45 빅
+index 0x408 escape 88 88 = U+BE4C 빌
+index 0x409 escape 88 89 = U+BFCC 뿌
+index 0x40A escape 88 8A = U+BFD0 뿐
+index 0x40B escape 88 8B = U+C0AD 삭
+index 0x40C escape 88 8C = U+C0BC 삼
+index 0x40D escape 88 8D = U+C0CC 샌
+index 0x40E escape 88 8E = U+C100 섀
+index 0x40F escape 88 8F = U+C12C 섬
+index 0x410 escape 88 90 = U+C12F 섯
+index 0x411 escape 88 91 = U+C149 셉
+index 0x412 escape 88 92 = U+C15C 셜
+index 0x413 escape 88 93 = U+C178 셸
+index 0x414 escape 88 94 = U+C19F 솟
+index 0x415 escape 88 95 = U+C1A1 송
+index 0x416 escape 88 96 = U+C22B 숫
+index 0x417 escape 88 97 = U+C2A8 슨
+index 0x418 escape 88 98 = U+C2AD 슭
+index 0x419 escape 88 99 = U+C37D 썽
+index 0x41A escape 88 9A = U+C564 앤
+index 0x41B escape 88 9B = U+C5B5 억
+index 0x41C escape 88 9C = U+C5D1 엑
+index 0x41D escape 88 9D = U+C5D4 엔
+index 0x41E escape 88 9E = U+C654 왔
+index 0x41F escape 88 9F = U+C6D4 월
+index 0x420 escape 88 A0 = U+C6DC 웜
+index 0x421 escape 88 A1 = U+C6E8 웨
+index 0x422 escape 88 A2 = U+C708 윈
+index 0x423 escape 88 A3 = U+C70C 윌
+index 0x424 escape 88 A4 = U+C77D 읽
+index 0x425 escape 88 A5 = U+C8E0 죠
+index 0x426 escape 88 A6 = U+C918 줘
+index 0x427 escape 88 A7 = U+C92C 줬
+index 0x428 escape 88 A8 = U+C98C 즌
+index 0x429 escape 88 A9 = U+C990 즐
+index 0x42A escape 88 AA = U+C9E0 짠
+index 0x42B escape 88 AB = U+CA4C 쩌
+index 0x42C escape 88 AC = U+CBE4 쯤
+index 0x42D escape 88 AD = U+CC29 착
+index 0x42E escape 88 AE = U+CC48 챈
+index 0x42F escape 88 AF = U+CC99 척
+index 0x430 escape 88 B0 = U+CCA8 첨
+index 0x431 escape 88 B1 = U+CCA9 첩
+index 0x432 escape 88 B2 = U+CD0C 촌
+index 0x433 escape 88 B3 = U+CE20 츠
+index 0x434 escape 88 B4 = U+CE59 칙
+index 0x435 escape 88 B5 = U+CE6D 칭
+index 0x436 escape 88 B6 = U+CE7C 칼
+index 0x437 escape 88 B7 = U+CE90 캐
+index 0x438 escape 88 B8 = U+CEA0 캠
+index 0x439 escape 88 B9 = U+CEA1 캡
+index 0x43A escape 88 BA = U+CEEC 컬
+index 0x43B escape 88 BB = U+CF00 케
+index 0x43C escape 88 BC = U+CF30 켰
+index 0x43D escape 88 BD = U+CF5C 콜
+index 0x43E escape 88 BE = U+CF67 콧
+index 0x43F escape 88 BF = U+D02D 퀭
+index 0x440 escape 88 C0 = U+D035 퀵
+index 0x441 escape 88 C1 = U+D038 퀸
+index 0x442 escape 88 C2 = U+D0AC 킬
+index 0x443 escape 88 C3 = U+D1A4 톤
+index 0x444 escape 88 C4 = U+D230 툰
+index 0x445 escape 88 C5 = U+D2AC 튬
+index 0x446 escape 88 C6 = U+D2C8 틈
+index 0x447 escape 88 C7 = U+D2F0 티
+index 0x448 escape 88 C8 = U+D2F1 틱
+index 0x449 escape 88 C9 = U+D2F4 틴
+index 0x44A escape 88 CA = U+D2F8 틸
+index 0x44B escape 88 CB = U+D300 팀
+index 0x44C escape 88 CC = U+D305 팅
+index 0x44D escape 88 CD = U+D329 팩
+index 0x44E escape 88 CE = U+D33D 팽
+index 0x44F escape 88 CF = U+D398 페
+index 0x450 escape 88 D0 = U+D3F4 폴
+index 0x451 escape 88 D1 = U+D478 푸
+index 0x452 escape 88 D2 = U+D53D 픽
+index 0x453 escape 88 D3 = U+D584 햄
+index 0x454 escape 88 D4 = U+D5E4 헤
+index 0x455 escape 88 D5 = U+D614 혔
+index 0x456 escape 88 D6 = U+D648 홈
+index 0x457 escape 88 D7 = U+D68D 획
+index 0x458 escape 88 D8 = U+D6CC 훌
+index 0x459 escape 88 D9 = U+D6D4 훔
+index 0x45A escape 88 DA = U+D729 휩
+index 0x45B escape 88 DB = U+D734 휴
+index 0x45C escape 88 DC = U+D76C 희
+index 0x45D escape 88 DD = U+B2CC 닌
+index 0x45E escape 88 DE = U+B835 렵
+index 0x45F escape 88 DF = U+B9AD 릭
+index 0x460 escape 88 E0 = U+B9F5 맵
+index 0x461 escape 88 E1 = U+BB47 뭇
+index 0x462 escape 88 E2 = U+BC0F 및
+index 0x463 escape 88 E3 = U+C130 섰
+index 0x464 escape 88 E4 = U+C2FC 싼
+index 0x465 escape 88 E5 = U+C3DF 쏟
+index 0x466 escape 88 E6 = U+CC54 챔
+index 0x467 escape 88 E7 = U+CF64 콤
+index 0x468 escape 88 E8 = U+D575 핵
+index 0x469 escape 88 E9 = U+D5E8 헨
+[smoke]
+  한글테스트 -> 82 80 82 81 82 82 82 83 82 84
+  description 한글테스트 한글테스트 -> 82 80 82 81 82 82 82 83 82 84 20 82 80 82 81 82 82 82 83 82 84
+
+[translations]
+CAMPE01.H2C
+  Evil 1 -> 악편 1 [82 85 82 86 20 31]
+  "First Blood" -> 첫 피 [82 87 20 82 88]
+  (Scene 1)  Capture all enemy castles. -> 1장 적 성 점령 [31 82 89 20 82 8A 20 82 8B 20 82 8C 82 8D]
+  You face three opponents in this scenario. Capture their castles and their heroes to prove your worthiness to Archibald. -> 적 성 셋 점령 영웅 격파 [82 8A 20 82 8B 20 82 8E 20 82 8C 82 8D 20 82 8F 82 90 20 82 91 82 92]
+
+CAMPG01.H2C
+  Good 1 -> 선편 1 [82 93 82 86 20 31]
+  "Force of Arms" -> 무력 [82 94 82 95]
+  cene 1)  Capture all enemy castles. -> 1장 적 성 점령 [31 82 89 20 82 8A 20 82 8B 20 82 8C 82 8D]
+  There are three enemy castles to the north. Capture them in the name of Roland the true king! -> 북쪽 적 성 셋 점령 롤랜드 [82 96 82 97 20 82 8A 20 82 8B 20 82 8E 20 82 8C 82 8D 20 82 98 82 99 82 9A]
+
+[common names]
+  peasant -> 농민 [82 9B 82 9C]
+  peasants -> 농민들 [82 9B 82 9C 82 9D]
+  archer -> 궁수 [82 9E 82 9F]
+  archers -> 궁수들 [82 9E 82 9F 82 9D]
+  ranger -> 명궁 [82 A0 82 9E]
+  rangers -> 명궁들 [82 A0 82 9E 82 9D]
+  pikeman -> 창병 [82 A1 82 A2]
+  pikemen -> 창병들 [82 A1 82 A2 82 9D]
+  veteran pikeman -> 정예 창병 [82 A3 82 A4 20 82 A1 82 A2]
+  veteran pikemen -> 정예 창병들 [82 A3 82 A4 20 82 A1 82 A2 82 9D]
+  swordsman -> 검병 [82 A5 82 A2]
+  swordsmen -> 검병들 [82 A5 82 A2 82 9D]
+  master swordsman -> 정예 검병 [82 A3 82 A4 20 82 A5 82 A2]
+  master swordsmen -> 정예 검병들 [82 A3 82 A4 20 82 A5 82 A2 82 9D]
+  cavalry -> 기병 [82 A6 82 A2]
+  cavalries -> 기병들 [82 A6 82 A2 82 9D]
+  champion -> 용사 [82 A7 82 A8]
+  champions -> 용사들 [82 A7 82 A8 82 9D]
+  paladin -> 성기사 [82 8B 82 A6 82 A8]
+  paladins -> 성기사들 [82 8B 82 A6 82 A8 82 9D]
+  crusader -> 성전사 [82 8B 82 A9 82 A8]
+  crusaders -> 성전사들 [82 8B 82 A9 82 A8 82 9D]
+  goblin -> 고블린 [82 AA 82 AB 82 AC]
+  goblins -> 고블린 [82 AA 82 AB 82 AC]
+  orc -> 오크 [82 AD 82 AE]
+  orcs -> 오크들 [82 AD 82 AE 82 9D]
+  orc chief -> 오크대장 [82 AD 82 AE 82 AF 82 89]
+  orc chiefs -> 오크대장들 [82 AD 82 AE 82 AF 82 89 82 9D]
+  wolf -> 늑대 [82 B0 82 AF]
+  wolves -> 늑대들 [82 B0 82 AF 82 9D]
+  ogre -> 오거 [82 AD 82 B1]
+  ogres -> 오거 [82 AD 82 B1]
+  ogre lord -> 오거군주 [82 AD 82 B1 82 B2 82 B3]
+  ogre lords -> 오거군주들 [82 AD 82 B1 82 B2 82 B3 82 9D]
+  troll -> 트롤 [82 84 82 98]
+  trolls -> 트롤들 [82 84 82 98 82 9D]
+  war troll -> 전쟁트롤 [82 A9 82 B4 82 84 82 98]
+  war trolls -> 전쟁트롤들 [82 A9 82 B4 82 84 82 98 82 9D]
+  cyclops -> 외눈 [82 B5 82 B6]
+  cyclopes -> 외눈들 [82 B5 82 B6 82 9D]
+  sprite -> 요정 [82 B7 82 A3]
+  sprites -> 요정들 [82 B7 82 A3 82 9D]
+  dwarf -> 드워프 [82 9A 82 B8 82 B9]
+  dwarves -> 드워프 [82 9A 82 B8 82 B9]
+  battle dwarf -> 전투드워프 [82 A9 82 BA 82 9A 82 B8 82 B9]
+  battle dwarves -> 전투드워프들 [82 A9 82 BA 82 9A 82 B8 82 B9 82 9D]
+  elf -> 엘프 [82 BB 82 B9]
+  elves -> 엘프 [82 BB 82 B9]
+  grand elf -> 대엘프 [82 AF 82 BB 82 B9]
+  grand elves -> 대엘프들 [82 AF 82 BB 82 B9 82 9D]
+  druid -> 드루이드 [82 9A 82 BC 82 BD 82 9A]
+  druids -> 드루이드들 [82 9A 82 BC 82 BD 82 9A 82 9D]
+  greater druid -> 대드루이드 [82 AF 82 9A 82 BC 82 BD 82 9A]
+  greater druids -> 대드루이드들 [82 AF 82 9A 82 BC 82 BD 82 9A 82 9D]
+  unicorn -> 유니콘 [82 BE 82 BF 82 C0]
+  unicorns -> 유니콘들 [82 BE 82 BF 82 C0 82 9D]
+  phoenix -> 피닉스 [82 88 82 C1 82 83]
+  centaur -> 켄타우로스 [82 C2 82 C3 82 C4 82 C5 82 83]
+  centaurs -> 켄타우로스들 [82 C2 82 C3 82 C4 82 C5 82 83 82 9D]
+  gargoyle -> 가고일 [82 C6 82 AA 82 C7]
+  gargoyles -> 가고일들 [82 C6 82 AA 82 C7 82 9D]
+  griffin -> 그리핀 [82 C8 82 C9 82 CA]
+  griffins -> 그리핀들 [82 C8 82 C9 82 CA 82 9D]
+  minotaur -> 미노타우로스 [82 CB 82 CC 82 C3 82 C4 82 C5 82 83]
+  minotaurs -> 미노타우로스들 [82 CB 82 CC 82 C3 82 C4 82 C5 82 83 82 9D]
+  minotaur king -> 미노타우로스 왕 [82 CB 82 CC 82 C3 82 C4 82 C5 82 83 20 82 CD]
+  minotaur kings -> 미노타우로스 왕들 [82 CB 82 CC 82 C3 82 C4 82 C5 82 83 20 82 CD 82 9D]
+  hydra -> 히드라 [82 CE 82 9A 82 CF]
+  hydras -> 히드라들 [82 CE 82 9A 82 CF 82 9D]
+  green dragon -> 녹룡 [82 D0 82 D1]
+  red dragon -> 적룡 [82 8A 82 D1]
+  black dragon -> 흑룡 [82 D2 82 D1]
+  halfling -> 하플링 [82 D3 82 D4 82 D5]
+  halflings -> 하플링들 [82 D3 82 D4 82 D5 82 9D]
+  boar -> 멧돼지 [82 D6 82 D7 82 D8]
+  boars -> 멧돼지들 [82 D6 82 D7 82 D8 82 9D]
+  iron golem -> 철골렘 [82 D9 82 DA 82 DB]
+  iron golems -> 철골렘들 [82 D9 82 DA 82 DB 82 9D]
+  steel golem -> 강철골렘 [82 DC 82 D9 82 DA 82 DB]
+  steel golems -> 강철골렘들 [82 DC 82 D9 82 DA 82 DB 82 9D]
+  roc -> 로크 [82 C5 82 AE]
+  rocs -> 로크들 [82 C5 82 AE 82 9D]
+  mage -> 마법사 [82 DD 82 DE 82 A8]
+  magi -> 마법사들 [82 DD 82 DE 82 A8 82 9D]
+  archmage -> 대마법사 [82 AF 82 DD 82 DE 82 A8]
+  archmagi -> 대마법사들 [82 AF 82 DD 82 DE 82 A8 82 9D]
+  giant -> 거인 [82 B1 82 DF]
+  giants -> 거인들 [82 B1 82 DF 82 9D]
+  titan -> 거신 [82 B1 82 E0]
+  titans -> 거신들 [82 B1 82 E0 82 9D]
+  skeleton -> 해골 [82 E1 82 DA]
+  skeletons -> 해골들 [82 E1 82 DA 82 9D]
+  zombie -> 좀비 [82 E2 82 E3]
+  zombies -> 좀비들 [82 E2 82 E3 82 9D]
+  mutant zombie -> 변이좀비 [82 E4 82 BD 82 E2 82 E3]
+  mutant zombies -> 변이좀비들 [82 E4 82 BD 82 E2 82 E3 82 9D]
+  mummy -> 미라 [82 CB 82 CF]
+  mummies -> 미라들 [82 CB 82 CF 82 9D]
+  royal mummy -> 왕미라 [82 CD 82 CB 82 CF]
+  royal mummies -> 왕미라들 [82 CD 82 CB 82 CF 82 9D]
+  vampire -> 흡혈귀 [82 E5 82 E6 82 E7]
+  vampires -> 흡혈귀들 [82 E5 82 E6 82 E7 82 9D]
+  vampire lord -> 흡혈군주 [82 E5 82 E6 82 B2 82 B3]
+  vampire lords -> 흡혈군주들 [82 E5 82 E6 82 B2 82 B3 82 9D]
+  lich -> 리치 [82 C9 82 E8]
+  liches -> 리치들 [82 C9 82 E8 82 9D]
+  power lich -> 강화리치 [82 DC 82 E9 82 C9 82 E8]
+  power liches -> 강화리치들 [82 DC 82 E9 82 C9 82 E8 82 9D]
+  bone dragon -> 해골용 [82 E1 82 DA 82 A7]
+  bone dragons -> 해골용들 [82 E1 82 DA 82 A7 82 9D]
+  rogue -> 도적 [82 EA 82 8A]
+  rogues -> 도적들 [82 EA 82 8A 82 9D]
+  nomad -> 유목민 [82 BE 82 EB 82 9C]
+  nomads -> 유목민들 [82 BE 82 EB 82 9C 82 9D]
+  ghost -> 유령 [82 BE 82 8D]
+  ghosts -> 유령들 [82 BE 82 8D 82 9D]
+  genie -> 지니 [82 D8 82 BF]
+  genies -> 지니들 [82 D8 82 BF 82 9D]
+  medusa -> 메두사 [82 EC 82 ED 82 A8]
+  medusas -> 메두사 [82 EC 82 ED 82 A8]
+  earth elemental -> 대지정령 [82 AF 82 D8 82 A3 82 8D]
+  air elemental -> 공기정령 [82 EE 82 A6 82 A3 82 8D]
+  fire elemental -> 불정령 [82 EF 82 A3 82 8D]
+  water elemental -> 물정령 [82 F0 82 A3 82 8D]
+  Mage Guild -> 마법길드 [82 DD 82 DE 82 F1 82 9A]
+  Thieves' Guild -> 도적길드 [82 EA 82 8A 82 F1 82 9A]
+  Tavern -> 주점 [82 B3 82 8C]
+  Shipyard -> 도크 [82 EA 82 AE]
+  Well -> 우물 [82 C4 82 F0]
+  Tent -> 천막 [82 F2 82 F3]
+  Castle -> 성채 [82 8B 82 F4]
+  Statue -> 석상 [82 F5 82 F6]
+  Left Turret -> 좌포탑 [82 F7 82 F8 82 F9]
+  Right Turret -> 우포탑 [82 C4 82 F8 82 F9]
+  Marketplace -> 시장 [82 FA 82 89]
+  Moat -> 해자 [82 E1 82 FB]
+  Farm -> 농장 [82 9B 82 89]
+  Blacksmith -> 대장간 [82 AF 82 89 82 FC]
+  Armory -> 무기고 [82 94 82 A6 82 AA]
+  Cathedral -> 대성당 [82 AF 82 8B 82 FD]
+  Thatched Hut -> 초가집 [82 FE 82 C6 82 FF]
+  Archery Range -> 궁술장 [82 9E 83 80 82 89]
+  Jousting Arena -> 마상경기장 [82 DD 82 F6 83 81 82 A6 82 89]
+

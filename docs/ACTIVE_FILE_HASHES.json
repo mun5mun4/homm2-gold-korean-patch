@@ -1,0 +1,333 @@
+{
+  "schema": "homm2-ko-active-hash-reference-v2",
+  "audit_date": "2026-08-23",
+  "version": "v0.9.0-beta.3",
+  "purpose": "Hash-only reference for the release target; proprietary game binaries are not stored in this repository.",
+  "supported_source": {
+    "game_id": "1207658785",
+    "build_id": "52745329670822422",
+    "language": "English",
+    "original_core_files": [
+      {
+        "path": "HEROES2.EXE",
+        "md5": "0DAC1B70B74331DE3F54A245CA9AAF0D",
+        "sha256": "255A6ACA4C40F32DECE105A65BEA9AE5B3D83FBCF41A25DD139D2F1EF19E943F",
+        "size": 1503974
+      },
+      {
+        "path": "DATA/HEROES2.AGG",
+        "md5": "12A9CFE97AD563B0BDC9CCC894958F47",
+        "sha256": "7A11C86DB8EC8FBF19D810C1F7EBF9D8520F63FBDC42D6F51F7538654004315D",
+        "size": 43363026
+      },
+      {
+        "path": "DATA/HEROES2X.AGG",
+        "md5": "70B10454571D84C47373BEE8AA404AC6",
+        "sha256": "1F3EDAD1BB88052DA50B3FAE5D00E8F7E73DD977F356463022AAB132B54F4D41",
+        "size": 2598847
+      }
+    ]
+  },
+  "counts": {
+    "release_target_files": 51,
+    "binary_delta_files": 50,
+    "campaign_maps": 47,
+    "project_payload_files": 1
+  },
+  "files": [
+    {
+      "path": "HEROES2.EXE",
+      "size": 1523420,
+      "sha256": "52AE3BA15AE309327D698EDEE8844684F91B3BA056B9215854002265A9F6E3EF"
+    },
+    {
+      "path": "DATA/HEROES2.AGG",
+      "size": 43648538,
+      "sha256": "9FF405A4902085DEBEDA30CD53647A306B42EB690C7F7B58ECCB6F00AD90F993"
+    },
+    {
+      "path": "DATA/HEROES2X.AGG",
+      "size": 2873055,
+      "sha256": "5499B7BA07402847088FA461DA2F212ADE269BDFDAD793D5D40E6B8887616F93"
+    },
+    {
+      "path": "MAPS/CAMPE01.H2C",
+      "size": 144427,
+      "sha256": "25DA144457AC1382104001B51F457403723DDF6D57554400F7C875ADA39885B7"
+    },
+    {
+      "path": "MAPS/CAMPE02.H2C",
+      "size": 41217,
+      "sha256": "B75EC516C02D754DC269A34569A17554EF50985C22A092A27B6AB976982C124A"
+    },
+    {
+      "path": "MAPS/CAMPE03.H2C",
+      "size": 214634,
+      "sha256": "AC8F44AD546C7865A563170E0A6CE3EB28AAADC299938E34FD40784C51715F2A"
+    },
+    {
+      "path": "MAPS/CAMPE04.H2C",
+      "size": 153430,
+      "sha256": "E100469513B35930CA106973FC612D52A0FFACAB487F700E7ECD3B3A4944F329"
+    },
+    {
+      "path": "MAPS/CAMPE05.H2C",
+      "size": 41056,
+      "sha256": "C96DC5BED1A4960FB0BA97CA3050EDF5A0FD947B44340AC146751B1DFD77AA41"
+    },
+    {
+      "path": "MAPS/CAMPE05B.H2C",
+      "size": 40597,
+      "sha256": "BF0DE7CC494EBF9CF6AE782F3D07602E60BC65793C614294B3CD420ADD411CA9"
+    },
+    {
+      "path": "MAPS/CAMPE06.H2C",
+      "size": 132929,
+      "sha256": "839E03B91BD28858D0F12B580005F0E015DDE69144DE6381B588A00E4CCC7321"
+    },
+    {
+      "path": "MAPS/CAMPE07.H2C",
+      "size": 161371,
+      "sha256": "D7BC4498A5DCAF89D0CAEF4410AF66F8190D24A38D03B28E12A4C779D7776812"
+    },
+    {
+      "path": "MAPS/CAMPE08.H2C",
+      "size": 141516,
+      "sha256": "6C6A0A691169D5B82E8E6A385DA023205083E9579960AAA26164101D38AB69E9"
+    },
+    {
+      "path": "MAPS/CAMPE09.H2C",
+      "size": 133372,
+      "sha256": "D45D4D20843A9F28DDF0FCF6C6BA4672BB82D67F00BB60F59A6F125426509559"
+    },
+    {
+      "path": "MAPS/CAMPE10.H2C",
+      "size": 203346,
+      "sha256": "3AC2ADAB34D79F55498EC2383EC3C3CC12433790D13675345AC83B6E80575B39"
+    },
+    {
+      "path": "MAPS/CAMPE11.H2C",
+      "size": 442980,
+      "sha256": "3080081786A4E8CBF299C0B24F40BF50029CE4C926E41BB284DB9A4A880113B9"
+    },
+    {
+      "path": "MAPS/CAMPG01.H2C",
+      "size": 163600,
+      "sha256": "D801119619F5FB67ADBAAA1D65E2AD07BFBA677CE08DC6BF51E85D23954E63A1"
+    },
+    {
+      "path": "MAPS/CAMPG02.H2C",
+      "size": 45129,
+      "sha256": "1FEE79C6089CCD3891475C624CF7B0BBD03E7D0F71EC72DAB17C2D08072E6F71"
+    },
+    {
+      "path": "MAPS/CAMPG03.H2C",
+      "size": 153440,
+      "sha256": "221BBAB11F0934FC9B538598248670F64675603613AE0D9689BF16B02F76254B"
+    },
+    {
+      "path": "MAPS/CAMPG04.H2C",
+      "size": 146473,
+      "sha256": "E4DA96B775FB1DB17F5A6A9BEA47B70D1259C2D0A9B68BCCA6724E4DF67DE30C"
+    },
+    {
+      "path": "MAPS/CAMPG05.H2C",
+      "size": 40998,
+      "sha256": "6D75537FE0140CDE27F023F01DD46C2285F244FDFDF3357A282DD1EE90C6CDEE"
+    },
+    {
+      "path": "MAPS/CAMPG05B.H2C",
+      "size": 40582,
+      "sha256": "0C85435E3666772962EA7A94BC9F37E144C8ADDA724251FB01F14C6D2258E758"
+    },
+    {
+      "path": "MAPS/CAMPG06.H2C",
+      "size": 125661,
+      "sha256": "731428DEFE7F1C124B885FD5DA12395E55F6C6DC58DFBC33FBFC337A054DD369"
+    },
+    {
+      "path": "MAPS/CAMPG07.H2C",
+      "size": 203152,
+      "sha256": "949C89F60CC4E6FB15E21F601F4F7D15AD8E640D55CDD2CCC32E2A7891C31DE8"
+    },
+    {
+      "path": "MAPS/CAMPG08.H2C",
+      "size": 133360,
+      "sha256": "9E48CDE863180F2CB1E2A57188AD909FFFF1A9F60FB10311754CE16138FA8B1A"
+    },
+    {
+      "path": "MAPS/CAMPG09.H2C",
+      "size": 158285,
+      "sha256": "B7551128A8CB0FC590C69F383F03A57CC4EEFEE5F316E6120F6C124309BB5DEF"
+    },
+    {
+      "path": "MAPS/CAMPG10.H2C",
+      "size": 423221,
+      "sha256": "8BA8E6CA30FDB8A5A4E9096B2E4FA88EA7B7FBD149676411B7A2CB287354FA01"
+    },
+    {
+      "path": "MAPS/CAMP1_01.HXC",
+      "size": 48130,
+      "sha256": "EA1DD7B20A21A70465B70006D2E7B2DA1002B7FA2CA60B097A635E7BD368EFF6"
+    },
+    {
+      "path": "MAPS/CAMP1_02.HXC",
+      "size": 153785,
+      "sha256": "32E9A2976BD5F4315353684D67A4BCB85F0064A162B2F0AC5658D11B2E51EFAD"
+    },
+    {
+      "path": "MAPS/CAMP1_03.HXC",
+      "size": 150119,
+      "sha256": "64A6E7B3B6A09B76F8278621DDCD6B78D5D65937D93139ED45BCB046BC55E225"
+    },
+    {
+      "path": "MAPS/CAMP1_04.HXC",
+      "size": 47422,
+      "sha256": "B0B680BE2CBE9A459BEFA4EC2DD97845966D7881A55053B13A173544D5660CE0"
+    },
+    {
+      "path": "MAPS/CAMP1_05.HXC",
+      "size": 46170,
+      "sha256": "0C949D46E5C42539CA4C7ADA3E03BDF86AD8855046E8F307DE0F7A60FE8AED39"
+    },
+    {
+      "path": "MAPS/CAMP1_06.HXC",
+      "size": 130143,
+      "sha256": "08CE85E96DCE7788C7D0EA2F14FB810755FBFD942EF85FB9CABA67A5662AA13D"
+    },
+    {
+      "path": "MAPS/CAMP1_07.HXC",
+      "size": 176995,
+      "sha256": "7D6285CAEE69AF7AC3A2781C33EEB619F0F4DDA21E5931CC71FE99A9325D2686"
+    },
+    {
+      "path": "MAPS/CAMP1_08.HXC",
+      "size": 310222,
+      "sha256": "7FD804B0E26AF205836CD5D8F3FAC440FEAD66AC5CF133C761126755C7A2E506"
+    },
+    {
+      "path": "MAPS/CAMP2_01.HXC",
+      "size": 41541,
+      "sha256": "03426A72B3FF5B27746EE42844B1B1875A61A1080BA349EF0B0884B76F837CF3"
+    },
+    {
+      "path": "MAPS/CAMP2_02.HXC",
+      "size": 144933,
+      "sha256": "FD5B11BB7C09D3B70207E909E83852D58115BF9F686D6908677A7289DDCB57FB"
+    },
+    {
+      "path": "MAPS/CAMP2_03.HXC",
+      "size": 130497,
+      "sha256": "134FD6E18EA39C94AA9B57FB1785BFD14B42283C9BA01FAEF562ED6916D5EDC6"
+    },
+    {
+      "path": "MAPS/CAMP2_04.HXC",
+      "size": 147454,
+      "sha256": "2150F720F3EF8D0B3AED0C7313DF177685942813C9672AE1A14059A629FCF2AF"
+    },
+    {
+      "path": "MAPS/CAMP2_05.HXC",
+      "size": 330792,
+      "sha256": "68A70D99BA1B1CE74239D8AC60B24FE635FD35E473B355B73064801BC6A24D77"
+    },
+    {
+      "path": "MAPS/CAMP2_06.HXC",
+      "size": 162768,
+      "sha256": "DEF95D16C4E9A4AB12CC57A2B1AE59322A77F103B90EC6E681AB384F80AC36AA"
+    },
+    {
+      "path": "MAPS/CAMP2_07.HXC",
+      "size": 170903,
+      "sha256": "AB507DC237DB4D74EB8DFD42C4E5E5C66016A2027F7380126216988242AB0AA4"
+    },
+    {
+      "path": "MAPS/CAMP2_08.HXC",
+      "size": 326055,
+      "sha256": "5A1072EA3C1176BBA36088FF73839E805ADA0C6EE8E3B6D85BE2C1DA80D4E197"
+    },
+    {
+      "path": "MAPS/CAMP3_01.HXC",
+      "size": 141432,
+      "sha256": "BA16612F5C217F7EABE27CB3D0D14E3BD2BFD66A427DB3E7F119557ADFBF1623"
+    },
+    {
+      "path": "MAPS/CAMP3_02.HXC",
+      "size": 145299,
+      "sha256": "B5F9B10FB789D7FB19CEA64ECB215E83D25C6A8603AFA139A4F042FDAEF55973"
+    },
+    {
+      "path": "MAPS/CAMP3_03.HXC",
+      "size": 222426,
+      "sha256": "28ABA94727A095F037F3AD880F637D3411BBBF9E136DF82FB0865F0207335508"
+    },
+    {
+      "path": "MAPS/CAMP3_04.HXC",
+      "size": 325254,
+      "sha256": "5B6075A33800E38A9D62772900E49E7E830A68062A3EBE7614298A7FFC4339B2"
+    },
+    {
+      "path": "MAPS/CAMP4_01.HXC",
+      "size": 37823,
+      "sha256": "546890DBAD23834D858C477D291786650B0CC092A0FA92BA1CDC810560D3E001"
+    },
+    {
+      "path": "MAPS/CAMP4_02.HXC",
+      "size": 254204,
+      "sha256": "F0ECAFB63F50D66EA3F1BF9259109C9612783549A70223233817ED54C2C2D5F3"
+    },
+    {
+      "path": "MAPS/CAMP4_03.HXC",
+      "size": 317826,
+      "sha256": "F2BDB6F1A4817A32B5B378C15590C75DF759223C223A4806BDD3C6C83AD2A22B"
+    },
+    {
+      "path": "MAPS/CAMP4_04.HXC",
+      "size": 324288,
+      "sha256": "77EC42470F09317D530F8836A364470073E382FF2DCB712E0A1DDBA51189A44A"
+    },
+    {
+      "path": "KOREAN.BIN",
+      "size": 11286,
+      "sha256": "DD30DD967E81BB179BC1D33903D0B8926FB799D969A3C36FFAA6CA3FA0C89AAF"
+    }
+  ],
+  "external_loader": {
+    "format": "H2K3",
+    "initialization": "before_game_main_after_runtime_tables_ready",
+    "render_rows": 16,
+    "descriptors": 178,
+    "static_sentence_descriptors": 155,
+    "renderer_token_descriptors": 16,
+    "unit_name_descriptors": 7,
+    "runtime_rebase_hex": "0x00204000",
+    "maximum_bank_bytes": 65279,
+    "current_bank_bytes": 11286,
+    "free_bank_bytes": 53993,
+    "malloc_bytes": 69632
+  },
+  "font": {
+    "mapping_entries": 874,
+    "mapping_size": 42302,
+    "mapping_sha256": "3033584F6E65A36220F61EA58F8D7173A493FC83A72807D6FB43488AAE6DF164",
+    "font_sprites": 1130,
+    "smallfont_sprites": 1130
+  },
+  "object3": {
+    "base_hex": "0x16FEDC",
+    "used_end_hex": "0x3FD8",
+    "remaining_bytes": 40,
+    "used_prefix_sha256": "25FC2EBCC9A1A8CC3424BCBE692CADAC51E1322BCE70E2FB426B9CC3DB1CDD15",
+    "full_object_sha256": "F223B02980C74FB0DBB030CEADF56A82C3FC03F3A32C6ABEE6A74C70F6AFF0E0"
+  },
+  "release_scope": {
+    "ordinary_maps_modified": false,
+    "image_assets_translated": false,
+    "save_files_modified": false,
+    "cloud_saves_files_distributed": false
+  },
+  "limitations": [
+    "Image-embedded English UI remains outside this beta.",
+    "Ordinary MP2/MX2 maps are outside this beta.",
+    "Long campaign regression testing continues during the beta."
+  ]
+}

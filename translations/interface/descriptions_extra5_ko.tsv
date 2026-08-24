@@ -1,0 +1,113 @@
+I can offer you %d %s of %s for %d %s of %s.	%s %d %s을 %s %d %s에 드립니다.
+You have received quite a bargain.  I expect to make no profit on the deal.  Can I interest you in any of my other wares?	좋은 거래였습니다. 이득은 없습니다. 다른 물건도 보시겠습니까?
+Please inspect our fine wares.  If you feel like offering a trade, click on the items you wish to trade with and for.	좋은 물건을 살펴보고 바꿀 물건을 고르십시오.
+  Press 'CANCEL' to abort.	취소로 끝내십시오.
+Are you sure you want to dismiss this Hero?	이 영웅을 해산하시겠습니까?
+You may learn either %s %s or %s %s.	%s %s나 %s %s을 배울 수 있습니다.
+From the observation tower, you are able to see distant lands.	관측탑에서 먼 곳을 볼 수 있습니다.
+ All of the %s, %s and %s you have in your army have been trained by the battle masters of the fort.  Your army now contains %s, %s, and %s.	요새 교관이 %s, %s, %s을 훈련했습니다. 이제 %s, %s, %s입니다.
+All of the %s and %s you have in your army have been trained by the battle masters of the fort.  Your army now contains %s and %s.	요새 교관이 %s와 %s을 훈련했습니다. 이제 %s와 %s입니다.
+All of the %s you have in your army have been trained by the battle masters of the fort.  Your army now contains %s.	요새 교관이 %s을 훈련했습니다. 이제 %s입니다.
+An unusual alliance of Orcs, Ogres, and Dwarves offer to train (upgrade) any such troops brought to them.  Unfortunately, you have none with you.	오크, 오우거, 드워프 동맹이 훈련을 제안하지만 해당 부대가 없습니다.
+All of your  %s, %s and %s have been upgraded into %s, %s, and %s.	모든 %s, %s, %s이 %s, %s, %s로 업그레이드되었습니다.
+All of your %s and %s have been upgraded into %s and %s.	모든 %s와 %s이 %s와 %s로 업그레이드되었습니다.
+All of your %s have been upgraded into %s.	모든 %s이 %s로 업그레이드되었습니다.
+A blacksmith working at the foundry offers to convert all Pikemen and Swordsmen's weapons brought to him from iron to steel. He also says that he knows a process that will convert Iron Golems into Steel Golems.  Unfortunately, you have none of these troops in your army, so he can't help you.	대장장이가 창병, 검사, 골렘을 강철로 바꿔주지만 해당 부대가 없습니다.
+After spending hours trying to fish the chest out of the sea, you open it, only to find it empty.	바다 상자를 건져 열었지만 비었습니다.
+You search through the flotsam, but find nothing.	표류물을 뒤졌지만 아무것도 없습니다.
+You search through the flotsam, and find some wood.	표류물을 뒤져 목재를 찾았습니다.
+You approach the hut and observe a witch inside studying an ancient tome on %s.  As you approach, she turns and focuses her one glass eye on you.  "You already know everything you deserve to learn!" the witch screeches. "NOW GET OUT OF MY HOUSE!"	마녀가 %s 고서를 보다가 외칩니다. 이미 배울 것은 모두 배웠습니다. 나가십시오!
+A second drink at the well in one day will not help you.	하루에 두 번 우물을 마셔도 도움이 없습니다.
+It doesn't help to pray twice before a battle.  Come back after you've fought.	전투 전 두 번 기도해도 도움이 없습니다. 싸운 뒤 오십시오.
+You come across an old wagon left by a trader who didn't quite make it to safe terrain.  Unfortunately, others have found it first, and the wagon is empty.	낡은 수레를 찾았지만 이미 비었습니다.
+You come across an old wagon left by a trader who didn't quite make it to safe terrain.  Searching inside, you find the '%s'.	낡은 수레 안에서 '%s'을 찾았습니다.
+You come across an old wagon left by a trader who didn't quite make it to safe terrain.  Inside, you find some of the wagon's cargo still intact.	낡은 수레 안에서 남은 물자를 찾았습니다.
+Unfortunately, you do not have the wisdom to understand the spell, and you are unable to learn it.  	지혜가 부족해 주문을 배울 수 없습니다.  
+You try to pay the leprechaun, but realize that you can't afford it.  The leprechaun stamps his foot and ignores you.	돈이 부족해 요정과 거래할 수 없습니다. 요정이 무시합니다.
+Insulted by your refusal of his generous offer, the leprechaun stamps his foot and ignores you.	제안을 받지 않자 요정이 화를 내며 무시합니다.
+Upon defeating the monsters, you decipher an ancient glyph on the wall, telling the secret of the spell - 	괴물을 물리치자 벽의 룬이 주문의 비밀을 알려 줍니다 - 
+As you enter the Alchemist's Tower, a hobbled, graying man in a brown cloak makes his way towards you.  He checks your pack, and sees that you have 1 cursed item.  For 750 gold, the alchemist will remove it for you.  Do you pay?	탑의 술사가 저주 유물 1개를 금 750에 지워 주겠다고 합니다. 내시겠습니까?
+As you enter the Alchemist's Tower, a hobbled, graying man in a brown cloak makes his way towards you.  He checks your pack, and sees that you have %d cursed items.  For 750 gold,  the alchemist will remove them for you.  Do you pay?	탑의 술사가 저주 유물 %d개를 금 750에 지워 주겠다고 합니다. 내시겠습니까?
+You hear a voice from high above in the tower, "Go away! I can't help you!"	탑 위 목소리가 말합니다. 도울 수 없습니다!
+The dragons see you and call out.  "Our alliance with Archibald compels us to join you.  Unfortunately you have no room.  A pity!"  They quickly scatter.	용들이 동맹이라 합류하려 하지만 칸이 없어 떠납니다.
+The dwarves hail you, "Any friend of Roland is a friend of ours.  You may pass."	드워프들이 말합니다. 롤랜드의 친구라면 통과하십시오.
+The ogres give you a grunt of recognition, "Archibald's allies may pass."	오우거들이 알아보고 말합니다. 아치발드 동맹은 통과하십시오.
+"The Dwarfbane!!!!, run for your lives."	드워프의 적이다! 달아나라!
+The elves stand at attention as you approach.  Their leader calls to you and says, "Let us not impede your progress, ally!  Move on, and may victory be yours."	엘프들이 말합니다. 동맹이여, 길을 막지 않겠습니다. 승리를 빕니다.
+Cannot build another boat.	배를 더 만들 수 없습니다.
+The above spells are available here.	위 주문을 여기서 배울 수 있습니다.
+@You have no hero to cast a spell.	@주문을 쓸 영웅이 없습니다.
+You have already cast a spell this round.	이번 라운드에는 이미 주문을 썼습니다.
+Practicing the dark arts of necromancy, you are able to raise %d of the enemy's dead to return under your service as Skeletons.	강령술로 적 시체 %d명을 해골로 되살렸습니다.
+Practicing the dark arts of necromancy, you are able to raise one of the enemy's dead to return under your service as a Skeleton.	강령술로 적 하나를 해골로 되살렸습니다.
+Through eagle-eyed observation, %s is able to learn the magic spell '%s'.	%s의 관찰로 주문 '%s'을 배웁니다.
+"I will accept your surrender and grant you and your troops safe passage for the price of %d gold."	금 %d을 내면 항복과 안전한 퇴각을 받겠습니다.
+The %s fires with the strength of %d Archers, each with a +%d bonus to their attack skill.	%s은 궁수 %d명 힘과 공격 +%d로 쏩니다.
+The %s fires with the strength of %d Archers.	%s은 궁수 %d명 힘으로 쏩니다.
+Select teleport destination.	순간이동 위치 선택.
+to all undead creatures.	모든 언데드에게.
+to all living creatures.	모든 산 부대에게.
+Mirror Image spell failed!	환영 주문 실패!
+ A%d %s rise from the dead!	 A%d %s 부활!
+%d %s rises from the dead!	%d %s 부활!
+pAThe %s are paralyzed by the Cyclopes!	pA외눈거인이 %s을 마비시킵니다!
+The Unicorns' attack blinds the %s!	유니콘 공격이 %s을 실명시킵니다!
+The Mummies' curse falls upon the %s!	미라의 저주가 %s에게 내립니다!
+The captain casts '%s' on the %s.	선장이 '%s'을 %s에게 겁니다.
+%s casts '%s' on the %s.	%s: %s에게 %s 시전.
+%s, your heroes abandon you, and you are banished from this land.	%s, 영웅들이 떠났고 이 땅에서 추방됩니다.
+%s's heroes have abandoned him, and he is banished from this land.	%s의 영웅들이 떠났고 이 땅에서 추방됩니다.
+All the dwarf towns have fallen.  This is a disastrous defeat!  You have lost.	모든 드워프 마을이 함락되었습니다. 패배했습니다.
+Please enter your name for the high score list.	점수표에 이름을 입력하십시오.
+Not enough memory to run Heroes II.	메모리가 부족해 실행할 수 없습니다.
+Ultimate Book of Knowledge	궁극 지식서
+Arcane Necklace of Magic	마법 목걸이
+Caster's Bracelet of Magic	마법 팔찌
+Armored Gauntlets of Protection	수호 장갑
+Dragon Sword of Dominion	용의 지배검
+Minor Scroll of Knowledge	작은 지식 두루마리
+Major Scroll of Knowledge	큰 지식 두루마리
+Superior Scroll of Knowledge	고급 지식 두루마리
+Foremost Scroll of Knowledge	최고 지식 두루마리
+Endless Pouch of Crystal	끝없는 수정 주머니
+The Traveler's Boots of Mobility increase your movement on land.	여행 장화는 길 위 이동력을 높입니다.
+The Lucky Rabbit's Foot increases your luck in combat.	행운 부적은 전투 행운을 높입니다.
+The Gambler's Lucky Coin increases your luck in combat.	행운 동전은 전투 행운을 높입니다.
+The Four-Leaf Clover increases your luck in combat.	행운 풀은 전투 행운을 높입니다.
+The True Compass of Mobility increases your movement on land and sea.	길과 바다 이동력을 높입니다.
+The Sailors' Astrolabe of Mobility increases your movement on sea.	바다 이동력을 높입니다.
+The Evil Eye reduces the casting cost of curse spells by half.	악한 눈은 저주 주문 비용을 반으로 줄입니다.
+The Enchanted Hourglass extends the duration of all your spells by 2 turns.	모든 주문 지속을 2턴 늘립니다.
+The Skullcap halves the casting cost of all mind influencing spells.	마음 주문 비용을 반으로 줄입니다.
+The Snake Ring halves the casting cost of all your bless spells.	축복 주문 비용을 반으로 줄입니다.
+The Ankh doubles the effectiveness of all your resurrect and animate spells.	부활 주문 효과를 두 배로 합니다.
+The Book of Elements doubles the effectiveness of all your summoning spells.	소환 주문 효과를 두 배로 합니다.
+The Elemental Ring halves the casting cost of all summoning spells.	소환 주문 비용을 반으로 줄입니다.
+The Telescope increases the amount of terrain your hero reveals when adventuring by 1 extra square.	모험 중 시야를 1칸 더 넓힙니다.
+The Wizard's Hat increases the duration of your spells by 10 turns!	주문 지속을 10턴 늘립니다!
+The Power Ring returns 2 extra spell points/turn to your hero.	매 턴 주문 포인트 2를 더 회복합니다.
+The Endless Pouch of Sulfur provides 1 unit of sulfur per day.	유황 주머니는 매일 유황 1개를 줍니다.
+The Endless Vial of Mercury provides 1 unit of mercury per day.	수은 주머니는 매일 수은 1개를 줍니다.
+The Endless Cord of Wood provides 1 unit of wood per day.	목재 주머니는 매일 목재 1개를 줍니다.
+The Endless Cart of Ore provides 1 unit of ore per day.	광석 수레는 매일 광석 1개를 줍니다.
+The Endless Pouch of Crystal provides 1 unit of crystal/day.	수정 주머니는 매일 수정 1개를 줍니다.
+The Spiked Helm increases your attack and defense skills by 1 each.	가시 투구는 공격과 방어를 각각 1 높입니다.
+The Spiked Shield increases your attack and defense skills by 2 each.	가시 방패는 공격과 방어를 각각 2 높입니다.
+The White Pearl increases your spell power and knowledge by 1 each.	하얀 진주는 마력과 지력을 각각 1 높입니다.
+The Black Pearl increases your spell power and knowledge by 2 each.	검은 진주는 마력과 지력을 각각 2 높입니다.
+This Spell Scroll gives your hero the ability to cast the '%s' spell.	주문 두루마리는 '%s' 주문을 쓸 수 있게 합니다.
+The Arm of the Martyr increases your spell power by 3 but adds the undead morale penalty.	순교자의 팔은 마력을 3 높이나 언데드 사기 불리를 줍니다.
+The Breastplate increases your defense by 5.	흉갑은 방어를 5 높입니다.
+The Broach of Shielding provides 50% protection from Armageddon and Elemental Storm, but decreases spell power by 2.	브로치는 종말과 원소 폭풍 피해를 50% 줄이나 마력을 2 낮춥니다.
+The Crystal Ball lets you get more specific information about monsters, enemy heroes, and castles nearby the hero who holds it.	수정 공은 근처 몬스터, 적 영웅, 성 정보를 더 보여 줍니다.
+The Heart of Fire provides 50% protection from fire, but doubles the damage taken from cold.	불 유물은 화염 피해를 반으로 줄이나 냉기 피해가 두 배가 됩니다.
+The Heart of Ice provides 50% protection from cold, but doubles the damage taken from fire.	얼음 유물은 냉기 피해를 반으로 줄이나 화염 피해가 두 배가 됩니다.
+The Helmet increases your spell power by 5.	투구는 마력을 5 높입니다.
+The Holy Hammer increases your attack skill by 5.	신성 망치는 공격을 5 높입니다.
+The Legendary Scepter adds 2 points to all attributes.	전설 홀은 모든 능력을 2 높입니다.
+The Masthead boosts your luck and morale by 1 each in sea combat.	선수상은 바다 전투 행운과 사기를 1 높입니다.
+The Sphere of Negation disables all spell casting, for both sides, in combat.	무효의 구는 전투에서 양쪽 모두 주문을 막습니다.
+The Staff of Wizardry boosts your spell power by 5.	마법 지팡이는 마력을 5 높입니다.
+The Sword Breaker increases your defense by 4 and attack by 1.	검 파괴자는 방어 4와 공격 1을 높입니다.
+The Sword increases your attack skill by 5.	검은 공격을 5 높입니다.
+The Spade gives you increased necromancy skill.	삽은 강령술을 높입니다.

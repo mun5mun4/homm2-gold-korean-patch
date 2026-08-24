@@ -1,0 +1,88 @@
+Basic Logistics increases your hero's movement points by 10 percent.	초급 병참술은 영웅의 이동력을 10% 늘립니다.
+Advanced Logistics increases your hero's movement points by 20 percent.	중급 병참술은 영웅의 이동력을 20% 늘립니다.
+Expert Logistics increases your hero's movement points by 30 percent.	고급 병참술은 영웅의 이동력을 30% 늘립니다.
+Basic Scouting increases your hero's viewable area by 1 square.	초급 정찰은 영웅의 시야를 1칸 넓힙니다.
+Advanced Scouting increases your hero's viewable area by 2 squares.	중급 정찰은 영웅의 시야를 2칸 넓힙니다.
+Expert Scouting increases your hero's viewable area by 3 squares.	고급 정찰은 영웅의 시야를 3칸 넓힙니다.
+Basic Diplomacy allows you to negotiate with monsters who are weaker than your group.  Approximately 1/4 of the creatures may offer to join you.	초급 외교는 아군보다 약한 몬스터와 협상할 수 있게 합니다. 약 1/4이 합류할 수 있습니다.
+Advanced Diplomacy allows you to negotiate with monsters who are weaker than your group.  Approximately 1/2 of the creatures may offer to join you.	중급 외교는 아군보다 약한 몬스터와 협상할 수 있게 합니다. 약 1/2이 합류할 수 있습니다.
+Expert Diplomacy allows you to negotiate with monsters who are weaker than your group.  All of the creatures may offer to join you.	고급 외교는 아군보다 약한 몬스터와 협상할 수 있게 합니다. 전원이 합류할 수 있습니다.
+Basic Navigation increases your hero's movement points over water by 1/3.	초급 항해는 해상 이동력을 1/3 늘립니다.
+Advanced Navigation increases your hero's movement points over water by 2/3.	중급 항해는 해상 이동력을 2/3 늘립니다.
+Expert Navigation doubles your hero's movement points over water.	고급 항해는 해상 이동력을 두 배로 늘립니다.
+Basic Leadership increases your hero's troops' morale by 1.	초급 통솔은 부대 사기를 1 올립니다.
+Advanced Leadership increases your hero's troops' morale by 2.	중급 통솔은 부대 사기를 2 올립니다.
+Expert Leadership increases your hero's troops' morale by 3.	고급 통솔은 부대 사기를 3 올립니다.
+Basic Wisdom allows your hero to learn third level spells.	초급 지혜는 3레벨 주문을 배울 수 있게 합니다.
+Advanced Wisdom allows your hero to learn fourth level spells.	중급 지혜는 4레벨 주문을 배울 수 있게 합니다.
+Expert Wisdom allows your hero to learn fifth level spells.	고급 지혜는 5레벨 주문을 배울 수 있게 합니다.
+Basic Mysticism regenerates two of your hero's spell points per day.	초급 신비술은 하루에 주문 포인트 2를 회복합니다.
+Advanced Mysticism regenerates three of your hero's spell points per day.	중급 신비술은 하루에 주문 포인트 3을 회복합니다.
+Expert Mysticism regenerates four of your hero's spell points per day.	고급 신비술은 하루에 주문 포인트 4를 회복합니다.
+Basic Luck increases your hero's luck by 1.	초급 행운은 영웅의 행운을 1 올립니다.
+Advanced Luck increases your hero's luck by 2.	중급 행운은 영웅의 행운을 2 올립니다.
+Expert Luck increases your hero's luck by 3.	고급 행운은 영웅의 행운을 3 올립니다.
+Basic Ballistics gives your hero's catapult shots a greater chance to hit and do damage to castle walls.	초급 탄도술은 투석기가 성벽을 맞히고 피해를 줄 확률을 높입니다.
+Advanced Ballistics gives your hero's catapult an extra shot, and each shot has a greater chance to hit and do damage to castle walls.	중급 탄도술은 투석기를 한 번 더 쏘게 하고, 성벽 명중과 피해 확률을 높입니다.
+Expert Ballistics gives your hero's catapult an extra shot, and each shot automatically destroys any wall, except a fortified wall in a Knight town.	고급 탄도술은 투석기를 한 번 더 쏘게 하며, 기사 성의 강화 성벽을 빼고 성벽을 자동 파괴합니다.
+Basic Eagle Eye gives your hero a 20 percent chance to learn any given 1st or 2nd level enemy spell used against him in a combat.	초급 독수리눈은 전투에서 적이 쓴 1, 2레벨 주문을 20% 확률로 배웁니다.
+Advanced Eagle Eye gives your hero a 30 percent chance to learn any given 3rd level spell (or below) used against him in combat.	중급 독수리눈은 전투에서 적이 쓴 3레벨 이하 주문을 30% 확률로 배웁니다.
+Expert Eagle Eye gives your hero a 40 percent chance to learn any given 4th level spell (or below) used against him in combat.	고급 독수리눈은 전투에서 적이 쓴 4레벨 이하 주문을 40% 확률로 배웁니다.
+Basic Necromancy allows 10 percent of the creatures killed in combat to be brought back from the dead as Skeletons.	초급 강령술은 전투에서 죽은 생물의 10%를 해골로 되살립니다.
+Advanced Necromancy allows 20 percent of the creatures killed in combat to be brought back from the dead as Skeletons.	중급 강령술은 전투에서 죽은 생물의 20%를 해골로 되살립니다.
+Expert Necromancy allows 30 percent of the creatures killed in combat to be brought back from the dead as Skeletons.	고급 강령술은 전투에서 죽은 생물의 30%를 해골로 되살립니다.
+Your hero produces 100 gold pieces per turn as tax revenue from estates.	영웅은 영지 수입으로 턴마다 금 100을 얻습니다.
+Your hero produces 250 gold pieces per turn as tax revenue from estates.	영웅은 영지 수입으로 턴마다 금 250을 얻습니다.
+Your hero produces 500 gold pieces per turn as tax revenue from estates.	영웅은 영지 수입으로 턴마다 금 500을 얻습니다.
+The Mage Guild allows heroes to learn spells and replenish their spell points.	마법 길드는 영웅이 주문을 배우고 주문 포인트를 회복하게 합니다.
+The Thieves' Guild provides information on enemy players.  Thieves' Guilds can also provide scouting information on enemy towns.  Additional Guilds provide more information.	도적 길드는 적 플레이어 정보를 제공합니다. 적 마을 정찰 정보도 주며, 길드가 많을수록 정보가 늘어납니다.
+The Tavern increases morale for troops defending the castle.	주점은 성을 방어하는 부대의 사기를 올립니다.
+The Shipyard allows ships to be built.	조선소에서는 배를 만들 수 있습니다.
+The Well increases the growth rate of all dwellings by 2 creatures per week.	우물은 모든 거처의 주간 성장량을 2 늘립니다.
+The Tent provides workers to build a castle, provided the materials and the gold are available.	천막은 자재와 금이 있을 때 성을 지을 일꾼을 제공합니다.
+The Castle improves town defense and increases income to 1000 gold per day.	성은 방어력을 높이고 하루 수입을 금 1000으로 늘립니다.
+The Statue increases your town's income by 250 per day.	조각상은 마을 수입을 하루 금 250 늘립니다.
+The Left Turret provides extra firepower during castle combat.	좌포탑은 공성전에서 추가 화력을 제공합니다.
+The Right Turret provides extra firepower during castle combat.	우포탑은 공성전에서 추가 화력을 제공합니다.
+The Marketplace can be used to convert one type of resource into another.  The more marketplaces you control, the better the exchange rate.	시장은 자원을 다른 자원으로 바꿀 수 있습니다. 시장이 많을수록 교환 비율이 좋아집니다.
+The Moat slows attacking units.  Any unit entering the moat must end its turn there and becomes more vulnerable to attack.	해자는 공격 부대의 이동을 늦춥니다. 해자에 들어간 부대는 턴을 끝내고 더 취약해집니다.
+The Captain's Quarters provides a captain to assist in the castle's defense when no hero is present.	대장 숙소는 영웅이 없을 때 성 방어를 돕는 대장을 제공합니다.
+The Fortifications increase the toughness of the walls, increasing the number of turns it takes to knock them down.	요새화는 성벽을 튼튼하게 해 무너뜨리는 데 필요한 턴 수를 늘립니다.
+The Coliseum provides inspiring spectacles to defending troops, raising their morale by two during combat.	원형경기장은 방어 부대에 볼거리를 제공해 전투 중 사기를 2 올립니다.
+The Rainbow increases the luck of the defending units by two.	무지개는 방어 부대의 행운을 2 올립니다.
+The Dungeon increases the income of the town by 500 / day.	던전은 마을 수입을 하루 금 500 늘립니다.
+The Library increases the number of spells in the Guild by one for each level of the guild.	도서관은 길드 각 레벨마다 주문 수를 하나씩 늘립니다.
+The Storm adds +2 to the power of spells of a defending spell caster.	폭풍은 방어 마법사의 주문 위력을 2 올립니다.
+The Ultimate Book of Knowledge increases your knowledge by 12.	궁극의 지식서는 지력을 12 올립니다.
+The Ultimate Sword of Dominion increases your attack skill by 12.	궁극의 지배검은 공격력을 12 올립니다.
+The Ultimate Cloak of Protection increases your defense skill by 12.	궁극의 보호망토는 수비력을 12 올립니다.
+The Ultimate Wand of Magic increases your spell power by 12.	궁극의 마법봉은 마력을 12 올립니다.
+The Ultimate Shield increases your attack and defense skills by 6 each.	궁극의 방패는 공격력과 수비력을 각각 6 올립니다.
+The Ultimate Staff increases your spell power and knowledge by 6 each.	궁극의 지팡이는 마력과 지력을 각각 6 올립니다.
+The Ultimate Crown increases each of your basic skills by 4 points.	궁극의 왕관은 모든 기본 능력치를 4씩 올립니다.
+The Golden Goose brings in an income of 10,000 gold per turn.	황금 거위는 턴마다 금 10000 수입을 줍니다.
+The Arcane Necklace of Magic increases your spell power by 4.	비전 목걸이는 마력을 4 올립니다.
+The Caster's Bracelet of Magic increases your spell power by 2.	시전자의 팔찌는 마력을 2 올립니다.
+The Mage's Ring of Power increases your spell power by 2.	마법사의 힘의 반지는 마력을 2 올립니다.
+The Witch's Broach of Magic increases your spell power by 3.	마녀의 브로치는 마력을 3 올립니다.
+The Medal of Valor increases your morale.	용맹의 메달은 사기를 올립니다.
+The Medal of Courage increases your morale.	용기의 메달은 사기를 올립니다.
+The Medal of Honor increases your morale.	명예의 메달은 사기를 올립니다.
+The Medal of Distinction increases your morale.	공훈의 메달은 사기를 올립니다.
+The Fizbin of Misfortune greatly decreases your morale.	불운의 피즈빈은 사기를 크게 낮춥니다.
+The Thunder Mace of Dominion increases your attack skill by 1.	천둥 철퇴는 공격력을 1 올립니다.
+The Armored Gauntlets of Protection increase your defense skill by 1.	보호의 장갑은 수비력을 1 올립니다.
+The Defender Helm of Protection increases your defense skill by 1.	보호의 수호 투구는 수비력을 1 올립니다.
+The Giant Flail of Dominion increases your attack skill by 1.	거인의 도리깨는 공격력을 1 올립니다.
+The Ballista of Quickness lets your catapult fire twice per combat round.	신속의 발리스타는 투석기가 라운드마다 두 번 쏘게 합니다.
+The Stealth Shield of Protection increases your defense skill by 2.	은신 방패는 수비력을 2 올립니다.
+The Dragon Sword of Dominion increases your attack skill by 3.	용검은 공격력을 3 올립니다.
+The Power Axe of Dominion increases your attack skill by 2.	힘의 도끼는 공격력을 2 올립니다.
+The Divine Breastplate of Protection increases your defense skill by 3.	신성한 흉갑은 수비력을 3 올립니다.
+The Minor Scroll of Knowledge increases your knowledge by 2.	하급 지식 두루마리는 지력을 2 올립니다.
+The Major Scroll of Knowledge increases your knowledge by 3.	상급 지식 두루마리는 지력을 3 올립니다.
+The Superior Scroll of Knowledge increases your knowledge by 4.	고급 지식 두루마리는 지력을 4 올립니다.
+The Foremost Scroll of Knowledge increases your knowledge by 5.	최고 지식 두루마리는 지력을 5 올립니다.
+The Endless Sack of Gold provides you with 1000 gold per day.	끝없는 금 자루는 하루 금 1000을 제공합니다.
+The Endless Bag of Gold provides you with 750 gold per day.	끝없는 금 가방은 하루 금 750을 제공합니다.
+The Endless Purse of Gold provides you with 500 gold per day.	끝없는 금 주머니는 하루 금 500을 제공합니다.

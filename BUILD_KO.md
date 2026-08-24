@@ -1,0 +1,138 @@
+# beta.6 배포판 재포장
+
+이 문서는 검증된 GOG 원본 트리와 현재 활성 한국어 패치 트리에서 `v0.9.0-beta.6` 패키지를 만드는 절차입니다. 공개 beta.4와 beta.5를 직접 업그레이드 입력으로 지원합니다.
+
+beta.6는 48개 고정 BSDIFF40 결과와 설치 시 나눔고딕코딩으로 생성하는 2개 AGG를 manifest v2로 묶고, 직접 업그레이드 검증용으로 공개 beta.4·beta.5 manifest를 고정해 포함합니다. 완성 AGG나 미리 생성한 한글 래스터, 사용자 선택 글꼴은 배포하지 않습니다.
+
+## 준비물
+
+- Python 3.13
+- `bsdiff4` 1.2.6
+- Pillow 12.0.0
+- Windows 실행 파일을 다시 만들 경우 PyInstaller 6.15.0
+- 수정되지 않은 지원 GOG 영문판
+- `docs/ACTIVE_FILE_HASHES.json`에 source pin으로 고정된 beta.3 활성판과 일치하는 패치 트리
+
+빌드 의존성은 다음 명령으로 설치할 수 있습니다.
+
+```text
+python -m pip install -r requirements-build.txt
+```
+
+원본 게임 파일과 완성 패치 파일은 저장소에 포함되지 않습니다.
+
+## beta.3 활성 pin의 역할
+
+`docs/ACTIVE_FILE_HASHES.json`은 `v0.9.0-beta.3` 활성 결과를 재포장 입력으로 고정한 source pin입니다. beta.6 빌더가 번역된 EXE·캠페인·은행과 AGG 내부의 선별된 비이미지 리소스를 가져오는 검증 입력으로 사용합니다.
+
+이 파일은 beta.4~beta.6 출력 해시 목록이 아니므로 `ACTIVE_FILE_HASHES.json` 자체를 갱신하지 않습니다. 설치 시 생성된 두 AGG의 실제 해시는 사용자 PC의 receipt가 보존합니다.
+
+## beta.3 활성 입력의 필수 후단 교정
+
+활성 패치 트리를 다시 만들 때는 앞 단계의 한글화 EXE와 은행을 그대로 쓰지 말고 다음 두 고정 해시 변환을 마지막에 실행합니다.
+
+```text
+python tools/localization/final_text_hotfix.py apply ^
+  --source "C:\path\to\pinned-5AE509-exe\HEROES2.EXE" ^
+  --output "C:\path\to\empty-hotfix-candidate\HEROES2.EXE"
+
+python tools/localization/final_bank_hotfix.py apply ^
+  --source "C:\path\to\beta2-tree\KOREAN.BIN" ^
+  --mapping "translations\font\mapping874.fixed-interface-font.txt" ^
+  --output "C:\path\to\empty-hotfix-candidate\KOREAN.BIN"
+```
+
+출력 파일은 미리 존재하면 안 됩니다. 각 도구의 `verify`를 통과한 후보만 입력 트리로 승격하고 루트와 `cloud_saves/KOREAN.BIN`을 동일하게 맞춥니다. EXE와 은행의 활성 pin은 `docs/ACTIVE_FILE_HASHES.json`과 일치해야 합니다.
+
+이 입력은 게임 본체 진입 직전 H2K3를 불러오며, Object2 기반 일반 descriptor 155개와 EXE helper 허용 범위에 실기 재배치 주소 `+0x204000`을 사용합니다. EXE와 은행은 반드시 위 도구로 만든 한 쌍을 사용합니다.
+
+## beta.6 AGG 기반 생성 규칙
+
+빌더는 beta.3 활성 AGG에서 기존 고정 폰트와 시험 이미지 UI를 배포 기반으로 넘기지 않습니다. 대신 `HEROWIND.BIN`의 고정 슬롯 교정을 추가합니다.
+
+| 대상 | beta.6의 폰트 없는 기반 |
+|---|---|
+| `DATA/HEROES2.AGG` | GOG 원본에 번역된 BIN 8개(`HEROWIND.BIN`, `THIEFWIN.BIN`, `WELLWIND.BIN`, `RECRUIT0.BIN`, `RECRUIT1.BIN`, `RECRUIQ0.BIN`, `RECRUIQ1.BIN`, `TRADPOST.BIN`)만 유지 |
+| `DATA/HEROES2X.AGG` | GOG 원본과 동일 |
+
+`HEROWIND.BIN` payload offset 303의 `0A 00` 길이 word는 그대로 두고, offset 305의 10바이트가 정확히 `Knowledge\0`일 때만 `82 D8 82 95 00 00 00 00 00 00`(`지력`)으로 바꿉니다. 이미 교정된 값은 허용하고 그 밖의 값은 빌드를 중단합니다. 나머지 payload와 AGG 엔트리는 바뀌지 않아야 합니다.
+
+beta.3의 고정 바탕체 `FONT.ICN`·`SMALFONT.ICN`과 이미지 UI `SYSTEM.ICN`, `REQUEST.ICN`, `REQUESTS.ICN`, `SYSTEME.ICN`은 기반에서 제거됩니다. 설치 시 동봉한 나눔고딕코딩에서 새 `FONT.ICN`·`SMALFONT.ICN`을 생성해 두 AGG에 넣습니다. 오리지널 `HEROES2.AGG`에서는 순정 `RECRBKG.ICN` identity를 먼저 확인한 뒤 sprite 0의 고정 ROI에 작은 글꼴로 `병력당 비용:`을 생성합니다. 확장 `HEROES2X.AGG`에는 이 리소스가 없어 글꼴 ICN 2종만 바뀝니다. 자세한 배열은 [docs/DYNAMIC_FONT_KO.md](docs/DYNAMIC_FONT_KO.md)를 확인하세요.
+
+## 렌더러 v2 고정 계약
+
+- 기본 파일: `fonts/NanumGothicCoding-Regular.ttf`
+- 일반 셀 13x14, advance 13, 공통 ink-bottom 기준선 14
+- 작은 셀 11x12, advance 11, 공통 ink-bottom 기준선 12
+- 각 face 전체가 셀에 들어가는 가장 큰 정수 픽셀 크기를 선택하고 글자별 확대·축소는 하지 않음
+- tight crop 뒤 논리 셀의 `offset_y`를 보존하며 전경 clip은 0이어야 함
+- `(1, 1)` 그림자는 논리 셀 경계에서만 제한적으로 잘릴 수 있음
+
+기본 글꼴의 저장소 고정 원본은 Google Fonts commit `90abd17b4f97671435798b6147b698aa9087612f`, SHA-256 `787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089`입니다.
+
+## 1. 설치기 실행 파일 생성
+
+`homm2_ko_patcher.py`가 같은 디렉터리의 `homm2_font.py`를 가져올 수 있도록 `--paths tools/release`를 지정합니다. Pillow 12.0.0이 설치된 환경에서 실행해야 합니다.
+
+```text
+pyinstaller --noconfirm --clean --onefile ^
+  --name homm2-ko-patcher ^
+  --paths tools/release ^
+  tools/release/homm2_ko_patcher.py
+```
+
+## 2. beta.6 배포 디렉터리 생성
+
+```text
+python tools/release/build_release.py ^
+  --original-root "C:\path\to\clean-gog" ^
+  --patched-root "C:\path\to\beta3-active-korean-tree" ^
+  --patcher-exe "dist\homm2-ko-patcher.exe" ^
+  --output "release_output\homm2-ko-v0.9.0-beta.6" ^
+  --version "v0.9.0-beta.6"
+```
+
+출력 폴더는 미리 존재하면 안 됩니다. 빌더는 GOG 원본 50개를 고정 해시로 확인하고 다음 구성을 만듭니다.
+
+- 고정 BSDIFF40 48개: `HEROES2.EXE` 1개 + 캠페인 맵 47개
+- 동적 AGG 행 2개: 원본에서 폰트 없는 기반으로 가는 BSDIFF40과 설치 시 글꼴 ICN·모집 비용 명패를 재구성하는 계약
+- 프로젝트 파일 복사 1개: `KOREAN.BIN`
+- 874자 매핑, 기본 `NanumGothicCoding-Regular.ttf`, 동적 폰트 빌더와 OFL 1.1 고지
+- 공개 beta.4·beta.5의 고정 manifest `upgrades/v0.9.0-beta.4-manifest.json`, `upgrades/v0.9.0-beta.5-manifest.json`
+- schema `homm2-korean-release-manifest-v2`의 `manifest.json`
+
+고정 upgrade manifest는 다음 공개 자산과 바이트 단위로 같아야 합니다. 빌더·패키저·설치기 중 어느 단계든 identity가 다르면 중단합니다.
+
+- beta.4: 31,988바이트, SHA-256 `D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60`
+- beta.5: 32,845바이트, SHA-256 `A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F`
+
+설치되는 게임 파일 수는 합계 51개입니다. 정적 49개는 manifest의 고정 target 해시로 검증하고, 설치 시 생성되는 두 AGG는 구조 검증 후 실제 해시를 receipt에 기록합니다.
+
+## 3. GitHub 자산 생성
+
+```text
+python tools/release/package_release.py ^
+  --release-dir "release_output\homm2-ko-v0.9.0-beta.6" ^
+  --output-dir "release_output\github-assets-v0.9.0-beta.6" ^
+  --version "v0.9.0-beta.6"
+```
+
+이 단계는 고정 ZIP 시간과 정렬된 파일 순서로 ZIP, 독립 manifest와 `SHA256SUMS.txt`를 생성한 뒤 모든 ZIP 항목을 원본 배포 디렉터리와 다시 대조합니다.
+
+## 4. 소스 검사
+
+```text
+python -m unittest discover -s tests -v
+git diff --check
+```
+
+실제 공개 전에는 다음 경로를 각각 격리된 fixture에서 확인합니다.
+
+1. 깨끗한 GOG 원본에서 기본 나눔고딕코딩 설치·검증·제거·재설치
+2. 공개 beta.4 기본·사용자 글꼴 설치본에서 beta.6 `INSTALL.cmd` 직접 업그레이드, 나눔고딕코딩 전환, 실패 주입 시 beta.4 롤백, beta.6 제거 시 최초 GOG 원본 복원
+3. 공개 beta.5 기본·사용자 글꼴 설치본에서 beta.6 `INSTALL.cmd` 직접 업그레이드, 나눔고딕코딩 전환, 실패 주입 시 beta.5 롤백, beta.6 제거 시 최초 GOG 원본 복원
+4. 오리지널 모집 창의 `Cost per troop:`이 `병력당 비용:`으로 바뀌고 `RECRBKG.ICN:0`의 지정 ROI 밖 픽셀·transform, sprite 1과 다른 AGG 엔트리가 보존되는지 확인
+
+beta.1~beta.3 직접 업그레이드는 지원하지 않으며 이전 버전을 제거한 GOG 원본에서 시험합니다. 두 upgrade manifest는 크기와 SHA-256이 고정된 공개 beta.4·beta.5 manifest와 정확히 일치해야 합니다. 최종 ZIP에는 `NanumGothicCoding-Regular.ttf` 이외의 글꼴과 사용자 글꼴 선택 진입점이 없어야 합니다.
+
+이 도구는 번역 개발 전 과정을 GOG 원본부터 반복하는 통합 현지화 빌더가 아니라, 검증된 활성 번역 트리를 beta.6 배포 형식으로 재포장하는 도구입니다.

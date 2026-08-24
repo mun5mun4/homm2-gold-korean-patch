@@ -1,0 +1,18 @@
+Set the speed of combat actions and animations.	전투 속도를 설정합니다.
+Cast an adventure spell.	모험 주문 사용.
+Cast a magical spell.  You may only cast one spell per combat round.  The round is reset when every creature has had a turn.	주문 사용. 라운드당 한 번 쓸 수 있습니다.
+Good luck sometimes lets your armies get lucky attacks (double strength) in combat.	행운은 전투에서 두 배 피해를 줄 수 있습니다.
+Bad luck sometimes falls on your armies in combat, causing their attacks to only do half damage.	불운은 전투에서 피해를 반으로 줄일 수 있습니다.
+Good morale may give your armies extra attacks in combat.	좋은 사기는 전투에서 추가 공격을 줄 수 있습니다.
+Bad morale may cause your armies to freeze in combat.	나쁜 사기는 전투에서 부대를 얼어붙게 할 수 있습니다.
+Neutral morale means your armies will never be blessed with extra attacks or freeze in combat.	보통 사기는 추가 공격이나 얼어붙는 일이 없습니다.
+Battle Garb of Anduran gives you maximum luck.	안두란 전투 장비는 최대 행운을 줍니다.
+Battle Garb of Anduran gives you maximum morale.	안두란 전투 장비는 최대 사기를 줍니다.
+Your hero has %d spell points remaining	영웅의 남은 주문 포인트 %d
+For valor in combat, %s receives %d experience	전투의 공으로 %s이 경험치 %d을 얻습니다.
+For valor in combat, %s receives %d experience, and gains %d level(s).	전투의 공으로 %s이 경험치 %d을 얻고 레벨 %d이 오릅니다.
+Allows you to customize the combat screen.	전투 화면 설정.
+Select teleport destination.	순간이동 위치 선택.
+Mirror Image spell failed!	환영 주문 실패!
+Followers	추종자
+A group of %s with a desire for greater glory wish to join you. Do you accept?	%s 중 일부가 더 큰 영광을 바라며 군대에 합류하려 합니다. 받아들이시겠습니까?

@@ -1,0 +1,30 @@
+string_id	source_text	translation_ko	review_status	notes
+exe.0015820A	Force of Arms	무력	pending_user_language_review	롤랜드 첫 시나리오 제목
+exe.0015829B	First Blood	첫 피	pending_user_language_review	아치발드 첫 시나리오 제목
+exe.00158334	Roland needs you to defeat the lords near his castle to begin his war of rebellion against his brother.  They are not allied with each other, so they will spend most of their time fighting with one another.  Victory is yours when you have defeated all of their castles and heroes.	롤랜드는 형제에 맞선 반란을 시작하기 위해 성 근처의 영주들을 물리쳐야 합니다. 영주들은 서로 동맹이 아니므로 대부분 서로 싸울 것입니다. 적의 모든 성과 영웅을 물리치면 승리합니다.	pending_user_language_review	기존 1행 초안을 문맥에 맞게 다듬은 안
+exe.00158B9D	King Archibald requires you to defeat the three enemies in this region.  They are not allied with one another, so they will spend most of their energy fighting amongst themselves.  You will win when you own all of the enemy castles and there are no more heroes left to fight.	아치발드 왕은 이 지역의 세 적을 물리치라고 명합니다. 적들은 서로 동맹이 아니므로 대부분의 힘을 서로 싸우는 데 쓸 것입니다. 모든 적의 성을 차지하고 더는 싸울 영웅이 남지 않으면 승리합니다.	pending_user_language_review	아치발드 첫 시나리오 설명
+exe.0015B873	Uprising	봉기	pending_user_language_review	충성의 대가 첫 시나리오 제목
+exe.0015B9EA	Subdue the unruly local lords in order to provide the Empire with facilities to operate in this region.	제국이 이 지역에서 활동할 거점을 얻도록 반항적인 지방 영주들을 굴복시키십시오.	pending_user_language_review	기존 번역 초안 유지
+map.CAMPE01.H2C.header.name	Evil 1	악편 1	pending_user_language_review	16바이트 고정 필드
+map.CAMPE01.H2C.header.description	"""First Blood"""	"""첫 피"""	pending_user_language_review	200바이트 고정 필드
+map.CAMPE01.H2C.block.001.daily_event	You face three opponents in this scenario. Capture their castles and their heroes to prove your worthiness to Archibald.	이 시나리오에서는 세 적과 맞섭니다. 아치발드에게 능력을 증명하려면 적의 성을 차지하고 영웅들을 물리치십시오.	pending_user_language_review	가변 길이 이벤트
+map.CAMPE01.H2C.block.002.fixed70.candidate.00	Nightshadow	나이트섀도	pending_user_language_review	도시 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMPE01.H2C.block.003.fixed70.candidate.00	Sandcaster	샌드캐스터	pending_user_language_review	도시 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMPE01.H2C.block.004.fixed70.candidate.00	Brindamoor	브린다무어	pending_user_language_review	성 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMPE01.H2C.block.005.fixed70.candidate.00	Alamar	알라마	pending_user_language_review	원문 점유 길이에 맞추기 위해 짧게 음역
+map.CAMPG01.H2C.header.name	Good 1	선편 1	pending_user_language_review	16바이트 고정 필드
+map.CAMPG01.H2C.header.description	"""Force of Arms"""	"""무력"""	pending_user_language_review	200바이트 고정 필드
+map.CAMPG01.H2C.block.000.fixed70.candidate.00	Pig's Eye	피그아이	pending_user_language_review	도시 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMPG01.H2C.block.001.fixed70.candidate.00	Quick Silver	퀵실버	pending_user_language_review	성 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMPG01.H2C.block.002.daily_event	There are three enemy castles to the north. Capture them in the name of Roland the true king!	북쪽에 적의 성 세 곳이 있습니다. 진정한 왕 롤랜드의 이름으로 모두 점령하십시오!	pending_user_language_review	가변 길이 이벤트
+map.CAMPG01.H2C.block.003.fixed70.candidate.00	Willow	윌로우	pending_user_language_review	도시 이름 음역, 원문 점유 길이에 정확히 맞춤
+map.CAMPG01.H2C.block.004.fixed70.candidate.00	Corackston	코랙스턴	pending_user_language_review	성 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMP1_01.HXC.header.name	POL-1	충성 1	pending_user_language_review	16바이트 고정 필드
+map.CAMP1_01.HXC.header.description	Price Of Loyalty 1	충성의 대가 1	pending_user_language_review	200바이트 고정 필드
+map.CAMP1_01.HXC.block.000.fixed70.candidate.00	Avone	에본	pending_user_language_review	원문 점유 길이에 맞추기 위해 짧게 음역
+map.CAMP1_01.HXC.block.001.daily_event	Because the Darkscale Valley is so barren, the Emperor will be sending wood to you every week. Use it wisely, for it is all you shall have.	다크스케일 계곡은 매우 황량하므로 황제가 매주 목재를 보낼 것입니다. 이것이 전부이니 현명하게 사용하십시오.	pending_user_language_review	가변 길이 이벤트
+map.CAMP1_01.HXC.block.002.daily_event	The wood has arrived. 	목재가 도착했습니다. 	pending_user_language_review	원문의 끝 공백 보존
+map.CAMP1_01.HXC.block.003.fixed70.candidate.00	Chandler	챈들러	pending_user_language_review	성 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMP1_01.HXC.block.004.fixed70.candidate.00	South Mill	사우스밀	pending_user_language_review	도시 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMP1_01.HXC.block.007.fixed70.candidate.00	Roc Haven	록헤이븐	pending_user_language_review	도시 이름 음역, 원문 점유 길이 안에 맞춤
+map.CAMP1_01.HXC.block.008.daily_event	Like, Stuff And Junk?	뭐, 이런저런 물건?	pending_user_language_review	원문 자체가 구어체인 이벤트

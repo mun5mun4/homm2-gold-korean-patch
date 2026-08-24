@@ -1,0 +1,75 @@
+That spell costs %d mana.  You only have %d mana, so you can't cast the spell.	주문 포인트가 %d 필요합니다. 현재 %d입니다. 주문 불가.
+Are you sure you want to dismiss this army?	이 부대를 해산하시겠습니까?
+Your troops can be upgraded, but it will cost you dearly.  Do you wish to upgrade them?	부대를 승급할 수 있지만 많은 금이 필요합니다. 진행하시겠습니까?
+You can't afford to upgrade your troops!	승급할 금이 모자랍니다!
+This window provides information on the status of your hero or kingdom, and shows the date.  Left click here to cycle through these windows.	이 창은 영웅과 왕국 정보를 보여 줍니다. 선택하면 창을 바꿉니다.
+One or more heroes may still move, are you sure you want to end your turn?	이동할 영웅이 남았습니다. 턴을 끝내시겠습니까?
+Digging for artifacts requires a whole day, try again tomorrow.	유물을 파려면 하루가 필요합니다. 내일 다시 하십시오.
+Searching for the Ultimate Artifact is fruitless.  Your hero could not carry it even if he found it - all his artifact slots are full.	궁극의 유물을 찾아도 소용없습니다. 유물 칸이 가득 차서 들 수 없습니다.
+Try searching on clear ground.	빈 곳에서 다시 찾으십시오.
+Try looking on land!!!	지상에서 찾으십시오!!!
+You have no room to carry another artifact!	유물을 더 들 공간이 없습니다!
+Congratulations! After spending many hours digging here, you have uncovered the 	축하합니다! 오랜 시간 뒤 발견했습니다: 
+You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell.	이 주문은 광산 입구에서만 됩니다. 제재소는 제외됩니다.
+Enemy heroes are now fully identifiable.	이제 적 영웅 정보를 모두 알 수 있습니다.
+Your hero is too tired to cast this spell today.  Try again tomorrow.	영웅이 너무 지쳐 오늘은 주문을 쓸 수 없습니다. 내일 다시 하십시오.
+Game saved successfully.	게임을 저장했습니다.
+Dimension Door failed!!!	차원문 실패!!!
+No available town.  Spell Failed!!!	마을 없음. 주문 실패!!!
+Spell Failed!!!  You must be on land for this spell to work.	주문 실패!!! 지상에 있어야 합니다.
+Select town to port to.	이동할 마을 선택.
+Nearest town occupied.  Spell Failed!!!	가까운 마을 점령. 주문 실패!!!
+Summon Boat failed!!!	배 소환 실패!!!
+Are you sure you want to restart?  (Your current game will be lost)	다시 시작하시겠습니까? 현재 게임은 사라집니다.
+Are you sure you want to load a new game?  (Your current game will be lost)	새 게임을 불러오시겠습니까? 현재 게임은 사라집니다.
+Are you sure you want to quit?	정말 나가시겠습니까?
+The creatures are willing to join us!	생물들이 합류하려 합니다!
+for a fee of %d gold.	금 %d이 필요합니다.
+These weak creatures will surely flee before us.	약한 생물들은 달아날 것입니다.
+I fear these creatures are in the mood for a fight.	저 생물들은 싸우려 합니다.
+Recruit	모집
+Available: 	가능: 
+There is no room in the garrison for this army.	성에 이 부대 공간이 없습니다.
+This item can't be traded.	교환 불가.
+Move how many troops?	얼마나 이동합니까?
+File to Save:	저장할 파일:
+File to Load:	불러올 파일:
+Please make a selection from the list, or press cancel.	목록에서 선택하거나 취소하십시오.
+You have learned %s %s.	%s %s 습득.
+'Grouped' combat formation bunches your army together in the center of your side of the battlefield.	모임 전투 진형은 아군을 전장 아군 쪽 가운데에 모읍니다.
+You've found a magic garden, the kind of place that leprechauns and faeries like to cavort in, but there is no one here today.  Perhaps you should try again next week.	마법 정원을 찾았지만 오늘은 아무도 없습니다. 다음 주에 다시 와 보십시오.
+You come across a giant Sphinx.  The Sphinx remains strangely quiet.	거대한 스핑크스를 만났습니다. 스핑크스는 이상할 만큼 조용합니다.
+"I have a riddle for you," the Sphinx says.  "Answer correctly, and you shall be rewarded.  Answer incorrectly, and you shall be eaten.  Do you accept the challenge?"	스핑크스가 말합니다. "수수께끼를 내겠다. 맞히면 보상, 실패하면 죽는다. 도전하겠느냐?"
+Your answer?	대답은?
+Looking somewhat disappointed, the Sphinx sighs.  You've answered my riddle so here's your reward.  Now begone.	스핑크스가 아쉬운 듯 한숨을 냅니다. 수수께끼 정답입니다. 보상을 받고 가십시오.
+"You guessed incorrectly," the Sphinx says, smiling.  The Sphinx swipes at you with a paw, knocking you to the ground.  Another blow makes the world go black, and you know no more.	"실패다." 스핑크스가 당신을 쓰러뜨립니다. 다음 타격에 세상이 어두워집니다.
+You've pulled a shipwreck survivor from certain death in an unforgiving ocean.  Grateful, he rewards you for your act of kindness by giving you the %s.	거친 바다에서 난파자를 구했습니다. 그는 감사하며 %s을 보상으로 줍니다.
+You've pulled a shipwreck survivor from certain death in an unforgiving ocean.  Grateful, he says, "I would give you an artifact as a reward, but you're all full."	난파자를 구했지만 유물 칸이 가득합니다. 그는 줄 보상이 없다며 아쉬워합니다.
+The captain sighs.  "You don't have enough money, eh?  You can't expect me to give my maps away for free!"	선장이 한숨을 쉽니다. "돈이 모자라군. 공짜로 지도를 줄 수는 없지!"
+A retired captain living on this refurbished fishing platform offers to sell you maps of the sea he made in his younger days for 1,000 gold.  Do you wish to buy the maps?	낡은 어장에 사는 은퇴 선장이 만든 해도를 금 1000에 팔겠다고 합니다. 사시겠습니까?
+The spring only refills once a week, and someone's already been here this week.	샘은 주마다 한 번만 차며, 이번 주에는 이미 다녀갔습니다.
+After scouring the area, you fall upon a hidden treasure cache.  You may take the gold or distribute the gold to the peasants for experience.  Do you wish to keep the gold?	근처를 뒤져 숨겨진 보물을 찾았습니다. 금을 받거나 농민에게 주어 경험치를 얻을 수 있습니다. 금을 가지겠습니까?
+The drink at the watering hole is refreshing, but offers no further benefit.  The watering hole might help again if you fought a battle first.	물웅덩이의 물은 시원하지만 더 효과는 없습니다. 전투 뒤 다시 도움이 될 수 있습니다.
+The drink at the oasis is refreshing, but offers no further benefit.  The oasis might help again if you fought a battle first.	오아시스의 물은 시원하지만 더 효과는 없습니다. 전투 뒤 다시 도움이 될 수 있습니다.
+The lean-to is long abandoned.  There is nothing of value here.	오두막은 오래 버려졌고, 가치 있는 것은 없습니다.
+Recognizing you, the butler refuses to admit you.  "The master," he says, "will not see the same student twice."	집사가 당신을 알아보고 들여보내지 않습니다. "이미 배운 자는 다시 볼 수 없습니다."
+The butler admits you to see the master of the house.  He trains you in the four skills a hero should know.	집사가 주인을 만나게 해 줍니다. 주인은 영웅이 알아야 할 네 능력을 가르칩니다.
+The butler opens the door and looks you up and down.  "You are neither famous nor diplomatic enough to be admitted to see my master," he sniffs.  "Come back when you think yourself worthy."	집사가 보고 말합니다. "명성도 외교술도 부족합니다. 자격이 생기면 다시 오십시오."
+ "I'm sorry sir," The leader of the soldiers says, "but you already know everything we have to teach."	"이미 모두 아십니다." 병사들의 대장이 말합니다.
+ The soldiers living in the fort teach you a few new defensive tricks.	요새의 병사들이 새로운 방어 기술을 가르쳐 줍니다.
+You've found a group of Druids worshipping at one of their strange stone edifices.  Silently, the Druids turn you away, indicating they have nothing new to teach you.	드루이드들이 돌 건물에서 예배 중입니다. 그들은 더 배울 것이 없다며 조용히 돌려보냅니다.
+You've found a group of Druids worshipping at one of their strange stone edifices.  Silently, they teach you new ways to cast spells.	드루이드들이 돌 건물에서 예배 중입니다. 그들은 조용히 새로운 주문법을 알려 줍니다.
+You've come upon a mercenary camp practicing their tactics.  "You're too advanced for us," the mercenary captain says.  "We can teach nothing more."	용병 야영지를 찾았습니다. 대장은 "당신은 우리보다 뛰어납니다. 더 배울 것이 없습니다."라고 합니다.
+You've come upon a mercenary camp practicing their tactics.  The mercenaries welcome you and your troops and invite you to train with them.	용병 야영지를 찾았습니다. 용병들이 부대를 맞이하고 함께 배우자고 합니다.
+You've found a Sprite Tree City.  Unfortunately, none of the Sprites living there wish to join an army.  Maybe next week.	스프라이트 나무 도시를 찾았지만 합류할 이는 없습니다. 다음 주를 기다리십시오.
+Some of the Sprites living in the tree city are willing to join your army for a price.  Do you want to recruit Sprites?	나무 도시의 스프라이트 일부가 돈을 받고 합류하려 합니다. 모집하시겠습니까?
+Trolls living under the bridge challenge you.  Will you fight them?	다리 아래 트롤들이 도전합니다. 싸우시겠습니까?
+The City of the Dead is empty of life, and empty of unlife as well.  Perhaps some undead will move in next week.	죽음의 도시는 산 자도 언데드도 없이 비었습니다. 다음 주를 기다리십시오.
+You've found the ruins of an ancient city, now inhabited solely by the undead.  Will you search?	언데드만 남은 고대 도시터를 찾았습니다. 수색하시겠습니까?
+The Dragon city has no Dragons willing to join you this week.  Perhaps a Dragon will become available next week.	이번 주 용의 도시에 합류할 용은 없습니다. 다음 주를 기다리십시오.
+You stand before the Dragon City, a place off-limits to mere humans.  Do you wish to violate this rule and challenge the Dragons to a fight?	용의 도시입니다. 인간 금지 구역입니다. 용에게 도전하시겠습니까?
+You cannot pick up this artifact, you already have a full load!	유물 칸이 가득 차서 집을 수 없습니다!
+Victorious, you take your prize, the %s	승리하여 보상 %s을 얻었습니다
+Discretion is the better part of valor, and you decide to avoid this fight for today.	신중함도 용기의 일부입니다. 오늘은 싸움을 피합니다.
+You enter the arena and face a pack of vicious lions.  You handily defeat them, to the wild cheers of the crowd.  Impressed by your skill, the aged trainer of gladiators agrees to train you in a skill of your choice.	투기장에 들어가 사나운 사자들을 손쉽게 물리쳤습니다. 관중의 환호 속에 오랜 교관이 원하는 기술을 알려 줍니다.
+Are you sure you want to restart this scenario?	이 시나리오를 다시 시작하시겠습니까?

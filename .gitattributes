@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+# Windows launchers are consumed directly by cmd.exe.
+packaging/release_assets/*.cmd text eol=crlf
+
+# Byte-pinned mapping inputs must retain their original CRLF bytes.
+translations/font/*.txt -text
+
+# Bundled OFL font binaries must remain byte exact.
+packaging/release_assets/fonts/*.ttf -text
+
+# Pinned upstream license files retain their exact published bytes and spacing.
+packaging/release_assets/THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt -text -whitespace
+packaging/release_assets/THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt -text -whitespace
+
+# A published manifest is a byte-pinned upgrade input.
+packaging/release_assets/upgrades/*.json -text

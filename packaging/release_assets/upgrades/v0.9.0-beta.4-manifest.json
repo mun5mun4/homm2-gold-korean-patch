@@ -1,0 +1,990 @@
+{
+  "channel": "beta",
+  "counts": {
+    "bsdiff_files": 48,
+    "campaign_maps": 47,
+    "copied_project_files": 1,
+    "dynamic_font_agg_files": 2,
+    "installed_files": 51
+  },
+  "files": [
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "DD12A1E2F524978973B9577C182843E7B5C6544232B9EB177BCD43436E4C678B",
+        "size": 47830
+      },
+      "package_path": "patches/HEROES2.EXE.bsdiff",
+      "path": "HEROES2.EXE",
+      "source": {
+        "md5": "0DAC1B70B74331DE3F54A245CA9AAF0D",
+        "sha256": "255A6ACA4C40F32DECE105A65BEA9AE5B3D83FBCF41A25DD139D2F1EF19E943F",
+        "size": 1503974
+      },
+      "target": {
+        "sha256": "52AE3BA15AE309327D698EDEE8844684F91B3BA056B9215854002265A9F6E3EF",
+        "size": 1523420
+      }
+    },
+    {
+      "base_target": {
+        "sha256": "9A6C38CA7001D00E903D35FF4028B7B3B397E2BA84F770E632E2E5129425404F",
+        "size": 43363026
+      },
+      "keep_localized_resources": [
+        "THIEFWIN.BIN",
+        "WELLWIND.BIN",
+        "RECRUIT0.BIN",
+        "RECRUIT1.BIN",
+        "RECRUIQ0.BIN",
+        "RECRUIQ1.BIN",
+        "TRADPOST.BIN"
+      ],
+      "method": "bsdiff40_font_agg_v1",
+      "package": {
+        "sha256": "96420F635E3BDCF840021929E76ED649C90F936F16272D91642EFCCD8C1CABFF",
+        "size": 754
+      },
+      "package_path": "patches/DATA/HEROES2.AGG.bsdiff",
+      "path": "DATA/HEROES2.AGG",
+      "source": {
+        "md5": "12A9CFE97AD563B0BDC9CCC894958F47",
+        "sha256": "7A11C86DB8EC8FBF19D810C1F7EBF9D8520F63FBDC42D6F51F7538654004315D",
+        "size": 43363026
+      },
+      "target": null
+    },
+    {
+      "base_target": {
+        "sha256": "1F3EDAD1BB88052DA50B3FAE5D00E8F7E73DD977F356463022AAB132B54F4D41",
+        "size": 2598847
+      },
+      "keep_localized_resources": [],
+      "method": "bsdiff40_font_agg_v1",
+      "package": {
+        "sha256": "3262CA942DCF142CD9CE52F322883CE39C2BA3302F1F6A80951DD4D8C08F7EE1",
+        "size": 146
+      },
+      "package_path": "patches/DATA/HEROES2X.AGG.bsdiff",
+      "path": "DATA/HEROES2X.AGG",
+      "source": {
+        "md5": "70B10454571D84C47373BEE8AA404AC6",
+        "sha256": "1F3EDAD1BB88052DA50B3FAE5D00E8F7E73DD977F356463022AAB132B54F4D41",
+        "size": 2598847
+      },
+      "target": null
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "140A4121D5DE9AEC132A773749697E2839B293439C3970127652FDFD32032C55",
+        "size": 446
+      },
+      "package_path": "patches/MAPS/CAMPE01.H2C.bsdiff",
+      "path": "MAPS/CAMPE01.H2C",
+      "source": {
+        "md5": "B01EE04030B7F86CD257DAADEC47EA05",
+        "sha256": "BA1D02F75D9A86A5BBB853C53C648E1C871E65815818D71FA150349FB9726A7C",
+        "size": 144439
+      },
+      "target": {
+        "sha256": "25DA144457AC1382104001B51F457403723DDF6D57554400F7C875ADA39885B7",
+        "size": 144427
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "E01013BCF563BF4468B9080E0D253443F43A8FE4B3D55BC044DF69547E52A5D9",
+        "size": 422
+      },
+      "package_path": "patches/MAPS/CAMPE02.H2C.bsdiff",
+      "path": "MAPS/CAMPE02.H2C",
+      "source": {
+        "md5": "CC651CFFE3BE1A339077278826ED3C85",
+        "sha256": "D0B6AD3E84D593C85B5A4C287D1603994254F4879559E0AEF17EC212716EAFB7",
+        "size": 41225
+      },
+      "target": {
+        "sha256": "B75EC516C02D754DC269A34569A17554EF50985C22A092A27B6AB976982C124A",
+        "size": 41217
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "6C14D2F4E15AB48B753CA7FDCB6EA03FC6B432510D452CAC2214A00C609B465B",
+        "size": 568
+      },
+      "package_path": "patches/MAPS/CAMPE03.H2C.bsdiff",
+      "path": "MAPS/CAMPE03.H2C",
+      "source": {
+        "md5": "E9ACED0625F1312D625B60223133B2A8",
+        "sha256": "5216D7E485970DF598BBDC09D401753CA414CDD3B11DDD3CD0B8962710688145",
+        "size": 214743
+      },
+      "target": {
+        "sha256": "AC8F44AD546C7865A563170E0A6CE3EB28AAADC299938E34FD40784C51715F2A",
+        "size": 214634
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "F47BCC43C553A44A2C7A6A4F6FD82E4B2A90E520260965F8FAF394FD14B5AAF4",
+        "size": 612
+      },
+      "package_path": "patches/MAPS/CAMPE04.H2C.bsdiff",
+      "path": "MAPS/CAMPE04.H2C",
+      "source": {
+        "md5": "D8C9870A8D3CC9C79406BA607FD374FF",
+        "sha256": "DC6ABB1C7F8DD670FA5952D975702A746CF02236C5673CC9DBB5C592E4D1443B",
+        "size": 153469
+      },
+      "target": {
+        "sha256": "E100469513B35930CA106973FC612D52A0FFACAB487F700E7ECD3B3A4944F329",
+        "size": 153430
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "88F1632EE204E57DF01C4FACC074FF3F7C0969B99491C559B16FD269290AF3A8",
+        "size": 426
+      },
+      "package_path": "patches/MAPS/CAMPE05.H2C.bsdiff",
+      "path": "MAPS/CAMPE05.H2C",
+      "source": {
+        "md5": "A1EE78024979D9C2277A08B3DB9FE73A",
+        "sha256": "A6046EB0A373451DC5BDC2D0F3D913F09BF7D89FD0D011235F2B732170957A1E",
+        "size": 41081
+      },
+      "target": {
+        "sha256": "C96DC5BED1A4960FB0BA97CA3050EDF5A0FD947B44340AC146751B1DFD77AA41",
+        "size": 41056
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "59B53257BFE099C30FA30DD6F945A5663DEC47E6F59D3A3C47C3C88F341842E4",
+        "size": 426
+      },
+      "package_path": "patches/MAPS/CAMPE05B.H2C.bsdiff",
+      "path": "MAPS/CAMPE05B.H2C",
+      "source": {
+        "md5": "2C5B1EA09A6D70D75E098B6164DE16AF",
+        "sha256": "BD45065081699C8C9CDE38122C0928E0566059498308B31D8A38B3FA6359A160",
+        "size": 40638
+      },
+      "target": {
+        "sha256": "BF0DE7CC494EBF9CF6AE782F3D07602E60BC65793C614294B3CD420ADD411CA9",
+        "size": 40597
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "F141E20CA54134C2E32AA7235CCBCCA30F8DED422983DDCF73C62B47D3327968",
+        "size": 485
+      },
+      "package_path": "patches/MAPS/CAMPE06.H2C.bsdiff",
+      "path": "MAPS/CAMPE06.H2C",
+      "source": {
+        "md5": "9F83997E7F2CB45194D83A628FE18D24",
+        "sha256": "74006AC87C4361C58BB77918C2AAB05E2D864E539B253C8A8D7975BE01155791",
+        "size": 132980
+      },
+      "target": {
+        "sha256": "839E03B91BD28858D0F12B580005F0E015DDE69144DE6381B588A00E4CCC7321",
+        "size": 132929
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "835BED29A1066103BB0C021CBCB43BEEBF0BD57E326F2C783AED11539BECE0A0",
+        "size": 828
+      },
+      "package_path": "patches/MAPS/CAMPE07.H2C.bsdiff",
+      "path": "MAPS/CAMPE07.H2C",
+      "source": {
+        "md5": "F445F4F97963880AF3346EF94C72F136",
+        "sha256": "844E8DE02A130DC3B8A599A2D974A4CEA08E6F6B22CD41E5452A24E84FB5109D",
+        "size": 161513
+      },
+      "target": {
+        "sha256": "D7BC4498A5DCAF89D0CAEF4410AF66F8190D24A38D03B28E12A4C779D7776812",
+        "size": 161371
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "C7A27178CF8023E06CAAFFB1E97807A065CAA9E6879C21C1880A2CCF1D1C63AB",
+        "size": 606
+      },
+      "package_path": "patches/MAPS/CAMPE08.H2C.bsdiff",
+      "path": "MAPS/CAMPE08.H2C",
+      "source": {
+        "md5": "3AB6259D41064311A002FAE264240292",
+        "sha256": "8C3C7AAF84C0DC8D06820ED257A304456DC4752B2E410C85A538E069A8CFD3C7",
+        "size": 141575
+      },
+      "target": {
+        "sha256": "6C6A0A691169D5B82E8E6A385DA023205083E9579960AAA26164101D38AB69E9",
+        "size": 141516
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "AAF964F77F4DC7E5F34BFA148638252F85752A2CA2864B1713BB76A5BB36A573",
+        "size": 477
+      },
+      "package_path": "patches/MAPS/CAMPE09.H2C.bsdiff",
+      "path": "MAPS/CAMPE09.H2C",
+      "source": {
+        "md5": "D00286A7478E58049A9AE1E4CDA55941",
+        "sha256": "0C0319895A4803A49D99B887D1C33F2BEC365EC7FEFE0A4F8D745FC9A6F0EDAE",
+        "size": 133376
+      },
+      "target": {
+        "sha256": "D45D4D20843A9F28DDF0FCF6C6BA4672BB82D67F00BB60F59A6F125426509559",
+        "size": 133372
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "7C02AD95C5695D91987379C1CC582023193E1D1D7B80A66ADD0C001978C9746F",
+        "size": 853
+      },
+      "package_path": "patches/MAPS/CAMPE10.H2C.bsdiff",
+      "path": "MAPS/CAMPE10.H2C",
+      "source": {
+        "md5": "F574B4E54B35D10989FB92314311FF43",
+        "sha256": "5D6AE75485C6215AD097C72BD72622AE9192993C526618678BCDE1CB06498B46",
+        "size": 203367
+      },
+      "target": {
+        "sha256": "3AC2ADAB34D79F55498EC2383EC3C3CC12433790D13675345AC83B6E80575B39",
+        "size": 203346
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "9B375E7773B667F2897F37B7389BB7DA8E24AABE497A7543D6CD36EC3B17A892",
+        "size": 953
+      },
+      "package_path": "patches/MAPS/CAMPE11.H2C.bsdiff",
+      "path": "MAPS/CAMPE11.H2C",
+      "source": {
+        "md5": "8FA54674253668BE211354E1A8FAA28E",
+        "sha256": "7FC839F6F3F6A1CEB9CB0C196DE63293DF68F35F1A07C2090533168CEB822271",
+        "size": 443041
+      },
+      "target": {
+        "sha256": "3080081786A4E8CBF299C0B24F40BF50029CE4C926E41BB284DB9A4A880113B9",
+        "size": 442980
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "5FF721D85CCA71CBA9FA81A28CA41FBFAD10F2A2659EE5CAB391809BF17AABCB",
+        "size": 407
+      },
+      "package_path": "patches/MAPS/CAMPG01.H2C.bsdiff",
+      "path": "MAPS/CAMPG01.H2C",
+      "source": {
+        "md5": "322A0D21E4ECA6BE364D723E7F10C113",
+        "sha256": "E6F39D8E2D100A34BB34949A06E2AB84C6CA10EC4D8ABE16458DA6443BA605A2",
+        "size": 163614
+      },
+      "target": {
+        "sha256": "D801119619F5FB67ADBAAA1D65E2AD07BFBA677CE08DC6BF51E85D23954E63A1",
+        "size": 163600
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "DAEAA936DFE3B9B06DDE4E00408C77EC87BD6E5BC3EA3D2D31C65E44666D6369",
+        "size": 477
+      },
+      "package_path": "patches/MAPS/CAMPG02.H2C.bsdiff",
+      "path": "MAPS/CAMPG02.H2C",
+      "source": {
+        "md5": "F73376070FE714CCEE80AFBF7A32F84A",
+        "sha256": "B3A8158756E9F0F576295F63B8C15B44BDA4B62B046214225531F674090915F8",
+        "size": 45165
+      },
+      "target": {
+        "sha256": "1FEE79C6089CCD3891475C624CF7B0BBD03E7D0F71EC72DAB17C2D08072E6F71",
+        "size": 45129
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "51B7C4461A37B8F5174612F652FD54A1A6D2FFDE159A750B40230B3A4755E9E1",
+        "size": 668
+      },
+      "package_path": "patches/MAPS/CAMPG03.H2C.bsdiff",
+      "path": "MAPS/CAMPG03.H2C",
+      "source": {
+        "md5": "60EA8EABC893719853A029E2D7551382",
+        "sha256": "20463B8C843FD39C44B5F5BF7506A0033B46702E4E08E049AA974883A4201A1F",
+        "size": 153477
+      },
+      "target": {
+        "sha256": "221BBAB11F0934FC9B538598248670F64675603613AE0D9689BF16B02F76254B",
+        "size": 153440
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "7D912FE3677906785EF0EF1A3398BF8908AF4A1B44788F68CE81F5CE2D6E58B2",
+        "size": 614
+      },
+      "package_path": "patches/MAPS/CAMPG04.H2C.bsdiff",
+      "path": "MAPS/CAMPG04.H2C",
+      "source": {
+        "md5": "EF993732851BC5553E47A3DF038C3229",
+        "sha256": "27F130EA4C22A1123437188CD7AC8BF77ED85D7A35BB6B9BB9E1FCB5C246A4EE",
+        "size": 146498
+      },
+      "target": {
+        "sha256": "E4DA96B775FB1DB17F5A6A9BEA47B70D1259C2D0A9B68BCCA6724E4DF67DE30C",
+        "size": 146473
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "AEF2C10EC9A39486A55B24219FD4D5CD5FA350747E7C68213C0BC98B0007B047",
+        "size": 431
+      },
+      "package_path": "patches/MAPS/CAMPG05.H2C.bsdiff",
+      "path": "MAPS/CAMPG05.H2C",
+      "source": {
+        "md5": "BE4695929BEA9B4A8FF9FA904EDB8BF8",
+        "sha256": "DBBB6D7D37A024EC5AE97D7E36E8ACACF21708FAD62968AF5CBCF208FF8E5D6B",
+        "size": 41006
+      },
+      "target": {
+        "sha256": "6D75537FE0140CDE27F023F01DD46C2285F244FDFDF3357A282DD1EE90C6CDEE",
+        "size": 40998
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "E4B1CA5B0389B1234CE6121C6798DE81C9A1F1F70EFAD39DFD0DBA8F5F5F0E82",
+        "size": 451
+      },
+      "package_path": "patches/MAPS/CAMPG05B.H2C.bsdiff",
+      "path": "MAPS/CAMPG05B.H2C",
+      "source": {
+        "md5": "0D51F993F65E1641226B0EC87FC89A5C",
+        "sha256": "394228BE33FE02200B992B8C79B4E31AD80B7651C71655A660B00C89AADF9635",
+        "size": 40631
+      },
+      "target": {
+        "sha256": "0C85435E3666772962EA7A94BC9F37E144C8ADDA724251FB01F14C6D2258E758",
+        "size": 40582
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "6F85FCC4FA56320CC6E7D39F0A6067D78690BB7BCCE1DD254F55658E8D8760A2",
+        "size": 862
+      },
+      "package_path": "patches/MAPS/CAMPG06.H2C.bsdiff",
+      "path": "MAPS/CAMPG06.H2C",
+      "source": {
+        "md5": "25AF41BAB83A89D74DCC4043F549E385",
+        "sha256": "9D8F9C3DEA3582E519BE724D7D4DD38B18E6BD35BAC658621C1050F80C3C7EE8",
+        "size": 125743
+      },
+      "target": {
+        "sha256": "731428DEFE7F1C124B885FD5DA12395E55F6C6DC58DFBC33FBFC337A054DD369",
+        "size": 125661
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "227E025FC33F4B7511F1B987547F68D93A82A70D3E0464EBE2FE6DFF726D0AF8",
+        "size": 762
+      },
+      "package_path": "patches/MAPS/CAMPG07.H2C.bsdiff",
+      "path": "MAPS/CAMPG07.H2C",
+      "source": {
+        "md5": "79B5860DA61A666B39F8833E635F6F0F",
+        "sha256": "11E66EE883BE59D50C054C2A7FB26FEB4ECF8C081184CA93EE53CDF80C34D615",
+        "size": 203196
+      },
+      "target": {
+        "sha256": "949C89F60CC4E6FB15E21F601F4F7D15AD8E640D55CDD2CCC32E2A7891C31DE8",
+        "size": 203152
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "4E1C2B1A94E2D3E4C3219506C9DCC381E07C57F3286407727884B89C6374F371",
+        "size": 552
+      },
+      "package_path": "patches/MAPS/CAMPG08.H2C.bsdiff",
+      "path": "MAPS/CAMPG08.H2C",
+      "source": {
+        "md5": "429ADB1F3CEC5448C5BF1FE03E98B08E",
+        "sha256": "153FD501513DC3DD94705CF26E837EA71AF4317D462A6B8D7F66DD6A269233C7",
+        "size": 133387
+      },
+      "target": {
+        "sha256": "9E48CDE863180F2CB1E2A57188AD909FFFF1A9F60FB10311754CE16138FA8B1A",
+        "size": 133360
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "A51A45413B894AABF3C4F19A547464DDB06AB26A3CAA3E6C11C15B1D9B379AEB",
+        "size": 666
+      },
+      "package_path": "patches/MAPS/CAMPG09.H2C.bsdiff",
+      "path": "MAPS/CAMPG09.H2C",
+      "source": {
+        "md5": "D430976D41481084B6099D8E201647E1",
+        "sha256": "47EC521EF057ADA2E279F17553143E9F0154369F7CAF1C6B9BD9EAF9DB937747",
+        "size": 158357
+      },
+      "target": {
+        "sha256": "B7551128A8CB0FC590C69F383F03A57CC4EEFEE5F316E6120F6C124309BB5DEF",
+        "size": 158285
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "9016725F159CF653859F50FB1FE3F257D53D82DE7F1E430A5A1CA5E431612DEF",
+        "size": 1066
+      },
+      "package_path": "patches/MAPS/CAMPG10.H2C.bsdiff",
+      "path": "MAPS/CAMPG10.H2C",
+      "source": {
+        "md5": "2D8677ED22B1AECC0E9D24602107E5CB",
+        "sha256": "8A52D6F77E9B125E9F20D1B247707E75B43F1A6F8A4789F03BA2FE483BA08817",
+        "size": 423254
+      },
+      "target": {
+        "sha256": "8BA8E6CA30FDB8A5A4E9096B2E4FA88EA7B7FBD149676411B7A2CB287354FA01",
+        "size": 423221
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "8120E587B4421B7CD131B43C9E89718CB6083FF75F98CE6716B8B84A640562E7",
+        "size": 465
+      },
+      "package_path": "patches/MAPS/CAMP1_01.HXC.bsdiff",
+      "path": "MAPS/CAMP1_01.HXC",
+      "source": {
+        "md5": "6471618D69162A9163A92CEC7286ED16",
+        "sha256": "498C1DD3DDE4901F6310BA3235D77B0426CCBB9521C90135221CE282415390B9",
+        "size": 48167
+      },
+      "target": {
+        "sha256": "EA1DD7B20A21A70465B70006D2E7B2DA1002B7FA2CA60B097A635E7BD368EFF6",
+        "size": 48130
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "D5DD1ED4289DB666AAA081615D5385867CD63CB957F9D888905D96D422ED456B",
+        "size": 593
+      },
+      "package_path": "patches/MAPS/CAMP1_02.HXC.bsdiff",
+      "path": "MAPS/CAMP1_02.HXC",
+      "source": {
+        "md5": "912E5A4B6F3391515A5B864799CA02E3",
+        "sha256": "154E993BA81960BE04EC57199CC2D9427086A1EB013ABC434B4762F5B5E9BC81",
+        "size": 153838
+      },
+      "target": {
+        "sha256": "32E9A2976BD5F4315353684D67A4BCB85F0064A162B2F0AC5658D11B2E51EFAD",
+        "size": 153785
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "B05453FAB4F10EBCF229E4C0EDF9BBC423F52C5F59510DFF8F0377EEDDCFC2D2",
+        "size": 1243
+      },
+      "package_path": "patches/MAPS/CAMP1_03.HXC.bsdiff",
+      "path": "MAPS/CAMP1_03.HXC",
+      "source": {
+        "md5": "69C4DD9ED0611B7A29B0C4A36CF1219D",
+        "sha256": "F78089B0AD8A4EA519D1DAAC562783CEEC80AC48CE24BDB8F05DA524890A4813",
+        "size": 150549
+      },
+      "target": {
+        "sha256": "64A6E7B3B6A09B76F8278621DDCD6B78D5D65937D93139ED45BCB046BC55E225",
+        "size": 150119
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "B1D74CE82301E43A2DEB2C8E32199A49EFD991D5D657444BC4726562D7B7E1A7",
+        "size": 323
+      },
+      "package_path": "patches/MAPS/CAMP1_04.HXC.bsdiff",
+      "path": "MAPS/CAMP1_04.HXC",
+      "source": {
+        "md5": "52FC7DE4D12B8724AE6C2C0710A9B7AA",
+        "sha256": "E719DFD47A9D43CECBA91D3044A37F2A94E80EC52C4D6841D7F853DA04D9FA1A",
+        "size": 47443
+      },
+      "target": {
+        "sha256": "B0B680BE2CBE9A459BEFA4EC2DD97845966D7881A55053B13A173544D5660CE0",
+        "size": 47422
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "CB104877A2D7A19BEC3A21659A172EBE3CD6EBA6CE925D0E50EEFD296DACB175",
+        "size": 268
+      },
+      "package_path": "patches/MAPS/CAMP1_05.HXC.bsdiff",
+      "path": "MAPS/CAMP1_05.HXC",
+      "source": {
+        "md5": "0ABDEAC50CCA8F5CE2181926BFA5AB64",
+        "sha256": "7549F1497AC18EB3418E82626F12C3C8D9888034E43096142C03E4A0531DE495",
+        "size": 46170
+      },
+      "target": {
+        "sha256": "0C949D46E5C42539CA4C7ADA3E03BDF86AD8855046E8F307DE0F7A60FE8AED39",
+        "size": 46170
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "9A24CE80C1AA3C75C2B264B9F498F7A38C2430B583327B1ED0A8142630F15FFD",
+        "size": 826
+      },
+      "package_path": "patches/MAPS/CAMP1_06.HXC.bsdiff",
+      "path": "MAPS/CAMP1_06.HXC",
+      "source": {
+        "md5": "D1E62D43F5A40F66FAA0CBB53F548E4F",
+        "sha256": "B99F99FDFD5DC682D5128081916ADD1F6A64BD754F610A41C1A6E40F94898E29",
+        "size": 130302
+      },
+      "target": {
+        "sha256": "08CE85E96DCE7788C7D0EA2F14FB810755FBFD942EF85FB9CABA67A5662AA13D",
+        "size": 130143
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "7E605BF3821D202A7FA0CDEE6417DB9B3C5C2E4C7F367C95852B52D610A59840",
+        "size": 833
+      },
+      "package_path": "patches/MAPS/CAMP1_07.HXC.bsdiff",
+      "path": "MAPS/CAMP1_07.HXC",
+      "source": {
+        "md5": "897DB29A93DF09BC228DB4F462075149",
+        "sha256": "D4607FF564C9BB697FC8E2A5A7A5DC8AB053AA17C23360E21F865479906E9A6F",
+        "size": 177122
+      },
+      "target": {
+        "sha256": "7D6285CAEE69AF7AC3A2781C33EEB619F0F4DDA21E5931CC71FE99A9325D2686",
+        "size": 176995
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "C072CF34E50388B3F0DAC52538FC99D12E07E82E18A38409474C6D79E5BDA07C",
+        "size": 1122
+      },
+      "package_path": "patches/MAPS/CAMP1_08.HXC.bsdiff",
+      "path": "MAPS/CAMP1_08.HXC",
+      "source": {
+        "md5": "00BC59668F981DCC90A044AB973DB6BF",
+        "sha256": "4C826ED02255E50A95AC04430EE0F14CCC3FA8A5FC0DE6D5DA5B7D63332ACC92",
+        "size": 310407
+      },
+      "target": {
+        "sha256": "7FD804B0E26AF205836CD5D8F3FAC440FEAD66AC5CF133C761126755C7A2E506",
+        "size": 310222
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "2C40FC18B6C6C8E848F13FD100C1051B53A4EFA2885240A8A1A34E62B8E99E64",
+        "size": 334
+      },
+      "package_path": "patches/MAPS/CAMP2_01.HXC.bsdiff",
+      "path": "MAPS/CAMP2_01.HXC",
+      "source": {
+        "md5": "3449180E1F156D361833E636EE9C8831",
+        "sha256": "215A7737326627906E952F5FBB17C6BC7F548CF0C0182B909BAC5ED59216F4A9",
+        "size": 41541
+      },
+      "target": {
+        "sha256": "03426A72B3FF5B27746EE42844B1B1875A61A1080BA349EF0B0884B76F837CF3",
+        "size": 41541
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "E2537106F7850FA51494E3720434C9D23065F42EB8CC68E33FF3B8862E327278",
+        "size": 360
+      },
+      "package_path": "patches/MAPS/CAMP2_02.HXC.bsdiff",
+      "path": "MAPS/CAMP2_02.HXC",
+      "source": {
+        "md5": "F7B730E50D41DA881C840557A84DE60C",
+        "sha256": "7472EF6180DC4F4A4E714D7079E77F5ACF7CA0B9BF6E02DEE811AFEB110D1502",
+        "size": 144933
+      },
+      "target": {
+        "sha256": "FD5B11BB7C09D3B70207E909E83852D58115BF9F686D6908677A7289DDCB57FB",
+        "size": 144933
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "B92632FC94AF54D144B84104F8BADC5EF5A42FFFB1944D6EA20AE1E7AA807806",
+        "size": 1425
+      },
+      "package_path": "patches/MAPS/CAMP2_03.HXC.bsdiff",
+      "path": "MAPS/CAMP2_03.HXC",
+      "source": {
+        "md5": "5E882BBC13C23B8D449BB475E86B1DD7",
+        "sha256": "ABFAD66CB95E5BB30D8F1792FE637223434CFEEE569128F2B00113A8137CCDCE",
+        "size": 130866
+      },
+      "target": {
+        "sha256": "134FD6E18EA39C94AA9B57FB1785BFD14B42283C9BA01FAEF562ED6916D5EDC6",
+        "size": 130497
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "B1C1668BD9516FFAC81464F065D1695C736B07DB67357309FB99C1E4DA2E5A52",
+        "size": 1142
+      },
+      "package_path": "patches/MAPS/CAMP2_04.HXC.bsdiff",
+      "path": "MAPS/CAMP2_04.HXC",
+      "source": {
+        "md5": "AB537528FBA23A1DDD1B8537E2F73BDD",
+        "sha256": "9B05CAC4ABC2A8E1D119EBD1E34F3BD8C78DAACB963427314DB945203670C3C8",
+        "size": 147724
+      },
+      "target": {
+        "sha256": "2150F720F3EF8D0B3AED0C7313DF177685942813C9672AE1A14059A629FCF2AF",
+        "size": 147454
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "874304F98085681B3055E7793869053D60C1E44A748A948F063DCF7F9E62BD69",
+        "size": 784
+      },
+      "package_path": "patches/MAPS/CAMP2_05.HXC.bsdiff",
+      "path": "MAPS/CAMP2_05.HXC",
+      "source": {
+        "md5": "CFDC4E72974CE97F8CDF73FA4DBE1339",
+        "sha256": "96DE0BD7FC858D754ECE9A573BDC568B8797E431AD4C82EC7861BCEE035EE6DB",
+        "size": 330877
+      },
+      "target": {
+        "sha256": "68A70D99BA1B1CE74239D8AC60B24FE635FD35E473B355B73064801BC6A24D77",
+        "size": 330792
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "25FAB051D8B6332CCAD72DA7541A9FB6781D63F7EDF67D3356757219CA47F6CC",
+        "size": 382
+      },
+      "package_path": "patches/MAPS/CAMP2_06.HXC.bsdiff",
+      "path": "MAPS/CAMP2_06.HXC",
+      "source": {
+        "md5": "EBF014DA1D487069930389CD77C7D409",
+        "sha256": "FF740A1E35819258A5D4F9A693C23D190F41256BF0C8C21DF62203F928BAE9ED",
+        "size": 162770
+      },
+      "target": {
+        "sha256": "DEF95D16C4E9A4AB12CC57A2B1AE59322A77F103B90EC6E681AB384F80AC36AA",
+        "size": 162768
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "3133C389401B28971E39B48A61875D0EA6EE45A4DBE46003BE482B4A6D8BFCF5",
+        "size": 1106
+      },
+      "package_path": "patches/MAPS/CAMP2_07.HXC.bsdiff",
+      "path": "MAPS/CAMP2_07.HXC",
+      "source": {
+        "md5": "3FA8560DCAEF80BFC6DED8A43D5EBC40",
+        "sha256": "DF5600A0ED1D8D6A5067162372C73AD0ED4F1E407E49ABF8E6EB1899BA4C8FA6",
+        "size": 171196
+      },
+      "target": {
+        "sha256": "AB507DC237DB4D74EB8DFD42C4E5E5C66016A2027F7380126216988242AB0AA4",
+        "size": 170903
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "23836BD0E62988E2F5C36063E8F026DD8075454CDA24358BD2DC7EBEF931E00B",
+        "size": 617
+      },
+      "package_path": "patches/MAPS/CAMP2_08.HXC.bsdiff",
+      "path": "MAPS/CAMP2_08.HXC",
+      "source": {
+        "md5": "62A156F72DDBA86DC91EF1ED9D8BBC17",
+        "sha256": "1F9502568B76BDFE56FF3E344526ABFC509F2A6624EE04E62312831B0403E50E",
+        "size": 326042
+      },
+      "target": {
+        "sha256": "5A1072EA3C1176BBA36088FF73839E805ADA0C6EE8E3B6D85BE2C1DA80D4E197",
+        "size": 326055
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "C69B0C6D7A98BB95F961EE31DADDCFE29F9FC428856607A0347AE8791ED0C48F",
+        "size": 350
+      },
+      "package_path": "patches/MAPS/CAMP3_01.HXC.bsdiff",
+      "path": "MAPS/CAMP3_01.HXC",
+      "source": {
+        "md5": "AFEDAA69CAB1E3523BBE9587AEF7E48F",
+        "sha256": "522FCDDBCCBD59036B380A5FBB25E7E53AB55AB3CD967E19E6D935400A1CAC81",
+        "size": 141440
+      },
+      "target": {
+        "sha256": "BA16612F5C217F7EABE27CB3D0D14E3BD2BFD66A427DB3E7F119557ADFBF1623",
+        "size": 141432
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "2F0B07453701391D8845D742BBB67851FF717D5DC0132CC9380C89E1633E23B7",
+        "size": 1092
+      },
+      "package_path": "patches/MAPS/CAMP3_02.HXC.bsdiff",
+      "path": "MAPS/CAMP3_02.HXC",
+      "source": {
+        "md5": "4D16EBA7D9E859931075DF8A54427720",
+        "sha256": "3ED511E83C39CCA316FF656A08DB7CDE967E8844EE3ED78422BFD1BA14E8C274",
+        "size": 145547
+      },
+      "target": {
+        "sha256": "B5F9B10FB789D7FB19CEA64ECB215E83D25C6A8603AFA139A4F042FDAEF55973",
+        "size": 145299
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "F646F29CF7ADE58993E149337E4EBABD16E1B4F24F16FB993FEC57C81D7819A6",
+        "size": 712
+      },
+      "package_path": "patches/MAPS/CAMP3_03.HXC.bsdiff",
+      "path": "MAPS/CAMP3_03.HXC",
+      "source": {
+        "md5": "9A432C40FCF642C487459A4DA0C7E059",
+        "sha256": "F6BAA2A52D193418AFDB4AD067A36A6476386B2705359B9E8D6C5C2D5F6A659B",
+        "size": 222534
+      },
+      "target": {
+        "sha256": "28ABA94727A095F037F3AD880F637D3411BBBF9E136DF82FB0865F0207335508",
+        "size": 222426
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "30859529B68042C5AB19D4B792CE9D1FF8A2CA1378B97023DB09DAE8FA3F1306",
+        "size": 1754
+      },
+      "package_path": "patches/MAPS/CAMP3_04.HXC.bsdiff",
+      "path": "MAPS/CAMP3_04.HXC",
+      "source": {
+        "md5": "736B77895127D5D4B09C3AC4BCF68A20",
+        "sha256": "005BDA5D9AA97693239F571D5C9106247001666EE25FD319007930B3BF6B5DE9",
+        "size": 325736
+      },
+      "target": {
+        "sha256": "5B6075A33800E38A9D62772900E49E7E830A68062A3EBE7614298A7FFC4339B2",
+        "size": 325254
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "6048D9C263679FF3A210D95AC7B41647D8F610A0E1633945BC9E03C7F56FB7E4",
+        "size": 480
+      },
+      "package_path": "patches/MAPS/CAMP4_01.HXC.bsdiff",
+      "path": "MAPS/CAMP4_01.HXC",
+      "source": {
+        "md5": "42C11F4B9D5DA24597A3D5CF42FD5727",
+        "sha256": "32B6C3F8356F75C3079B0F7174F1DD05F27AF1930F9669C8678C9A99B043F1CA",
+        "size": 37829
+      },
+      "target": {
+        "sha256": "546890DBAD23834D858C477D291786650B0CC092A0FA92BA1CDC810560D3E001",
+        "size": 37823
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "C33F049B49749297B0AFA0035B4E1164E0AB9FBF47C9AD7AA54B9DAC85D843EE",
+        "size": 1001
+      },
+      "package_path": "patches/MAPS/CAMP4_02.HXC.bsdiff",
+      "path": "MAPS/CAMP4_02.HXC",
+      "source": {
+        "md5": "3767A9AEED6F8BA24AD4DD1A20FFE232",
+        "sha256": "D2A0F791B19DFC2AE42376D709DB9C21E9C65F7795BCB6E216ACA79C6284BFCF",
+        "size": 254327
+      },
+      "target": {
+        "sha256": "F0ECAFB63F50D66EA3F1BF9259109C9612783549A70223233817ED54C2C2D5F3",
+        "size": 254204
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "962A9447464FF47DD16352EFDDA14D8D54454CD15C67340D3D05224631900D92",
+        "size": 947
+      },
+      "package_path": "patches/MAPS/CAMP4_03.HXC.bsdiff",
+      "path": "MAPS/CAMP4_03.HXC",
+      "source": {
+        "md5": "AF26DCBA5952C0CA1A5F27902B1F6824",
+        "sha256": "9C5BE1E81B29A8C9895926341043DB3468C55FD91FDB670CE7BEAEE501515E6D",
+        "size": 317933
+      },
+      "target": {
+        "sha256": "F2BDB6F1A4817A32B5B378C15590C75DF759223C223A4806BDD3C6C83AD2A22B",
+        "size": 317826
+      }
+    },
+    {
+      "method": "bsdiff40",
+      "package": {
+        "sha256": "BF721F6098BAD953FD608E8363B7FB55568FC3AB258B1B42EC8DDC5A87BA9424",
+        "size": 885
+      },
+      "package_path": "patches/MAPS/CAMP4_04.HXC.bsdiff",
+      "path": "MAPS/CAMP4_04.HXC",
+      "source": {
+        "md5": "ACE25511E650FA17A1B50EA6D69188F9",
+        "sha256": "0FE37AFC9BC455821B1EFD823BC0C0CF203FBF32A85870C024BCC27D2764A2BD",
+        "size": 324383
+      },
+      "target": {
+        "sha256": "77EC42470F09317D530F8836A364470073E382FF2DCB712E0A1DDBA51189A44A",
+        "size": 324288
+      }
+    },
+    {
+      "method": "copy",
+      "package": {
+        "sha256": "DD30DD967E81BB179BC1D33903D0B8926FB799D969A3C36FFAA6CA3FA0C89AAF",
+        "size": 11286
+      },
+      "package_path": "payload/KOREAN.BIN",
+      "path": "KOREAN.BIN",
+      "source": null,
+      "target": {
+        "sha256": "DD30DD967E81BB179BC1D33903D0B8926FB799D969A3C36FFAA6CA3FA0C89AAF",
+        "size": 11286
+      }
+    }
+  ],
+  "font_generation": {
+    "default_font": {
+      "face_index": 0,
+      "license_path": "THIRD_PARTY_LICENSES/NANUM_MYEONGJO_OFL.txt",
+      "name": "NanumMyeongjo Regular",
+      "package": {
+        "sha256": "7ED9E8653A8ED04285D51DC343FFEA6EB3D9C73AFC27383EA8929EE4FFD03205",
+        "size": 3058408
+      },
+      "package_path": "fonts/NanumMyeongjo-Regular.ttf"
+    },
+    "layout": {
+      "blank_legacy_sprite_index": 32,
+      "filler_sprite_count": 160,
+      "final_sprite_count": 1130,
+      "first_index": 256,
+      "glyph_count": 874,
+      "last_index": 1129,
+      "legacy_sprite_count": 96
+    },
+    "mapping": {
+      "package": {
+        "sha256": "3033584F6E65A36220F61EA58F8D7173A493FC83A72807D6FB43488AAE6DF164",
+        "size": 42302
+      },
+      "package_path": "fonts/mapping874.fixed-interface-font.txt"
+    },
+    "renderer": {
+      "foreground_palette_index": 10,
+      "id": "pillow-freetype-monochrome-v1",
+      "normal_pixel_size": 14,
+      "shadow_palette_index": 21,
+      "small_pixel_size": 12
+    },
+    "schema": "homm2-font-generation-v1"
+  },
+  "game": {
+    "build_id": "52745329670822422",
+    "edition": "Heroes of Might and Magic 2 Gold (GOG DOS)",
+    "game_id": "1207658785",
+    "language": "English"
+  },
+  "installation": {
+    "image_assets_translated": false,
+    "mode": "transactional root patch with cloud_saves shadow backup",
+    "ordinary_maps_modified": false,
+    "save_files_modified": false,
+    "state_directory": "_homm2_ko_install"
+  },
+  "release_date": "2026-08-23",
+  "schema": "homm2-korean-release-manifest-v2",
+  "version": "v0.9.0-beta.4"
+}
