@@ -31,7 +31,17 @@ DEFAULT_FONT_SOURCE = ASSETS / "fonts" / "NanumGothicCoding-Regular.ttf"
 MAPPING_PACKAGE_PATH = Path("fonts/mapping874.fixed-interface-font.txt")
 DEFAULT_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
 DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.6"
+CURRENT_VERSION = "v0.9.0-beta.7"
+PINNED_BETA7_TARGETS = {
+    Path("HEROES2.EXE"): {
+        "size": 1_523_420,
+        "sha256": "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C",
+    },
+    Path("KOREAN.BIN"): {
+        "size": 36_265,
+        "sha256": "95EA660215425E34FCB7CFD37405F8D1869845EB2EAED245613D2FF8AAE1D20A",
+    },
+}
 UPGRADE_RELEASES = (
     {
         "version": "v0.9.0-beta.4",
@@ -47,6 +57,14 @@ UPGRADE_RELEASES = (
         "manifest": {
             "size": 32_845,
             "sha256": "A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F",
+        },
+    },
+    {
+        "version": "v0.9.0-beta.6",
+        "manifest_path": Path("upgrades/v0.9.0-beta.6-manifest.json"),
+        "manifest": {
+            "size": 33_107,
+            "sha256": "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C",
         },
     },
 )
@@ -295,6 +313,11 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
             source = source_path.read_bytes()
             target = target_path.read_bytes()
             require(source_digest(source) == baseline[relative.as_posix().casefold()], f"original baseline mismatch: {relative}")
+            if relative in PINNED_BETA7_TARGETS:
+                require(
+                    digest(target) == PINNED_BETA7_TARGETS[relative],
+                    f"pinned beta.7 target mismatch: {relative}",
+                )
             if relative == Path("DATA/HEROES2.AGG"):
                 target = localize_herowind_knowledge_agg(target, label=f"{relative.as_posix()}:patched")
             if relative in FONT_AGG_PATHS:
@@ -343,6 +366,10 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
             print(f"[{index:02d}/{len(paths):02d}] {relative.as_posix()} method={method} patch={len(patch)}")
 
         bank = checked_file(patched, Path("KOREAN.BIN"), "patched").read_bytes()
+        require(
+            digest(bank) == PINNED_BETA7_TARGETS[Path("KOREAN.BIN")],
+            "pinned beta.7 target mismatch: KOREAN.BIN",
+        )
         bank_relative = Path("payload/KOREAN.BIN")
         write(stage / bank_relative, bank)
         rows.append(
@@ -379,7 +406,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
         manifest = {
             "schema": "homm2-korean-release-manifest-v2",
             "version": version,
-            "release_date": "2026-08-24",
+            "release_date": "2026-08-26",
             "channel": "beta",
             "game": {
                 "game_id": GAME_ID,

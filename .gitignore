@@ -13,6 +13,8 @@
 *.[gG][mM]1
 *.[hH][sS]
 *.[iI][sS][oO]
+*.[sS][mM][kK]
+*.[wW][aA][vV]
 
 # Generated assets and caches
 *.[pP][nN][gG]
@@ -25,6 +27,8 @@ __pycache__/
 dist/
 build/
 release_output/
+subtitle_work/
+.subtitle_cache/
 *.egg-info/
 
 # Local state and logs

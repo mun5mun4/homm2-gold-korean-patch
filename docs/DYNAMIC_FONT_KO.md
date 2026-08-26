@@ -1,12 +1,12 @@
-# beta.6 동적 폰트·모집 비용 명패·업그레이드 설계
+# beta.7 동적 폰트·모집 비용 명패·업그레이드 설계
 
-이 문서는 `v0.9.0-beta.6`의 설치 시 글리프·모집 비용 명패 생성과 공개 beta.4·beta.5에서 직접 업그레이드하는 계약을 설명합니다.
+이 문서는 `v0.9.0-beta.7`의 설치 시 글리프·모집 비용 명패 생성과 공개 beta.4·beta.5·beta.6에서 직접 업그레이드하는 계약을 설명합니다.
 
 ## 전환 목적
 
 beta.3까지는 미리 만든 바탕체 비트맵 글리프가 두 AGG 안에 고정돼 있었습니다. beta.4부터 그 고정 래스터를 배포 기반에서 제거하고 설치 시 필요한 874자를 생성합니다.
 
-beta.6는 SIL Open Font License 1.1의 `NanumGothicCoding Regular` 하나만 배포하고 사용합니다. 사용자 글꼴 선택 진입점과 관련 명령줄 옵션은 제공하지 않습니다.
+beta.7는 SIL Open Font License 1.1의 `NanumGothicCoding Regular` 하나만 배포하고 사용합니다. 사용자 글꼴 선택 진입점과 관련 명령줄 옵션은 제공하지 않습니다.
 
 beta.4 렌더러 v1은 각 글자를 tight crop한 뒤 모든 `offset_y`를 0으로 잃어버려, 같은 줄의 한글 높이가 들쭉날쭉해 보이는 회귀가 있었습니다. beta.5 렌더러 v2는 face 공통 기준선과 논리 셀 위치를 명시적으로 보존합니다.
 
@@ -23,7 +23,7 @@ Heroes II Gold는 두 AGG에 각각 일반 글꼴과 작은 글꼴을 보관합�
 
 ## 모집 비용 명패 한정 생성
 
-오리지널 `DATA/HEROES2.AGG`에는 모집 창 배경 `RECRBKG.ICN`이 있습니다. beta.6 설치기는 먼저 순정 payload가 91,987바이트, SHA-256 `D7B9EF7C819CADACFABF0BCB857976535945DC6F52DC60581D30AC69513E7024`인지 확인합니다. 정확히 일치할 때만 sprite 0의 ROI `(157, 51, 96, 17)`을 같은 행의 안전한 배경으로 지우고, 생성된 `SMALFONT.ICN` 글리프로 `병력당 비용:`을 가운데 배치합니다.
+오리지널 `DATA/HEROES2.AGG`에는 모집 창 배경 `RECRBKG.ICN`이 있습니다. beta.7 설치기는 먼저 순정 payload가 91,987바이트, SHA-256 `D7B9EF7C819CADACFABF0BCB857976535945DC6F52DC60581D30AC69513E7024`인지 확인합니다. 정확히 일치할 때만 sprite 0의 ROI `(157, 51, 96, 17)`을 같은 행의 안전한 배경으로 지우고, 생성된 `SMALFONT.ICN` 글리프로 `병력당 비용:`을 가운데 배치합니다.
 
 결과 payload는 102,017바이트, SHA-256 `F4A2C1B33BDA292E1F4DB06DDE6FF65F1DCF7CA554037FB1011360C6071C505D`로 고정합니다. 글자 전경은 모집 창 팔레트 인덱스 10, 그림자는 51을 사용합니다. 지정 ROI 밖의 pixel·transform, sprite 1과 다른 AGG 엔트리는 디코딩 결과가 원본과 같은지 확인합니다. `HEROES2X.AGG`에는 이 리소스가 없으므로 모집 비용 명패를 만들지 않습니다.
 
@@ -74,7 +74,7 @@ GOG 원본을 기준으로 다음 번역 BIN 8개만 유지합니다.
 
 `HEROWIND.BIN`은 payload offset 303의 `0A 00` 길이 word를 보존하면서 offset 305의 10바이트 `Knowledge\0`만 `82 D8 82 95 00 00 00 00 00 00`(`지력`)으로 바꿉니다. 이미 교정된 슬롯은 그대로 허용하고 예상 밖의 값이면 배포 빌드를 중단합니다. 이 슬롯 밖 payload와 다른 AGG 엔트리는 변경하지 않습니다.
 
-그 밖의 AGG 기반 리소스는 원본을 사용합니다. 특히 기존 고정 바탕체 `FONT.ICN`, `SMALFONT.ICN`과 시험적으로 수정했던 이미지 UI `SYSTEM.ICN`, `REQUEST.ICN`, `REQUESTS.ICN`, `SYSTEME.ICN`은 beta.6 기반에 남기지 않습니다. 설치 결과에서는 `FONT.ICN`, `SMALFONT.ICN`과 위에서 설명한 `RECRBKG.ICN:0` 모집 비용 명패만 동적으로 바뀝니다.
+그 밖의 AGG 기반 리소스는 원본을 사용합니다. 특히 기존 고정 바탕체 `FONT.ICN`, `SMALFONT.ICN`과 시험적으로 수정했던 이미지 UI `SYSTEM.ICN`, `REQUEST.ICN`, `REQUESTS.ICN`, `SYSTEME.ICN`은 beta.7 기반에 남기지 않습니다. 설치 결과에서는 `FONT.ICN`, `SMALFONT.ICN`과 위에서 설명한 `RECRBKG.ICN:0` 모집 비용 명패만 동적으로 바뀝니다.
 
 ### `DATA/HEROES2X.AGG`
 
@@ -92,25 +92,26 @@ GOG 원본을 기준으로 다음 번역 BIN 8개만 유지합니다.
 
 ## manifest와 receipt 검증
 
-beta.6 manifest schema는 `homm2-korean-release-manifest-v2`입니다.
+beta.7 manifest schema는 `homm2-korean-release-manifest-v2`입니다.
 
 - 48개 파일은 고정 BSDIFF40과 고정 target 해시를 사용합니다.
 - 두 AGG는 `bsdiff40_font_agg_v1`으로 폰트 없는 기반을 만든 뒤 네 폰트 ICN을 동적으로 재구성합니다. 오리지널 AGG에서는 순정 identity를 고정한 `RECRBKG.ICN:0`의 모집 비용 명패도 함께 생성합니다.
 - `KOREAN.BIN`은 프로젝트 payload로 복사합니다.
 - `upgrades/v0.9.0-beta.4-manifest.json`은 공개 beta.4 manifest의 크기 31,988바이트와 SHA-256 `D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60`을 고정한 직접 업그레이드 입력입니다.
 - `upgrades/v0.9.0-beta.5-manifest.json`은 공개 beta.5 manifest의 크기 32,845바이트와 SHA-256 `A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F`을 고정한 직접 업그레이드 입력입니다.
+- `upgrades/v0.9.0-beta.6-manifest.json`은 공개 beta.6 manifest의 크기 33,107바이트와 SHA-256 `32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C`를 고정한 직접 업그레이드 입력입니다.
 - 전체 설치 파일은 51개입니다.
 
 폰트 없는 AGG 기반의 해시는 manifest에 고정돼 있습니다. 설치기는 나눔고딕코딩으로 임시 생성한 AGG의 구조와 변경 리소스 범위를 검사합니다. 오리지널 AGG의 변경 리소스는 `FONT.ICN`, `SMALFONT.ICN`, `RECRBKG.ICN`, 확장 AGG는 `FONT.ICN`, `SMALFONT.ICN`으로 제한합니다. 최종 두 AGG의 실제 크기와 SHA-256은 `_homm2_ko_install/receipt.json`에 기록합니다.
 
 `VERIFY.cmd`는 이 receipt와 현재 파일을 대조합니다. `UNINSTALL.cmd`도 현재 파일이 설치 당시 동적 해시와 같을 때만 백업 원본으로 복구하므로, 사용자가 별도로 수정한 AGG를 덮어쓰지 않습니다.
 
-`docs/ACTIVE_FILE_HASHES.json`은 beta.3 활성 번역 트리의 source pin입니다. beta.4~beta.6 출력 해시 문서가 아니므로 파일 자체를 변경하지 않습니다. 설치 시 생성된 AGG 해시는 이 고정 문서가 아니라 각 설치 receipt의 책임입니다.
+`docs/ACTIVE_FILE_HASHES.json`은 beta.3 활성 번역 트리의 기존 source pin입니다. beta.4~beta.7 출력 해시 문서가 아니므로 파일 자체를 변경하지 않습니다. 설치 시 생성된 AGG 해시는 이 고정 문서가 아니라 각 설치 receipt의 책임입니다.
 
 ## 이전 버전에서 이동
 
-공개 beta.4·beta.5는 beta.6 직접 업그레이드를 지원합니다. 이전 버전의 기본·사용자 글꼴 설치본 모두 beta.6의 `INSTALL.cmd`를 실행하며, beta.6는 이전 글꼴 설정을 재사용하지 않고 동봉한 나눔고딕코딩으로 두 AGG를 다시 생성합니다.
+공개 beta.4·beta.5·beta.6은 beta.7 직접 업그레이드를 지원합니다. 지원되는 이전 설치본은 모두 beta.7의 `INSTALL.cmd`를 실행하며, beta.7는 이전 글꼴 설정을 재사용하지 않고 동봉한 나눔고딕코딩으로 두 AGG를 다시 생성합니다.
 
-업그레이드는 동봉한 고정 beta.4·beta.5 manifest, 이전 receipt와 현재 설치 파일을 검증한 뒤 최초 GOG 원본 백업에서 beta.6 후보를 만듭니다. 실패하면 교체 전 베타 상태로 롤백합니다. 성공한 beta.6의 `UNINSTALL.cmd`는 최초 GOG 원본을 복원합니다.
+업그레이드는 동봉한 고정 beta.4·beta.5·beta.6 manifest, 이전 receipt와 현재 설치 파일을 검증한 뒤 최초 GOG 원본 백업에서 beta.7 후보를 만듭니다. 실패하면 교체 전 베타 상태로 롤백합니다. 성공한 beta.7의 `UNINSTALL.cmd`는 최초 GOG 원본을 복원합니다.
 
 beta.1~beta.3은 직접 업그레이드를 지원하지 않습니다. 먼저 설치에 사용한 이전 버전의 `UNINSTALL.cmd`로 원본을 복구해야 합니다. 이전 배포 폴더가 없다면 같은 버전 ZIP을 다시 받아 제거할 수 있습니다.

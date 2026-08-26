@@ -35,8 +35,23 @@ def herowind_payload(text: bytes = release.HEROWIND_KNOWLEDGE_ENGLISH) -> bytes:
 
 
 class HerowindKnowledgeTests(unittest.TestCase):
-    def test_builder_rejects_a_non_beta6_version_before_reading_inputs(self) -> None:
-        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.6"):
+    def test_beta7_core_targets_are_pinned(self) -> None:
+        self.assertEqual(
+            release.PINNED_BETA7_TARGETS,
+            {
+                Path("HEROES2.EXE"): {
+                    "size": 1_523_420,
+                    "sha256": "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C",
+                },
+                Path("KOREAN.BIN"): {
+                    "size": 36_265,
+                    "sha256": "95EA660215425E34FCB7CFD37405F8D1869845EB2EAED245613D2FF8AAE1D20A",
+                },
+            },
+        )
+
+    def test_builder_rejects_a_non_beta7_version_before_reading_inputs(self) -> None:
+        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.7"):
             release.build(
                 Path("missing-original"),
                 Path("missing-patched"),
@@ -57,9 +72,14 @@ class HerowindKnowledgeTests(unittest.TestCase):
                 "upgrades/v0.9.0-beta.5-manifest.json",
                 {"size": 32_845, "sha256": "A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F"},
             ),
+            (
+                "v0.9.0-beta.6",
+                "upgrades/v0.9.0-beta.6-manifest.json",
+                {"size": 33_107, "sha256": "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C"},
+            ),
         )
 
-        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.6")
+        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.7")
         self.assertEqual(len(release.UPGRADE_RELEASES), len(expected))
         for upgrade, (version, manifest_path, identity) in zip(release.UPGRADE_RELEASES, expected):
             with self.subTest(version=version):

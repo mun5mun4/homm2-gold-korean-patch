@@ -1,0 +1,389 @@
+scene	track	start_ms	end_ms	text	campaign	block	timing_basis_movie	timing_status
+0x04	primary_ms	130	7450	모든 불행은 3년 전, 늙은 아이언피스트\n왕이 세상을 떠나면서 시작되었다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	8590	10630	왕에게는 두 아들이 있었다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	11810	15890	롤랜드는 선하고 친절했으며,\n명예를 아는 사람이었다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	16510	20390	하지만 아치발드는 달랐다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	20550	25630	관례에 따라 왕실 예언자가\n왕위를 이을 자를 골라야 했다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	26070	29270	하지만 비극적인 배 사고로 죽고 말았다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	30810	33470	뒤를 이은 예언자들도 운이 좋지 않았다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	33930	36690	프레더릭은 창밖으로 떨어졌고,	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	37450	39770	로버트는 드래곤에게 죽었으며,	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	40130	43070	요한은 식중독으로 죽었다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	44790	48590	아치발드는 롤랜드가 예언자들을 죽였다고	succession	intro	INTRO.SMK	voice_aligned_split
+0x04	primary_ms	48590	51950	몰아세우며 그를 수배하는\n포고령을 내렸다.	succession	intro	INTRO.SMK	voice_aligned_split
+0x04	primary_ms	52230	57210	목숨을 두려워한 롤랜드는\n서쪽의 자기 성으로 달아났다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	58690	61350	롤랜드가 사라지자 아치발드는	succession	intro	INTRO.SMK	voice_aligned_split
+0x04	primary_ms	61350	65090	새 왕실 예언자의 결정을\n마음대로 움직일 수 있었다.	succession	intro	INTRO.SMK	voice_aligned_split
+0x04	primary_ms	66390	73190	예언자는 아치발드를 택했고, 아치발드는\n다음 날 스스로 왕관을 썼다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	74330	77750	그렇게 왕위 계승 전쟁이 시작되었다.	succession	intro	INTRO.SMK	voice_aligned
+0x05	secondary_ms	70	1270	충성스러운 신하여,	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	1270	4040	그대의 충성 맹세에 감사하오.\n참으로 마음이 놓이는군.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	4040	8610	알다시피 사악한 아치발드가 아버지의\n성을 빼앗고 왕좌를 빼앗았소.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	8650	12250	성 가까이 있는 영주들만\n재빨리 그에게 충성했지만,	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	12250	16610	다른 영주들도 대안이 없다면\n그에게 무릎 꿇을까 두렵소.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	16810	19560	내가 그 대안이 되어야 하오.	roland	scenario_1	GOOD01V.SMK	voice_aligned_split
+0x05	secondary_ms	19560	23770	아버지께 충성했던 영주들과\n싸워야 한다 해도 말이오.	roland	scenario_1	GOOD01V.SMK	voice_aligned_split
+0x05	secondary_ms	24010	32230	그러니 무거운 마음으로 여름 궁전 근처의\n영주들을 무력으로 굴복시키라 명하오.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	32290	37960	우리는 실패할 수 없기에\n임무에 충분한 금을 주었소.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	37960	43350	전쟁을 함께 이끌 수 있도록\n마법의 부적도 보냈소.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x05	secondary_ms	43350	46770	언제나 몸에 지니시오.\n그러면 계속 연락할 수 있소.	roland	scenario_1	GOOD01V.SMK	voice_aligned
+0x06	secondary_ms	0	1190	훌륭하오!	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x06	secondary_ms	1390	4590	첫 움직임은 완벽한 성공이오.	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x06	secondary_ms	4710	7550	하지만 축하할 시간은 없소.	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x06	secondary_ms	7670	15930	남은 지방 귀족들은 우리의 승리를\n달가워하지 않아 방어 태세를 갖추었소.	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x06	secondary_ms	15930	21020	그 반란을 진압해야 하오.\n하지만 지난 임무에서 모은	roland	scenario_2	GOOD02W.SMK	voice_aligned_split
+0x06	secondary_ms	21020	24230	병력은 그 지역을 지켜야 하오.	roland	scenario_2	GOOD02W.SMK	voice_aligned_split
+0x06	secondary_ms	24230	28550	임무가 얼마나 중요한지는 다시\n말할 필요도 없을 것이오.	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x06	secondary_ms	28590	34350	아치발드와 싸울 전쟁 자금을\n세금으로 마련해야 하오.	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x06	secondary_ms	34370	39030	그들을 항복시킬 군대를 위해\n남은 금을 모두 주겠소.	roland	scenario_2	GOOD02W.SMK	voice_aligned
+0x07	secondary_ms	0	980	축하하오!	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	980	3800	눈부신 군사적 수완이었소.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	3800	10030	이 비옥한 농업 지대의 재정 지원을 얻었으니,\n전쟁에 필요한 금은 충분하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	10090	12510	이제 자원을 확보해야 하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	12570	17580	아치발드는 남쪽 산악 광산\n지대 카라토르에 병력을	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x07	secondary_ms	17580	22370	보내고 있소. 그를 막고\n자원을 차지해야 하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x07	secondary_ms	22610	27950	한편 드워프 왕 로클린에게서\n도움을 청하는 전갈도 왔소.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	28630	33180	나흘 전 아치발드의 워록들이\n드워프 마을을 습격하여	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x07	secondary_ms	33180	37510	남녀노소를 모두 죽였소.\n드워프의 금을 노렸지만	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x07	secondary_ms	37770	42020	아무것도 찾지 못하자, 다른 드워프\n영지까지 계속 공격하고 있소.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	42020	44790	장군, 그대의 조언이 필요하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x07	secondary_ms	45130	51410	카라토르를 당장 공격할지, 드워프를\n구하러 갈지, 그대가 결정해 주시오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	0	980	축하하오!	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	980	3800	눈부신 군사적 수완이었소.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	3800	10030	이 비옥한 농업 지대의 재정 지원을 얻었으니,\n전쟁에 필요한 금은 충분하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	10090	12510	이제 자원을 확보해야 하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	12570	17580	아치발드는 남쪽 산악 광산\n지대 카라토르에 병력을	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x08	secondary_ms	17580	22370	보내고 있소. 그를 막고\n자원을 차지해야 하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x08	secondary_ms	22610	27950	한편 드워프 왕 로클린에게서\n도움을 청하는 전갈도 왔소.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	28630	33180	나흘 전 아치발드의 워록들이\n드워프 마을을 습격하여	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x08	secondary_ms	33180	37510	남녀노소를 모두 죽였소.\n드워프의 금을 노렸지만	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned_split
+0x08	secondary_ms	37770	42020	아무것도 찾지 못하자, 다른 드워프\n영지까지 계속 공격하고 있소.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	42020	44790	장군, 그대의 조언이 필요하오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x08	secondary_ms	45130	51410	카라토르를 당장 공격할지, 드워프를\n구하러 갈지, 그대가 결정해 주시오.	roland	scenario_3_or_4	GOOD03QW.SMK	voice_aligned
+0x09	secondary_ms	150	5490	로클린이 전령을 보내 워록을 막아\n준 그대에게 영원한 감사를 전했소.	roland	after_scenario_3_to_4	GOOD04W.SMK	voice_aligned
+0x09	secondary_ms	5510	12250	그 보답으로 그대가 나를 섬기는 동안\n언제나 드워프들이 돕겠다고 했소.	roland	after_scenario_3_to_4	GOOD04W.SMK	voice_aligned
+0x09	secondary_ms	12330	17490	이미 카라토르 산지에 병력도 보내 두었소.	roland	after_scenario_3_to_4	GOOD04W.SMK	voice_aligned
+0x09	secondary_ms	17490	19530	그 병력은 그대의 명령을 기다리고 있소.	roland	after_scenario_3_to_4	GOOD04W.SMK	voice_aligned
+0x0A	secondary_ms	110	4470	카라토르 광산을 점령해\n우리의 세력은 크게 강해졌소.	roland	scenario_5	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	4470	10090	그 힘을 보고 신중한 영주들도\n우리 편에 서기 시작했소.	roland	scenario_5	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	10190	13770	중립 영주 둘이 마침내 우리 편에 합류했소.	roland	scenario_5	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	13770	20790	그들의 요새는 아치발드 성으로\n보급로가 지나는 핵심 계곡에 있소.	roland	scenario_5	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	20970	27770	현지인으로 군대를 모아 계곡의\n반역 영주 둘을 공격하시오.	roland	scenario_5	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	28030	36630	그들을 물리치고 나면 대륙의 자원을\n장악하고 마침내 공세로 나설 것이오.	roland	scenario_5	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	36630	39610	장군! 아치발드 왕이다.	roland	archibald_betrayal_offer	GOOD05V.SMK	voice_aligned_combined
+0x0A	secondary_ms	39630	42500	전장에서 세운 공적이 인상 깊어	roland	archibald_betrayal_offer	GOOD05V.SMK	voice_aligned_split
+0x0A	secondary_ms	42500	46770	내게 합류하고 합당한 보상을\n받을 기회를 한 번 주겠다.	roland	archibald_betrayal_offer	GOOD05V.SMK	voice_aligned_split
+0x0A	secondary_ms	46870	50850	내 형제는 꿈도 못 꿀\n부와 권력을 줄 수 있다.	roland	archibald_betrayal_offer	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	50870	57390	부와 권력을 택할지, 결국 내가 형제의 약한\n군대를 짓밟은 뒤 교수대에 설지 선택해라.	roland	archibald_betrayal_offer	GOOD05V.SMK	voice_aligned
+0x0A	secondary_ms	57790	59650	그래, 어느 쪽을 택하겠나?	roland	archibald_betrayal_offer	GOOD05V.SMK	voice_aligned
+0x0B	secondary_ms	210	4680	예언자가 전해 주었소. 그대는 나를\n배신하라는 제안을 거절했다고 하더군.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	4680	7230	다시 그대에게 감사하오.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	7230	12010	이 전쟁이 끝나면 그 충성에\n반드시 보답하겠소.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	12490	16850	노라스턴의 여마법사들에게서\n도움을 청하는 전갈이 왔소.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	16850	21150	그들이 공개적으로 내 편에\n서자 아치발드가 분노했소.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	21510	24700	아치발드는 본보기로 삼으려고\n대군을 보내 공격하고 있소.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	24700	28770	외교적 신뢰를 지키려면 반드시\n그들을 구해야 하오.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	29110	33990	할턴 경을 보내 그대가 여마법사들을\n모으는 일을 돕게 하겠소.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0B	secondary_ms	34190	36170	다시 한번 고맙소.	roland	scenario_6_loyal	GOOD06AV.SMK	voice_aligned
+0x0C	secondary_ms	50	1740	잘 선택했소!	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	1740	8030	계속 충성한다면 전쟁이 끝난\n뒤 반드시 보답받을 것이오.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	8270	12280	노라스턴의 여마법사들에게서\n도움을 청하는 전갈이 왔소.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	12280	16370	그들이 공개적으로 내 편에\n서자 아치발드가 분노했소.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	16610	20140	아치발드는 본보기로 삼으려고\n대군을 보내 공격하고 있소.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	20140	24650	외교적 신뢰를 지키려면 반드시\n그들을 구해야 하오.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	24950	29520	할턴 경을 보내 그대가 여마법사들을\n모으는 일을 돕게 하겠소.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0C	secondary_ms	29520	31210	다시 한번 고맙소.	roland	scenario_6_switched	GOOD06BV.SMK	voice_aligned
+0x0D	secondary_ms	50	4120	여마법사들이 감사를 전했소.\n그대가 나를 섬기는 동안	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0D	secondary_ms	4120	7210	최고의 이들을 보내겠다고 했소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0D	secondary_ms	7530	10210	훌륭한 장군, 조언이 필요하오.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0D	secondary_ms	10210	15270	사악한 형제를 공격할 때가\n점점 가까워지고 있소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0D	secondary_ms	15350	17860	그러나 참모들의 의견이 갈렸소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0D	secondary_ms	17860	23240	절반은 아치발드에게 충성하는 영주들을\n공격할 병력을 모으라고 조언했소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0D	secondary_ms	23240	30230	나머지는 여행의 관문을 지나 전설의\n궁극의 왕관을 찾으라고 하더군.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0D	secondary_ms	30410	31610	그대는 어느 쪽을 택하겠소?	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0E	secondary_ms	50	4120	여마법사들이 감사를 전했소.\n그대가 나를 섬기는 동안	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0E	secondary_ms	4120	7210	최고의 이들을 보내겠다고 했소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0E	secondary_ms	7530	10210	훌륭한 장군, 조언이 필요하오.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0E	secondary_ms	10210	15270	사악한 형제를 공격할 때가\n점점 가까워지고 있소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0E	secondary_ms	15350	17860	그러나 참모들의 의견이 갈렸소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0E	secondary_ms	17860	23240	절반은 아치발드에게 충성하는 영주들을\n공격할 병력을 모으라고 조언했소.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0E	secondary_ms	23240	30230	나머지는 여행의 관문을 지나 전설의\n궁극의 왕관을 찾으라고 하더군.	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned_split
+0x0E	secondary_ms	30410	31610	그대는 어느 쪽을 택하겠소?	roland	scenario_7_or_8	GOOD07QW.SMK	voice_aligned
+0x0F	secondary_ms	30	3990	병력을 모아 아치발드의\n수비군을 칠 준비를 마쳤군.	roland	scenario_9	GOOD09W.SMK	voice_aligned
+0x0F	secondary_ms	4050	10900	서부의 내 영지가 다급한 반격을 받고 있어,\n이 중요한 때에 그대를 지원할 수 없소.	roland	scenario_9	GOOD09W.SMK	voice_aligned
+0x0F	secondary_ms	10900	16870	그대가 모은 군사와 마법이 임무를\n이루기에 충분하기만을 바랄 뿐이오.	roland	scenario_9	GOOD09W.SMK	voice_aligned
+0x0F	secondary_ms	16870	19330	하트 경이 그대를 도울 것이오.	roland	scenario_9	GOOD09W.SMK	voice_aligned
+0x0F	secondary_ms	19550	24190	그리고 한 가지 더 있소. 코라곤\n장군을 꼭 사로잡으시오.	roland	scenario_9	GOOD09W.SMK	voice_aligned
+0x0F	secondary_ms	24190	28710	그의 지혜를 빼앗으면 아치발드는\n더 쉽게 무너질 것이오.	roland	scenario_9	GOOD09W.SMK	voice_aligned
+0x10	secondary_ms	110	3150	마침내 전쟁이 끝나 가는군.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x10	secondary_ms	3150	6520	내 형제는 그대의 군대\n앞에서도 항복을 거부하고,	roland	scenario_10	GOOD10W.SMK	voice_aligned_split
+0x10	secondary_ms	6520	11890	언데드 군대를 보내 자기 백성과\n싸움을 계속하고 있소.	roland	scenario_10	GOOD10W.SMK	voice_aligned_split
+0x10	secondary_ms	12130	18970	코라곤 장군을 상대로 싸운 그 병력을\n백성을 지키는 데 돌려야 하오.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x10	secondary_ms	19030	26970	방어는 하트 경에게 맡기고, 그대는\n약해진 형제를 공격하시오.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x10	secondary_ms	27450	32780	최근 아치발드의 가신들에게서\n빼앗은 영지는 마음대로 쓰시오.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x10	secondary_ms	32780	35810	현명하게 활용해 내 형제를 사로잡으시오!	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x10	secondary_ms	35810	38290	이 내전을 끝냅시다!	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x11	secondary_ms	110	3150	마침내 전쟁이 끝나 가는군.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x11	secondary_ms	3150	6520	내 형제는 그대의 군대\n앞에서도 항복을 거부하고,	roland	scenario_10	GOOD10W.SMK	voice_aligned_split
+0x11	secondary_ms	6520	11890	언데드 군대를 보내 자기 백성과\n싸움을 계속하고 있소.	roland	scenario_10	GOOD10W.SMK	voice_aligned_split
+0x11	secondary_ms	12130	18970	코라곤 장군을 상대로 싸운 그 병력을\n백성을 지키는 데 돌려야 하오.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x11	secondary_ms	19030	26970	방어는 하트 경에게 맡기고, 그대는\n약해진 형제를 공격하시오.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x11	secondary_ms	27450	32780	최근 아치발드의 가신들에게서\n빼앗은 영지는 마음대로 쓰시오.	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x11	secondary_ms	32780	35810	현명하게 활용해 내 형제를 사로잡으시오!	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x11	secondary_ms	35810	38290	이 내전을 끝냅시다!	roland	scenario_10	GOOD10W.SMK	voice_aligned
+0x12	secondary_ms	170	7680	아치발드 형제여, 왕국과 나에게 저지른\n죄에 대해 형제라면 내게 베풀지 않았을	roland	ending	LIBRARYW.SMK	voice_aligned_split
+0x12	secondary_ms	7680	11220	자비를 베풀겠소. 그대를 돌로\n만들어 서쪽 탑에 가두겠소.	roland	ending	LIBRARYW.SMK	voice_aligned_split
+0x12	secondary_ms	11220	15910	나중에 후손들이 가엾게 여겨\n다시 살려 줄 때까지 말이오.	roland	ending	LIBRARYW.SMK	voice_aligned_split
+0x12	secondary_ms	16190	17570	그런 날이 온다면 말이지만.	roland	ending	LIBRARYW.SMK	voice_aligned
+0x12	secondary_ms	17730	22550	하지만 왕관을 다시 보는\n일은 절대 없을 것이오.	roland	ending	LIBRARYW.SMK	voice_aligned
+0x13	secondary_ms	290	2800	나를 섬기기로 한 것에 감사하지.	archibald	scenario_1	EVIL01V.SMK	voice_aligned
+0x13	secondary_ms	2800	6940	충성하는 가신에게 나는 아주\n관대한 군주가 될 수 있다.	archibald	scenario_1	EVIL01V.SMK	voice_aligned_split
+0x13	secondary_ms	6940	11610	하지만 내게 충성을 거부하는\n겁쟁이 영주들은 다르다.	archibald	scenario_1	EVIL01V.SMK	voice_aligned_split
+0x13	secondary_ms	11790	14610	왕은 나다! 롤랜드가 아니야!	archibald	scenario_1	EVIL01V.SMK	voice_aligned_combined
+0x13	secondary_ms	14850	17890	감히 내 앞에서 충성을 거부할 수는 없다!	archibald	scenario_1	EVIL01V.SMK	voice_aligned
+0x13	secondary_ms	17890	18640	가라!	archibald	scenario_1	EVIL01V.SMK	voice_aligned
+0x13	secondary_ms	18640	23990	성에서 가장 가까운 영주들을\n본보기로 삼을 금을 주었다.	archibald	scenario_1	EVIL01V.SMK	voice_aligned
+0x13	secondary_ms	24150	29110	놈들을 짓밟고, 내가 보낸 마법의\n부적으로 결과를 보고하라.	archibald	scenario_1	EVIL01V.SMK	voice_aligned
+0x14	secondary_ms	350	2020	훌륭하군, 장군.	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x14	secondary_ms	2020	4380	확실한 인상을 남겼지?	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x14	secondary_ms	4380	9660	가까운 영주들은 충성하겠지만,\n먼 곳의 영주들은 아직 망설인다.	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x14	secondary_ms	9660	13270	두 번째 본보기가 필요하겠군.	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x14	secondary_ms	13570	17600	북쪽의 얼어붙은 황무지,\n크라사우 지방에는 아버지가	archibald	scenario_2	EVIL02W.SMK	voice_aligned_split
+0x14	secondary_ms	17600	21610	정복하지 않은 바바리안\n부족들이 살고 있다.	archibald	scenario_2	EVIL02W.SMK	voice_aligned_split
+0x14	secondary_ms	21950	27390	한데 모이면 강한 놈들이지만 다행히\n한 번도 힘을 모으지 못했지.	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x14	secondary_ms	27390	30300	그곳으로 가서 놈들을\n정복하고 하나로 통일하라.	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x14	secondary_ms	30300	34790	내 형제의 반란을 짓밟을\n훌륭한 보병이 될 것이다.	archibald	scenario_2	EVIL02W.SMK	voice_aligned
+0x15	secondary_ms	270	2850	결정을 내려야겠군.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x15	secondary_ms	2850	7020	롤랜드가 드워프 왕과\n동맹을 맺었다는 소식이다.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x15	secondary_ms	7020	12900	그 동맹이 나와 우리의 지위에\n얼마나 위험한지 알겠지.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x15	secondary_ms	12900	17590	한편 네크로맨서 길드에서도\n도움을 청하는 전갈이 왔다.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x15	secondary_ms	17590	24050	왕실군이 바쁜 틈을 타 위저드 길드가\n오랜 숙적을 공격한 모양이다.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x15	secondary_ms	24210	32090	장군, 내가 묻겠다. 드워프 동맹을\n깨뜨릴까, 네크로맨서 길드를 구할까?	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x16	secondary_ms	270	2850	결정을 내려야겠군.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x16	secondary_ms	2850	7020	롤랜드가 드워프 왕과\n동맹을 맺었다는 소식이다.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x16	secondary_ms	7020	12900	그 동맹이 나와 우리의 지위에\n얼마나 위험한지 알겠지.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x16	secondary_ms	12900	17590	한편 네크로맨서 길드에서도\n도움을 청하는 전갈이 왔다.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x16	secondary_ms	17590	24050	왕실군이 바쁜 틈을 타 위저드 길드가\n오랜 숙적을 공격한 모양이다.	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x16	secondary_ms	24210	32090	장군, 내가 묻겠다. 드워프 동맹을\n깨뜨릴까, 네크로맨서 길드를 구할까?	archibald	scenario_3_or_4	EVIL03QW.SMK	voice_aligned
+0x17	secondary_ms	0	1070	축하한다.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned
+0x17	secondary_ms	1170	6790	위저드들을 약화하는 동시에\n네크로맨서들을 강하게 만들었다.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned
+0x17	secondary_ms	6850	12700	네크로맨서 길드가 영원한 감사를\n전해 왔다. 네가 나를 섬기는 동안	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned_split
+0x17	secondary_ms	12700	16830	최고의 인재 한 명을 언제나\n보내 주겠다고 하는군.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned_split
+0x17	secondary_ms	16830	22490	이제 로렌데일 계곡 영주들과\n관련된 급한 군사 문제다.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned
+0x17	secondary_ms	22490	27810	두 놈이 반역자 롤랜드를 공개적으로\n지지했다. 절대 용납할 수 없는 죄다.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned
+0x17	secondary_ms	27930	32970	충성스러운 두 영주의 성을 써서\n맨손으로 군대를 일으켜라.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned
+0x17	secondary_ms	33210	34590	나를 실망시키지 마라.	archibald	scenario_5_from_3	EVIL05AV.SMK	voice_aligned
+0x18	secondary_ms	230	1680	잘했다, 장군.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	1680	5440	드워프 왕이 아주 화가 나서\n내게 증오의 편지를 보냈더군.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	5440	11590	이렇게 적혀 있다. 살인자이자 사악한\n찬탈자 아치발드 아이언피스트에게.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned_split
+0x18	secondary_ms	11590	15080	영원한 저주의 불길 속으로\n떨어지고 또 떨어져라!	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned_split
+0x18	secondary_ms	15080	24390	드워프의 원수라 부를 네 추악한 장군도\n같은 운명을 맞길 빈다. 참으로 귀엽군!	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	24470	27630	오우거 왕에게도 전갈이 왔다.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	27630	33290	결과가 마음에 들었다며 우리와 영원히\n동맹을 맺고 병력을 보내겠다고 하는군.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	33570	38990	이제 로렌데일 계곡 영주들과\n관련된 급한 군사 문제다.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	39290	45110	두 놈이 반역자 롤랜드를 공개적으로\n지지했다. 절대 용납할 수 없는 죄다.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	45310	50410	충성스러운 두 영주의 성을 써서\n맨손으로 군대를 일으켜라.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x18	secondary_ms	50710	53930	실패하면 매우 화가 날 것이다.	archibald	scenario_5_from_4	EVIL05BV.SMK	voice_aligned
+0x19	secondary_ms	310	2530	장군, 정당한 왕 롤랜드요.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	2530	4430	그대에게 제안할 것이 있소.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	4470	6720	내 편에 서서 함께 싸웁시다.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	6720	10050	사악한 아치발드를 섬기는 것이\n잘못임은 그대도 알 것이오.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	10190	16070	부당한 찬탈자를 섬긴다는 게 양심에\n걸리지 않소? 그 대가가 고작 돈이오?	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned_combined
+0x19	secondary_ms	16410	18090	돈이라면 나도 줄 수 있소.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	18090	21550	나는 부와 함께 명예와 의무,\n그리고 목적을 주겠소.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	21630	24470	내게 와서 정의를 위해 싸우시오.	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x19	secondary_ms	24550	25750	어느 쪽을 택하겠소?	archibald	roland_betrayal_offer	RBETRAYV.SMK	voice_aligned
+0x1A	secondary_ms	190	3750	내 네크로맨서가 너와 내\n형제의 대화를 몰래 들었다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	3810	5870	현명한 선택이었다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	5870	8490	내 형제에게는 이 전쟁을 이길 희망 따위 없다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned_split
+0x1A	secondary_ms	8490	11370	그에게 붙었다면 네 목도\n단두대에 올랐을 것이다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned_split
+0x1A	secondary_ms	11370	13070	하지만 걱정 마라.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	13090	18790	계속 잘 섬기면 형제의 여름 궁전에 있는\n영지를 주고 백작으로 삼아 주겠다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	19010	20270	이제 본론으로 가지.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	20270	24510	내 밭을 가는 농민들이 롤랜드 부하들의\n지휘 아래 반란을 일으키고 있다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	24530	29370	반란을 진압하고\n지도자들을 사로잡아라.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1A	secondary_ms	29630	32730	코라곤 경을 보내 돕게 하겠다.	archibald	scenario_6_loyal	EVIL06AW.SMK	voice_aligned
+0x1B	secondary_ms	250	2110	승리할 편에 온 것을 환영한다.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	2110	5160	나를 섬기는 일은 쉬울 것이다.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	5160	8110	성공에는 상을 주고 실패에는 벌을 내리지.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	8110	12230	충성을 지켜 전쟁에서 이긴다면\n너를 백작으로 삼아 주겠다.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	12270	13520	이제 본론으로 가지.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	13520	18000	내 밭을 가는 농민들이 롤랜드 부하들의\n지휘 아래 반란을 일으키고 있다.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	18000	22390	반란을 진압하고\n지도자들을 사로잡아라.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1B	secondary_ms	22450	25230	코라곤 경을 보내 돕게 하겠다.	archibald	scenario_6_switched	EVIL06BW.SMK	voice_aligned
+0x1C	secondary_ms	190	2810	농민을 처벌한 솜씨가 아주 감동적이었다.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1C	secondary_ms	2870	4660	훌륭한 본보기를 보였군.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1C	secondary_ms	4660	8630	다음은 롤랜드 성 근처의 지방\n영주들을 정복할 차례다.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1C	secondary_ms	8690	15990	평범한 방법으로도 이길 수 있지만\n수석 워록 고문은 드래곤 왕의	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned_split
+0x1C	secondary_ms	15990	19710	도움이 매우 효과적일 거라 한다.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned_split
+0x1C	secondary_ms	20230	23810	문제는 드래곤 왕이 순순히\n돕지 않는다는 점이지.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1C	secondary_ms	24130	26130	장군, 그대의 생각은 어떤가?	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1C	secondary_ms	26330	31630	롤랜드의 가신들을 곧장 칠까,\n먼저 드래곤들을 정복할까?	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1D	secondary_ms	190	2810	농민을 처벌한 솜씨가 아주 감동적이었다.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1D	secondary_ms	2870	4660	훌륭한 본보기를 보였군.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1D	secondary_ms	4660	8630	다음은 롤랜드 성 근처의 지방\n영주들을 정복할 차례다.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1D	secondary_ms	8690	15990	평범한 방법으로도 이길 수 있지만\n수석 워록 고문은 드래곤 왕의	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned_split
+0x1D	secondary_ms	15990	19710	도움이 매우 효과적일 거라 한다.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned_split
+0x1D	secondary_ms	20230	23810	문제는 드래곤 왕이 순순히\n돕지 않는다는 점이지.	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1D	secondary_ms	24130	26130	장군, 그대의 생각은 어떤가?	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1D	secondary_ms	26330	31630	롤랜드의 가신들을 곧장 칠까,\n먼저 드래곤들을 정복할까?	archibald	scenario_7_or_8	EVIL07W.SMK	voice_aligned
+0x1E	primary_ms	100	1300	잘했다.	archibald	after_scenario_7_to_8	EVIL08.SMK	voice_aligned
+0x1E	primary_ms	1300	6130	이제 드래곤 왕은 내게 협력하며\n짧은 목줄에 묶여 있지. 하하하!	archibald	after_scenario_7_to_8	EVIL08.SMK	voice_aligned
+0x1E	primary_ms	7250	13030	우리 군대에 병력을 보낼 것이고 야생에서\n만나는 드래곤도 그대에게 협력할 것이다.	archibald	after_scenario_7_to_8	EVIL08.SMK	voice_aligned
+0x1E	primary_ms	13290	15850	롤랜드의 가신들을 계속 공격하라.	archibald	after_scenario_7_to_8	EVIL08.SMK	voice_aligned
+0x1F	secondary_ms	170	4490	그 시골 영주들을 빠르게\n없애니 아주 쉬워 보이는군.	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x1F	secondary_ms	4750	9230	다음에는 조금 천천히 해서 놈들에게\n승산이라도 줘라! 하하!	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x1F	secondary_ms	10990	15110	롤랜드에게 마지막 공격을\n할 준비를 시작할 때다.	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x1F	secondary_ms	15150	19530	내 참모들의 의견은 둘로 갈렸다.\n한쪽은 롤랜드를 물리칠 군대를	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned_split
+0x1F	secondary_ms	19530	25050	모으는 데 힘을 쏟자고 하고, 다른 쪽은\n궁극의 아티팩트를 찾자고 하는군.	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned_split
+0x1F	secondary_ms	25410	28490	현장에 있는 자는 그대다.\n어느 쪽을 택하겠나?	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x20	secondary_ms	170	4490	그 시골 영주들을 빠르게\n없애니 아주 쉬워 보이는군.	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x20	secondary_ms	4750	9230	다음에는 조금 천천히 해서 놈들에게\n승산이라도 줘라! 하하!	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x20	secondary_ms	10990	15110	롤랜드에게 마지막 공격을\n할 준비를 시작할 때다.	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x20	secondary_ms	15150	19530	내 참모들의 의견은 둘로 갈렸다.\n한쪽은 롤랜드를 물리칠 군대를	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned_split
+0x20	secondary_ms	19530	25050	모으는 데 힘을 쏟자고 하고, 다른 쪽은\n궁극의 아티팩트를 찾자고 하는군.	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned_split
+0x20	secondary_ms	25410	28490	현장에 있는 자는 그대다.\n어느 쪽을 택하겠나?	archibald	scenario_9_or_10	EVIL09W.SMK	voice_aligned
+0x21	secondary_ms	70	2290	우리 최고의 순간이 왔다!	archibald	scenario_11	EVIL11W.SMK	voice_aligned
+0x21	secondary_ms	2290	7590	롤랜드의 군대는 성 주변 영지로\n물러났고, 그 바보 롤랜드는	archibald	scenario_11	EVIL11W.SMK	voice_aligned_split
+0x21	secondary_ms	7590	11230	여름 궁전에서 마지막\n공격을 두려워하고 있다!	archibald	scenario_11	EVIL11W.SMK	voice_aligned_split
+0x21	secondary_ms	11270	14350	최후의 전투를 위해 모은\n군대를 이끌고 가라!	archibald	scenario_11	EVIL11W.SMK	voice_aligned
+0x21	secondary_ms	14470	17810	반란을 짓밟고 내 형제를\n사슬에 묶어 데려와라!	archibald	scenario_11	EVIL11W.SMK	voice_aligned
+0x22	primary_ms	1590	5620	롤랜드, 우리의 작은 시합은\n내가 이긴 모양이군.	archibald	ending	PRISON.SMK	voice_aligned
+0x22	primary_ms	5620	6970	하지만 걱정 마라.	archibald	ending	PRISON.SMK	voice_aligned
+0x22	primary_ms	6970	13230	목숨은 살려 주기로 했고,\n서쪽 탑의 군주로 임명하겠다.	archibald	ending	PRISON.SMK	voice_aligned
+0x22	primary_ms	13490	19510	너는 위대한 제국의 지배자가 되어\n구석구석 모든 틈을 알게 될 것이다.	archibald	ending	PRISON.SMK	voice_aligned
+0x22	primary_ms	19810	21350	앞으로 10분 안에 말이지.	archibald	ending	PRISON.SMK	voice_aligned
+0x22	primary_ms	21490	29230	귀한 쥐와 거미들을 접대하지 않을 때 찬란한\n궁정에 찾아가 주마. 하하하하!	archibald	ending	PRISON.SMK	voice_aligned
+0x23	secondary_ms	0	2000	군주를 선택하십시오.	succession	choose_lord	CHOOSEW.SMK	voice_aligned
+0x27	secondary_ms	30	4460	크리거 자작은 어린 시절의 벗이자\n제국 북부를 지키던 사령관입니다.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
+0x27	secondary_ms	4460	8670	그가 황제에게 등을 돌리고\n공개적으로 반란을 일으켰습니다.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
+0x27	secondary_ms	8770	13380	왕좌를 무너뜨릴 군대는 없지만\n전설의 유물을 찾고 있습니다.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
+0x27	secondary_ms	13380	18710	그 유물은 우리 모두를 파멸시킬\n엄청난 힘을 준다고 합니다.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
+0x27	secondary_ms	18790	23650	황제께서 당신을 부르셨습니다.\n군대를 이끌고 진군하십시오.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
+0x27	secondary_ms	23650	28210	반역자 크리거를 무찌르고 제국을\n위해 유물을 찾으십시오.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
+0x28	secondary_ms	90	2820	북부의 반란을 진압했습니다.	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned_split
+0x28	secondary_ms	2820	8490	이제 반역자의 군대를 쫓아\n다크스케일 산지로 가십시오.	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned_split
+0x28	secondary_ms	8690	15340	황제의 대마법사가 유물에 관한\n중요한 사실을 알아냈습니다.	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned_split
+0x28	secondary_ms	15340	20730	유물은 세 조각으로 갈라져\n모아야 온전한 힘을 냅니다.	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned_split
+0x28	secondary_ms	21150	26470	크리거는 산속 깊은 곳에서 첫\n조각을 찾기 시작했습니다.	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned
+0x28	secondary_ms	27240	31730	그보다 먼저 찾아내십시오.\n이 조각이 없으면 나머지 조각의	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned_split
+0x28	secondary_ms	31730	33930	위치도 알아낼 수 없습니다.	The Price of Loyalty	After Winning Map 1	MIXPOL2.SMK	voice_aligned_split
+0x29	secondary_ms	0	4570	유물을 무사히 찾아내자 크리거는\n서쪽으로 달아났습니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned_split
+0x29	secondary_ms	4570	8730	다음 조각이 숨겨졌다는\n글레이브 섬으로 향했습니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned_split
+0x29	secondary_ms	9510	13030	크리거는 다크스케일 산지의\n비밀 통로를 알아냈습니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned_split
+0x29	secondary_ms	13030	14950	그는 이미 멀리 앞서 있습니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned_split
+0x29	secondary_ms	15450	17830	이제 위험한 선택을 해야 합니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned
+0x29	secondary_ms	18050	24750	어비스라 불리는 숨은 길은\n목숨을 위협할 만큼 위험하지만	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned
+0x29	secondary_ms	25090	27330	더 빨리 갈 수 있습니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned
+0x29	secondary_ms	27670	32850	다른 길은 산을 돌아 남서쪽\n숲을 지나는 길입니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned
+0x29	secondary_ms	33310	36180	하지만 그곳은 엘프의 땅입니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned_split
+0x29	secondary_ms	36180	40690	그늘진 숲을 어지럽히면 크게\n노할 이들도 있습니다.	The Price of Loyalty	After Winning Map 2	MIXPOL3.SMK	voice_aligned_split
+0x2A	secondary_ms	50	5680	미움받던 적을 없애 준 대가로\n엘프 군주 일타니스가 제국의	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned_split
+0x2A	secondary_ms	5680	8870	크리거 추적을 돕기로 했습니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned_split
+0x2A	secondary_ms	8950	16130	목재 일부를 보내 주고 만나는\n엘프들도 도울 것입니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned
+0x2A	secondary_ms	16730	19530	하지만 나쁜 소식도 있습니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned
+0x2A	secondary_ms	19590	24710	크리거가 글레이브 섬에서 두\n번째 조각을 찾아냈습니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned
+0x2A	secondary_ms	25170	30210	마지막 조각은 북쪽의 눈\n덮인 황무지에 있습니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned
+0x2A	secondary_ms	31370	36300	북방으로 가는 길목에는 거대한\n야만인 왕국이 있습니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned_split
+0x2A	secondary_ms	36300	41410	사나운 약탈자들을 굴복시켜야\n먼 북쪽으로 갈 수 있습니다.	The Price of Loyalty	After Winning Map 3	MIXPOL4.SMK	voice_aligned_split
+0x2B	secondary_ms	250	4990	크리거가 글레이브 섬에서 두\n번째 조각을 가져갔습니다.	The Price of Loyalty	After Winning Map 4 or 5	MIXPOL5.SMK	voice_aligned_split
+0x2B	secondary_ms	4990	8530	이제 북쪽 황무지로 달려가\n마지막 조각을 찾아야 합니다.	The Price of Loyalty	After Winning Map 4 or 5	MIXPOL5.SMK	voice_aligned_split
+0x2B	secondary_ms	8810	13890	그 조각을 먼저 얻는 쪽이\n크리거와의 결전에서 유리합니다.	The Price of Loyalty	After Winning Map 4 or 5	MIXPOL5.SMK	voice_aligned
+0x2B	secondary_ms	14270	20770	정찰대가 눈 덮인 황무지 한가운데\n푸른 땅이 있다고 전했습니다.	The Price of Loyalty	After Winning Map 4 or 5	MIXPOL5.SMK	voice_aligned
+0x2B	secondary_ms	21130	27090	사실인지 눈보라에 지친 이들의\n거짓말인지는 알 수 없습니다.	The Price of Loyalty	After Winning Map 4 or 5	MIXPOL5.SMK	voice_aligned
+0x2C	secondary_ms	330	4870	황제의 대마법사가 중요한 사실을\n크리거의 생각에서 알아냈습니다.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned_split
+0x2C	secondary_ms	4870	8490	그가 세 번째 조각의 전투에서\n달아날 때 읽어 낸 것입니다.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned_split
+0x2C	secondary_ms	8670	11430	크리거는 혼자가 아니었습니다.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned
+0x2C	secondary_ms	11450	15770	제국 중심부의 강령술사 무리가\n그를 유물로 이끌었습니다.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned_split
+0x2C	secondary_ms	15770	18230	그들도 유물을 노리고 있었습니다.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned_split
+0x2C	secondary_ms	18770	22990	이제 제국을 위협하는 혼란의\n근원을 공격할 수 있습니다.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned
+0x2C	secondary_ms	23270	26720	황제의 군대를 모으십시오.\n강령술사 무리와	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned_split
+0x2C	secondary_ms	26720	29790	오랫동안 달아난 반역자를\n함께 없애십시오.	The Price of Loyalty	After Winning Map 6	MIXPOL6.SMK	voice_aligned_split
+0x2D	secondary_ms	90	4390	크리거는 강령술사의 마법에\n정신을 지배당했던 듯합니다.	The Price of Loyalty	After Winning Map 7	MIXPOL7.SMK	voice_aligned
+0x2D	secondary_ms	4470	8850	투구의 힘으로 정신을 되찾게\n해 그의 반란을 끝냈습니다.	The Price of Loyalty	After Winning Map 7	MIXPOL7.SMK	voice_aligned
+0x2D	secondary_ms	9050	15590	황제께서는 제국의 심판을 받을\n그에게 자비를 보일지도 모릅니다.	The Price of Loyalty	After Winning Map 7	MIXPOL7.SMK	voice_aligned
+0x2D	secondary_ms	16150	24650	하지만 마지막 유물 조각을 되찾아\n제국이 온전한 힘을 얻었습니다.	The Price of Loyalty	After Winning Map 7	MIXPOL7.SMK	voice_aligned
+0x2D	secondary_ms	24910	28930	그 힘으로 진짜 적에 맞서십시오.	The Price of Loyalty	After Winning Map 7	MIXPOL7.SMK	voice_aligned
+0x2D	secondary_ms	29430	33070	배신과 거짓의 소굴인\n강령술사들을 없애십시오.	The Price of Loyalty	After Winning Map 7	MIXPOL7.SMK	voice_aligned
+0x2E	secondary_ms	490	6550	황제의 위대한 지혜가 이끌고\n고귀한 영웅들이 지켜 온 덕분에	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	6550	10030	강대한 제국은 이어질 것입니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	10170	15860	당신은 옛 친구 크리거가 스스로\n반란을 일으킨 게 아니라	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	15860	20570	강령술사의 마법에 지배당했다고\n말하고 있습니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	21350	27870	그렇다 해도 백성들은 그가 제국에\n무기를 든 모습을 보았습니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned
+0x2E	secondary_ms	28170	30670	그런 행동을 벌하지 않을 수 없습니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned
+0x2E	secondary_ms	30770	32280	하지만 좋은 소식도 있습니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	32280	36570	황제께서 당신의 충성과 공로에\n큰 보답을 내리기로 했습니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	36570	39350	크리거가 가졌던 모든 영지와\n작위를 당신에게 줄 것입니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned_split
+0x2E	secondary_ms	39890	42239	이것이 바로 충성의 대가입니다.	The Price of Loyalty	You've Won!	MIXPOL8.SMK	voice_aligned
+0x2F	secondary_ms	290	11070	아주 오래전 이 왕국이 서기 전에 이 땅은\n여러 부족이 다투던 전쟁터였습니다.	Descendants	Intro	MIXDES9.SMK	voice_aligned
+0x2F	secondary_ms	11990	17650	오랜 왕가의 첫 통치자였던 야만인\n자르코나는 꿈을 꾸었습니다.	Descendants	Intro	MIXDES9.SMK	voice_aligned_split
+0x2F	secondary_ms	17650	22750	부족들을 정복하고 하나로\n만드는 원대한 꿈이었습니다.	Descendants	Intro	MIXDES9.SMK	voice_aligned_split
+0x30	secondary_ms	470	8830	여러 세대가 흐르는 동안 자르코나가 세운\n왕국은 자유롭게 성장하고 번영했습니다.	Descendants	After Winning Map 1	MIXDES10.SMK	voice_aligned
+0x30	secondary_ms	9170	14100	하지만 동쪽에서 하론데일 왕국이\n강대한 세력으로 일어났습니다.	Descendants	After Winning Map 1	MIXDES10.SMK	voice_aligned_split
+0x30	secondary_ms	14100	18390	두 왕국은 국경을 두고 치열하게\n다투기 시작했습니다.	Descendants	After Winning Map 1	MIXDES10.SMK	voice_aligned_split
+0x31	secondary_ms	250	8070	에타니아의 손자인 자르코나 3세는\n죽음을 앞두고 약해진 왕국의	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
+0x31	secondary_ms	8070	11890	앞날을 걱정했습니다. 오랜\n전쟁으로 큰 피해를 입었고	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
+0x31	secondary_ms	12630	19610	왕국이 다시 번영하려면 먼\n친척의 도움이 필요했습니다.	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned
+0x31	secondary_ms	20390	32150	마지막으로 선택해야 했습니다. 전쟁광\n괴짜 이반 삼촌과 그의 야만인 부족을	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
+0x31	secondary_ms	32150	40630	부를 것인가 아니면 집을 떠난 아들이자\n이름난 마법사 조셉을 찾을 것인가.	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
+0x32	secondary_ms	90	5820	부족을 통일한 지 200년째\n되던 해 왕가가 힘든 시기를	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
+0x32	secondary_ms	5820	12850	보내던 때였습니다. 정찰병이 남쪽\n국경에서 다급히 말을 달려왔습니다.	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
+0x32	secondary_ms	13470	20250	야만인 무리가 전초 기지 여럿을\n점령하고 하나를 불태웠습니다.	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned
+0x32	secondary_ms	21190	24830	당시의 여왕 젤드리아는 잃은 도시를 되찾고	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
+0x32	secondary_ms	24830	28710	국경을 지키려 남쪽으로\n군대를 보냈습니다.	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
+0x33	secondary_ms	50	8170	전쟁과 혼란이 자르코나 왕국을\n무너뜨리려던 때 큰 타격이 닥쳤습니다.	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned
+0x33	secondary_ms	8450	16030	하론데일 첩자의 배신으로 아이보리\n게이츠 성이 함락됐습니다.	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned
+0x33	secondary_ms	16970	24880	당시 통치자 에타니아 젤드리아\n2세는 엘프에게 도움을 청할지	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned_split
+0x33	secondary_ms	24880	29670	직접 성을 되찾을지 정해야 했습니다.	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned_split
+0x34	secondary_ms	530	9550	이제 조상들이 시작한 일을 나\n자르코나 6세가 끝낼 차례입니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned
+0x34	secondary_ms	11350	18020	오래전 아이보리 게이츠를 되찾은\n뒤 우리 가문은 더 강해졌습니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned_split
+0x34	secondary_ms	18020	23090	하론데일은 다른 전선의 전투에서\n계속 운이 다하고 있습니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned_split
+0x34	secondary_ms	24330	31150	아침이면 하론데일의 본토를 향해\n대공세를 시작할 것입니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned
+0x34	secondary_ms	31770	37410	어떤 결과가 나오든 이 오랜\n원한은 곧 끝날 것입니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned
+0x35	secondary_ms	110	6190	하론데일 왕국은 우리 손에\n들어왔습니다. 통치자들은 먼	Descendants	You've Won!	MIXDES15.SMK	voice_aligned_split
+0x35	secondary_ms	6190	11500	땅으로 달아났거나 모두 목숨을\n잃었습니다. 나는 성으로	Descendants	You've Won!	MIXDES15.SMK	voice_aligned_split
+0x35	secondary_ms	11500	15430	돌아가 남은 세월을\n평화롭게 보낼 것입니다.	Descendants	You've Won!	MIXDES15.SMK	voice_aligned_split
+0x36	secondary_ms	290	5140	최근 서쪽 바다에 안개로\n둘러싸인 군도가 나타났다는	The Wizard's Isle	Intro	MIXWIZ16.SMK	voice_aligned_split
+0x36	secondary_ms	5140	10070	이야기가 들립니다. 전에는\n물밖에 없던 곳입니다.	The Wizard's Isle	Intro	MIXWIZ16.SMK	voice_aligned_split
+0x36	secondary_ms	10970	17510	그곳은 전설의 쉬라우디드 군도이며\n마법의 샘이 숨겨져 있습니다.	The Wizard's Isle	Intro	MIXWIZ16.SMK	voice_aligned
+0x36	secondary_ms	18010	23290	천 년마다 바다 위로\n솟아오르고 그 힘을 차지한	The Wizard's Isle	Intro	MIXWIZ16.SMK	voice_aligned_split
+0x36	secondary_ms	23290	28350	자는 다음 천 년을 지배한다고 전해집니다.	The Wizard's Isle	Intro	MIXWIZ16.SMK	voice_aligned_split
+0x36	secondary_ms	29270	37290	경쟁자들도 군도의 등장을 알고\n정복할 계획을 세우고 있을 것입니다.	The Wizard's Isle	Intro	MIXWIZ16.SMK	voice_aligned
+0x37	secondary_ms	270	6090	섬 주민들을 통해 오래된\n도서관의 위치를 알아냈습니다.	The Wizard's Isle	After Winning Map 1	MIXWIZ17.SMK	voice_aligned
+0x37	secondary_ms	6530	13470	그 안에는 거의 끝이 없는\n신비한 지식이 쌓여 있습니다.	The Wizard's Isle	After Winning Map 1	MIXWIZ17.SMK	voice_aligned
+0x37	secondary_ms	13610	21310	무엇보다 먼지 쌓인 책 속에는 마법의\n샘에 관한 정보가 있을 것입니다.	The Wizard's Isle	After Winning Map 1	MIXWIZ17.SMK	voice_aligned
+0x37	secondary_ms	21730	27750	그 정보가 있으면 샘을 찾아내\n당신의 뜻에 묶어 둘 수 있습니다.	The Wizard's Isle	After Winning Map 1	MIXWIZ17.SMK	voice_aligned
+0x37	secondary_ms	28250	34610	도서관이 있는 크로노스\n시를 점령하십시오.	The Wizard's Isle	After Winning Map 1	MIXWIZ17.SMK	voice_aligned
+0x38	secondary_ms	110	7590	도서관을 조사해 마법의 샘이\n있는 곳을 알아냈습니다.	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned
+0x38	secondary_ms	8170	12670	하지만 경쟁자 하나가 이미\n그곳을 차지했습니다.	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned
+0x38	secondary_ms	13550	17540	크로노스 도서관의 지식이\n없으니 힘을 다루려면	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned_split
+0x38	secondary_ms	17540	24210	시간이 걸릴 것입니다. 하지만\n성공하면 막을 수 없습니다.	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned_split
+0x38	secondary_ms	25350	32090	도서관은 강력한 유물의\n존재도 알려 주었습니다.	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned
+0x38	secondary_ms	32930	38430	그 유물은 가까이 있는 모든\n마법을 완전히 무효로 만듭니다.	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned_split
+0x38	secondary_ms	38430	43250	경쟁 대마법사를 상대하기에\n가장 알맞은 무기입니다.	The Wizard's Isle	After Winning Map 2	MIXWIZ18.SMK	voice_aligned_split
+0x39	secondary_ms	190	7390	이제 무효의 구를 손에 넣었으니\n승리는 거의 확실합니다.	The Wizard's Isle	After Winning Map 3	MIXWIZ19.SMK	voice_aligned
+0x39	secondary_ms	7690	12020	하지만 시간이 없으니 서두르십시오.	The Wizard's Isle	After Winning Map 3	MIXWIZ19.SMK	voice_aligned_split
+0x39	secondary_ms	12020	18010	경쟁자가 마법의 샘을 지배하면 무효의\n구도 그 힘을 막지 못합니다.	The Wizard's Isle	After Winning Map 3	MIXWIZ19.SMK	voice_aligned_split
+0x3A	secondary_ms	70	6850	모든 경쟁자를 물리쳐 달아나게 했습니다.\n마법의 샘은 이제 당신의 것입니다.	The Wizard's Isle	You've Won!	MIXWIZ20.SMK	voice_aligned
+0x3A	secondary_ms	7610	14210	새로운 마법의 시대를 열고\n시간의 비밀도 풀 수 있습니다.	The Wizard's Isle	You've Won!	MIXWIZ20.SMK	voice_aligned
+0x3A	secondary_ms	15090	19870	이 힘을 현명하게 사용하십시오.\n그러면 어떤 세계에서도	The Wizard's Isle	You've Won!	MIXWIZ20.SMK	voice_aligned_split
+0x3A	secondary_ms	19870	23070	가장 위대한 마법사가 될 것입니다.	The Wizard's Isle	You've Won!	MIXWIZ20.SMK	voice_aligned_split
+0x3B	secondary_ms	110	2260	알베론 경을 위해 먼 섬으로 가던 중	The Voyage Home	Intro	MIXVOY21.SMK	voice_aligned_split
+0x3B	secondary_ms	2260	6310	갑작스럽고 거센 폭풍에\n배가 부서졌습니다.	The Voyage Home	Intro	MIXVOY21.SMK	voice_aligned_split
+0x3B	secondary_ms	6670	11530	나와 몇 안 되는 선원은 간신히 이름\n모를 섬의 해안에 닿았습니다.	The Voyage Home	Intro	MIXVOY21.SMK	voice_aligned
+0x3B	secondary_ms	11910	16710	이제 본토의 고향으로 돌아갈\n만큼 큰 배를 만들어야 합니다.	The Voyage Home	Intro	MIXVOY21.SMK	voice_aligned
+0x3C	secondary_ms	230	4110	항해는 순조롭게 이어지고 있으며\n보름 뒤면 고향에 도착할 것입니다.	The Voyage Home	After Winning Map 1	MIXVOY22.SMK	voice_aligned
+0x3C	secondary_ms	4650	8450	뜻밖에도 악명 높은 해적\n군도를 우연히 찾아냈습니다.	The Voyage Home	After Winning Map 1	MIXVOY22.SMK	voice_aligned
+0x3C	secondary_ms	9110	13380	이 해적들은 오랫동안 알베론 경의\n왕국 해안을 약탈했습니다.	The Voyage Home	After Winning Map 1	MIXVOY22.SMK	voice_aligned_split
+0x3C	secondary_ms	13380	18550	여정을 계속하기 전에 두목을 찾아\n없애는 것이 나의 의무입니다.	The Voyage Home	After Winning Map 1	MIXVOY22.SMK	voice_aligned_split
+0x3D	secondary_ms	110	3950	어제 안개를 틈타 고향에 돌아왔습니다.	The Voyage Home	After Winning Map 2	MIXVOY23.SMK	voice_aligned
+0x3D	secondary_ms	4350	6390	해변에서 사촌이 나를 맞았습니다.	The Voyage Home	After Winning Map 2	MIXVOY23.SMK	voice_aligned
+0x3D	secondary_ms	6730	10610	내가 떠난 사이 내전이 일어났고	The Voyage Home	After Winning Map 2	MIXVOY23.SMK	voice_aligned
+0x3D	secondary_ms	10710	18490	반란의 우두머리는 내 누이인 강령술사라고\n했습니다. 나와 매우 가까운 가족입니다.	The Voyage Home	After Winning Map 2	MIXVOY23.SMK	voice_aligned
+0x3D	secondary_ms	18970	27180	이제 선택해야 합니다. 오랫동안 나를\n귀하게 대한 알베론 경에게 충성할 것인가	The Voyage Home	After Winning Map 2	MIXVOY23.SMK	voice_aligned_split
+0x3D	secondary_ms	27180	32330	더 오래된 피의 인연을 따라\n누이의 뜻을 위해 싸울 것인가.	The Voyage Home	After Winning Map 2	MIXVOY23.SMK	voice_aligned_split
+0x3E	secondary_ms	30	4730	나는 알베론 경에게 충성하기로\n했습니다. 이제 누이는 사슬에	The Voyage Home	You've Won! (Map 3)	MIXVOY24.SMK	voice_aligned_split
+0x3E	secondary_ms	4730	8450	묶여 끌려가 죽을 때까지\n감옥에 갇힐 것입니다.	The Voyage Home	You've Won! (Map 3)	MIXVOY24.SMK	voice_aligned_split
+0x3E	secondary_ms	8770	14330	내 선택은 받아들였지만 이 싸움이\n피를 부르지 않기를 바랐습니다.	The Voyage Home	You've Won! (Map 3)	MIXVOY24.SMK	voice_aligned
+0x3F	secondary_ms	50	6610	옛 주군 알베론 경의 성이 멀리서 불타고\n있습니다. 누이와 나는 뜻을 이루었지만	The Voyage Home	You've Won! (Map 4)	MIXVOY25.SMK	voice_aligned_split
+0x3F	secondary_ms	6610	12970	내가 맞서 달려오는 모습을 본 주군의\n배신감 어린 눈빛을 잊지 못할 것입니다.	The Voyage Home	You've Won! (Map 4)	MIXVOY25.SMK	voice_aligned_split

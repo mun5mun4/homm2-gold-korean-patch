@@ -12,13 +12,14 @@ from pathlib import Path
 from tools.release import package_release
 
 
-VERSION = "v0.9.0-beta.6"
+VERSION = "v0.9.0-beta.7"
 MANIFEST_PACKAGE_PATH = "patches/HEROES2.EXE.bsdiff"
 MAPPING_PACKAGE_PATH = "fonts/mapping874.fixed-interface-font.txt"
 DEFAULT_FONT_PACKAGE_PATH = "fonts/NanumGothicCoding-Regular.ttf"
 UPGRADE_MANIFEST_PACKAGE_PATHS = (
     "upgrades/v0.9.0-beta.4-manifest.json",
     "upgrades/v0.9.0-beta.5-manifest.json",
+    "upgrades/v0.9.0-beta.6-manifest.json",
 )
 FIXTURE_RAW = b"fixture\n"
 FROZEN_UPGRADE_MANIFESTS = {
@@ -104,6 +105,11 @@ def fixture_manifest(version: str = VERSION) -> dict[str, object]:
                     "version": "v0.9.0-beta.5",
                     "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[1],
                     "manifest": dict(package_release.BETA5_MANIFEST_IDENTITY),
+                },
+                {
+                    "version": "v0.9.0-beta.6",
+                    "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[2],
+                    "manifest": dict(package_release.BETA6_MANIFEST_IDENTITY),
                 },
             ],
         },
@@ -212,7 +218,7 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
 
         self.assertFalse(self.output.exists())
 
-    def test_rejects_legacy_manifest_schema_for_beta6(self) -> None:
+    def test_rejects_legacy_manifest_schema_for_beta7(self) -> None:
         manifest = fixture_manifest()
         manifest["schema"] = "homm2-korean-release-manifest-v1"
 
@@ -301,7 +307,7 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             ("manifest_path", "upgrades/vprivate-manifest.json"),
             ("manifest", {"size": 1, "sha256": "A" * 64}),
         )
-        for index in range(2):
+        for index in range(len(UPGRADE_MANIFEST_PACKAGE_PATHS)):
             for key, value in mutations:
                 with self.subTest(index=index, key=key):
                     manifest = fixture_manifest()

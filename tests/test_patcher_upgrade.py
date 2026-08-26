@@ -15,7 +15,8 @@ from tools.release import homm2_ko_patcher as patcher
 
 PREVIOUS_VERSION = "v0.9.0-beta.4"
 BETA5_VERSION = "v0.9.0-beta.5"
-CURRENT_VERSION = "v0.9.0-beta.6"
+BETA6_VERSION = "v0.9.0-beta.6"
+CURRENT_VERSION = "v0.9.0-beta.7"
 PREVIOUS_SHA256 = "A" * 64
 CURRENT_SHA256 = "B" * 64
 
@@ -427,10 +428,11 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertFalse((fixture.state / patcher.JOURNAL_NAME).exists())
             self.assertEqual((fixture.game / "DATA" / "A.BIN").read_bytes(), fixture.new_static)
 
-    def test_beta4_and_beta5_custom_fonts_upgrade_to_the_bundled_default_without_reselection(self) -> None:
+    def test_beta4_beta5_and_beta6_upgrade_to_the_bundled_default_without_reselection(self) -> None:
         cases = (
             (PREVIOUS_VERSION, True),
             (BETA5_VERSION, False),
+            (BETA6_VERSION, False),
         )
         for previous_version, previous_legacy in cases:
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:

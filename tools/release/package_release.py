@@ -16,7 +16,7 @@ from pathlib import PurePosixPath
 from typing import Any
 
 
-FIXED_ZIP_TIME = (2026, 8, 24, 0, 0, 0)
+FIXED_ZIP_TIME = (2026, 8, 26, 0, 0, 0)
 
 COMMON_RELEASE_FILES = {
     "CHANGELOG.md",
@@ -105,8 +105,10 @@ DEFAULT_FONT_LICENSE_PATH = "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt"
 BETA4_VERSION = "v0.9.0-beta.4"
 BETA5_VERSION = "v0.9.0-beta.5"
 BETA6_VERSION = "v0.9.0-beta.6"
+BETA7_VERSION = "v0.9.0-beta.7"
 BETA4_MANIFEST_PATH = "upgrades/v0.9.0-beta.4-manifest.json"
 BETA5_MANIFEST_PATH = "upgrades/v0.9.0-beta.5-manifest.json"
+BETA6_MANIFEST_PATH = "upgrades/v0.9.0-beta.6-manifest.json"
 BETA4_MANIFEST_IDENTITY = {
     "size": 31_988,
     "sha256": "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60",
@@ -115,9 +117,14 @@ BETA5_MANIFEST_IDENTITY = {
     "size": 32_845,
     "sha256": "A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F",
 }
+BETA6_MANIFEST_IDENTITY = {
+    "size": 33_107,
+    "sha256": "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C",
+}
 PINNED_UPGRADE_SOURCES = (
     (BETA4_VERSION, BETA4_MANIFEST_PATH, BETA4_MANIFEST_IDENTITY),
     (BETA5_VERSION, BETA5_MANIFEST_PATH, BETA5_MANIFEST_IDENTITY),
+    (BETA6_VERSION, BETA6_MANIFEST_PATH, BETA6_MANIFEST_IDENTITY),
 )
 
 
@@ -183,8 +190,8 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         "release version is unsafe",
     )
     require(manifest.get("version") == version, "release version does not match manifest")
-    require(version == BETA6_VERSION, "this packager is pinned to beta.6")
-    require(schema == "homm2-korean-release-manifest-v2", "beta.6 requires release manifest v2")
+    require(version == BETA7_VERSION, "this packager is pinned to beta.7")
+    require(schema == "homm2-korean-release-manifest-v2", "beta.7 requires release manifest v2")
     rows = manifest.get("files")
     require(isinstance(rows, list) and rows, "release manifest file list is empty")
 
@@ -247,7 +254,7 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         sources = upgrades.get("from")
         require(
             isinstance(sources, list) and len(sources) == len(PINNED_UPGRADE_SOURCES),
-            "beta.6 must declare exactly the pinned beta.4 and beta.5 upgrade sources",
+            "beta.7 must declare exactly the pinned beta.4, beta.5 and beta.6 upgrade sources",
         )
         for index, (descriptor, pinned) in enumerate(zip(sources, PINNED_UPGRADE_SOURCES)):
             require(
@@ -405,7 +412,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--release-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--version", default=BETA6_VERSION)
+    parser.add_argument("--version", default=BETA7_VERSION)
     args = parser.parse_args()
     print(
         json.dumps(

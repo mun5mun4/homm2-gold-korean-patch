@@ -15,7 +15,7 @@
 
 ## NanumGothicCoding Regular
 
-beta.6의 유일한 한글 글리프 생성 글꼴로 `fonts/NanumGothicCoding-Regular.ttf`를 동봉합니다.
+beta.7의 유일한 한글 글리프 생성 글꼴로 `fonts/NanumGothicCoding-Regular.ttf`를 동봉합니다.
 
 - 저작권 고지: Copyright (c) 2010, NHN Corporation
 - 라이선스: SIL Open Font License 1.1

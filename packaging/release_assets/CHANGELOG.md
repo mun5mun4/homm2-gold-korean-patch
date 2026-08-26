@@ -1,5 +1,16 @@
 # 변경 기록
 
+## v0.9.0-beta.7 — 2026-08-26
+
+- 오프닝·캠페인 영상 51편, 57개 장면에 한국어 자막 388개 추가
+- Whisper·DTW 음성 정렬과 primary/secondary 영상 시계 분리로 장면별 싱크 교정
+- 흰색 글자·검은 테두리의 2배 자막과 안전한 하단 갱신 gate로 반복 깜빡임 제거
+- 영상 종료·건너뛰기·재진입에서 원본 화면 갱신으로 복귀하도록 generation 검증 추가
+- 공개 beta.4·beta.5·beta.6 설치본에서 beta.7 `INSTALL.cmd` 직접 업그레이드 지원
+- 공개 beta.6 manifest를 beta.4·beta.5 manifest와 함께 고정 검증
+
+beta.1~beta.3 사용자는 해당 버전을 제거해 원본을 복구한 뒤 beta.7를 설치해야 합니다.
+
 ## v0.9.0-beta.6 — 2026-08-24
 
 - 배포 글꼴을 OFL 1.1의 `NanumGothicCoding Regular` 하나로 고정
