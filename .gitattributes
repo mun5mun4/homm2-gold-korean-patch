@@ -11,6 +11,7 @@ packaging/release_assets/fonts/*.ttf -text
 
 # Pinned upstream license files retain their exact published bytes and spacing.
 packaging/release_assets/THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt -text -whitespace
+packaging/release_assets/THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt -text -whitespace
 packaging/release_assets/THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt -text -whitespace
 
 # A published manifest is a byte-pinned upgrade input.

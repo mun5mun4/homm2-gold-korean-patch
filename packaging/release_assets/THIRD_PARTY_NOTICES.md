@@ -13,9 +13,22 @@
 
 이 배포판은 GPL-2.0-only 조건을 따르며 라이선스 전문을 `COPYING.GPL-2.0`에 포함합니다. 대응 번역 원장과 공개 패치 도구는 같은 Git 태그의 소스 저장소에서 제공합니다.
 
+## Iropke Batang Medium
+
+beta.9의 기본 한글 글리프·버튼 생성 글꼴로 `fonts/IropkeBatangM.ttf`를 포함합니다.
+
+- 저작권 고지: Copyright (c) 2016, 이롭게(iropke) (www.iropke.com | hello@iropke.com)
+- Reserved Font Name: '이롭게 바탕체', 'iropke batang'
+- 라이선스: SIL Open Font License 1.1
+- 용도: 기본 한글 글리프·버튼·`병력당 비용:` 생성
+- 원본: `https://github.com/iropke/font-iropke-batang`
+- 원본 SHA-256: `5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69`
+
+TTF는 원본을 수정하지 않고 그대로 동봉합니다. OFL 1.1은 라이선스와 저작권 고지를 함께 포함하는 조건으로 글꼴을 소프트웨어와 묶어 재배포할 수 있도록 허용합니다. OFL 1.1과 Reserved Font Name 고지 전문은 `THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt`에 있습니다. 이 글꼴에서 미리 만든 고정 래스터나 완성 AGG는 포함하지 않으며 설치 시 생성합니다.
+
 ## NanumGothicCoding Regular
 
-beta.8에 유일하게 동봉하는 기본·보완 한글 글꼴로 `fonts/NanumGothicCoding-Regular.ttf`를 포함합니다.
+beta.9의 보완 한글 글꼴로 `fonts/NanumGothicCoding-Regular.ttf`를 포함합니다.
 
 - 저작권 고지: Copyright (c) 2010, NHN Corporation
 - 라이선스: SIL Open Font License 1.1
@@ -25,13 +38,9 @@ beta.8에 유일하게 동봉하는 기본·보완 한글 글꼴로 `fonts/Nanum
 
 TTF는 위 원본을 수정하지 않고 그대로 동봉합니다. 라이선스와 Reserved Font Name 고지 전문은 `THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt`에 있습니다.
 
-## 사용자 로컬 글꼴 검증 예시 — 배포하지 않음
-
-이롭게 바탕체는 사용자가 자신의 PC에서 선택해 렌더러 v3의 FreeType bearing과 typographic 기준선을 수동 검증한 예시로만 사용했습니다. 이롭게 바탕체 파일, 그 글꼴에서 만든 글리프·버튼 래스터와 시험용 AGG는 저장소와 배포 ZIP에 포함하지 않습니다. 이 기록은 해당 글꼴을 프로젝트의 배포 구성요소로 표시하거나 사용 권한을 대신 확인한다는 뜻이 아닙니다.
-
 ## Pillow
 
-Pillow 12.0.0은 설치 시 기본 나눔고딕코딩 또는 사용자가 선택한 로컬 글꼴을 한글 비트맵 글리프와 동적 버튼 래스터로 그리는 데 사용되며 Windows 단독 실행 파일에 포함됩니다. Pillow 및 그 기반이 된 PIL의 저작권·라이선스 고지 전문은 `THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt`에 있습니다.
+Pillow 12.0.0은 설치 시 기본 이롭게 바탕체, 보완 나눔고딕코딩 또는 사용자가 선택한 로컬 글꼴을 한글 비트맵 글리프와 동적 버튼 래스터로 그리는 데 사용되며 Windows 단독 실행 파일에 포함됩니다. Pillow 및 그 기반이 된 PIL의 저작권·라이선스 고지 전문은 `THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt`에 있습니다.
 
 ## Python bsdiff4
 

@@ -17,7 +17,8 @@ PREVIOUS_VERSION = "v0.9.0-beta.4"
 BETA5_VERSION = "v0.9.0-beta.5"
 BETA6_VERSION = "v0.9.0-beta.6"
 BETA7_VERSION = "v0.9.0-beta.7"
-CURRENT_VERSION = "v0.9.0-beta.8"
+BETA8_VERSION = "v0.9.0-beta.8"
+CURRENT_VERSION = "v0.9.0-beta.9"
 PREVIOUS_SHA256 = "A" * 64
 CURRENT_SHA256 = "B" * 64
 
@@ -70,15 +71,17 @@ def renderer(*, legacy: bool, historical_v2: bool = False) -> dict[str, object]:
 def generation(
     default_font_raw: bytes,
     *,
+    fallback_font_raw: bytes | None = None,
     legacy: bool,
     historical_v2: bool = False,
+    frozen_legacy: bool = False,
 ) -> dict[str, object]:
-    return {
-        "schema": "homm2-font-generation-v1",
+    value: dict[str, object] = {
+        "schema": "homm2-font-generation-v1" if frozen_legacy else "homm2-font-generation-v2",
         "mapping": {"package_path": "fonts/mapping.txt", "package": identity(b"mapping")},
         "default_font": {
-            "name": "Fixture Regular",
-            "package_path": "fonts/Fixture.ttf",
+            "name": "Legacy Nanum Fixture" if frozen_legacy else "Iropke Fixture",
+            "package_path": "fonts/Legacy.ttf" if frozen_legacy else "fonts/Iropke.ttf",
             "package": identity(default_font_raw),
             "face_index": 0,
             "license_path": "licenses/FONT.txt",
@@ -94,6 +97,16 @@ def generation(
             "blank_legacy_sprite_index": homm2_font.AT_SIGN_SPRITE_INDEX,
         },
     }
+    if not frozen_legacy:
+        assert fallback_font_raw is not None
+        value["fallback_font"] = {
+            "name": "Nanum Fallback Fixture",
+            "package_path": "fonts/Nanum.ttf",
+            "package": identity(fallback_font_raw),
+            "face_index": 0,
+            "license_path": "licenses/FALLBACK_FONT.txt",
+        }
+    return value
 
 
 def resolved_face(
@@ -203,7 +216,8 @@ class UpgradeFixture:
     new_static = b"beta5-static"
     new_copy = b"beta5-copy"
     old_cloud = b"cloud-before-beta4"
-    default_font = b"fixture-font"
+    default_font = b"iropke-fixture-font"
+    fallback_font = b"nanum-fixture-font"
 
     def __init__(
         self,
@@ -246,11 +260,12 @@ class UpgradeFixture:
             [previous_static, previous_copy],
             legacy=previous_legacy,
             historical_v2=previous_historical_v2,
+            frozen_legacy=True,
         )
         self.current_manifest = self.manifest(CURRENT_VERSION, [current_static, current_copy], legacy=False)
 
         previous_font = font_receipt(
-            self.default_font,
+            self.fallback_font,
             legacy=previous_legacy,
             mode="custom" if custom else "default",
             historical_v2=previous_historical_v2,
@@ -304,15 +319,18 @@ class UpgradeFixture:
         *,
         legacy: bool,
         historical_v2: bool = False,
+        frozen_legacy: bool = False,
     ) -> dict[str, object]:
         return {
             "schema": "homm2-korean-release-manifest-v2",
             "version": version,
             "game": {"game_id": patcher.GAME_ID, "build_id": patcher.BUILD_ID, "language": "English"},
             "font_generation": generation(
-                self.default_font,
+                self.fallback_font if frozen_legacy else self.default_font,
+                fallback_font_raw=None if frozen_legacy else self.fallback_font,
                 legacy=legacy,
                 historical_v2=historical_v2,
+                frozen_legacy=frozen_legacy,
             ),
             "files": files,
         }
@@ -496,12 +514,13 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertFalse((fixture.state / patcher.JOURNAL_NAME).exists())
             self.assertEqual((fixture.game / "DATA" / "A.BIN").read_bytes(), fixture.new_static)
 
-    def test_beta4_through_beta7_upgrade_to_the_bundled_default_without_reselection(self) -> None:
+    def test_beta4_through_beta8_upgrade_to_iropke_default_without_reselection(self) -> None:
         cases = (
             (PREVIOUS_VERSION, True),
             (BETA5_VERSION, False),
             (BETA6_VERSION, False),
             (BETA7_VERSION, False),
+            (BETA8_VERSION, False),
         )
         for previous_version, previous_legacy in cases:
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
@@ -607,7 +626,7 @@ class PatcherUpgradeTests(unittest.TestCase):
         self.assertEqual(patcher.sha256_file(frozen), "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60")
         document = patcher.json.loads(frozen.read_text(encoding="utf-8"))
         patcher.validate_manifest_document(document, frozen_legacy=True)
-        with self.assertRaisesRegex(patcher.PatchError, "renderer"):
+        with self.assertRaisesRegex(patcher.PatchError, "font_generation"):
             patcher.validate_manifest_document(document)
         current = {
             "game": document["game"],
@@ -631,45 +650,65 @@ class PatcherUpgradeTests(unittest.TestCase):
         self.assertEqual(loaded["version"], PREVIOUS_VERSION)
         self.assertEqual(loaded_sha256, "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60")
 
-    def test_frozen_beta5_through_beta7_manifests_and_receipts_keep_historical_v2_support(self) -> None:
+    def test_frozen_beta5_through_beta8_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
         fixtures = (
             (
                 BETA5_VERSION,
                 32_845,
                 "A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F",
+                True,
             ),
             (
                 BETA6_VERSION,
                 33_107,
                 "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C",
+                True,
             ),
             (
                 BETA7_VERSION,
                 33_369,
                 "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE",
+                True,
+            ),
+            (
+                BETA8_VERSION,
+                33_656,
+                "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5",
+                False,
             ),
         )
-        for version, expected_size, expected_sha256 in fixtures:
+        for version, expected_size, expected_sha256, historical_v2 in fixtures:
             with self.subTest(version=version):
                 frozen = Path(f"packaging/release_assets/upgrades/{version}-manifest.json")
                 self.assertEqual(frozen.stat().st_size, expected_size)
                 self.assertEqual(patcher.sha256_file(frozen), expected_sha256)
                 document = patcher.json.loads(frozen.read_text(encoding="utf-8"))
                 patcher.validate_manifest_document(document, frozen_legacy=True)
-                with self.assertRaisesRegex(patcher.PatchError, "renderer"):
+                with self.assertRaisesRegex(patcher.PatchError, "font_generation"):
                     patcher.validate_manifest_document(document)
 
                 historical_receipt = font_receipt(
                     b"historical-custom-font",
                     legacy=False,
                     mode="custom",
-                    historical_v2=True,
+                    historical_v2=historical_v2,
                 )
                 patcher.validate_font_receipt(historical_receipt, document)
+                if version == BETA8_VERSION:
+                    nanum = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
+                    beta8_default_receipt = font_receipt(nanum.read_bytes(), legacy=False)
+                    patcher.validate_font_receipt(beta8_default_receipt, document)
 
     def test_current_receipt_rejects_impossible_bearing_layout_diagnostics(self) -> None:
         default_font = UpgradeFixture.default_font
-        manifest = {"font_generation": generation(default_font, legacy=False)}
+        fallback_font = UpgradeFixture.fallback_font
+        manifest = {
+            "font_generation": generation(
+                default_font,
+                fallback_font_raw=fallback_font,
+                legacy=False,
+            )
+        }
         valid = font_receipt(default_font, legacy=False)
         patcher.validate_font_receipt(valid, manifest)
 
@@ -718,12 +757,19 @@ class PatcherUpgradeTests(unittest.TestCase):
 
     def test_current_receipt_allows_zero_primary_glyphs_with_complete_fallback(self) -> None:
         default_font = UpgradeFixture.default_font
-        manifest = {"font_generation": generation(default_font, legacy=False)}
+        fallback_font = UpgradeFixture.fallback_font
+        manifest = {
+            "font_generation": generation(
+                default_font,
+                fallback_font_raw=fallback_font,
+                legacy=False,
+            )
+        }
         receipt = font_receipt(default_font, legacy=False, mode="custom")
         fallback_layout = receipt["resolved_faces"]["primary"]
         receipt["primary_glyph_count"] = 0
         receipt["fallback_glyph_count"] = homm2_font.KOREAN_GLYPH_COUNT
-        receipt["fallback"] = font_face(default_font)
+        receipt["fallback"] = font_face(fallback_font)
         receipt["resolved_faces"] = {
             "primary": {"normal": None, "small": None},
             "fallback": fallback_layout,
@@ -753,6 +799,81 @@ class PatcherUpgradeTests(unittest.TestCase):
                 malicious["resolved_faces"]["fallback"] = copy.deepcopy(fallback_layout_value)
                 with self.assertRaises(patcher.PatchError):
                     patcher.validate_font_receipt(malicious, manifest)
+
+    def test_current_v2_receipt_enforces_iropke_primary_and_nanum_fallback(self) -> None:
+        default_font = UpgradeFixture.default_font
+        fallback_font = UpgradeFixture.fallback_font
+        manifest = {
+            "font_generation": generation(
+                default_font,
+                fallback_font_raw=fallback_font,
+                legacy=False,
+            )
+        }
+        receipt = font_receipt(default_font, legacy=False)
+        receipt["primary_glyph_count"] = 800
+        receipt["fallback_glyph_count"] = homm2_font.KOREAN_GLYPH_COUNT - 800
+        for size in ("normal", "small"):
+            receipt["resolved_faces"]["primary"][size]["glyph_count"] = 800
+        receipt["fallback"] = font_face(fallback_font, "Nanum.ttf")
+        receipt["resolved_faces"]["fallback"] = {
+            "normal": resolved_face(
+                homm2_font.NORMAL_PIXEL_SIZE,
+                homm2_font.NORMAL_CELL_WIDTH,
+                homm2_font.NORMAL_CELL_HEIGHT,
+                glyph_count=homm2_font.KOREAN_GLYPH_COUNT - 800,
+            ),
+            "small": resolved_face(
+                homm2_font.SMALL_PIXEL_SIZE,
+                homm2_font.SMALL_CELL_WIDTH,
+                homm2_font.SMALL_CELL_HEIGHT,
+                glyph_count=homm2_font.KOREAN_GLYPH_COUNT - 800,
+            ),
+        }
+        patcher.validate_font_receipt(receipt, manifest)
+
+        wrong_primary = copy.deepcopy(receipt)
+        wrong_primary["primary"] = font_face(fallback_font, "Nanum.ttf")
+        with self.assertRaisesRegex(patcher.PatchError, "기본 설치 기록"):
+            patcher.validate_font_receipt(wrong_primary, manifest)
+
+        wrong_fallback = copy.deepcopy(receipt)
+        wrong_fallback["fallback"] = font_face(default_font, "Iropke.ttf")
+        with self.assertRaisesRegex(patcher.PatchError, "대체 글꼴"):
+            patcher.validate_font_receipt(wrong_fallback, manifest)
+
+        custom = copy.deepcopy(receipt)
+        custom["mode"] = "custom"
+        custom["primary"] = font_face(b"selected-font", "Selected.ttf")
+        patcher.validate_font_receipt(custom, manifest)
+
+    def test_font_generation_v2_requires_separate_default_and_fallback_descriptors(self) -> None:
+        current = generation(
+            UpgradeFixture.default_font,
+            fallback_font_raw=UpgradeFixture.fallback_font,
+            legacy=False,
+        )
+        self.assertEqual(
+            patcher.validate_font_generation(current),
+            ["fonts/mapping.txt", "fonts/Iropke.ttf", "fonts/Nanum.ttf"],
+        )
+
+        missing_fallback = copy.deepcopy(current)
+        del missing_fallback["fallback_font"]
+        with self.assertRaisesRegex(patcher.PatchError, "대체 글꼴"):
+            patcher.validate_font_generation(missing_fallback)
+
+        frozen = generation(
+            UpgradeFixture.fallback_font,
+            legacy=False,
+            frozen_legacy=True,
+        )
+        self.assertEqual(
+            patcher.validate_font_generation(frozen, frozen_legacy=True),
+            ["fonts/mapping.txt", "fonts/Legacy.ttf"],
+        )
+        with self.assertRaisesRegex(patcher.PatchError, "font_generation"):
+            patcher.validate_font_generation(frozen)
 
     def test_invalid_staged_font_metadata_blocks_upgrade_before_backup_or_commit(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -814,19 +935,36 @@ class PatcherUpgradeTests(unittest.TestCase):
 
     def test_current_rendered_font_receipt_matches_bearing_validator(self) -> None:
         mapping = Path("translations/font/mapping874.fixed-interface-font.txt")
-        font = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
-        plan = homm2_font.make_font_plan(mapping, font, mode="default")
+        default_font = Path("packaging/release_assets/fonts/IropkeBatangM.ttf")
+        fallback_font = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
+        plan = homm2_font.make_font_plan(
+            mapping,
+            default_font,
+            fallback_path=fallback_font,
+            mode="default",
+        )
         metadata = homm2_font.render_font(plan).metadata
         manifest = {
             "font_generation": {
-                **generation(font.read_bytes(), legacy=False),
+                **generation(
+                    default_font.read_bytes(),
+                    fallback_font_raw=fallback_font.read_bytes(),
+                    legacy=False,
+                ),
                 "mapping": {"package_path": "fonts/mapping.txt", "package": patcher.file_identity(mapping)},
                 "default_font": {
+                    "name": "Iropke Batang Medium",
+                    "package_path": "fonts/IropkeBatangM.ttf",
+                    "package": patcher.file_identity(default_font),
+                    "face_index": 0,
+                    "license_path": "licenses/IROPKE_BATANG_OFL.txt",
+                },
+                "fallback_font": {
                     "name": "NanumGothicCoding Regular",
                     "package_path": "fonts/NanumGothicCoding-Regular.ttf",
-                    "package": patcher.file_identity(font),
+                    "package": patcher.file_identity(fallback_font),
                     "face_index": 0,
-                    "license_path": "licenses/FONT.txt",
+                    "license_path": "licenses/NANUMFONT_LICENSE.txt",
                 },
             }
         }

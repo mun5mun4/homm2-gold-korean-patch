@@ -4,20 +4,20 @@ Heroes of Might and Magic II Gold GOG DOS 영문판을 위한 비공식 한국�
 
 ## 배포 상태
 
-- 현재 배포 기준은 `v0.9.0-beta.8`입니다.
-- beta.8은 beta.7의 오프닝·캠페인 영상 51편, 57개 장면·388개 한국어 자막을 유지하면서 렌더러 v3, 사용자 글꼴 선택과 동적 버튼 글씨를 추가합니다.
-- 공개 beta.4·beta.5·beta.6·beta.7 설치본은 beta.8로 직접 업그레이드할 수 있습니다.
+- 현재 배포 기준은 `v0.9.0-beta.9`입니다.
+- beta.9은 beta.8의 렌더러 v3와 사용자 글꼴 선택을 유지하면서, OFL 1.1의 이롭게 바탕체를 기본 글꼴로 동봉합니다. 설치 시 게임 글리프·버튼·`병력당 비용:`을 이 글꼴에서 생성합니다.
+- 공개 beta.4·beta.5·beta.6·beta.7·beta.8 설치본은 beta.9으로 직접 업그레이드할 수 있습니다.
 
 배포판은 게임 실행 파일이나 원작 리소스 전체를 포함하지 않고, 사용자가 보유한 정확한 GOG 원본에 바이너리 델타를 적용합니다.
 
-## beta.8 설치와 업그레이드
+## beta.9 설치와 업그레이드
 
-깨끗한 GOG 원본이나 공개 beta.4·beta.5·beta.6·beta.7 설치본에서 기본 나눔고딕코딩을 쓰려면 `INSTALL.cmd`, 사용자가 보유한 글꼴을 쓰려면 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다. 지원되는 이전 버전을 먼저 제거할 필요는 없지만, 사용자 글꼴 경로는 저장하지 않으므로 사용자 글꼴 설치·업그레이드 때마다 파일을 다시 선택합니다.
+깨끗한 GOG 원본이나 공개 beta.4·beta.5·beta.6·beta.7·beta.8 설치본에서 기본 이롭게 바탕체를 쓰려면 `INSTALL.cmd`, 사용자가 보유한 다른 글꼴을 쓰려면 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다. 지원되는 이전 버전을 먼저 제거할 필요는 없지만, 사용자 글꼴 경로는 저장하지 않으므로 사용자 글꼴 설치·업그레이드 때마다 파일을 다시 선택합니다.
 
-beta.1~beta.3은 직접 업그레이드 대상이 아닙니다. 해당 버전 배포 폴더의 `UNINSTALL.cmd`로 GOG 원본을 복구한 뒤 beta.8을 설치하세요. 이전 배포 폴더가 없다면 같은 버전 ZIP을 다시 받아 제거할 수 있습니다.
+beta.1~beta.3은 직접 업그레이드 대상이 아닙니다. 해당 버전 배포 폴더의 `UNINSTALL.cmd`로 GOG 원본을 복구한 뒤 beta.9을 설치하세요. 이전 배포 폴더가 없다면 같은 버전 ZIP을 다시 받아 제거할 수 있습니다.
 
 1. GOG Galaxy, Heroes II, DOSBox를 모두 종료합니다.
-2. GitHub Releases에서 `homm2-ko-v0.9.0-beta.8-win-gog.zip`을 받습니다.
+2. GitHub Releases에서 `homm2-ko-v0.9.0-beta.9-win-gog.zip`을 받습니다.
 3. ZIP을 모두 푼 뒤 기본 글꼴은 `INSTALL.cmd`, 사용자 글꼴은 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다.
 
 기본 설치 경로는 다음과 같습니다.
@@ -34,9 +34,9 @@ homm2-ko-patcher.exe install --game-dir "C:\Program Files (x86)\GOG Galaxy\Games
 
 지원 대상은 GOG gameId `1207658785`, buildId `52745329670822422`, English 설치본입니다.
 
-## beta.8 글꼴 방식
+## beta.9 글꼴 방식
 
-배포 ZIP에 들어가는 글꼴 파일은 SIL Open Font License 1.1의 `NanumGothicCoding Regular` 하나뿐입니다. `INSTALL.cmd`는 이 기본 글꼴에서 874자 한글 글리프를 생성하고, `INSTALL_CUSTOM_FONT.cmd`는 사용자가 보유한 로컬 TTF·OTF·TTC·OTC를 선택해 같은 글리프와 한글 버튼 글씨를 생성합니다. 선택 글꼴에 없는 매핑 문자는 동봉한 나눔고딕코딩으로 보완합니다.
+배포 ZIP에는 SIL Open Font License 1.1의 `Iropke Batang Medium`과 `NanumGothicCoding Regular`를 동봉합니다. `INSTALL.cmd`는 기본 `fonts/IropkeBatangM.ttf`에서 874자 한글 글리프, 한글 버튼과 모집 창의 `병력당 비용:`을 설치 시 생성합니다. 이롭게 바탕체에 없는 매핑 문자는 `fonts/NanumGothicCoding-Regular.ttf`로 보완합니다. 완성된 글리프·버튼 래스터나 AGG는 배포하지 않습니다.
 
 명령줄에서는 `--font-file`로 파일을 직접 지정하고 TTC·OTC의 face는 0부터 시작하는 `--font-index`로 고를 수 있습니다. 선택한 파일은 설치 시 이 PC에서만 읽으며 패치 폴더로 복사하거나 저장소·배포 ZIP에 수집하지 않습니다. 설치기는 글꼴 이름이나 라이선스로 선택을 막지 않으므로 해당 글꼴을 사용할 권한은 사용자가 확인해야 합니다.
 
@@ -49,9 +49,9 @@ homm2-ko-patcher.exe install --font-file "C:\path\to\Collection.ttc" --font-inde
 
 폰트 없는 `HEROES2.AGG` 기반에는 번역 BIN 8개를 유지합니다. `HEROWIND.BIN`은 고정 10바이트 `Knowledge` 슬롯만 `지력`으로 교정합니다. 설치 시 한글화하는 버튼 글씨와 모집 창의 `Cost per troop:`을 바꾼 `병력당 비용:`은 같은 선택 글꼴에서 동적으로 그립니다. 메인 메뉴의 원본 배경·장식과 선언된 글씨 영역 밖 픽셀은 보존합니다. 정확한 ICN 배열과 AGG 생성 방식은 [동적 폰트 설계](docs/DYNAMIC_FONT_KO.md)에 설명했습니다.
 
-개발 중에는 사용자가 로컬로 보유한 `Iropke Batang Medium`을 선택한 별도 테스트에서 874자 생성, 기준선과 전경 잘림 0을 확인했습니다. 이 글꼴 파일과 그 글꼴로 미리 만든 래스터·AGG는 저장소나 배포 ZIP에 포함하지 않습니다.
+기본 이롭게 바탕체는 874자 생성, 공통 기준선과 전경 잘림 0을 검증한 원본 TTF를 수정하지 않고 동봉합니다. 저작권·Reserved Font Name 고지는 `Copyright (c) 2016, 이롭게(iropke) (www.iropke.com | hello@iropke.com), with Reserved Font Name '이롭게 바탕체', 'iropke batang'.`입니다. OFL 1.1 전문은 `THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt`에 함께 들어갑니다.
 
-직접 업그레이드는 동봉한 고정 beta.4·beta.5·beta.6·beta.7 manifest와 기존 receipt를 모두 검증합니다. 중간에 실패하면 업그레이드 직전 버전으로 롤백하고, 업그레이드된 beta.8을 제거하면 이전 베타가 아니라 최초 GOG 원본을 복원합니다.
+직접 업그레이드는 동봉한 고정 beta.4·beta.5·beta.6·beta.7·beta.8 manifest와 기존 receipt를 모두 검증합니다. 중간에 실패하면 업그레이드 직전 버전으로 롤백하고, 업그레이드된 beta.9을 제거하면 이전 베타가 아니라 최초 GOG 원본을 복원합니다.
 
 ## 번역 범위
 
@@ -70,21 +70,21 @@ homm2-ko-patcher.exe install --font-file "C:\path\to\Collection.ttc" --font-inde
 ├─ tools/release/             델타 빌더, 동적 폰트 빌더와 트랜잭션 설치기
 ├─ tools/localization/        최종 교정·캠페인·H2K3·영상 자막 빌드 도구
 ├─ translations/             선별된 번역 원장, 874자 글리프 매핑과 자막 큐
-├─ packaging/release_assets/ ZIP에 포함되는 문서·설치 스크립트·기본 나눔고딕코딩
+├─ packaging/release_assets/ ZIP에 포함되는 문서·설치 스크립트·기본 이롭게 바탕체·보완 나눔고딕코딩
 ├─ tests/                     공개 소스 단위 검사
 └─ docs/                      설계 문서와 공개판 활성 파일 해시
 ```
 
 내부 분석 로그, DOSBox 제어 실험, 캡처, 후보·복구 산출물은 저장소에 포함하지 않습니다. 배포 재포장 방법은 [BUILD_KO.md](BUILD_KO.md), 소스 범위는 [docs/SOURCE_LAYOUT_KO.md](docs/SOURCE_LAYOUT_KO.md), 영상 자막 재현 방법은 [docs/VIDEO_SUBTITLES_KO.md](docs/VIDEO_SUBTITLES_KO.md)에 설명했습니다.
 
-`docs/ACTIVE_FILE_HASHES.json`은 beta.3 번역 기반을 고정한 기존 source pin입니다. beta.8의 실행 파일·자막 은행 결과는 새 release manifest에서 별도로 고정하며, 설치 시 생성된 두 AGG의 실제 해시는 로컬 receipt에 기록합니다.
+`docs/ACTIVE_FILE_HASHES.json`은 beta.3 번역 기반을 고정한 기존 source pin입니다. beta.9의 실행 파일·자막 은행 결과는 새 release manifest에서 별도로 고정하며, 설치 시 생성된 두 AGG의 실제 해시는 로컬 receipt에 기록합니다.
 
 ## 원작 파일 미포함
 
-저장소와 배포 ZIP에는 완성된 `HEROES2.EXE`, AGG, 캠페인 맵, 세이브, 캡처, GOG·DOSBox 파일을 넣지 않습니다. 완성 AGG나 미리 생성한 한글 래스터 대신 정확한 지원 원본 없이는 사용할 수 없는 델타, 프로젝트 파일, 874자 매핑과 기본·대체용 나눔고딕코딩을 사용합니다. 사용자가 선택한 글꼴 파일도 배포물에 복사하지 않습니다.
+저장소와 배포 ZIP에는 완성된 `HEROES2.EXE`, AGG, 캠페인 맵, 세이브, 캡처, GOG·DOSBox 파일을 넣지 않습니다. 완성 AGG나 미리 생성한 한글 래스터 대신 정확한 지원 원본 없이는 사용할 수 없는 델타, 프로젝트 파일, 874자 매핑, 기본 이롭게 바탕체와 보완 나눔고딕코딩을 사용합니다. 사용자가 따로 선택한 글꼴 파일은 배포물에 복사하지 않습니다.
 
 ## 라이선스
 
-프로젝트 소스와 번역 데이터는 `GPL-2.0-only`로 배포됩니다. 기본 `NanumGothicCoding Regular`는 SIL Open Font License 1.1을 따릅니다. `munument1/-KR-fheroes2`의 한국어 번역을 참고·수정한 범위와 제3자 도구는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 기록했습니다.
+프로젝트 소스와 번역 데이터는 `GPL-2.0-only`로 배포됩니다. 기본 `Iropke Batang Medium`과 보완 `NanumGothicCoding Regular`는 각각 SIL Open Font License 1.1을 따릅니다. `munument1/-KR-fheroes2`의 한국어 번역을 참고·수정한 범위와 제3자 도구는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 기록했습니다.
 
 원작 게임과 상표의 권리는 각 권리자에게 있으며, 이 프로젝트는 비공식 팬 패치입니다.

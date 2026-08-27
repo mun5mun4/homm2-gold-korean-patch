@@ -2102,6 +2102,54 @@ class FontLayoutTests(unittest.TestCase):
                 resource_name,
             )
 
+    def test_local_gog_iropke_default_matches_the_same_font_in_custom_mode(self) -> None:
+        fixture_value = os.environ.get(LOCAL_GOG_ORIGINAL_AGG_ENV)
+        if not fixture_value:
+            self.skipTest(f"set {LOCAL_GOG_ORIGINAL_AGG_ENV} to a pristine GOG HEROES2.AGG")
+        fixture = Path(fixture_value)
+        if not fixture.is_file():
+            self.skipTest(f"configured pristine GOG HEROES2.AGG is unavailable: {fixture}")
+
+        iropke_value = os.environ.get(LOCAL_IROPKE_FONT_ENV)
+        if not iropke_value:
+            self.skipTest(f"set {LOCAL_IROPKE_FONT_ENV} to a locally owned IropkeBatangM.ttf fixture")
+        iropke = Path(iropke_value)
+        if not iropke.is_file():
+            self.skipTest(f"configured IropkeBatangM.ttf is unavailable: {iropke}")
+
+        default_plan = font.make_font_plan(
+            MAPPING,
+            iropke,
+            fallback_path=DEFAULT_FONT,
+            mode="default",
+        )
+        custom_plan = font.make_font_plan(
+            MAPPING,
+            iropke,
+            fallback_path=DEFAULT_FONT,
+            mode="custom",
+        )
+        self.assertEqual(default_plan.primary.sha256, IROPKE_FONT_SHA256)
+        self.assertEqual(default_plan.fallback_codepoints, frozenset())
+
+        default_rendered = font.render_font(default_plan)
+        custom_rendered = font.render_font(custom_plan)
+        self.assertEqual(default_rendered.normal, custom_rendered.normal)
+        self.assertEqual(default_rendered.small, custom_rendered.small)
+
+        base_raw = fixture.read_bytes()
+        default_raw = font.rebuild_agg_fonts(
+            base_raw,
+            default_rendered,
+            label="local-gog-main-iropke-default",
+        )
+        custom_raw = font.rebuild_agg_fonts(
+            base_raw,
+            custom_rendered,
+            label="local-gog-main-iropke-custom",
+        )
+        self.assertEqual(default_raw, custom_raw)
+
     def test_local_gog_main_agg_rebuilds_button_ui_and_recruit_cost_rasters(self) -> None:
         fixture_value = os.environ.get(LOCAL_GOG_ORIGINAL_AGG_ENV)
         if not fixture_value:

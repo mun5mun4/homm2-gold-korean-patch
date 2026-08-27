@@ -27,12 +27,24 @@ PATCHER_SOURCE = HERE / "homm2_ko_patcher.py"
 FONT_BUILDER_SOURCE = HERE / "homm2_font.py"
 BASELINE_SOURCE = HERE / "gog_original_file_hashes.json"
 MAPPING_SOURCE = REPOSITORY / "translations" / "font" / "mapping874.fixed-interface-font.txt"
-DEFAULT_FONT_SOURCE = ASSETS / "fonts" / "NanumGothicCoding-Regular.ttf"
+DEFAULT_FONT_SOURCE = ASSETS / "fonts" / "IropkeBatangM.ttf"
+FALLBACK_FONT_SOURCE = ASSETS / "fonts" / "NanumGothicCoding-Regular.ttf"
 MAPPING_PACKAGE_PATH = Path("fonts/mapping874.fixed-interface-font.txt")
-DEFAULT_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
-DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.8"
-PINNED_BETA8_TARGETS = {
+DEFAULT_FONT_PACKAGE_PATH = Path("fonts/IropkeBatangM.ttf")
+FALLBACK_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
+DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt")
+FALLBACK_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
+CURRENT_VERSION = "v0.9.0-beta.9"
+RELEASE_DATE = "2026-08-27"
+PINNED_DEFAULT_FONT = {
+    "size": 3_202_516,
+    "sha256": "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69",
+}
+PINNED_FALLBACK_FONT = {
+    "size": 2_315_924,
+    "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
+}
+PINNED_BETA9_TARGETS = {
     Path("HEROES2.EXE"): {
         "size": 1_523_420,
         "sha256": "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C",
@@ -73,6 +85,14 @@ UPGRADE_RELEASES = (
         "manifest": {
             "size": 33_369,
             "sha256": "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE",
+        },
+    },
+    {
+        "version": "v0.9.0-beta.8",
+        "manifest_path": Path("upgrades/v0.9.0-beta.8-manifest.json"),
+        "manifest": {
+            "size": 33_656,
+            "sha256": "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5",
         },
     },
 )
@@ -480,19 +500,30 @@ def localize_herowind_knowledge_agg(raw: bytes, *, label: str) -> bytes:
     return result
 
 
-def font_generation_manifest(mapping_raw: bytes, default_font_raw: bytes) -> dict[str, Any]:
+def font_generation_manifest(
+    mapping_raw: bytes,
+    default_font_raw: bytes,
+    fallback_font_raw: bytes,
+) -> dict[str, Any]:
     return {
-        "schema": "homm2-font-generation-v1",
+        "schema": "homm2-font-generation-v2",
         "mapping": {
             "package_path": MAPPING_PACKAGE_PATH.as_posix(),
             "package": digest(mapping_raw),
         },
         "default_font": {
-            "name": "NanumGothicCoding Regular",
+            "name": "Iropke Batang Medium",
             "package_path": DEFAULT_FONT_PACKAGE_PATH.as_posix(),
             "package": digest(default_font_raw),
             "face_index": 0,
             "license_path": DEFAULT_FONT_LICENSE_PATH.as_posix(),
+        },
+        "fallback_font": {
+            "name": "NanumGothicCoding Regular",
+            "package_path": FALLBACK_FONT_PACKAGE_PATH.as_posix(),
+            "package": digest(fallback_font_raw),
+            "face_index": 0,
+            "license_path": FALLBACK_FONT_LICENSE_PATH.as_posix(),
         },
         "renderer": {
             "id": homm2_font.RENDERER_ID,
@@ -550,6 +581,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
         require((ASSETS / asset).is_file(), f"release asset missing: {asset}")
     third_party_license_names = (
         "BSDIFF4_LICENSE.txt",
+        "IROPKE_BATANG_OFL.txt",
         "NANUM_GOTHIC_CODING_OFL.txt",
         "PILLOW_LICENSE.txt",
         "PYINSTALLER_COPYING.txt",
@@ -560,7 +592,8 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
     require(PATCHER_SOURCE.is_file(), "patcher source missing")
     require(FONT_BUILDER_SOURCE.is_file(), "font builder source missing")
     require(MAPPING_SOURCE.is_file(), "font mapping source missing")
-    require(DEFAULT_FONT_SOURCE.is_file(), "default Nanum font source missing")
+    require(DEFAULT_FONT_SOURCE.is_file(), "default Iropke font source missing")
+    require(FALLBACK_FONT_SOURCE.is_file(), "fallback Nanum font source missing")
     for upgrade in UPGRADE_RELEASES:
         require(
             (ASSETS / upgrade["manifest_path"]).is_file(),
@@ -579,10 +612,10 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
             source = source_path.read_bytes()
             target = target_path.read_bytes()
             require(source_digest(source) == baseline[relative.as_posix().casefold()], f"original baseline mismatch: {relative}")
-            if relative in PINNED_BETA8_TARGETS:
+            if relative in PINNED_BETA9_TARGETS:
                 require(
-                    digest(target) == PINNED_BETA8_TARGETS[relative],
-                    f"pinned beta.8 target mismatch: {relative}",
+                    digest(target) == PINNED_BETA9_TARGETS[relative],
+                    f"pinned beta.9 target mismatch: {relative}",
                 )
             if relative == Path("DATA/HEROES2.AGG"):
                 target = localize_herowind_knowledge_agg(target, label=f"{relative.as_posix()}:patched")
@@ -633,8 +666,8 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
 
         bank = checked_file(patched, Path("KOREAN.BIN"), "patched").read_bytes()
         require(
-            digest(bank) == PINNED_BETA8_TARGETS[Path("KOREAN.BIN")],
-            "pinned beta.8 target mismatch: KOREAN.BIN",
+            digest(bank) == PINNED_BETA9_TARGETS[Path("KOREAN.BIN")],
+            "pinned beta.9 target mismatch: KOREAN.BIN",
         )
         bank_relative = Path("payload/KOREAN.BIN")
         write(stage / bank_relative, bank)
@@ -650,8 +683,12 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
         )
         mapping_raw = MAPPING_SOURCE.read_bytes()
         default_font_raw = DEFAULT_FONT_SOURCE.read_bytes()
+        fallback_font_raw = FALLBACK_FONT_SOURCE.read_bytes()
+        require(digest(default_font_raw) == PINNED_DEFAULT_FONT, "default Iropke font identity mismatch")
+        require(digest(fallback_font_raw) == PINNED_FALLBACK_FONT, "fallback Nanum font identity mismatch")
         write(stage / MAPPING_PACKAGE_PATH, mapping_raw)
         write(stage / DEFAULT_FONT_PACKAGE_PATH, default_font_raw)
+        write(stage / FALLBACK_FONT_PACKAGE_PATH, fallback_font_raw)
         upgrade_descriptors: list[dict[str, Any]] = []
         for upgrade in UPGRADE_RELEASES:
             manifest_path = upgrade["manifest_path"]
@@ -672,7 +709,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
         manifest = {
             "schema": "homm2-korean-release-manifest-v2",
             "version": version,
-            "release_date": "2026-08-27",
+            "release_date": RELEASE_DATE,
             "channel": "beta",
             "game": {
                 "game_id": GAME_ID,
@@ -694,7 +731,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
                 "copied_project_files": 1,
                 "installed_files": len(rows),
             },
-            "font_generation": font_generation_manifest(mapping_raw, default_font_raw),
+            "font_generation": font_generation_manifest(mapping_raw, default_font_raw, fallback_font_raw),
             "upgrades": {
                 "schema": "homm2-korean-upgrades-v1",
                 "from": upgrade_descriptors,

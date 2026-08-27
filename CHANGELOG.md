@@ -1,5 +1,14 @@
 # 변경 기록
 
+## v0.9.0-beta.9 — 2026-08-27
+
+- SIL Open Font License 1.1의 `Iropke Batang Medium` 원본 TTF를 배포 ZIP에 동봉하고 기본 설치 글꼴로 변경
+- `INSTALL.cmd` 실행 시 이롭게 바탕체로 874자 게임 글리프, 한글 버튼과 모집 창의 `병력당 비용:`을 동적으로 생성
+- 기본 이롭게 바탕체에 없는 매핑 문자는 동봉한 `NanumGothicCoding Regular`로 보완
+- `INSTALL_CUSTOM_FONT.cmd`, `--choose-font`, `--font-file`, `--font-index` 사용자 글꼴 선택 기능 유지
+- 이롭게 바탕체 및 나눔고딕코딩 원본 파일의 SHA-256과 각각의 OFL 1.1·Reserved Font Name 고지를 패키지에서 고정 검증
+- 공개 beta.4·beta.5·beta.6·beta.7·beta.8 설치본에서 beta.9 직접 업그레이드 지원
+
 ## v0.9.0-beta.8 — 2026-08-27
 
 - 글리프를 셀 바닥에 맞추던 렌더러 v2를 FreeType `glyph.top`을 보존하는 typographic 기준선 렌더러 v3로 교체

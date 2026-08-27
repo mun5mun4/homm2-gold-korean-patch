@@ -36,9 +36,9 @@ def herowind_payload(text: bytes = release.HEROWIND_KNOWLEDGE_ENGLISH) -> bytes:
 
 
 class HerowindKnowledgeTests(unittest.TestCase):
-    def test_beta8_core_targets_are_pinned(self) -> None:
+    def test_beta9_core_targets_are_pinned(self) -> None:
         self.assertEqual(
-            release.PINNED_BETA8_TARGETS,
+            release.PINNED_BETA9_TARGETS,
             {
                 Path("HEROES2.EXE"): {
                     "size": 1_523_420,
@@ -51,13 +51,13 @@ class HerowindKnowledgeTests(unittest.TestCase):
             },
         )
 
-    def test_builder_rejects_beta7_before_reading_inputs(self) -> None:
-        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.8"):
+    def test_builder_rejects_beta8_before_reading_inputs(self) -> None:
+        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.9"):
             release.build(
                 Path("missing-original"),
                 Path("missing-patched"),
                 Path("missing-output"),
-                "v0.9.0-beta.7",
+                "v0.9.0-beta.8",
                 None,
             )
 
@@ -83,9 +83,15 @@ class HerowindKnowledgeTests(unittest.TestCase):
                 "upgrades/v0.9.0-beta.7-manifest.json",
                 {"size": 33_369, "sha256": "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE"},
             ),
+            (
+                "v0.9.0-beta.8",
+                "upgrades/v0.9.0-beta.8-manifest.json",
+                {"size": 33_656, "sha256": "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5"},
+            ),
         )
 
-        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.8")
+        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.9")
+        self.assertEqual(release.RELEASE_DATE, "2026-08-27")
         self.assertEqual(len(release.UPGRADE_RELEASES), len(expected))
         for upgrade, (version, manifest_path, identity) in zip(release.UPGRADE_RELEASES, expected):
             with self.subTest(version=version):
@@ -94,6 +100,49 @@ class HerowindKnowledgeTests(unittest.TestCase):
                 self.assertEqual(upgrade["manifest"], identity)
                 raw = (release.ASSETS / upgrade["manifest_path"]).read_bytes()
                 self.assertEqual(release.digest(raw), identity)
+
+    def test_font_generation_v2_pins_iropke_default_and_nanum_fallback(self) -> None:
+        mapping = b"mapping"
+        default_font = b"iropke"
+        fallback_font = b"nanum"
+
+        manifest = release.font_generation_manifest(mapping, default_font, fallback_font)
+
+        self.assertEqual(manifest["schema"], "homm2-font-generation-v2")
+        self.assertEqual(
+            manifest["default_font"],
+            {
+                "name": "Iropke Batang Medium",
+                "package_path": "fonts/IropkeBatangM.ttf",
+                "package": release.digest(default_font),
+                "face_index": 0,
+                "license_path": "THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt",
+            },
+        )
+        self.assertEqual(
+            manifest["fallback_font"],
+            {
+                "name": "NanumGothicCoding Regular",
+                "package_path": "fonts/NanumGothicCoding-Regular.ttf",
+                "package": release.digest(fallback_font),
+                "face_index": 0,
+                "license_path": "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt",
+            },
+        )
+        self.assertEqual(
+            release.PINNED_DEFAULT_FONT,
+            {
+                "size": 3_202_516,
+                "sha256": "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69",
+            },
+        )
+        self.assertEqual(
+            release.PINNED_FALLBACK_FONT,
+            {
+                "size": 2_315_924,
+                "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
+            },
+        )
 
     def test_payload_changes_only_fixed_ten_byte_allocation_and_is_idempotent(self) -> None:
         original = herowind_payload()

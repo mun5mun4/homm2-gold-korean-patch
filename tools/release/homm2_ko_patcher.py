@@ -134,24 +134,33 @@ def validate_identity(value: Any, label: str, *, allow_md5: bool = False) -> Non
 
 def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list[str]:
     require(isinstance(value, dict), "font_generation 형식이 잘못됐습니다")
-    require(value.get("schema") == "homm2-font-generation-v1", "지원하지 않는 font_generation 형식입니다")
+    expected_schema = "homm2-font-generation-v1" if frozen_legacy else "homm2-font-generation-v2"
+    require(value.get("schema") == expected_schema, "지원하지 않는 font_generation 형식입니다")
     mapping = value.get("mapping")
     require(isinstance(mapping, dict) and set(mapping) == {"package_path", "package"}, "폰트 매핑 선언이 잘못됐습니다")
     require(isinstance(mapping["package_path"], str), "폰트 매핑 패키지 경로가 잘못됐습니다")
     validate_identity(mapping["package"], "font mapping package")
 
-    default_font = value.get("default_font")
-    require(
-        isinstance(default_font, dict)
-        and set(default_font) == {"name", "package_path", "package", "face_index", "license_path"},
-        "기본 글꼴 선언이 잘못됐습니다",
-    )
-    require(isinstance(default_font["name"], str) and default_font["name"], "기본 글꼴 이름이 잘못됐습니다")
-    require(isinstance(default_font["package_path"], str), "기본 글꼴 패키지 경로가 잘못됐습니다")
-    require(isinstance(default_font["license_path"], str), "기본 글꼴 라이선스 경로가 잘못됐습니다")
-    normalize_relative(default_font["license_path"])
-    require(default_font["face_index"] == 0, "기본 글꼴 face 번호가 잘못됐습니다")
-    validate_identity(default_font["package"], "default font package")
+    def validate_font_descriptor(descriptor: Any, label: str) -> dict[str, Any]:
+        require(
+            isinstance(descriptor, dict)
+            and set(descriptor) == {"name", "package_path", "package", "face_index", "license_path"},
+            f"{label} 글꼴 선언이 잘못됐습니다",
+        )
+        require(isinstance(descriptor["name"], str) and descriptor["name"], f"{label} 글꼴 이름이 잘못됐습니다")
+        require(isinstance(descriptor["package_path"], str), f"{label} 글꼴 패키지 경로가 잘못됐습니다")
+        require(isinstance(descriptor["license_path"], str), f"{label} 글꼴 라이선스 경로가 잘못됐습니다")
+        normalize_relative(descriptor["license_path"])
+        require(descriptor["face_index"] == 0, f"{label} 글꼴 face 번호가 잘못됐습니다")
+        validate_identity(descriptor["package"], f"{label} font package")
+        return descriptor
+
+    default_font = validate_font_descriptor(value.get("default_font"), "기본")
+    fallback_font = None
+    if frozen_legacy:
+        require("fallback_font" not in value, "이전 배포판의 font_generation에 대체 글꼴이 있으면 안 됩니다")
+    else:
+        fallback_font = validate_font_descriptor(value.get("fallback_font"), "대체")
 
     expected_renderer = {
         "id": homm2_font.RENDERER_ID,
@@ -190,7 +199,10 @@ def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list
         "blank_legacy_sprite_index": homm2_font.AT_SIGN_SPRITE_INDEX,
     }
     require(value.get("layout") == expected_layout, "폰트 sprite 배치 규칙이 설치기와 다릅니다")
-    return [mapping["package_path"], default_font["package_path"]]
+    package_paths = [mapping["package_path"], default_font["package_path"]]
+    if fallback_font is not None:
+        package_paths.append(fallback_font["package_path"])
+    return package_paths
 
 
 def validate_upgrades(value: Any, current_version: str) -> list[str]:
@@ -486,17 +498,22 @@ def prepare_font_plan(
 ) -> homm2_font.FontPlan:
     generation = manifest["font_generation"]
     mapping_path = verify_package_artifact(package, generation["mapping"], "글자 매핑")
-    default_path = verify_package_artifact(package, generation["default_font"], "기본 나눔고딕코딩")
+    default_font = generation["default_font"]
+    fallback_font = generation["fallback_font"]
+    default_path = verify_package_artifact(package, default_font, f"기본 글꼴 {default_font['name']}")
+    fallback_path = verify_package_artifact(package, fallback_font, f"대체 글꼴 {fallback_font['name']}")
     require(font_index >= 0, "글꼴 face 번호는 0 이상이어야 합니다")
     if font_file is None:
         require(
-            font_index == generation["default_font"]["face_index"],
+            font_index == default_font["face_index"],
             "기본 글꼴 face 번호는 0입니다",
         )
         plan = homm2_font.make_font_plan(
             mapping_path,
             default_path,
             primary_face_index=font_index,
+            fallback_path=fallback_path,
+            fallback_face_index=fallback_font["face_index"],
             mode="default",
         )
     else:
@@ -507,15 +524,23 @@ def prepare_font_plan(
             mapping_path,
             selected,
             primary_face_index=font_index,
-            fallback_path=default_path,
-            fallback_face_index=generation["default_font"]["face_index"],
+            fallback_path=fallback_path,
+            fallback_face_index=fallback_font["face_index"],
             mode="custom",
         )
     metadata = plan.metadata()
+    primary_metadata = metadata["primary"]
+    fallback_metadata = metadata.get("fallback")
+    primary_name = primary_metadata.get("family") or primary_metadata.get("full_name") or primary_metadata["file_name"]
+    fallback_name = (
+        fallback_metadata.get("family") or fallback_metadata.get("full_name") or fallback_metadata["file_name"]
+        if fallback_metadata is not None
+        else fallback_font["name"]
+    )
     print(
-        f"글꼴 준비: {metadata['primary']['family'] or metadata['primary']['file_name']} "
+        f"글꼴 준비: {primary_name} "
         f"(선택 {metadata['primary_glyph_count']}자, "
-        f"나눔고딕코딩 대체 {metadata['fallback_glyph_count']}자)"
+        f"{fallback_name} 대체 {metadata['fallback_glyph_count']}자)"
     )
     return plan
 
@@ -992,15 +1017,31 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
             (value["resolved_faces"]["fallback"] is None) == (fallback_value is None),
             "설치 기록의 대체 글꼴 layout과 face 정보가 다릅니다",
         )
-    default_identity = generation["default_font"]["package"]
+    default_font = generation["default_font"]
+    default_identity = default_font["package"]
     if value["mode"] == "default":
-        require(primary_identity == default_identity, "기본 설치 기록의 글꼴이 나눔고딕코딩이 아닙니다")
-        require(fallback_identity is None and fallback_count == 0, "기본 설치 기록에 불필요한 대체 글꼴이 있습니다")
-    else:
-        if fallback_count:
-            require(fallback_identity == default_identity, "사용자 글꼴의 대체 글꼴이 나눔고딕코딩이 아닙니다")
+        require(primary_identity == default_identity, f"기본 설치 기록의 글꼴이 {default_font['name']}이 아닙니다")
+
+    if generation["schema"] == "homm2-font-generation-v1":
+        if value["mode"] == "default":
+            require(fallback_identity is None and fallback_count == 0, "기본 설치 기록에 불필요한 대체 글꼴이 있습니다")
+        elif fallback_count:
+            require(
+                fallback_identity == default_identity,
+                f"사용자 글꼴의 대체 글꼴이 {default_font['name']}이 아닙니다",
+            )
         else:
             require(fallback_identity is None, "사용자 글꼴 설치 기록에 불필요한 대체 글꼴이 있습니다")
+        return
+
+    fallback_font = generation["fallback_font"]
+    if fallback_count:
+        require(
+            fallback_identity == fallback_font["package"],
+            f"설치 기록의 대체 글꼴이 {fallback_font['name']}이 아닙니다",
+        )
+    else:
+        require(fallback_identity is None, "설치 기록에 사용되지 않은 대체 글꼴이 있습니다")
 
 
 def backup_root_for(game: Path, run_id: str) -> Path:

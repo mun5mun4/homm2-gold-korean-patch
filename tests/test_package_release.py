@@ -13,17 +13,21 @@ from tools.release import package_release
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "v0.9.0-beta.8"
+VERSION = "v0.9.0-beta.9"
 MANIFEST_PACKAGE_PATH = "patches/HEROES2.EXE.bsdiff"
 MAPPING_PACKAGE_PATH = "fonts/mapping874.fixed-interface-font.txt"
-DEFAULT_FONT_PACKAGE_PATH = "fonts/NanumGothicCoding-Regular.ttf"
+DEFAULT_FONT_PACKAGE_PATH = "fonts/IropkeBatangM.ttf"
+FALLBACK_FONT_PACKAGE_PATH = "fonts/NanumGothicCoding-Regular.ttf"
 UPGRADE_MANIFEST_PACKAGE_PATHS = (
     "upgrades/v0.9.0-beta.4-manifest.json",
     "upgrades/v0.9.0-beta.5-manifest.json",
     "upgrades/v0.9.0-beta.6-manifest.json",
     "upgrades/v0.9.0-beta.7-manifest.json",
+    "upgrades/v0.9.0-beta.8-manifest.json",
 )
 FIXTURE_RAW = b"fixture\n"
+DEFAULT_FONT_RAW = (ROOT / "packaging" / "release_assets" / DEFAULT_FONT_PACKAGE_PATH).read_bytes()
+FALLBACK_FONT_RAW = (ROOT / "packaging" / "release_assets" / FALLBACK_FONT_PACKAGE_PATH).read_bytes()
 FROZEN_UPGRADE_MANIFESTS = {
     relative: Path(__file__).resolve().parents[1] / "packaging" / "release_assets" / relative
     for relative in UPGRADE_MANIFEST_PACKAGE_PATHS
@@ -47,6 +51,7 @@ FIXED_RELEASE_FILES = frozenset(
         "UNINSTALL.cmd",
         "RECOVER.cmd",
         "THIRD_PARTY_LICENSES/BSDIFF4_LICENSE.txt",
+        "THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt",
         "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt",
         "THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt",
         "THIRD_PARTY_LICENSES/PYINSTALLER_COPYING.txt",
@@ -88,11 +93,20 @@ def fixture_manifest(version: str = VERSION) -> dict[str, object]:
         "version": version,
         "files": files,
         "font_generation": {
-            "schema": "homm2-font-generation-v1",
+            "schema": "homm2-font-generation-v2",
             "mapping": {"package_path": MAPPING_PACKAGE_PATH, "package": artifact_identity(FIXTURE_RAW)},
             "default_font": {
+                "name": "Iropke Batang Medium",
                 "package_path": DEFAULT_FONT_PACKAGE_PATH,
-                "package": artifact_identity(FIXTURE_RAW),
+                "package": artifact_identity(DEFAULT_FONT_RAW),
+                "face_index": 0,
+                "license_path": "THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt",
+            },
+            "fallback_font": {
+                "name": "NanumGothicCoding Regular",
+                "package_path": FALLBACK_FONT_PACKAGE_PATH,
+                "package": artifact_identity(FALLBACK_FONT_RAW),
+                "face_index": 0,
                 "license_path": "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt",
             },
         },
@@ -119,6 +133,11 @@ def fixture_manifest(version: str = VERSION) -> dict[str, object]:
                     "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[3],
                     "manifest": dict(package_release.BETA7_MANIFEST_IDENTITY),
                 },
+                {
+                    "version": "v0.9.0-beta.8",
+                    "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[4],
+                    "manifest": dict(package_release.BETA8_MANIFEST_IDENTITY),
+                },
             ],
         },
     }
@@ -139,9 +158,10 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             *(f"patches/{path}.bsdiff" for path in package_release.PATCH_GAME_PATHS),
             package_release.COPY_PACKAGE_PATH,
             MAPPING_PACKAGE_PATH,
-            DEFAULT_FONT_PACKAGE_PATH,
         ):
             write_file(self.release, relative)
+        write_file(self.release, DEFAULT_FONT_PACKAGE_PATH, DEFAULT_FONT_RAW)
+        write_file(self.release, FALLBACK_FONT_PACKAGE_PATH, FALLBACK_FONT_RAW)
         for relative, source in FROZEN_UPGRADE_MANIFESTS.items():
             write_file(self.release, relative, source.read_bytes())
         self.write_manifest()
@@ -159,10 +179,12 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             package_release.COPY_PACKAGE_PATH,
             MAPPING_PACKAGE_PATH,
             DEFAULT_FONT_PACKAGE_PATH,
+            FALLBACK_FONT_PACKAGE_PATH,
             *UPGRADE_MANIFEST_PACKAGE_PATHS,
         }
 
     def test_packages_exact_manifest_and_fixed_asset_allowlist(self) -> None:
+        self.assertEqual(package_release.FIXED_ZIP_TIME, (2026, 8, 27, 0, 0, 0))
         result = package_release.package(self.release, self.output, VERSION)
 
         zip_path = self.output / str(result["zip"]["name"])
@@ -170,7 +192,7 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             self.assertEqual(set(archive.namelist()), self.expected_files)
             self.assertEqual(len(archive.namelist()), len(self.expected_files))
 
-    def test_custom_font_launcher_selects_once_without_bundling_a_font(self) -> None:
+    def test_custom_font_launcher_selects_once(self) -> None:
         launcher = (ROOT / "packaging" / "release_assets" / "INSTALL_CUSTOM_FONT.cmd").read_text(
             encoding="utf-8"
         )
@@ -243,17 +265,24 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
 
         self.assertFalse(self.output.exists())
 
-    def test_rejects_beta7_as_the_current_release(self) -> None:
-        manifest = fixture_manifest(version="v0.9.0-beta.7")
+    def test_rejects_beta8_as_the_current_release(self) -> None:
+        manifest = fixture_manifest(version="v0.9.0-beta.8")
 
-        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.8"):
-            package_release.expected_release_files(manifest, "v0.9.0-beta.7")
+        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.9"):
+            package_release.expected_release_files(manifest, "v0.9.0-beta.8")
 
-    def test_rejects_legacy_manifest_schema_for_beta8(self) -> None:
+    def test_rejects_legacy_manifest_schema_for_beta9(self) -> None:
         manifest = fixture_manifest()
         manifest["schema"] = "homm2-korean-release-manifest-v1"
 
         with self.assertRaisesRegex(package_release.PackageError, "manifest v2"):
+            package_release.expected_release_files(manifest, VERSION)
+
+    def test_rejects_legacy_font_generation_schema_for_beta9(self) -> None:
+        manifest = fixture_manifest()
+        manifest["font_generation"]["schema"] = "homm2-font-generation-v1"
+
+        with self.assertRaisesRegex(package_release.PackageError, "font_generation"):
             package_release.expected_release_files(manifest, VERSION)
 
     def test_rejects_manifest_package_paths_outside_fixed_patch_contract(self) -> None:
@@ -288,11 +317,29 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             ("mapping", "package_path", "captures/mapping.txt"),
             ("default_font", "package_path", "fonts/PrivateFont.ttf"),
             ("default_font", "license_path", "captures/font-license.txt"),
+            ("fallback_font", "package_path", "fonts/PrivateFallback.ttf"),
+            ("fallback_font", "license_path", "captures/fallback-license.txt"),
         )
         for section, key, bad_path in cases:
             with self.subTest(section=section, key=key):
                 manifest = fixture_manifest()
                 manifest["font_generation"][section][key] = bad_path
+                with self.assertRaises(package_release.PackageError):
+                    package_release.expected_release_files(manifest, VERSION)
+
+    def test_rejects_font_names_and_faces_outside_fixed_contract(self) -> None:
+        cases = (
+            ("default_font", "name", "NanumGothicCoding Regular"),
+            ("default_font", "face_index", 1),
+            ("default_font", "package", artifact_identity(FIXTURE_RAW)),
+            ("fallback_font", "name", "Iropke Batang Medium"),
+            ("fallback_font", "face_index", 1),
+            ("fallback_font", "package", artifact_identity(FIXTURE_RAW)),
+        )
+        for section, key, value in cases:
+            with self.subTest(section=section, key=key):
+                manifest = fixture_manifest()
+                manifest["font_generation"][section][key] = value
                 with self.assertRaises(package_release.PackageError):
                     package_release.expected_release_files(manifest, VERSION)
 
@@ -318,6 +365,7 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             package_release.COPY_PACKAGE_PATH,
             MAPPING_PACKAGE_PATH,
             DEFAULT_FONT_PACKAGE_PATH,
+            FALLBACK_FONT_PACKAGE_PATH,
             *UPGRADE_MANIFEST_PACKAGE_PATHS,
         )
         for relative in artifacts:

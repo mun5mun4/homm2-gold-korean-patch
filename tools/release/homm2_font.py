@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build HoMM2 bitmap-font resources from a user-selected OpenType font.
+"""Build HoMM2 bitmap-font resources from bundled or user-selected fonts.
 
-The module intentionally keeps the user's font local.  It reads the selected
-face, rasterizes only the 874 characters declared by the release mapping, and
-returns rebuilt AGG bytes to the transactional installer.
+The module rasterizes only the 874 characters declared by the release mapping
+and returns rebuilt AGG bytes to the transactional installer.  A separately
+selected user font is read locally and is never copied into the package.
 """
 
 from __future__ import annotations
@@ -45,6 +45,10 @@ BASELINE_POLICY = "logical-cell-preserve-glyph-bearing-common-baseline-v3"
 FIT_POLICY = "largest-common-integer-pixel-size-ink-union-fit-v3"
 CROP_POLICY = "tight-mask-preserve-logical-cell-offset-v1"
 SHADOW_POLICY = "clip-at-logical-cell-edge-v1"
+# The fixed raster identities below describe the historical Nanum default.
+# Other pinned or user-selected fonts receive the same structural/ROI checks,
+# while their exact generated identities are recorded in the install receipt.
+CANONICAL_RASTER_PRIMARY_SHA256 = "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089"
 
 RECRUIT_COST_RESOURCE_NAME = "RECRBKG.ICN"
 RECRUIT_COST_LABEL = "병력당 비용:"
@@ -4028,10 +4032,22 @@ def rebuild_agg_fonts(
         rendered_mode in {None, "default", "custom"},
         f"렌더링 글꼴 모드가 잘못됐습니다: {label}:{rendered_mode!r}",
     )
-    # Legacy/synthetic RenderedFont fixtures predate the mode field and retain
-    # the canonical contract.  A real custom FontPlan always records
-    # ``mode=custom`` and therefore receives structural raster validation.
-    canonical_raster_identities = rendered_mode != "custom"
+    # Legacy/synthetic RenderedFont fixtures predate full face metadata and
+    # retain the canonical contract.  Exact raster constants describe the old
+    # Nanum default only; the bundled Iropke default and arbitrary user fonts
+    # receive the same structural/ROI validation and record their output
+    # identities transactionally instead.
+    primary_metadata = rendered.metadata.get("primary")
+    canonical_raster_identities = (
+        rendered_mode is None
+        or (
+            rendered_mode == "default"
+            and (
+                not isinstance(primary_metadata, Mapping)
+                or primary_metadata.get("sha256") == CANONICAL_RASTER_PRIMARY_SHA256
+            )
+        )
+    )
     replacements: dict[str, bytes] = {}
     rebuilt_font_sprites: dict[str, tuple[Sprite, ...]] = {}
     for resource_name, additions in (("FONT.ICN", rendered.normal), ("SMALFONT.ICN", rendered.small)):

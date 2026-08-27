@@ -40,6 +40,7 @@ COMMON_RELEASE_FILES = {
 
 V2_RELEASE_FILES = {
     "homm2_font.py",
+    "THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt",
     "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt",
     "THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt",
 }
@@ -101,17 +102,31 @@ FONT_AGG_PATHS = frozenset({"DATA/HEROES2.AGG", "DATA/HEROES2X.AGG"})
 COPY_GAME_PATH = "KOREAN.BIN"
 COPY_PACKAGE_PATH = "payload/KOREAN.BIN"
 MAPPING_PACKAGE_PATH = "fonts/mapping874.fixed-interface-font.txt"
-DEFAULT_FONT_PACKAGE_PATH = "fonts/NanumGothicCoding-Regular.ttf"
-DEFAULT_FONT_LICENSE_PATH = "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt"
+DEFAULT_FONT_NAME = "Iropke Batang Medium"
+FALLBACK_FONT_NAME = "NanumGothicCoding Regular"
+DEFAULT_FONT_PACKAGE_PATH = "fonts/IropkeBatangM.ttf"
+FALLBACK_FONT_PACKAGE_PATH = "fonts/NanumGothicCoding-Regular.ttf"
+DEFAULT_FONT_LICENSE_PATH = "THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt"
+FALLBACK_FONT_LICENSE_PATH = "THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt"
+PINNED_DEFAULT_FONT = {
+    "size": 3_202_516,
+    "sha256": "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69",
+}
+PINNED_FALLBACK_FONT = {
+    "size": 2_315_924,
+    "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
+}
 BETA4_VERSION = "v0.9.0-beta.4"
 BETA5_VERSION = "v0.9.0-beta.5"
 BETA6_VERSION = "v0.9.0-beta.6"
 BETA7_VERSION = "v0.9.0-beta.7"
 BETA8_VERSION = "v0.9.0-beta.8"
+BETA9_VERSION = "v0.9.0-beta.9"
 BETA4_MANIFEST_PATH = "upgrades/v0.9.0-beta.4-manifest.json"
 BETA5_MANIFEST_PATH = "upgrades/v0.9.0-beta.5-manifest.json"
 BETA6_MANIFEST_PATH = "upgrades/v0.9.0-beta.6-manifest.json"
 BETA7_MANIFEST_PATH = "upgrades/v0.9.0-beta.7-manifest.json"
+BETA8_MANIFEST_PATH = "upgrades/v0.9.0-beta.8-manifest.json"
 BETA4_MANIFEST_IDENTITY = {
     "size": 31_988,
     "sha256": "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60",
@@ -128,11 +143,16 @@ BETA7_MANIFEST_IDENTITY = {
     "size": 33_369,
     "sha256": "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE",
 }
+BETA8_MANIFEST_IDENTITY = {
+    "size": 33_656,
+    "sha256": "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5",
+}
 PINNED_UPGRADE_SOURCES = (
     (BETA4_VERSION, BETA4_MANIFEST_PATH, BETA4_MANIFEST_IDENTITY),
     (BETA5_VERSION, BETA5_MANIFEST_PATH, BETA5_MANIFEST_IDENTITY),
     (BETA6_VERSION, BETA6_MANIFEST_PATH, BETA6_MANIFEST_IDENTITY),
     (BETA7_VERSION, BETA7_MANIFEST_PATH, BETA7_MANIFEST_IDENTITY),
+    (BETA8_VERSION, BETA8_MANIFEST_PATH, BETA8_MANIFEST_IDENTITY),
 )
 
 
@@ -198,8 +218,8 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         "release version is unsafe",
     )
     require(manifest.get("version") == version, "release version does not match manifest")
-    require(version == BETA8_VERSION, "this packager is pinned to beta.8")
-    require(schema == "homm2-korean-release-manifest-v2", "beta.8 requires release manifest v2")
+    require(version == BETA9_VERSION, "this packager is pinned to beta.9")
+    require(schema == "homm2-korean-release-manifest-v2", "beta.9 requires release manifest v2")
     rows = manifest.get("files")
     require(isinstance(rows, list) and rows, "release manifest file list is empty")
 
@@ -238,20 +258,62 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         expected.update(V2_RELEASE_FILES)
         generation = manifest.get("font_generation")
         require(
-            isinstance(generation, dict) and generation.get("schema") == "homm2-font-generation-v1",
+            isinstance(generation, dict) and generation.get("schema") == "homm2-font-generation-v2",
             "font_generation is missing or invalid",
         )
         mapping = generation.get("mapping")
         default_font = generation.get("default_font")
-        require(isinstance(mapping, dict), "font mapping declaration is invalid")
-        require(isinstance(default_font, dict), "default font declaration is invalid")
+        fallback_font = generation.get("fallback_font")
+        require(
+            isinstance(mapping, dict) and set(mapping) == {"package_path", "package"},
+            "font mapping declaration is invalid",
+        )
+        font_declaration_keys = {"name", "package_path", "package", "face_index", "license_path"}
+        require(
+            isinstance(default_font, dict) and set(default_font) == font_declaration_keys,
+            "default font declaration is invalid",
+        )
+        require(
+            isinstance(fallback_font, dict) and set(fallback_font) == font_declaration_keys,
+            "fallback font declaration is invalid",
+        )
         mapping_path = normalized_archive_path(mapping.get("package_path"), "font mapping")
         font_path = normalized_archive_path(default_font.get("package_path"), "default font")
+        fallback_font_path = normalized_archive_path(fallback_font.get("package_path"), "fallback font")
         font_license_path = normalized_archive_path(default_font.get("license_path"), "default font license")
+        fallback_font_license_path = normalized_archive_path(
+            fallback_font.get("license_path"),
+            "fallback font license",
+        )
         require(mapping_path == MAPPING_PACKAGE_PATH, "font mapping path is outside the fixed release contract")
+        require(default_font.get("name") == DEFAULT_FONT_NAME, "default font name is outside the fixed release contract")
+        require(default_font.get("face_index") == 0, "default font face is outside the fixed release contract")
+        require(default_font.get("package") == PINNED_DEFAULT_FONT, "default font identity is outside the fixed release contract")
         require(font_path == DEFAULT_FONT_PACKAGE_PATH, "default font path is outside the fixed release contract")
+        require(
+            fallback_font.get("name") == FALLBACK_FONT_NAME,
+            "fallback font name is outside the fixed release contract",
+        )
+        require(fallback_font.get("face_index") == 0, "fallback font face is outside the fixed release contract")
+        require(fallback_font.get("package") == PINNED_FALLBACK_FONT, "fallback font identity is outside the fixed release contract")
+        require(
+            fallback_font_path == FALLBACK_FONT_PACKAGE_PATH,
+            "fallback font path is outside the fixed release contract",
+        )
         require(font_license_path == DEFAULT_FONT_LICENSE_PATH, "default font license path is outside the fixed release contract")
-        expected.update({mapping_path, font_path, font_license_path})
+        require(
+            fallback_font_license_path == FALLBACK_FONT_LICENSE_PATH,
+            "fallback font license path is outside the fixed release contract",
+        )
+        expected.update(
+            {
+                mapping_path,
+                font_path,
+                fallback_font_path,
+                font_license_path,
+                fallback_font_license_path,
+            }
+        )
 
         upgrades = manifest.get("upgrades")
         require(
@@ -262,7 +324,7 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         sources = upgrades.get("from")
         require(
             isinstance(sources, list) and len(sources) == len(PINNED_UPGRADE_SOURCES),
-            "beta.8 must declare exactly the pinned beta.4, beta.5, beta.6 and beta.7 upgrade sources",
+            "beta.9 must declare exactly the pinned beta.4 through beta.8 upgrade sources",
         )
         for index, (descriptor, pinned) in enumerate(zip(sources, PINNED_UPGRADE_SOURCES)):
             require(
@@ -299,11 +361,19 @@ def verify_manifest_artifacts(release_dir: Path, manifest: dict[str, Any]) -> No
         generation = manifest["font_generation"]
         mapping = generation["mapping"]
         default_font = generation["default_font"]
+        fallback_font = generation["fallback_font"]
         artifacts.append(
             (
                 str(mapping["package_path"]),
                 validate_identity(mapping.get("package"), "font mapping"),
                 "font mapping",
+            )
+        )
+        artifacts.append(
+            (
+                str(fallback_font["package_path"]),
+                validate_identity(fallback_font.get("package"), "fallback font"),
+                "fallback font",
             )
         )
         artifacts.append(
@@ -420,7 +490,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--release-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--version", default=BETA8_VERSION)
+    parser.add_argument("--version", default=BETA9_VERSION)
     args = parser.parse_args()
     print(
         json.dumps(

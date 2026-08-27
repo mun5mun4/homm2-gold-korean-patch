@@ -155,15 +155,21 @@ class GameDirectoryDetectionTests(unittest.TestCase):
 
         load_manifest.assert_not_called()
 
-    def test_prepare_custom_font_plan_uses_bundled_default_only_as_fallback(self) -> None:
+    def test_prepare_default_font_plan_uses_iropke_with_nanum_fallback(self) -> None:
         package = Path("package")
         mapping = Path("package/fonts/mapping.txt")
-        default = Path("package/fonts/NanumGothicCoding-Regular.ttf")
-        selected = r"C:\Private Fonts\Selected.ttc"
+        default = Path("package/fonts/IropkeBatangM.ttf")
+        fallback = Path("package/fonts/NanumGothicCoding-Regular.ttf")
         manifest = {
             "font_generation": {
                 "mapping": {"package_path": "fonts/mapping.txt"},
                 "default_font": {
+                    "name": "Iropke Batang Medium",
+                    "package_path": "fonts/IropkeBatangM.ttf",
+                    "face_index": 0,
+                },
+                "fallback_font": {
+                    "name": "NanumGothicCoding Regular",
                     "package_path": "fonts/NanumGothicCoding-Regular.ttf",
                     "face_index": 0,
                 },
@@ -171,14 +177,69 @@ class GameDirectoryDetectionTests(unittest.TestCase):
         }
         plan = mock.Mock()
         plan.metadata.return_value = {
-            "primary": {"family": "Selected Family", "file_name": "Selected.ttc"},
+            "primary": {"family": "Iropke Batang", "full_name": "", "file_name": "IropkeBatangM.ttf"},
+            "fallback": None,
+            "primary_glyph_count": 874,
+            "fallback_glyph_count": 0,
+        }
+        with mock.patch.object(
+            patcher,
+            "verify_package_artifact",
+            side_effect=(mapping, default, fallback),
+        ), mock.patch.object(
+            patcher.homm2_font,
+            "make_font_plan",
+            return_value=plan,
+        ) as make_plan, mock.patch("sys.stdout", new_callable=io.StringIO) as stdout:
+            self.assertIs(patcher.prepare_font_plan(package, manifest), plan)
+
+        make_plan.assert_called_once_with(
+            mapping,
+            default,
+            primary_face_index=0,
+            fallback_path=fallback,
+            fallback_face_index=0,
+            mode="default",
+        )
+        self.assertIn("Iropke Batang", stdout.getvalue())
+        self.assertIn("NanumGothicCoding Regular 대체 0자", stdout.getvalue())
+
+    def test_prepare_custom_font_plan_uses_bundled_fallback_font(self) -> None:
+        package = Path("package")
+        mapping = Path("package/fonts/mapping.txt")
+        default = Path("package/fonts/IropkeBatangM.ttf")
+        fallback = Path("package/fonts/NanumGothicCoding-Regular.ttf")
+        selected = r"C:\Private Fonts\Selected.ttc"
+        manifest = {
+            "font_generation": {
+                "mapping": {"package_path": "fonts/mapping.txt"},
+                "default_font": {
+                    "name": "Iropke Batang Medium",
+                    "package_path": "fonts/IropkeBatangM.ttf",
+                    "face_index": 0,
+                },
+                "fallback_font": {
+                    "name": "NanumGothicCoding Regular",
+                    "package_path": "fonts/NanumGothicCoding-Regular.ttf",
+                    "face_index": 0,
+                },
+            }
+        }
+        plan = mock.Mock()
+        plan.metadata.return_value = {
+            "primary": {"family": "Selected Family", "full_name": "", "file_name": "Selected.ttc"},
+            "fallback": {
+                "family": "NanumGothicCoding",
+                "full_name": "NanumGothicCoding Regular",
+                "file_name": "NanumGothicCoding-Regular.ttf",
+            },
             "primary_glyph_count": 800,
             "fallback_glyph_count": 74,
         }
         with mock.patch.object(
             patcher,
             "verify_package_artifact",
-            side_effect=(mapping, default),
+            side_effect=(mapping, default, fallback),
         ), mock.patch.object(
             patcher.homm2_font,
             "make_font_plan",
@@ -190,11 +251,13 @@ class GameDirectoryDetectionTests(unittest.TestCase):
             mapping,
             Path(selected),
             primary_face_index=2,
-            fallback_path=default,
+            fallback_path=fallback,
             fallback_face_index=0,
             mode="custom",
         )
         self.assertNotIn(selected, stdout.getvalue())
+        self.assertIn("Selected Family", stdout.getvalue())
+        self.assertIn("NanumGothicCoding 대체 74자", stdout.getvalue())
 
 
 if __name__ == "__main__":
