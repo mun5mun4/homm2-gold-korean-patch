@@ -12,7 +12,8 @@ from pathlib import Path
 from tools.release import package_release
 
 
-VERSION = "v0.9.0-beta.7"
+ROOT = Path(__file__).resolve().parents[1]
+VERSION = "v0.9.0-beta.8"
 MANIFEST_PACKAGE_PATH = "patches/HEROES2.EXE.bsdiff"
 MAPPING_PACKAGE_PATH = "fonts/mapping874.fixed-interface-font.txt"
 DEFAULT_FONT_PACKAGE_PATH = "fonts/NanumGothicCoding-Regular.ttf"
@@ -20,6 +21,7 @@ UPGRADE_MANIFEST_PACKAGE_PATHS = (
     "upgrades/v0.9.0-beta.4-manifest.json",
     "upgrades/v0.9.0-beta.5-manifest.json",
     "upgrades/v0.9.0-beta.6-manifest.json",
+    "upgrades/v0.9.0-beta.7-manifest.json",
 )
 FIXTURE_RAW = b"fixture\n"
 FROZEN_UPGRADE_MANIFESTS = {
@@ -40,6 +42,7 @@ FIXED_RELEASE_FILES = frozenset(
         "THIRD_PARTY_NOTICES.md",
         "COPYING.GPL-2.0",
         "INSTALL.cmd",
+        "INSTALL_CUSTOM_FONT.cmd",
         "VERIFY.cmd",
         "UNINSTALL.cmd",
         "RECOVER.cmd",
@@ -111,6 +114,11 @@ def fixture_manifest(version: str = VERSION) -> dict[str, object]:
                     "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[2],
                     "manifest": dict(package_release.BETA6_MANIFEST_IDENTITY),
                 },
+                {
+                    "version": "v0.9.0-beta.7",
+                    "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[3],
+                    "manifest": dict(package_release.BETA7_MANIFEST_IDENTITY),
+                },
             ],
         },
     }
@@ -162,6 +170,15 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
             self.assertEqual(set(archive.namelist()), self.expected_files)
             self.assertEqual(len(archive.namelist()), len(self.expected_files))
 
+    def test_custom_font_launcher_selects_once_without_bundling_a_font(self) -> None:
+        launcher = (ROOT / "packaging" / "release_assets" / "INSTALL_CUSTOM_FONT.cmd").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn('homm2-ko-patcher.exe" install --choose-font %*', launcher)
+        self.assertNotIn(" preflight ", launcher)
+        self.assertNotRegex(launcher.casefold(), r"\.(?:ttf|otf|ttc|otc)(?:\s|\")")
+
     def test_rejects_unlisted_nested_file(self) -> None:
         write_file(self.release, "__pycache__/homm2_font.cpython-313.pyc", b"not-release-data")
 
@@ -170,8 +187,8 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
 
         self.assertFalse(self.output.exists())
 
-    def test_rejects_removed_custom_font_launcher_or_extra_font(self) -> None:
-        for relative in ("INSTALL_CUSTOM_FONT.cmd", "fonts/PrivateFont.ttf"):
+    def test_rejects_extra_user_font_files(self) -> None:
+        for relative in ("fonts/PrivateFont.ttf", "fonts/PrivateFont.otf"):
             with self.subTest(path=relative):
                 write_file(self.release, relative, b"must not be distributed")
                 try:
@@ -180,6 +197,14 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
                     self.assertFalse(self.output.exists())
                 finally:
                     (self.release / relative).unlink()
+
+    def test_rejects_missing_custom_font_launcher(self) -> None:
+        (self.release / "INSTALL_CUSTOM_FONT.cmd").unlink()
+
+        with self.assertRaisesRegex(package_release.PackageError, "missing"):
+            package_release.package(self.release, self.output, VERSION)
+
+        self.assertFalse(self.output.exists())
 
     def test_rejects_missing_manifest_package_file(self) -> None:
         (self.release / MANIFEST_PACKAGE_PATH).unlink()
@@ -218,7 +243,13 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
 
         self.assertFalse(self.output.exists())
 
-    def test_rejects_legacy_manifest_schema_for_beta7(self) -> None:
+    def test_rejects_beta7_as_the_current_release(self) -> None:
+        manifest = fixture_manifest(version="v0.9.0-beta.7")
+
+        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.8"):
+            package_release.expected_release_files(manifest, "v0.9.0-beta.7")
+
+    def test_rejects_legacy_manifest_schema_for_beta8(self) -> None:
         manifest = fixture_manifest()
         manifest["schema"] = "homm2-korean-release-manifest-v1"
 

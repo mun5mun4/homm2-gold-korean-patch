@@ -45,6 +45,20 @@ BLOCKED_PROCESSES = {
 DYNAMIC_FONT_AGG_METHOD = "bsdiff40_font_agg_v1"
 STATIC_METHODS = {"bsdiff40", "copy"}
 SUPPORTED_METHODS = STATIC_METHODS | {DYNAMIC_FONT_AGG_METHOD}
+HISTORICAL_V2_RENDERER = {
+    "id": "pillow-freetype-monochrome-v2-fixed-baseline",
+    "normal_pixel_size": 14,
+    "small_pixel_size": 12,
+    "normal_cell": {"width": 13, "height": 14},
+    "small_cell": {"width": 11, "height": 12},
+    "shadow_offset": [1, 1],
+    "baseline_policy": "logical-cell-ink-bottom-common-v2",
+    "fit_policy": "largest-common-integer-pixel-size-foreground-fit-v2",
+    "crop_policy": "tight-mask-preserve-logical-cell-offset-v1",
+    "shadow_policy": "clip-at-logical-cell-edge-v1",
+    "foreground_palette_index": 10,
+    "shadow_palette_index": 21,
+}
 
 
 class PatchError(RuntimeError):
@@ -153,7 +167,7 @@ def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list
         "foreground_palette_index": homm2_font.FOREGROUND_PALETTE_INDEX,
         "shadow_palette_index": homm2_font.SHADOW_PALETTE_INDEX,
     }
-    legacy_renderer = {
+    legacy_v1_renderer = {
         "id": "pillow-freetype-monochrome-v1",
         "normal_pixel_size": 14,
         "small_pixel_size": 12,
@@ -162,7 +176,8 @@ def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list
     }
     renderer = value.get("renderer")
     require(
-        renderer == expected_renderer or (frozen_legacy and renderer == legacy_renderer),
+        renderer == expected_renderer
+        or (frozen_legacy and renderer in (legacy_v1_renderer, HISTORICAL_V2_RENDERER)),
         "폰트 renderer 규칙이 설치기와 다릅니다",
     )
     expected_layout = {
@@ -466,22 +481,92 @@ def verify_package_artifact(package: Path, descriptor: dict[str, Any], label: st
 def prepare_font_plan(
     package: Path,
     manifest: dict[str, Any],
+    font_file: str | None = None,
+    font_index: int = 0,
 ) -> homm2_font.FontPlan:
     generation = manifest["font_generation"]
     mapping_path = verify_package_artifact(package, generation["mapping"], "글자 매핑")
     default_path = verify_package_artifact(package, generation["default_font"], "기본 나눔고딕코딩")
-    plan = homm2_font.make_font_plan(
-        mapping_path,
-        default_path,
-        primary_face_index=generation["default_font"]["face_index"],
-        mode="default",
-    )
+    require(font_index >= 0, "글꼴 face 번호는 0 이상이어야 합니다")
+    if font_file is None:
+        require(
+            font_index == generation["default_font"]["face_index"],
+            "기본 글꼴 face 번호는 0입니다",
+        )
+        plan = homm2_font.make_font_plan(
+            mapping_path,
+            default_path,
+            primary_face_index=font_index,
+            mode="default",
+        )
+    else:
+        selected = Path(font_file)
+        print("사용자 글꼴 모드: 선택한 파일은 이 PC에서만 읽으며 복사·수집·배포하지 않습니다.")
+        print("선택한 글꼴의 이용 조건을 확인할 책임은 사용자에게 있으며 설치기는 라이선스로 차단하지 않습니다.")
+        plan = homm2_font.make_font_plan(
+            mapping_path,
+            selected,
+            primary_face_index=font_index,
+            fallback_path=default_path,
+            fallback_face_index=generation["default_font"]["face_index"],
+            mode="custom",
+        )
     metadata = plan.metadata()
     print(
-        f"기본 글꼴 준비: {metadata['primary']['family'] or metadata['primary']['file_name']} "
-        f"({metadata['primary_glyph_count']}자)"
+        f"글꼴 준비: {metadata['primary']['family'] or metadata['primary']['file_name']} "
+        f"(선택 {metadata['primary_glyph_count']}자, "
+        f"나눔고딕코딩 대체 {metadata['fallback_glyph_count']}자)"
     )
     return plan
+
+
+def choose_font_file() -> str:
+    require(os.name == "nt", "--choose-font는 Windows에서만 사용할 수 있습니다. --font-file로 지정해 주세요.")
+    import ctypes
+    from ctypes import wintypes
+
+    class OpenFileNameW(ctypes.Structure):
+        _fields_ = [
+            ("lStructSize", wintypes.DWORD),
+            ("hwndOwner", wintypes.HWND),
+            ("hInstance", wintypes.HINSTANCE),
+            ("lpstrFilter", wintypes.LPCWSTR),
+            ("lpstrCustomFilter", wintypes.LPWSTR),
+            ("nMaxCustFilter", wintypes.DWORD),
+            ("nFilterIndex", wintypes.DWORD),
+            ("lpstrFile", wintypes.LPWSTR),
+            ("nMaxFile", wintypes.DWORD),
+            ("lpstrFileTitle", wintypes.LPWSTR),
+            ("nMaxFileTitle", wintypes.DWORD),
+            ("lpstrInitialDir", wintypes.LPCWSTR),
+            ("lpstrTitle", wintypes.LPCWSTR),
+            ("Flags", wintypes.DWORD),
+            ("nFileOffset", wintypes.WORD),
+            ("nFileExtension", wintypes.WORD),
+            ("lpstrDefExt", wintypes.LPCWSTR),
+            ("lCustData", wintypes.LPARAM),
+            ("lpfnHook", ctypes.c_void_p),
+            ("lpTemplateName", wintypes.LPCWSTR),
+            ("pvReserved", ctypes.c_void_p),
+            ("dwReserved", wintypes.DWORD),
+            ("FlagsEx", wintypes.DWORD),
+        ]
+
+    buffer = ctypes.create_unicode_buffer(32768)
+    dialog = OpenFileNameW()
+    dialog.lStructSize = ctypes.sizeof(OpenFileNameW)
+    dialog.lpstrFilter = "글꼴 파일 (*.ttf;*.otf;*.ttc;*.otc)\0*.ttf;*.otf;*.ttc;*.otc\0모든 파일 (*.*)\0*.*\0\0"
+    dialog.nFilterIndex = 1
+    dialog.lpstrFile = ctypes.cast(buffer, wintypes.LPWSTR)
+    dialog.nMaxFile = len(buffer)
+    dialog.lpstrTitle = "Heroes II 한국어 패치에 사용할 글꼴 선택"
+    dialog.Flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000008
+    if ctypes.windll.comdlg32.GetOpenFileNameW(ctypes.byref(dialog)):
+        return buffer.value
+    extended_error = ctypes.windll.comdlg32.CommDlgExtendedError()
+    if extended_error == 0:
+        raise PatchError("글꼴 선택을 취소했습니다")
+    raise PatchError(f"글꼴 선택 창 오류: 0x{extended_error:08X}")
 
 
 def verify_originals(game: Path, files: Iterable[dict[str, Any]]) -> dict[str, dict[str, int | str]]:
@@ -525,7 +610,11 @@ def stage_outputs(
             changed = {name.casefold() for name in homm2_font.changed_agg_resources(source_raw, base, label=relative)}
             expected = {str(name).casefold() for name in row["keep_localized_resources"]}
             require(changed == expected, f"AGG 기반의 변경 리소스 집합이 잘못됐습니다: {relative}: {sorted(changed)}")
-            output = homm2_font.rebuild_agg_fonts(base, rendered, label=relative)
+            output = homm2_font.rebuild_agg_fonts(
+                base,
+                rendered,
+                label=relative,
+            )
         elif row["method"] == "copy":
             output = package_file.read_bytes()
         else:
@@ -659,7 +748,15 @@ def validate_font_face_receipt(value: Any, label: str) -> dict[str, int | str]:
     return identity
 
 
-def validate_resolved_font_face(value: Any, label: str, *, requested: int, width: int, height: int) -> int:
+def validate_resolved_font_face(
+    value: Any,
+    label: str,
+    *,
+    requested: int,
+    width: int,
+    height: int,
+    bearing_baseline: bool,
+) -> int:
     keys = {
         "requested_pixel_size",
         "resolved_pixel_size",
@@ -689,13 +786,6 @@ def validate_resolved_font_face(value: Any, label: str, *, requested: int, width
         and value["cell_height"] == height,
         f"{label} cell 크기가 다릅니다",
     )
-    require(
-        type(value["origin_x"]) is int
-        and type(value["baseline_y"]) is int
-        and value["origin_x"] == width // 2
-        and value["baseline_y"] == height,
-        f"{label} 글꼴 원점이 잘못됐습니다",
-    )
     ink = value["ink_union"]
     require(
         isinstance(ink, list)
@@ -713,6 +803,23 @@ def validate_resolved_font_face(value: Any, label: str, *, requested: int, width
         and ink[3] <= height,
         f"{label} ink 범위가 논리 cell을 벗어났습니다",
     )
+    baseline_y = value["baseline_y"]
+    require(
+        type(value["origin_x"]) is int
+        and type(baseline_y) is int
+        and value["origin_x"] == width // 2,
+        f"{label} 글꼴 원점이 잘못됐습니다",
+    )
+    if bearing_baseline:
+        require(
+            ink[3] - ink[1] <= height
+            and baseline_y == -ink[1]
+            and baseline_y + ink[1] == 0
+            and baseline_y + ink[3] <= height,
+            f"{label} 글꼴 bearing 기준선 원점이 잘못됐습니다",
+        )
+    else:
+        require(baseline_y == height, f"{label} 글꼴 원점이 잘못됐습니다")
     require(
         type(value["glyph_count"]) is int and 0 < value["glyph_count"] <= homm2_font.KOREAN_GLYPH_COUNT,
         f"{label} 글립 수가 잘못됐습니다",
@@ -752,7 +859,7 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
         "primary",
         "fallback",
     }
-    v2_keys = {
+    structured_keys = {
         "normal_cell",
         "small_cell",
         "shadow_offset",
@@ -762,9 +869,13 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
         "shadow_policy",
         "resolved_faces",
     }
+    renderer_id = renderer.get("id")
+    current_renderer = renderer_id == homm2_font.RENDERER_ID
+    historical_v2_renderer = renderer == HISTORICAL_V2_RENDERER
+    structured_renderer = current_renderer or historical_v2_renderer
     resolved_glyph_counts: dict[str, int] = {}
-    if renderer["id"] == homm2_font.RENDERER_ID:
-        require(set(value) == base_keys | v2_keys, "설치 기록의 v2 글꼴 필드가 잘못됐습니다")
+    if structured_renderer:
+        require(set(value) == base_keys | structured_keys, "설치 기록의 구조화 글꼴 필드가 잘못됐습니다")
         normal_cell = value.get("normal_cell")
         require(
             isinstance(normal_cell, dict)
@@ -772,7 +883,7 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
             and type(normal_cell["width"]) is int
             and type(normal_cell["height"]) is int
             and normal_cell
-            == {"width": homm2_font.NORMAL_CELL_WIDTH, "height": homm2_font.NORMAL_CELL_HEIGHT},
+            == renderer["normal_cell"],
             "설치 기록의 일반 글꼴 cell이 다릅니다",
         )
         small_cell = value.get("small_cell")
@@ -782,7 +893,7 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
             and type(small_cell["width"]) is int
             and type(small_cell["height"]) is int
             and small_cell
-            == {"width": homm2_font.SMALL_CELL_WIDTH, "height": homm2_font.SMALL_CELL_HEIGHT},
+            == renderer["small_cell"],
             "설치 기록의 작은 글꼴 cell이 다릅니다",
         )
         shadow_offset = value.get("shadow_offset")
@@ -790,13 +901,13 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
             isinstance(shadow_offset, list)
             and len(shadow_offset) == 2
             and all(type(item) is int for item in shadow_offset)
-            and shadow_offset == [homm2_font.SHADOW_OFFSET_X, homm2_font.SHADOW_OFFSET_Y],
+            and shadow_offset == renderer["shadow_offset"],
             "설치 기록의 글꼴 그림자 규칙이 다릅니다",
         )
-        require(value.get("baseline_policy") == homm2_font.BASELINE_POLICY, "설치 기록의 baseline 규칙이 다릅니다")
-        require(value.get("fit_policy") == homm2_font.FIT_POLICY, "설치 기록의 글꼴 fit 규칙이 다릅니다")
-        require(value.get("crop_policy") == homm2_font.CROP_POLICY, "설치 기록의 글꼴 crop 규칙이 다릅니다")
-        require(value.get("shadow_policy") == homm2_font.SHADOW_POLICY, "설치 기록의 글꼴 shadow 규칙이 다릅니다")
+        require(value.get("baseline_policy") == renderer["baseline_policy"], "설치 기록의 baseline 규칙이 다릅니다")
+        require(value.get("fit_policy") == renderer["fit_policy"], "설치 기록의 글꼴 fit 규칙이 다릅니다")
+        require(value.get("crop_policy") == renderer["crop_policy"], "설치 기록의 글꼴 crop 규칙이 다릅니다")
+        require(value.get("shadow_policy") == renderer["shadow_policy"], "설치 기록의 글꼴 shadow 규칙이 다릅니다")
         resolved_faces = value.get("resolved_faces")
         require(isinstance(resolved_faces, dict) and set(resolved_faces) == {"primary", "fallback"}, "설치 기록의 확정 face 정보가 잘못됐습니다")
         require(resolved_faces["primary"] is not None, "설치 기록의 선택 글꼴 layout이 없습니다")
@@ -816,16 +927,18 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
             normal_count = validate_resolved_font_face(
                 resolved["normal"],
                 f"{face_label} 일반",
-                requested=homm2_font.NORMAL_PIXEL_SIZE,
-                width=homm2_font.NORMAL_CELL_WIDTH,
-                height=homm2_font.NORMAL_CELL_HEIGHT,
+                requested=renderer["normal_pixel_size"],
+                width=renderer["normal_cell"]["width"],
+                height=renderer["normal_cell"]["height"],
+                bearing_baseline=current_renderer,
             )
             small_count = validate_resolved_font_face(
                 resolved["small"],
                 f"{face_label} 작은",
-                requested=homm2_font.SMALL_PIXEL_SIZE,
-                width=homm2_font.SMALL_CELL_WIDTH,
-                height=homm2_font.SMALL_CELL_HEIGHT,
+                requested=renderer["small_pixel_size"],
+                width=renderer["small_cell"]["width"],
+                height=renderer["small_cell"]["height"],
+                bearing_baseline=current_renderer,
             )
             require(normal_count == small_count, f"{face_label} 일반/작은 글꼴의 글립 수가 다릅니다")
             resolved_glyph_counts[face_label] = normal_count
@@ -868,13 +981,13 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
         and primary_count + fallback_count == layout["glyph_count"],
         "설치 기록의 선택/대체 글리프 수가 잘못됐습니다",
     )
-    if renderer["id"] == homm2_font.RENDERER_ID:
+    if structured_renderer:
         require(resolved_glyph_counts.get("primary") == primary_count, "선택 글꼴 layout의 글립 수가 다릅니다")
         require(resolved_glyph_counts.get("fallback", 0) == fallback_count, "대체 글꼴 layout의 글립 수가 다릅니다")
     primary_identity = validate_font_face_receipt(value.get("primary"), "선택")
     fallback_value = value.get("fallback")
     fallback_identity = validate_font_face_receipt(fallback_value, "대체") if fallback_value is not None else None
-    if renderer["id"] == homm2_font.RENDERER_ID:
+    if structured_renderer:
         require(
             (value["resolved_faces"]["fallback"] is None) == (fallback_value is None),
             "설치 기록의 대체 글꼴 layout과 face 정보가 다릅니다",
@@ -1070,6 +1183,8 @@ def install_upgrade(
     manifest: dict[str, Any],
     manifest_sha256: str,
     previous_receipt: dict[str, Any],
+    font_file: str | None = None,
+    font_index: int = 0,
 ) -> dict[str, Any]:
     version = str(manifest["version"])
     state, receipt_path, journal_path = receipt_paths(game, version)
@@ -1081,7 +1196,7 @@ def install_upgrade(
         verify_active_files=True,
     )
     source_paths = upgrade_original_sources(game, manifest, previous_receipt, previous_records)
-    font_plan = prepare_font_plan(package, manifest)
+    font_plan = prepare_font_plan(package, manifest, font_file, font_index)
     run_id = time.strftime("%Y%m%dT%H%M%S") + "_" + uuid.uuid4().hex[:8]
     state.mkdir(parents=True, exist_ok=True)
     stage = checked_target(game, f"{STATE_DIR_NAME}/staging/{run_id}")
@@ -1215,6 +1330,8 @@ def install(
     package: Path,
     manifest: dict[str, Any],
     manifest_sha256: str,
+    font_file: str | None = None,
+    font_index: int = 0,
 ) -> dict[str, Any]:
     version = str(manifest["version"])
     state, receipt_path, journal_path = receipt_paths(game, version)
@@ -1225,16 +1342,28 @@ def install(
     if receipt_path.is_file():
         receipt = read_json(receipt_path)
         if receipt.get("version") == version and receipt.get("manifest_sha256") == manifest_sha256:
+            require(
+                font_file is None and font_index == 0,
+                "설치된 글꼴을 바꾸려면 먼저 UNINSTALL.cmd로 제거한 뒤 다시 설치해 주세요",
+            )
             current = verify(game, manifest, manifest_sha256, quiet=True)
             print(f"이미 설치되어 있습니다: {version}")
             return current
-        return install_upgrade(game, package, manifest, manifest_sha256, receipt)
+        return install_upgrade(
+            game,
+            package,
+            manifest,
+            manifest_sha256,
+            receipt,
+            font_file,
+            font_index,
+        )
     originals = verify_originals(game, (row for row in manifest["files"] if row["method"] != "copy"))
     copy_rows = [row for row in manifest["files"] if row["method"] == "copy"]
     for row in copy_rows:
         target = checked_target(game, row["path"])
         require(not target.exists(), f"다른 패치 파일과 충돌합니다: {row['path']}")
-    font_plan = prepare_font_plan(package, manifest)
+    font_plan = prepare_font_plan(package, manifest, font_file, font_index)
     run_id = time.strftime("%Y%m%dT%H%M%S") + "_" + uuid.uuid4().hex[:8]
     state.mkdir(parents=True, exist_ok=True)
     stage = checked_target(game, f"{STATE_DIR_NAME}/staging/{run_id}")
@@ -1652,6 +1781,8 @@ def preflight(
     package: Path,
     manifest: dict[str, Any],
     manifest_sha256: str | None = None,
+    font_file: str | None = None,
+    font_index: int = 0,
 ) -> dict[str, Any]:
     require_no_blockers()
     validate_game_info(game, manifest)
@@ -1674,6 +1805,10 @@ def preflight(
         require(manifest_sha256 is not None, "설치 기록을 확인할 manifest SHA-256이 필요합니다")
         receipt = read_json(receipt_path)
         if receipt.get("version") == manifest["version"] and receipt.get("manifest_sha256") == manifest_sha256:
+            require(
+                font_file is None and font_index == 0,
+                "설치된 글꼴을 바꾸려면 먼저 UNINSTALL.cmd로 제거한 뒤 다시 설치해 주세요",
+            )
             current = verify(game, manifest, manifest_sha256, quiet=True)
             current["status"] = "preflight_already_installed"
             print(json.dumps(current, ensure_ascii=False, indent=2))
@@ -1689,7 +1824,7 @@ def preflight(
         upgrade_from = str(previous_manifest["version"])
     else:
         originals = verify_originals(game, (row for row in manifest["files"] if row["method"] != "copy"))
-    font_plan = prepare_font_plan(package, manifest)
+    font_plan = prepare_font_plan(package, manifest, font_file, font_index)
     font_metadata = font_plan.metadata()
     result = {
         "status": "preflight_upgrade_passed" if upgrade_from else "preflight_passed",
@@ -1712,15 +1847,44 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("preflight", "install", "verify", "uninstall", "recover"))
     parser.add_argument("--game-dir")
+    font_source = parser.add_mutually_exclusive_group()
+    font_source.add_argument("--font-file", help="사용할 로컬 TTF/OTF/TTC/OTC 글꼴 파일")
+    font_source.add_argument("--choose-font", action="store_true", help="Windows 글꼴 파일 선택 창 열기")
+    parser.add_argument("--font-index", type=int, default=0, help="TTC/OTC face 번호(기본 0)")
     args = parser.parse_args()
     try:
+        require(args.font_index >= 0, "글꼴 face 번호는 0 이상이어야 합니다")
+        has_font_source = args.font_file is not None or args.choose_font
+        require(
+            args.action in {"preflight", "install"} or (not has_font_source and args.font_index == 0),
+            "글꼴 옵션은 preflight/install에서만 사용합니다",
+        )
+        require(
+            args.font_index == 0 or has_font_source,
+            "--font-index를 사용하려면 --font-file 또는 --choose-font를 함께 지정해 주세요",
+        )
+        font_file = choose_font_file() if args.choose_font else args.font_file
         package, manifest, manifest_sha256 = load_manifest()
         game = detect_game_dir(args.game_dir)
         with operation_lock(game):
             if args.action == "preflight":
-                preflight(game, package, manifest, manifest_sha256)
+                preflight(
+                    game,
+                    package,
+                    manifest,
+                    manifest_sha256,
+                    font_file,
+                    args.font_index,
+                )
             elif args.action == "install":
-                install(game, package, manifest, manifest_sha256)
+                install(
+                    game,
+                    package,
+                    manifest,
+                    manifest_sha256,
+                    font_file,
+                    args.font_index,
+                )
             elif args.action == "verify":
                 verify(game, manifest, manifest_sha256)
             elif args.action == "uninstall":

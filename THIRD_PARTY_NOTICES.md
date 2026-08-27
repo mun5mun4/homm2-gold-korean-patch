@@ -15,7 +15,7 @@
 
 ## NanumGothicCoding Regular
 
-beta.7의 유일한 한글 글리프 생성 글꼴로 `packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf`를 포함합니다.
+beta.8의 기본·대체 한글 글리프 생성 글꼴로 `packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf` 하나만 포함합니다.
 
 - 저작권 고지: Copyright (c) 2010, NHN Corporation
 - 라이선스: SIL Open Font License 1.1
@@ -25,9 +25,13 @@ beta.7의 유일한 한글 글리프 생성 글꼴로 `packaging/release_assets/
 
 TTF는 위 원본을 수정하지 않고 그대로 동봉합니다. 라이선스와 Reserved Font Name 고지 전문은 `packaging/release_assets/THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt`에 있습니다. 바탕체 파일이나 바탕체에서 미리 만든 고정 래스터는 포함하지 않습니다.
 
+## 사용자 로컬 글꼴 예시
+
+beta.8 개발 검증에서는 사용자가 로컬로 보유한 `Iropke Batang Medium`을 선택해 874자 생성, typographic 기준선과 전경 잘림 0을 확인했습니다. 이 이름은 사용자 글꼴 경로의 동작을 설명하는 검증 예시일 뿐입니다. 해당 글꼴 파일, 라이선스 파일, 그 글꼴로 미리 생성한 래스터·AGG는 저장소나 배포 ZIP에 포함하지 않습니다.
+
 ## Pillow
 
-Pillow 12.0.0은 설치 시 나눔고딕코딩을 Heroes II 비트맵 글리프로 그리는 데 사용되며 Windows 단독 실행 파일에 포함됩니다. Pillow 및 그 기반이 된 PIL의 저작권·라이선스 고지 전문은 `packaging/release_assets/THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt`에 있습니다.
+Pillow 12.0.0은 설치 시 기본 나눔고딕코딩 또는 사용자가 선택한 로컬 글꼴을 Heroes II 비트맵 글리프로 그리는 데 사용되며 Windows 단독 실행 파일에 포함됩니다. Pillow 및 그 기반이 된 PIL의 저작권·라이선스 고지 전문은 `packaging/release_assets/THIRD_PARTY_LICENSES/PILLOW_LICENSE.txt`에 있습니다.
 
 ## Python bsdiff4
 

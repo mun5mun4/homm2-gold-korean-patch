@@ -31,8 +31,8 @@ DEFAULT_FONT_SOURCE = ASSETS / "fonts" / "NanumGothicCoding-Regular.ttf"
 MAPPING_PACKAGE_PATH = Path("fonts/mapping874.fixed-interface-font.txt")
 DEFAULT_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
 DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.7"
-PINNED_BETA7_TARGETS = {
+CURRENT_VERSION = "v0.9.0-beta.8"
+PINNED_BETA8_TARGETS = {
     Path("HEROES2.EXE"): {
         "size": 1_523_420,
         "sha256": "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C",
@@ -67,6 +67,14 @@ UPGRADE_RELEASES = (
             "sha256": "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C",
         },
     },
+    {
+        "version": "v0.9.0-beta.7",
+        "manifest_path": Path("upgrades/v0.9.0-beta.7-manifest.json"),
+        "manifest": {
+            "size": 33_369,
+            "sha256": "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE",
+        },
+    },
 )
 GAME_ID = "1207658785"
 BUILD_ID = "52745329670822422"
@@ -88,16 +96,103 @@ HEROES2_LOCALIZED_BIN_RESOURCES = (
     "RECRUIQ1.BIN",
     "TRADPOST.BIN",
 )
-HEROES2_EXPECTED_PATCHED_RESOURCES = (
+# Every resource in these two tuples is rebuilt from the selected font during
+# installation.  Keep the archive ownership explicit: if a new font-dependent
+# localizer is added to homm2_font.py, validate_dynamic_font_agg_contracts()
+# rejects the release build until this allowlist is deliberately updated.
+HEROES2_DYNAMIC_FONT_RESOURCES = (
     "FONT.ICN",
     "SMALFONT.ICN",
-    *HEROES2_LOCALIZED_BIN_RESOURCES,
-    "SYSTEM.ICN",
     "REQUEST.ICN",
     "REQUESTS.ICN",
+    "SYSTEM.ICN",
     "SYSTEME.ICN",
+    "TREASURY.ICN",
+    "WELLXTRA.ICN",
+    "WELLBKG.ICN",
+    "RECRUIT.ICN",
+    "TRADPOST.ICN",
+    "BTNCMPGN.ICN",
+    "BTNCOM.ICN",
+    "BTNHOTST.ICN",
+    "BTNMODEM.ICN",
+    "BTNMP.ICN",
+    "BTNNET.ICN",
+    "BTNNEWGM.ICN",
+    "BTNNET2.ICN",
+    "BTNMCFG.ICN",
+    "BTNBAUD.ICN",
+    "BTNDC.ICN",
+    "BTNDCCFG.ICN",
+    "CAMPXTRG.ICN",
+    "CAMPXTRE.ICN",
+    "SPANBTN.ICN",
+    "SPANBTNE.ICN",
+    "CSPANBTN.ICN",
+    "CSPANBTE.ICN",
+    "ESPANBTN.ICN",
+    "SWAPBTN.ICN",
+    "TRADPOSE.ICN",
+    "VIEWARMY.ICN",
+    "VIEWARME.ICN",
+    "SURRENDR.ICN",
+    "SURRENDE.ICN",
+    "OVERVIEW.ICN",
+    "APANEL.ICN",
+    "APANELE.ICN",
+    "CPANEL.ICN",
+    "CPANELE.ICN",
+    "WINCMBTB.ICN",
+    "WINCMBBE.ICN",
+    "NGEXTRA.ICN",
+    "SPANBKG.ICN",
+    "SPANBKGE.ICN",
+    "CSPANBKG.ICN",
+    "CSPANBKE.ICN",
+    "ESPANBKG.ICN",
+    "REQBKG.ICN",
+    "REQSBKG.ICN",
+    "RECR2BKG.ICN",
+    "APANBKG.ICN",
+    "APANBKGE.ICN",
+    "CPANBKG.ICN",
+    "CPANBKGE.ICN",
+    "NGSPBKG.ICN",
+    "NGHSBKG.ICN",
+    "NGMPBKG.ICN",
+    "SWAPWIN.ICN",
+    "SCENIBKG.ICN",
+    "WINLOSE.ICN",
+    "WINLOSEE.ICN",
+    "CASLWIND.ICN",
+    "RECRBKG.ICN",
+    "TOWNWIND.ICN",
+    "TEXTBAR.ICN",
 )
-HEROES2X_EXPECTED_PATCHED_RESOURCES = ("FONT.ICN", "SMALFONT.ICN")
+HEROES2X_DYNAMIC_FONT_RESOURCES = (
+    "FONT.ICN",
+    "SMALFONT.ICN",
+    "X_CMPBTN.ICN",
+    "X_NEWCMP.ICN",
+    "X_LOADCM.ICN",
+    "X_MAPMNU.ICN",
+)
+HEROES2_EXPECTED_PATCHED_RESOURCES = (
+    *HEROES2_DYNAMIC_FONT_RESOURCES,
+    *HEROES2_LOCALIZED_BIN_RESOURCES,
+)
+HEROES2X_EXPECTED_PATCHED_RESOURCES = HEROES2X_DYNAMIC_FONT_RESOURCES
+
+# These image resources intentionally remain byte-exact originals.  They are
+# named here as a release-policy guard even though the exact changed-resource
+# allowlists above would also reject them.
+ORIGINAL_MENU_AND_CAMPAIGN_BACKGROUND_RESOURCES = (
+    "BTNSHNGL.ICN",
+    "HEROES.ICN",
+    "CAMPBKGG.ICN",
+    "CAMPBKGE.ICN",
+    "X_CMPBKG.ICN",
+)
 
 
 class BuildError(RuntimeError):
@@ -160,7 +255,176 @@ def write(path: Path, raw: bytes) -> None:
     require(path.read_bytes() == raw, f"write readback mismatch: {path}")
 
 
+def _target_resource_names(targets: Any, *, field: str = "resource") -> set[str]:
+    return {str(target[field]).upper() for target in targets}
+
+
+def _validate_localizer_resource_group(
+    label: str,
+    source_identities: Any,
+    output_identities: Any,
+    target_resources: set[str],
+) -> set[str]:
+    source = {str(name).upper() for name in source_identities}
+    output = {str(name).upper() for name in output_identities}
+    require(
+        source == output == target_resources,
+        f"{label} source/output/target resource declarations drifted: "
+        f"source={sorted(source)} output={sorted(output)} targets={sorted(target_resources)}",
+    )
+    return source
+
+
+def validate_dynamic_font_agg_contracts() -> None:
+    """Cross-check explicit release allowlists against every live localizer.
+
+    This deliberately does not derive the release allowlists from the font
+    builder.  An added or moved localizer therefore fails closed until archive
+    ownership is reviewed here.
+    """
+
+    font_resources = {str(name).upper() for name in homm2_font.FONT_RESOURCE_NAMES}
+    require(
+        font_resources == {"FONT.ICN", "SMALFONT.ICN"},
+        f"font resource declaration drifted: {sorted(font_resources)}",
+    )
+
+    image_ui = _validate_localizer_resource_group(
+        "image UI",
+        homm2_font.IMAGE_UI_RESOURCE_SOURCE_IDENTITIES,
+        homm2_font.IMAGE_UI_RESOURCE_OUTPUT_IDENTITIES,
+        _target_resource_names(homm2_font.IMAGE_UI_TEXT_TARGETS)
+        | {str(homm2_font.IMAGE_UI_WELL_MIRROR["target_resource"]).upper()},
+    )
+    menu132 = _validate_localizer_resource_group(
+        "132-pixel menu",
+        homm2_font.MENU132_RESOURCE_SOURCE_IDENTITIES,
+        homm2_font.MENU132_RESOURCE_OUTPUT_IDENTITIES,
+        _target_resource_names(homm2_font.MENU132_TEXT_TARGETS),
+    )
+    campaign_buttons = _validate_localizer_resource_group(
+        "campaign buttons",
+        homm2_font.CAMPAIGN_BUTTON_RESOURCE_SOURCE_IDENTITIES,
+        homm2_font.CAMPAIGN_BUTTON_RESOURCE_OUTPUT_IDENTITIES,
+        _target_resource_names(homm2_font.CAMPAIGN_BUTTON_TEXT_TARGETS),
+    )
+    game_buttons = _validate_localizer_resource_group(
+        "in-game buttons",
+        homm2_font.GAME_BUTTON_RESOURCE_SOURCE_IDENTITIES,
+        homm2_font.GAME_BUTTON_RESOURCE_OUTPUT_IDENTITIES,
+        _target_resource_names(homm2_font.GAME_BUTTON_TEXT_TARGETS),
+    )
+    expansion_menu = _validate_localizer_resource_group(
+        "expansion menu",
+        homm2_font.EXPANSION_MENU_RESOURCE_SOURCE_IDENTITIES,
+        homm2_font.EXPANSION_MENU_RESOURCE_OUTPUT_IDENTITIES,
+        _target_resource_names(homm2_font.EXPANSION_MENU_TEXT_TARGETS),
+    )
+    embedded_ui = _validate_localizer_resource_group(
+        "embedded UI",
+        homm2_font.EMBEDDED_UI_RESOURCE_SOURCE_IDENTITIES,
+        homm2_font.EMBEDDED_UI_RESOURCE_OUTPUT_IDENTITIES,
+        _target_resource_names(homm2_font.EMBEDDED_UI_MIRRORS, field="target_resource")
+        | _target_resource_names(homm2_font.EMBEDDED_UI_TEXT_TARGETS),
+    )
+
+    heroes2_campaign_buttons = {"CAMPXTRG.ICN", "CAMPXTRE.ICN"}
+    heroes2x_campaign_buttons = {"X_CMPBTN.ICN"}
+    campaign_archive_sets = {
+        frozenset(str(name).upper() for name in names)
+        for names in homm2_font.CAMPAIGN_BUTTON_ARCHIVE_RESOURCE_SETS
+    }
+    require(
+        campaign_buttons == heroes2_campaign_buttons | heroes2x_campaign_buttons
+        and campaign_archive_sets
+        == {frozenset(heroes2_campaign_buttons), frozenset(heroes2x_campaign_buttons)},
+        f"campaign button archive ownership drifted: {sorted(campaign_buttons)}",
+    )
+
+    recruit_cost = {str(homm2_font.RECRUIT_COST_RESOURCE_NAME).upper()}
+    townwind = {str(homm2_font.TOWNWIND_RESOURCE_NAME).upper()}
+    textbar = {str(homm2_font.TEXTBAR_RESOURCE_NAME).upper()}
+    require(
+        _target_resource_names(homm2_font.TOWNWIND_COST_TARGETS)
+        | _target_resource_names(homm2_font.TOWNWIND_BUTTON_TARGETS)
+        == townwind,
+        "TOWNWIND target declaration drifted",
+    )
+    require(
+        _target_resource_names(homm2_font.TEXTBAR_TARGETS) == textbar,
+        "TEXTBAR target declaration drifted",
+    )
+
+    heroes2_groups = (
+        font_resources,
+        image_ui,
+        menu132,
+        heroes2_campaign_buttons,
+        game_buttons,
+        embedded_ui,
+        recruit_cost,
+        townwind,
+        textbar,
+    )
+    heroes2x_groups = (font_resources, heroes2x_campaign_buttons, expansion_menu)
+    heroes2_declared = set().union(*heroes2_groups)
+    heroes2x_declared = set().union(*heroes2x_groups)
+    require(
+        len(heroes2_declared) == sum(len(group) for group in heroes2_groups),
+        "HEROES2 dynamic font resource groups overlap",
+    )
+    require(
+        len(heroes2x_declared) == sum(len(group) for group in heroes2x_groups),
+        "HEROES2X dynamic font resource groups overlap",
+    )
+
+    heroes2_explicit = {name.upper() for name in HEROES2_DYNAMIC_FONT_RESOURCES}
+    heroes2x_explicit = {name.upper() for name in HEROES2X_DYNAMIC_FONT_RESOURCES}
+    require(
+        len(heroes2_explicit) == len(HEROES2_DYNAMIC_FONT_RESOURCES)
+        and heroes2_explicit == heroes2_declared,
+        f"HEROES2 dynamic font allowlist drifted: "
+        f"missing={sorted(heroes2_declared - heroes2_explicit)} "
+        f"extra={sorted(heroes2_explicit - heroes2_declared)}",
+    )
+    require(
+        len(heroes2x_explicit) == len(HEROES2X_DYNAMIC_FONT_RESOURCES)
+        and heroes2x_explicit == heroes2x_declared,
+        f"HEROES2X dynamic font allowlist drifted: "
+        f"missing={sorted(heroes2x_declared - heroes2x_explicit)} "
+        f"extra={sorted(heroes2x_explicit - heroes2x_declared)}",
+    )
+
+    protected = {name.upper() for name in ORIGINAL_MENU_AND_CAMPAIGN_BACKGROUND_RESOURCES}
+    declared_protected = {
+        str(homm2_font.FANCY_MAIN_MENU_BUTTON_RESOURCE_NAME).upper(),
+        str(homm2_font.FANCY_MAIN_MENU_HEROES_RESOURCE_NAME).upper(),
+        *(str(name).upper() for name in homm2_font.CAMP_PROGRESS_RESOURCE_SOURCE_IDENTITIES),
+    }
+    require(
+        protected == declared_protected
+        and not protected.intersection(heroes2_explicit | heroes2x_explicit),
+        f"original menu/campaign-background policy drifted: {sorted(protected)}",
+    )
+
+    keep = {name.upper() for name in HEROES2_LOCALIZED_BIN_RESOURCES}
+    heroes2_patched = {name.upper() for name in HEROES2_EXPECTED_PATCHED_RESOURCES}
+    heroes2x_patched = {name.upper() for name in HEROES2X_EXPECTED_PATCHED_RESOURCES}
+    require(not keep.intersection(heroes2_explicit), "HEROES2 BIN keep list overlaps dynamic raster resources")
+    require(
+        len(heroes2_patched) == len(HEROES2_EXPECTED_PATCHED_RESOURCES)
+        and heroes2_patched == heroes2_explicit | keep,
+        "HEROES2 patched-resource allowlist drifted",
+    )
+    require(
+        len(heroes2x_patched) == len(HEROES2X_EXPECTED_PATCHED_RESOURCES)
+        and heroes2x_patched == heroes2x_explicit,
+        "HEROES2X patched-resource allowlist drifted",
+    )
+
+
 def font_agg_contract(relative: Path) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    validate_dynamic_font_agg_contracts()
     if relative == Path("DATA/HEROES2.AGG"):
         return HEROES2_EXPECTED_PATCHED_RESOURCES, HEROES2_LOCALIZED_BIN_RESOURCES
     if relative == Path("DATA/HEROES2X.AGG"):
@@ -264,6 +528,7 @@ def font_generation_manifest(mapping_raw: bytes, default_font_raw: bytes) -> dic
 
 def build(original: Path, patched: Path, output: Path, version: str, patcher_exe: Path | None) -> dict[str, Any]:
     require(version == CURRENT_VERSION, f"release builder is pinned to {CURRENT_VERSION}")
+    validate_dynamic_font_agg_contracts()
     require(original.is_dir(), f"original root missing: {original}")
     require(patched.is_dir(), f"patched root missing: {patched}")
     require(not output.exists(), f"output already exists: {output}")
@@ -276,6 +541,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
         "THIRD_PARTY_NOTICES.md",
         "COPYING.GPL-2.0",
         "INSTALL.cmd",
+        "INSTALL_CUSTOM_FONT.cmd",
         "VERIFY.cmd",
         "UNINSTALL.cmd",
         "RECOVER.cmd",
@@ -313,10 +579,10 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
             source = source_path.read_bytes()
             target = target_path.read_bytes()
             require(source_digest(source) == baseline[relative.as_posix().casefold()], f"original baseline mismatch: {relative}")
-            if relative in PINNED_BETA7_TARGETS:
+            if relative in PINNED_BETA8_TARGETS:
                 require(
-                    digest(target) == PINNED_BETA7_TARGETS[relative],
-                    f"pinned beta.7 target mismatch: {relative}",
+                    digest(target) == PINNED_BETA8_TARGETS[relative],
+                    f"pinned beta.8 target mismatch: {relative}",
                 )
             if relative == Path("DATA/HEROES2.AGG"):
                 target = localize_herowind_knowledge_agg(target, label=f"{relative.as_posix()}:patched")
@@ -367,8 +633,8 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
 
         bank = checked_file(patched, Path("KOREAN.BIN"), "patched").read_bytes()
         require(
-            digest(bank) == PINNED_BETA7_TARGETS[Path("KOREAN.BIN")],
-            "pinned beta.7 target mismatch: KOREAN.BIN",
+            digest(bank) == PINNED_BETA8_TARGETS[Path("KOREAN.BIN")],
+            "pinned beta.8 target mismatch: KOREAN.BIN",
         )
         bank_relative = Path("payload/KOREAN.BIN")
         write(stage / bank_relative, bank)
@@ -406,7 +672,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
         manifest = {
             "schema": "homm2-korean-release-manifest-v2",
             "version": version,
-            "release_date": "2026-08-26",
+            "release_date": "2026-08-27",
             "channel": "beta",
             "game": {
                 "game_id": GAME_ID,
@@ -419,7 +685,7 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
                 "state_directory": "_homm2_ko_install",
                 "ordinary_maps_modified": False,
                 "save_files_modified": False,
-                "image_assets_translated": False,
+                "image_assets_translated": True,
             },
             "counts": {
                 "bsdiff_files": len(paths) - len(FONT_AGG_PATHS),

@@ -16,7 +16,8 @@ from tools.release import homm2_ko_patcher as patcher
 PREVIOUS_VERSION = "v0.9.0-beta.4"
 BETA5_VERSION = "v0.9.0-beta.5"
 BETA6_VERSION = "v0.9.0-beta.6"
-CURRENT_VERSION = "v0.9.0-beta.7"
+BETA7_VERSION = "v0.9.0-beta.7"
+CURRENT_VERSION = "v0.9.0-beta.8"
 PREVIOUS_SHA256 = "A" * 64
 CURRENT_SHA256 = "B" * 64
 
@@ -39,7 +40,9 @@ def font_face(raw: bytes, file_name: str = "Fixture.ttf") -> dict[str, int | str
     }
 
 
-def renderer(*, legacy: bool) -> dict[str, object]:
+def renderer(*, legacy: bool, historical_v2: bool = False) -> dict[str, object]:
+    if historical_v2:
+        return copy.deepcopy(patcher.HISTORICAL_V2_RENDERER)
     if legacy:
         return {
             "id": "pillow-freetype-monochrome-v1",
@@ -64,7 +67,12 @@ def renderer(*, legacy: bool) -> dict[str, object]:
     }
 
 
-def generation(default_font_raw: bytes, *, legacy: bool) -> dict[str, object]:
+def generation(
+    default_font_raw: bytes,
+    *,
+    legacy: bool,
+    historical_v2: bool = False,
+) -> dict[str, object]:
     return {
         "schema": "homm2-font-generation-v1",
         "mapping": {"package_path": "fonts/mapping.txt", "package": identity(b"mapping")},
@@ -75,7 +83,7 @@ def generation(default_font_raw: bytes, *, legacy: bool) -> dict[str, object]:
             "face_index": 0,
             "license_path": "licenses/FONT.txt",
         },
-        "renderer": renderer(legacy=legacy),
+        "renderer": renderer(legacy=legacy, historical_v2=historical_v2),
         "layout": {
             "legacy_sprite_count": homm2_font.LEGACY_SPRITE_COUNT,
             "filler_sprite_count": homm2_font.FILLER_SPRITE_COUNT,
@@ -88,27 +96,47 @@ def generation(default_font_raw: bytes, *, legacy: bool) -> dict[str, object]:
     }
 
 
-def resolved_face(requested: int, width: int, height: int, glyph_count: int = homm2_font.KOREAN_GLYPH_COUNT) -> dict[str, object]:
+def resolved_face(
+    requested: int,
+    width: int,
+    height: int,
+    glyph_count: int = homm2_font.KOREAN_GLYPH_COUNT,
+    *,
+    historical_v2: bool = False,
+) -> dict[str, object]:
+    ink_union = [0, -requested + 2, width - 1, 2]
     return {
         "requested_pixel_size": requested,
         "resolved_pixel_size": requested,
         "cell_width": width,
         "cell_height": height,
         "origin_x": width // 2,
-        "baseline_y": height,
-        "ink_union": [0, -requested + 2, width - 1, 2],
+        "baseline_y": height if historical_v2 else -ink_union[1],
+        "ink_union": ink_union,
         "glyph_count": glyph_count,
         "foreground_clip_count": 0,
         "shadow_edge_clip_count": 0,
     }
 
 
-def font_receipt(font_raw: bytes, *, legacy: bool, mode: str = "default") -> dict[str, object]:
+def font_receipt(
+    font_raw: bytes,
+    *,
+    legacy: bool,
+    mode: str = "default",
+    historical_v2: bool = False,
+) -> dict[str, object]:
     selected_raw = font_raw if mode == "default" else b"custom-font"
     value: dict[str, object] = {
         "schema": "homm2-generated-font-receipt-v1",
         "mode": mode,
-        "renderer": "pillow-freetype-monochrome-v1" if legacy else homm2_font.RENDERER_ID,
+        "renderer": (
+            "pillow-freetype-monochrome-v1"
+            if legacy
+            else patcher.HISTORICAL_V2_RENDERER["id"]
+            if historical_v2
+            else homm2_font.RENDERER_ID
+        ),
         "normal_pixel_size": 14,
         "small_pixel_size": 12,
         "mapping_glyph_count": homm2_font.KOREAN_GLYPH_COUNT,
@@ -126,21 +154,39 @@ def font_receipt(font_raw: bytes, *, legacy: bool, mode: str = "default") -> dic
                 "normal_cell": {"width": homm2_font.NORMAL_CELL_WIDTH, "height": homm2_font.NORMAL_CELL_HEIGHT},
                 "small_cell": {"width": homm2_font.SMALL_CELL_WIDTH, "height": homm2_font.SMALL_CELL_HEIGHT},
                 "shadow_offset": [homm2_font.SHADOW_OFFSET_X, homm2_font.SHADOW_OFFSET_Y],
-                "baseline_policy": homm2_font.BASELINE_POLICY,
-                "fit_policy": homm2_font.FIT_POLICY,
-                "crop_policy": homm2_font.CROP_POLICY,
-                "shadow_policy": homm2_font.SHADOW_POLICY,
+                "baseline_policy": (
+                    patcher.HISTORICAL_V2_RENDERER["baseline_policy"]
+                    if historical_v2
+                    else homm2_font.BASELINE_POLICY
+                ),
+                "fit_policy": (
+                    patcher.HISTORICAL_V2_RENDERER["fit_policy"]
+                    if historical_v2
+                    else homm2_font.FIT_POLICY
+                ),
+                "crop_policy": (
+                    patcher.HISTORICAL_V2_RENDERER["crop_policy"]
+                    if historical_v2
+                    else homm2_font.CROP_POLICY
+                ),
+                "shadow_policy": (
+                    patcher.HISTORICAL_V2_RENDERER["shadow_policy"]
+                    if historical_v2
+                    else homm2_font.SHADOW_POLICY
+                ),
                 "resolved_faces": {
                     "primary": {
                         "normal": resolved_face(
                             homm2_font.NORMAL_PIXEL_SIZE,
                             homm2_font.NORMAL_CELL_WIDTH,
                             homm2_font.NORMAL_CELL_HEIGHT,
+                            historical_v2=historical_v2,
                         ),
                         "small": resolved_face(
                             homm2_font.SMALL_PIXEL_SIZE,
                             homm2_font.SMALL_CELL_WIDTH,
                             homm2_font.SMALL_CELL_HEIGHT,
+                            historical_v2=historical_v2,
                         ),
                     },
                     "fallback": None,
@@ -190,13 +236,24 @@ class UpgradeFixture:
         previous_copy = self.row("KOREAN.BIN", "copy", self.old_copy)
         current_static = self.row("DATA/A.BIN", "bsdiff40", self.new_static)
         current_copy = self.row("KOREAN.BIN", "copy", self.new_copy)
-        self.previous_manifest = self.manifest(previous_version, [previous_static, previous_copy], legacy=previous_legacy)
+        previous_historical_v2 = not previous_legacy and previous_version in {
+            BETA5_VERSION,
+            BETA6_VERSION,
+            BETA7_VERSION,
+        }
+        self.previous_manifest = self.manifest(
+            previous_version,
+            [previous_static, previous_copy],
+            legacy=previous_legacy,
+            historical_v2=previous_historical_v2,
+        )
         self.current_manifest = self.manifest(CURRENT_VERSION, [current_static, current_copy], legacy=False)
 
         previous_font = font_receipt(
             self.default_font,
             legacy=previous_legacy,
             mode="custom" if custom else "default",
+            historical_v2=previous_historical_v2,
         )
         records = [
             {
@@ -240,12 +297,23 @@ class UpgradeFixture:
             "target": identity(target_raw),
         }
 
-    def manifest(self, version: str, files: list[dict[str, object]], *, legacy: bool) -> dict[str, object]:
+    def manifest(
+        self,
+        version: str,
+        files: list[dict[str, object]],
+        *,
+        legacy: bool,
+        historical_v2: bool = False,
+    ) -> dict[str, object]:
         return {
             "schema": "homm2-korean-release-manifest-v2",
             "version": version,
             "game": {"game_id": patcher.GAME_ID, "build_id": patcher.BUILD_ID, "language": "English"},
-            "font_generation": generation(self.default_font, legacy=legacy),
+            "font_generation": generation(
+                self.default_font,
+                legacy=legacy,
+                historical_v2=historical_v2,
+            ),
             "files": files,
         }
 
@@ -260,7 +328,7 @@ class UpgradeFixture:
 
 
 class PatcherUpgradeTests(unittest.TestCase):
-    def patches(self, fixture: UpgradeFixture):
+    def patches(self, fixture: UpgradeFixture, stage_side_effect=None):
         return (
             mock.patch.object(patcher, "require_no_blockers"),
             mock.patch.object(patcher, "validate_game_info", return_value={}),
@@ -270,7 +338,7 @@ class PatcherUpgradeTests(unittest.TestCase):
                 return_value=(fixture.previous_manifest, PREVIOUS_SHA256),
             ),
             mock.patch.object(patcher, "prepare_font_plan", return_value=object()),
-            mock.patch.object(patcher, "stage_outputs", side_effect=fixture.staged),
+            mock.patch.object(patcher, "stage_outputs", side_effect=stage_side_effect or fixture.staged),
         )
 
     def test_upgrade_stages_from_first_original_and_new_uninstall_restores_it(self) -> None:
@@ -428,11 +496,12 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertFalse((fixture.state / patcher.JOURNAL_NAME).exists())
             self.assertEqual((fixture.game / "DATA" / "A.BIN").read_bytes(), fixture.new_static)
 
-    def test_beta4_beta5_and_beta6_upgrade_to_the_bundled_default_without_reselection(self) -> None:
+    def test_beta4_through_beta7_upgrade_to_the_bundled_default_without_reselection(self) -> None:
         cases = (
             (PREVIOUS_VERSION, True),
             (BETA5_VERSION, False),
             (BETA6_VERSION, False),
+            (BETA7_VERSION, False),
         )
         for previous_version, previous_legacy in cases:
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
@@ -459,7 +528,78 @@ class PatcherUpgradeTests(unittest.TestCase):
                 self.assertEqual(receipt["font_generation"]["mode"], "default")
                 self.assertEqual(receipt["font_generation"]["primary"], font_face(fixture.default_font))
                 self.assertIsNone(receipt["font_generation"]["fallback"])
-                font_plan_mock.assert_called_once_with(fixture.package, fixture.current_manifest)
+                font_plan_mock.assert_called_once_with(fixture.package, fixture.current_manifest, None, 0)
+
+    def test_upgrade_uses_selected_custom_font_and_does_not_store_its_path(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = UpgradeFixture(Path(temporary))
+            selected = Path(temporary) / "private-fonts" / "Custom.ttf"
+
+            def staged_custom(*args, **kwargs):
+                identities, _ = fixture.staged(*args, **kwargs)
+                return identities, font_receipt(fixture.default_font, legacy=False, mode="custom")
+
+            blockers, game_info, previous_manifest, font_plan, stage_outputs = self.patches(
+                fixture,
+                staged_custom,
+            )
+            with blockers, game_info, previous_manifest, font_plan as font_plan_mock, stage_outputs:
+                result = patcher.install(
+                    fixture.game,
+                    fixture.package,
+                    fixture.current_manifest,
+                    CURRENT_SHA256,
+                    str(selected),
+                    0,
+                )
+
+            self.assertEqual(result["font_mode"], "custom")
+            font_plan_mock.assert_called_once_with(
+                fixture.package,
+                fixture.current_manifest,
+                str(selected),
+                0,
+            )
+            receipt_path = fixture.state / patcher.RECEIPT_NAME
+            receipt = patcher.read_json(receipt_path)
+            self.assertEqual(receipt["font_generation"]["mode"], "custom")
+            self.assertEqual(receipt["font_generation"]["primary"]["file_name"], "Custom.ttf")
+            self.assertNotIn(str(selected.parent), receipt_path.read_text(encoding="utf-8"))
+
+    def test_same_version_custom_font_change_requires_uninstall_first(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            game = Path(temporary) / "game"
+            package = Path(temporary) / "package"
+            state = game / patcher.STATE_DIR_NAME
+            state.mkdir(parents=True)
+            (state / patcher.RECEIPT_NAME).write_bytes(
+                patcher.canonical(
+                    {
+                        "version": CURRENT_VERSION,
+                        "manifest_sha256": CURRENT_SHA256,
+                    }
+                )
+            )
+            with mock.patch.object(patcher, "require_no_blockers"), mock.patch.object(
+                patcher,
+                "validate_game_info",
+                return_value={},
+            ), mock.patch.object(patcher, "verify") as verify, mock.patch.object(
+                patcher,
+                "prepare_font_plan",
+            ) as prepare_font_plan:
+                with self.assertRaisesRegex(patcher.PatchError, "UNINSTALL.cmd"):
+                    patcher.install(
+                        game,
+                        package,
+                        {"version": CURRENT_VERSION},
+                        CURRENT_SHA256,
+                        r"C:\Fonts\Custom.ttf",
+                        0,
+                    )
+
+            verify.assert_not_called()
+            prepare_font_plan.assert_not_called()
 
     def test_frozen_beta4_manifest_accepts_only_historical_renderer(self) -> None:
         frozen = Path("packaging/release_assets/upgrades/v0.9.0-beta.4-manifest.json")
@@ -491,7 +631,43 @@ class PatcherUpgradeTests(unittest.TestCase):
         self.assertEqual(loaded["version"], PREVIOUS_VERSION)
         self.assertEqual(loaded_sha256, "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60")
 
-    def test_v2_receipt_rejects_impossible_fixed_layout_diagnostics(self) -> None:
+    def test_frozen_beta5_through_beta7_manifests_and_receipts_keep_historical_v2_support(self) -> None:
+        fixtures = (
+            (
+                BETA5_VERSION,
+                32_845,
+                "A9A402E1BD5A8ECD856EABA70BA2F88A828D42F68D37E6F2B82BF7659991B05F",
+            ),
+            (
+                BETA6_VERSION,
+                33_107,
+                "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C",
+            ),
+            (
+                BETA7_VERSION,
+                33_369,
+                "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE",
+            ),
+        )
+        for version, expected_size, expected_sha256 in fixtures:
+            with self.subTest(version=version):
+                frozen = Path(f"packaging/release_assets/upgrades/{version}-manifest.json")
+                self.assertEqual(frozen.stat().st_size, expected_size)
+                self.assertEqual(patcher.sha256_file(frozen), expected_sha256)
+                document = patcher.json.loads(frozen.read_text(encoding="utf-8"))
+                patcher.validate_manifest_document(document, frozen_legacy=True)
+                with self.assertRaisesRegex(patcher.PatchError, "renderer"):
+                    patcher.validate_manifest_document(document)
+
+                historical_receipt = font_receipt(
+                    b"historical-custom-font",
+                    legacy=False,
+                    mode="custom",
+                    historical_v2=True,
+                )
+                patcher.validate_font_receipt(historical_receipt, document)
+
+    def test_current_receipt_rejects_impossible_bearing_layout_diagnostics(self) -> None:
         default_font = UpgradeFixture.default_font
         manifest = {"font_generation": generation(default_font, legacy=False)}
         valid = font_receipt(default_font, legacy=False)
@@ -519,6 +695,7 @@ class PatcherUpgradeTests(unittest.TestCase):
             ("far-right ink union", "small", "ink_union", [0, -10, 10**9, 2]),
             ("far-bottom ink union", "small", "ink_union", [0, -10, 11, 10**9]),
             ("inverted ink union", "normal", "ink_union", [13, -12, 0, 2]),
+            ("ink union taller than cell", "small", "ink_union", [0, -11, 10, 2]),
             ("boolean glyph count", "normal", "glyph_count", True),
             ("too many glyphs", "small", "glyph_count", homm2_font.KOREAN_GLYPH_COUNT + 1),
             ("boolean foreground count", "normal", "foreground_clip_count", False),
@@ -539,7 +716,7 @@ class PatcherUpgradeTests(unittest.TestCase):
         with self.assertRaises(patcher.PatchError):
             patcher.validate_font_receipt(top_level, manifest)
 
-    def test_v2_receipt_allows_zero_primary_glyphs_with_complete_fallback(self) -> None:
+    def test_current_receipt_allows_zero_primary_glyphs_with_complete_fallback(self) -> None:
         default_font = UpgradeFixture.default_font
         manifest = {"font_generation": generation(default_font, legacy=False)}
         receipt = font_receipt(default_font, legacy=False, mode="custom")
@@ -635,7 +812,7 @@ class PatcherUpgradeTests(unittest.TestCase):
             copy_backup.assert_not_called()
             replace.assert_not_called()
 
-    def test_current_rendered_font_receipt_matches_v2_validator(self) -> None:
+    def test_current_rendered_font_receipt_matches_bearing_validator(self) -> None:
         mapping = Path("translations/font/mapping874.fixed-interface-font.txt")
         font = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
         plan = homm2_font.make_font_plan(mapping, font, mode="default")

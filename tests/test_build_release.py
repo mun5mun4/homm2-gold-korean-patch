@@ -6,6 +6,7 @@ from __future__ import annotations
 import struct
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from tools.release import build_release as release
 from tools.release import homm2_font as font
@@ -35,9 +36,9 @@ def herowind_payload(text: bytes = release.HEROWIND_KNOWLEDGE_ENGLISH) -> bytes:
 
 
 class HerowindKnowledgeTests(unittest.TestCase):
-    def test_beta7_core_targets_are_pinned(self) -> None:
+    def test_beta8_core_targets_are_pinned(self) -> None:
         self.assertEqual(
-            release.PINNED_BETA7_TARGETS,
+            release.PINNED_BETA8_TARGETS,
             {
                 Path("HEROES2.EXE"): {
                     "size": 1_523_420,
@@ -50,13 +51,13 @@ class HerowindKnowledgeTests(unittest.TestCase):
             },
         )
 
-    def test_builder_rejects_a_non_beta7_version_before_reading_inputs(self) -> None:
-        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.7"):
+    def test_builder_rejects_beta7_before_reading_inputs(self) -> None:
+        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.8"):
             release.build(
                 Path("missing-original"),
                 Path("missing-patched"),
                 Path("missing-output"),
-                "v0.9.0-beta.5",
+                "v0.9.0-beta.7",
                 None,
             )
 
@@ -77,9 +78,14 @@ class HerowindKnowledgeTests(unittest.TestCase):
                 "upgrades/v0.9.0-beta.6-manifest.json",
                 {"size": 33_107, "sha256": "32E731E43E6D00773867AF89A1BB0C0415099B69359B39C98153CE025279537C"},
             ),
+            (
+                "v0.9.0-beta.7",
+                "upgrades/v0.9.0-beta.7-manifest.json",
+                {"size": 33_369, "sha256": "F71C83895BDC3581F1C8BA4BC7919153E14F0500831D941DAE9B34D17519E2CE"},
+            ),
         )
 
-        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.7")
+        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.8")
         self.assertEqual(len(release.UPGRADE_RELEASES), len(expected))
         for upgrade, (version, manifest_path, identity) in zip(release.UPGRADE_RELEASES, expected):
             with self.subTest(version=version):
@@ -159,6 +165,85 @@ class HerowindKnowledgeTests(unittest.TestCase):
         self.assertIn(release.HEROWIND_RESOURCE_NAME, keep)
         self.assertIn(release.HEROWIND_RESOURCE_NAME, expected_changes)
         self.assertEqual(keep.count(release.HEROWIND_RESOURCE_NAME), 1)
+
+
+class DynamicFontAggContractTests(unittest.TestCase):
+    def test_explicit_archive_contracts_cover_every_dynamic_raster(self) -> None:
+        release.validate_dynamic_font_agg_contracts()
+        heroes2_expected, heroes2_keep = release.font_agg_contract(Path("DATA/HEROES2.AGG"))
+        heroes2x_expected, heroes2x_keep = release.font_agg_contract(Path("DATA/HEROES2X.AGG"))
+
+        self.assertEqual(len(release.HEROES2_DYNAMIC_FONT_RESOURCES), 67)
+        self.assertEqual(len(release.HEROES2X_DYNAMIC_FONT_RESOURCES), 6)
+        self.assertEqual(len(heroes2_expected), 67 + len(release.HEROES2_LOCALIZED_BIN_RESOURCES))
+        self.assertEqual(set(heroes2_keep), set(release.HEROES2_LOCALIZED_BIN_RESOURCES))
+        self.assertEqual(
+            set(heroes2_expected),
+            set(release.HEROES2_DYNAMIC_FONT_RESOURCES) | set(heroes2_keep),
+        )
+        self.assertEqual(tuple(heroes2x_expected), release.HEROES2X_DYNAMIC_FONT_RESOURCES)
+        self.assertEqual(heroes2x_keep, ())
+
+        protected = set(release.ORIGINAL_MENU_AND_CAMPAIGN_BACKGROUND_RESOURCES)
+        self.assertEqual(
+            protected,
+            {"BTNSHNGL.ICN", "HEROES.ICN", "CAMPBKGG.ICN", "CAMPBKGE.ICN", "X_CMPBKG.ICN"},
+        )
+        self.assertTrue(protected.isdisjoint(heroes2_expected))
+        self.assertTrue(protected.isdisjoint(heroes2x_expected))
+
+    def test_font_free_bases_keep_only_the_localized_bin_allowlist(self) -> None:
+        for relative in release.FONT_AGG_PATHS:
+            with self.subTest(relative=relative.as_posix()):
+                expected, keep = release.font_agg_contract(relative)
+                resources = tuple((name, f"original:{name}".encode("ascii")) for name in expected) + (
+                    ("UNCHANGED.BIN", b"unchanged"),
+                )
+                original = make_agg(resources)
+                archive = font.parse_agg(original, label=f"{relative}:fixture-original")
+                patched = font.repack_agg(
+                    archive,
+                    {name: f"patched:{name}".encode("ascii") for name in expected},
+                )
+
+                base = font.make_localized_font_base(
+                    original,
+                    patched,
+                    keep_localized_resources=keep,
+                    expected_patched_changes=expected,
+                    label=f"{relative}:fixture",
+                )
+
+                self.assertEqual(
+                    set(font.changed_agg_resources(original, patched, label=f"{relative}:patched")),
+                    set(expected),
+                )
+                self.assertEqual(
+                    set(font.changed_agg_resources(original, base, label=f"{relative}:base")),
+                    set(keep),
+                )
+                original_archive = font.parse_agg(original, label=f"{relative}:original-check")
+                patched_archive = font.parse_agg(patched, label=f"{relative}:patched-check")
+                base_archive = font.parse_agg(base, label=f"{relative}:base-check")
+                for name in expected:
+                    if name in keep:
+                        self.assertEqual(base_archive.get(name).payload, patched_archive.get(name).payload)
+                    else:
+                        self.assertEqual(base_archive.get(name).payload, original_archive.get(name).payload)
+
+    def test_contract_fails_closed_when_explicit_allowlist_loses_a_resource(self) -> None:
+        incomplete = release.HEROES2_DYNAMIC_FONT_RESOURCES[:-1]
+        with mock.patch.object(release, "HEROES2_DYNAMIC_FONT_RESOURCES", incomplete):
+            with self.assertRaisesRegex(release.BuildError, "HEROES2 dynamic font allowlist drifted"):
+                release.font_agg_contract(Path("DATA/HEROES2.AGG"))
+
+    def test_contract_fails_closed_when_a_localizer_declares_a_new_target(self) -> None:
+        undeclared = dict(font.IMAGE_UI_TEXT_TARGETS[0])
+        undeclared["resource"] = "UNDECLARED.ICN"
+        targets = font.IMAGE_UI_TEXT_TARGETS + (undeclared,)
+        with mock.patch.object(font, "IMAGE_UI_TEXT_TARGETS", targets):
+            with self.assertRaisesRegex(release.BuildError, "image UI source/output/target resource declarations drifted"):
+                release.font_agg_contract(Path("DATA/HEROES2.AGG"))
 
 
 if __name__ == "__main__":
