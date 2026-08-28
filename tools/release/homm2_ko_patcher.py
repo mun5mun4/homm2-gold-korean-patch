@@ -728,7 +728,16 @@ def load_upgrade_manifest(
     actual_sha256 = sha256_bytes(raw)
     require(actual_sha256 == previous_manifest_sha256, "설치 기록과 upgrade manifest가 일치하지 않습니다")
     previous = json.loads(raw.decode("utf-8"))
-    validate_manifest_document(previous, frozen_legacy=True)
+    font_generation = previous.get("font_generation") if isinstance(previous, dict) else None
+    font_schema = font_generation.get("schema") if isinstance(font_generation, dict) else None
+    require(
+        font_schema in {"homm2-font-generation-v1", "homm2-font-generation-v2"},
+        "upgrade manifest의 font_generation 형식이 잘못됐습니다",
+    )
+    validate_manifest_document(
+        previous,
+        frozen_legacy=font_schema == "homm2-font-generation-v1",
+    )
     require(previous.get("version") == previous_version, "upgrade manifest 버전이 설치 기록과 다릅니다")
     require(previous.get("game") == current_manifest.get("game"), "upgrade manifest의 게임 대상이 현재 배포판과 다릅니다")
     return previous, actual_sha256

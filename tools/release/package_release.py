@@ -16,7 +16,7 @@ from pathlib import PurePosixPath
 from typing import Any
 
 
-FIXED_ZIP_TIME = (2026, 8, 27, 0, 0, 0)
+FIXED_ZIP_TIME = (2026, 8, 28, 0, 0, 0)
 
 COMMON_RELEASE_FILES = {
     "CHANGELOG.md",
@@ -122,11 +122,13 @@ BETA6_VERSION = "v0.9.0-beta.6"
 BETA7_VERSION = "v0.9.0-beta.7"
 BETA8_VERSION = "v0.9.0-beta.8"
 BETA9_VERSION = "v0.9.0-beta.9"
+BETA10_VERSION = "v0.9.0-beta.10"
 BETA4_MANIFEST_PATH = "upgrades/v0.9.0-beta.4-manifest.json"
 BETA5_MANIFEST_PATH = "upgrades/v0.9.0-beta.5-manifest.json"
 BETA6_MANIFEST_PATH = "upgrades/v0.9.0-beta.6-manifest.json"
 BETA7_MANIFEST_PATH = "upgrades/v0.9.0-beta.7-manifest.json"
 BETA8_MANIFEST_PATH = "upgrades/v0.9.0-beta.8-manifest.json"
+BETA9_MANIFEST_PATH = "upgrades/v0.9.0-beta.9-manifest.json"
 BETA4_MANIFEST_IDENTITY = {
     "size": 31_988,
     "sha256": "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60",
@@ -147,12 +149,17 @@ BETA8_MANIFEST_IDENTITY = {
     "size": 33_656,
     "sha256": "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5",
 }
+BETA9_MANIFEST_IDENTITY = {
+    "size": 34_263,
+    "sha256": "CEB8E7D765DBFA2FBB6D955364E68A0D2A158B31BDA7DA70C1F04A85C37AEBDD",
+}
 PINNED_UPGRADE_SOURCES = (
     (BETA4_VERSION, BETA4_MANIFEST_PATH, BETA4_MANIFEST_IDENTITY),
     (BETA5_VERSION, BETA5_MANIFEST_PATH, BETA5_MANIFEST_IDENTITY),
     (BETA6_VERSION, BETA6_MANIFEST_PATH, BETA6_MANIFEST_IDENTITY),
     (BETA7_VERSION, BETA7_MANIFEST_PATH, BETA7_MANIFEST_IDENTITY),
     (BETA8_VERSION, BETA8_MANIFEST_PATH, BETA8_MANIFEST_IDENTITY),
+    (BETA9_VERSION, BETA9_MANIFEST_PATH, BETA9_MANIFEST_IDENTITY),
 )
 
 
@@ -218,8 +225,8 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         "release version is unsafe",
     )
     require(manifest.get("version") == version, "release version does not match manifest")
-    require(version == BETA9_VERSION, "this packager is pinned to beta.9")
-    require(schema == "homm2-korean-release-manifest-v2", "beta.9 requires release manifest v2")
+    require(version == BETA10_VERSION, "this packager is pinned to beta.10")
+    require(schema == "homm2-korean-release-manifest-v2", "beta.10 requires release manifest v2")
     rows = manifest.get("files")
     require(isinstance(rows, list) and rows, "release manifest file list is empty")
 
@@ -324,7 +331,7 @@ def expected_release_files(manifest: Any, version: str) -> set[str]:
         sources = upgrades.get("from")
         require(
             isinstance(sources, list) and len(sources) == len(PINNED_UPGRADE_SOURCES),
-            "beta.9 must declare exactly the pinned beta.4 through beta.8 upgrade sources",
+            "beta.10 must declare exactly the pinned beta.4 through beta.9 upgrade sources",
         )
         for index, (descriptor, pinned) in enumerate(zip(sources, PINNED_UPGRADE_SOURCES)):
             require(
@@ -490,7 +497,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--release-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--version", default=BETA9_VERSION)
+    parser.add_argument("--version", default=BETA10_VERSION)
     args = parser.parse_args()
     print(
         json.dumps(

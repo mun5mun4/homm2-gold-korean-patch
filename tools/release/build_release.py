@@ -34,8 +34,8 @@ DEFAULT_FONT_PACKAGE_PATH = Path("fonts/IropkeBatangM.ttf")
 FALLBACK_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
 DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt")
 FALLBACK_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.9"
-RELEASE_DATE = "2026-08-27"
+CURRENT_VERSION = "v0.9.0-beta.10"
+RELEASE_DATE = "2026-08-28"
 PINNED_DEFAULT_FONT = {
     "size": 3_202_516,
     "sha256": "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69",
@@ -44,14 +44,14 @@ PINNED_FALLBACK_FONT = {
     "size": 2_315_924,
     "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
 }
-PINNED_BETA9_TARGETS = {
+PINNED_BETA10_TARGETS = {
     Path("HEROES2.EXE"): {
         "size": 1_523_420,
-        "sha256": "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C",
+        "sha256": "87B175EF0698C65893BAF6A0581E74BEA60CCECA0D8DF57E9DF7614B27DB2365",
     },
     Path("KOREAN.BIN"): {
-        "size": 36_265,
-        "sha256": "95EA660215425E34FCB7CFD37405F8D1869845EB2EAED245613D2FF8AAE1D20A",
+        "size": 36_159,
+        "sha256": "37FDC1F372627E7B637EEEBFC15610E26B427E66947D7AA699B46B807F7338DA",
     },
 }
 UPGRADE_RELEASES = (
@@ -93,6 +93,14 @@ UPGRADE_RELEASES = (
         "manifest": {
             "size": 33_656,
             "sha256": "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5",
+        },
+    },
+    {
+        "version": "v0.9.0-beta.9",
+        "manifest_path": Path("upgrades/v0.9.0-beta.9-manifest.json"),
+        "manifest": {
+            "size": 34_263,
+            "sha256": "CEB8E7D765DBFA2FBB6D955364E68A0D2A158B31BDA7DA70C1F04A85C37AEBDD",
         },
     },
 )
@@ -612,10 +620,10 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
             source = source_path.read_bytes()
             target = target_path.read_bytes()
             require(source_digest(source) == baseline[relative.as_posix().casefold()], f"original baseline mismatch: {relative}")
-            if relative in PINNED_BETA9_TARGETS:
+            if relative in PINNED_BETA10_TARGETS:
                 require(
-                    digest(target) == PINNED_BETA9_TARGETS[relative],
-                    f"pinned beta.9 target mismatch: {relative}",
+                    digest(target) == PINNED_BETA10_TARGETS[relative],
+                    f"pinned beta.10 target mismatch: {relative}",
                 )
             if relative == Path("DATA/HEROES2.AGG"):
                 target = localize_herowind_knowledge_agg(target, label=f"{relative.as_posix()}:patched")
@@ -666,8 +674,8 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
 
         bank = checked_file(patched, Path("KOREAN.BIN"), "patched").read_bytes()
         require(
-            digest(bank) == PINNED_BETA9_TARGETS[Path("KOREAN.BIN")],
-            "pinned beta.9 target mismatch: KOREAN.BIN",
+            digest(bank) == PINNED_BETA10_TARGETS[Path("KOREAN.BIN")],
+            "pinned beta.10 target mismatch: KOREAN.BIN",
         )
         bank_relative = Path("payload/KOREAN.BIN")
         write(stage / bank_relative, bank)

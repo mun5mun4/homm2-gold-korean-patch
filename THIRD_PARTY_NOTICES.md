@@ -15,7 +15,7 @@
 
 ## Iropke Batang Medium
 
-beta.9의 기본 한글 글리프·버튼 생성 글꼴로 원본 `packaging/release_assets/fonts/IropkeBatangM.ttf`를 포함합니다.
+beta.10의 기본 한글 글리프·버튼 생성 글꼴로 원본 `packaging/release_assets/fonts/IropkeBatangM.ttf`를 포함합니다.
 
 - 저작권 고지: Copyright (c) 2016, 이롭게(iropke) (www.iropke.com | hello@iropke.com)
 - Reserved Font Name: '이롭게 바탕체', 'iropke batang'
@@ -28,7 +28,7 @@ TTF는 원본을 수정하지 않고 그대로 동봉합니다. OFL 1.1은 라�
 
 ## NanumGothicCoding Regular
 
-beta.9의 보완 한글 글리프 생성 글꼴로 `packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf`를 포함합니다.
+beta.10의 보완 한글 글리프 생성 글꼴로 `packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf`를 포함합니다.
 
 - 저작권 고지: Copyright (c) 2010, NHN Corporation
 - 라이선스: SIL Open Font License 1.1

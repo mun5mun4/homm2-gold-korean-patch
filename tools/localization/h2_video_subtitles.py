@@ -26,18 +26,18 @@ for module_path in (HERE, RELEASE_TOOLS):
     if str(module_path) not in sys.path:
         sys.path.insert(0, str(module_path))
 
-from h2k3_bank import parse_bank, serialize_bank  # noqa: E402
+from h2k3_bank import parse_bank, serialize_bank, token_allowed  # noqa: E402
 import homm2_font  # noqa: E402
 
 
 SOURCE_EXE_ID = (1_523_420, "52AE3BA15AE309327D698EDEE8844684F91B3BA056B9215854002265A9F6E3EF")
 SOURCE_BANK_ID = (11_286, "DD30DD967E81BB179BC1D33903D0B8926FB799D969A3C36FFAA6CA3FA0C89AAF")
-FINAL_EXE_ID = (1_523_420, "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C")
-FINAL_BANK_ID = (36_265, "95EA660215425E34FCB7CFD37405F8D1869845EB2EAED245613D2FF8AAE1D20A")
+FINAL_EXE_ID = (1_523_420, "87B175EF0698C65893BAF6A0581E74BEA60CCECA0D8DF57E9DF7614B27DB2365")
+FINAL_BANK_ID = (36_159, "37FDC1F372627E7B637EEEBFC15610E26B427E66947D7AA699B46B807F7338DA")
 MAPPING_ID = (42_302, "3033584F6E65A36220F61EA58F8D7173A493FC83A72807D6FB43488AAE6DF164")
-CUE_SOURCE_ID = (59_940, "E2A9B763D629D14EB0C661D09F3DACD61CFEF2ED27DE7A86D1CE7209E0E2222D")
-SAFE_RUNTIME_ID = (1_856, "AFB5B05FF8CCBC053A45714DE0F816083131EAA605ACE6ECE3E8639FBD8C9239")
-CANONICAL_RUNTIME_ID = (1_856, "27553D288F7FF27099ADB382434700989BD18BF7643BE0DB23AF1FFD206BB179")
+CUE_SOURCE_ID = (59_955, "0F5DF72829709851454D73B2A24B8D54752EDE7D96B40C55D86B18BAED136B8E")
+STABLE_HEIGHT_RUNTIME_ID = (1_856, "B2EB2965514009DF9DEEDFF276D0471DE41C08B304EE04FDF394E87B0AD00575")
+CANONICAL_RUNTIME_ID = (1_856, "9EB151BC4F1AD62AA0EF0BB77A627A96733DCCA9971A4015A6F10D309BBC25E8")
 MAPPING_PATH = REPO_ROOT / "translations" / "font" / "mapping874.fixed-interface-font.txt"
 SCENE_CUES_PATH = REPO_ROOT / "translations" / "subtitles" / "scene_cues_ko.tsv"
 SCENE_CUE_COLUMNS = (
@@ -58,7 +58,11 @@ CODE_PREFIX = b"{KSXR:CODE}!"
 MAPPING_TAG = 0x4F583330
 
 OBJECT1_PREFERRED_BASE = 0x10000
+OBJECT2_PREFERRED_BASE = 0xE0000
+OBJECT3_PREFERRED_BASE = 0x130000
 OBJECT1_ACTUAL_BASE = 0x21F000
+OBJECT2_ACTUAL_BASE = 0x2E4000
+OBJECT3_ACTUAL_BASE = 0x17F000
 CALL_SITE_OBJECT_OFFSET = 0x7425D
 CALL_SITE_PREFERRED = OBJECT1_PREFERRED_BASE + CALL_SITE_OBJECT_OFFSET
 CALL_SITE_ORIGINAL = bytes.fromhex("E8 EE F7 00 00")
@@ -81,11 +85,30 @@ LATE_MERGE_BRANCHES = {
 VIDEO_REFRESH_CALL_OBJECT_OFFSET = 0x7396D
 VIDEO_REFRESH_CALL_PREFERRED = OBJECT1_PREFERRED_BASE + VIDEO_REFRESH_CALL_OBJECT_OFFSET
 VIDEO_REFRESH_CALL_ORIGINAL = bytes.fromhex("E8 97 1A 01 00")
+LATE_REFRESH_JOIN_BRANCH_OBJECT_OFFSET = 0x739E8
+LATE_REFRESH_JOIN_BRANCH_BYTES = bytes.fromhex("EB 83")
 VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET = 0x73953
 VIDEO_REFRESH_CALL_CONTEXT = bytes.fromhex(
     "6A 00 6A 00 68 DF 01 00 00 A1 70 AD 03 00 8B 40 46 "
     "B9 7F 02 00 00 31 DB 31 D2 E8 97 1A 01 00"
 )
+VIDEO_REFRESH_CONTEXT_PREFERRED = OBJECT1_PREFERRED_BASE + VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET
+VIDEO_REFRESH_SURFACE_FIXUP_SOURCE = VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET + 10
+VIDEO_REFRESH_SURFACE_FIXUP_TARGET_OBJECT = 2
+VIDEO_REFRESH_SURFACE_FIXUP_TARGET_OFFSET = 0x3B1C0
+REFRESH_CLIP_CAVE_A_OBJECT_OFFSET = 0x956C5
+REFRESH_CLIP_CAVE_A_SIZE = 0x0B
+REFRESH_CLIP_CAVE_B_OBJECT_OFFSET = 0x95741
+REFRESH_CLIP_CAVE_B_SIZE = 0x0F
+REFRESH_CLIP_CAVE_C_OBJECT_OFFSET = 0x95755
+REFRESH_CLIP_CAVE_C_SIZE = 0x0B
+REFRESH_CLIP_HEIGHT_FIXUP_SOURCE = REFRESH_CLIP_CAVE_A_OBJECT_OFFSET + 3
+REFRESH_CLIP_CAVE_A_BEFORE = bytes.fromhex("C2 04 00")
+REFRESH_CLIP_CAVE_A_AFTER = bytes.fromhex("8B 44 24 08")
+REFRESH_CLIP_CAVE_B_BEFORE = b"\xC3"
+REFRESH_CLIP_CAVE_B_AFTER = bytes.fromhex("E9 C9 53 01 00")
+REFRESH_CLIP_CAVE_C_BEFORE = REFRESH_CLIP_CAVE_B_AFTER
+REFRESH_CLIP_CAVE_C_AFTER = bytes.fromhex("56 57 55")
 CALLER_ARGUMENT_OBJECT_OFFSET = 0x7400D
 CALLER_ARGUMENT_BYTES = bytes.fromhex("6A 00")
 ORIGINAL_FRAME_RETURN_OBJECT_OFFSET = 0x739F7
@@ -94,8 +117,6 @@ CAVE_OBJECT_OFFSET = 0xC4E8F
 CAVE_PREFERRED = OBJECT1_PREFERRED_BASE + CAVE_OBJECT_OFFSET
 CAVE_CAPACITY = 0x71
 CAVE_SOURCE_SHA256 = "0A781558AC722EC58738C7C17D3BD92C2B117DE8B306CBA5336A51A795BEA88C"
-SAFE_REFRESH_BRIDGE_SIZE = 6
-SAFE_REFRESH_BRIDGE_PREFERRED = CAVE_PREFERRED + CAVE_CAPACITY - SAFE_REFRESH_BRIDGE_SIZE
 H2K3_OBJECT_OFFSET = 0xC4F00
 H2K3_SIZE = 0x100
 MALLOC_INSTRUCTION_OFFSET = 0x2E
@@ -104,6 +125,19 @@ MALLOC_AFTER = bytes.fromhex("B8 00 E0 01 00")
 FALSE_CAVE_OBJECT_OFFSET = 0x877D6
 FALSE_CAVE_SIZE = 0x50
 FALSE_CAVE_SOURCE_SHA256 = "B14AB536D0077DA41D57A3E994B78B8226FF935D4E604E1CFDEBE79D48C3FF69"
+DESCRIPTOR_VALIDATOR_OBJECT_OFFSET = 0xBEDA0
+DESCRIPTOR_VALIDATOR_SIZE = 0x60
+DESCRIPTOR_VALIDATOR_SOURCE_SHA256 = "3A54999B4BA34A343929D7A6C7543569072FFCB2BB543AB08EA8FDD0983C3375"
+DESCRIPTOR_VALIDATOR_O2_BASE_FIXUP_SOURCE = DESCRIPTOR_VALIDATOR_OBJECT_OFFSET + 0x24
+DESCRIPTOR_VALIDATOR_SLOT_FIXUP_SOURCE = DESCRIPTOR_VALIDATOR_OBJECT_OFFSET + 0x33
+PORTABLE_GENERAL_TARGET_START = 0x2E920
+PORTABLE_GENERAL_TARGET_END = 0x31520
+SOURCE_UNIT_TARGET_START = OBJECT2_ACTUAL_BASE + 0x2E71C
+SOURCE_UNIT_TARGET_END = OBJECT2_ACTUAL_BASE + 0x2E824
+SOURCE_GENERAL_TARGET_START = OBJECT2_ACTUAL_BASE + PORTABLE_GENERAL_TARGET_START
+SOURCE_GENERAL_TARGET_END = OBJECT2_ACTUAL_BASE + PORTABLE_GENERAL_TARGET_END
+NATIVE_UNIT_DESCRIPTOR_COUNT = 7
+PORTABLE_GENERAL_DESCRIPTOR_COUNT = 155
 
 BANK_CONTROL = 0x00182E90
 SCENE_BYTE = 0x0031F22D
@@ -116,9 +150,10 @@ SURFACE_OWNER = 0x0031F1C0
 TEXT_DRAW_ACTUAL = OBJECT1_ACTUAL_BASE + 0x8905E
 RECT_REFRESH_OBJECT_OFFSET = 0x85409
 RECT_REFRESH_ACTUAL = OBJECT1_ACTUAL_BASE + RECT_REFRESH_OBJECT_OFFSET
-SAFE_REFRESH_DISPATCH_OBJECT_OFFSET = 0x3EAC
-SAFE_REFRESH_DISPATCH_POINTER = 0x00182EAC
-SAFE_REFRESH_DISPATCH_SOURCE = b"H2K3"
+STABLE_REFRESH_HEIGHT_OBJECT_OFFSET = 0x3EAC
+STABLE_REFRESH_HEIGHT_POINTER = 0x00182EAC
+STABLE_REFRESH_HEIGHT_SOURCE = b"H2K3"
+FULL_VIDEO_REFRESH_HEIGHT = 0x1DF
 SMACK_START_TICK_FIELD = 0x490
 TIMER_PROVIDER_POINTER = 0x00316648
 
@@ -167,6 +202,7 @@ GLYPH_SCRATCH_OFFSET = SCRATCH_OFFSET + SUBTITLE_BYTES
 LAYOUT_FLAG_OFFSET = GLYPH_SCRATCH_OFFSET + SOURCE_WIDTH * SOURCE_HEIGHT
 SCALE_SIGNATURE = b"S2O1"
 REFRESH_CLIP_SIGNATURE = b"VCL1"
+RUNTIME_RELOC_SIGNATURE = b"RLC1"
 STAGING_SENTINEL = 0xFF
 SOURCE_INK_PALETTE_MIN = 10
 SOURCE_INK_PALETTE_MAX = 20
@@ -189,7 +225,85 @@ TRACK_SECONDARY_MS = 4
 TRACK_NAME_TO_ID = {"primary_ms": TRACK_PRIMARY_MS, "secondary_ms": TRACK_SECONDARY_MS}
 TRACK_ID_TO_NAME = {value: key for key, value in TRACK_NAME_TO_ID.items()}
 CODE_SIGNATURE = b"KSXR"
-EXPECTED_FIXUP_ROWS = 28_095
+SOURCE_FIXUP_ROWS = 28_095
+
+# Object3's last 40 bytes are a data-only table.  The LE loader relocates each
+# entry for the process's actual object layout; the heap runtime then patches
+# its own absolute operands from this table before using any of them.
+RUNTIME_RELOC_TABLE_OBJECT_OFFSET = 0x3FD8
+RUNTIME_RELOC_TABLE_SIZE = 0x28
+RUNTIME_RELOC_TARGETS = (
+    ("bank_control", 3, 0x3E90, BANK_CONTROL),
+    ("scene_byte", 2, 0x3B22D, SCENE_BYTE),
+    ("primary_handle", 2, 0x3B248, PRIMARY_HANDLE),
+    ("secondary_handle", 2, 0x3B24C, SECONDARY_HANDLE),
+    ("subtitle_font", 2, 0x39550, SUBTITLE_FONT_OBJECT),
+    ("surface_owner", 2, 0x3B1C0, SURFACE_OWNER),
+    ("timer_provider", 2, 0x32648, TIMER_PROVIDER_POINTER),
+    ("text_draw", 1, 0x8905E, TEXT_DRAW_ACTUAL),
+    ("rect_refresh", 1, RECT_REFRESH_OBJECT_OFFSET, RECT_REFRESH_ACTUAL),
+    ("refresh_boundary", 3, STABLE_REFRESH_HEIGHT_OBJECT_OFFSET, STABLE_REFRESH_HEIGHT_POINTER),
+)
+STABLE_RUNTIME_RELOC_EXPECTED_COUNTS = (7, 1, 1, 1, 2, 2, 1, 1, 2, 2)
+CANONICAL_RUNTIME_RELOC_EXPECTED_COUNTS = (8, 1, 1, 1, 2, 2, 1, 1, 3, 0)
+
+# The pre-existing H2K3 loader used addresses observed in DOSBox-X.  These
+# operand locations are now registered as real LE relocations too, so loading
+# KOREAN.BIN does not depend on a particular emulator's object bases.
+H2K3_ABSOLUTE_RELOCS = (
+    (0xBED28, 3, 0x3E94),
+    (0xBED2D, 3, 0x3E9D),
+    (0xBED61, 3, 0x3E90),
+    (0xBED81, 3, 0x3E90),
+    (0xC4F08, 3, 0x3E9C),
+    (0xC4F15, 3, 0x3E9C),
+    (0xC4F1B, 3, 0x3EA0),
+    (0xC4F41, 3, 0x3E90),
+    (0xC4F4F, 3, 0x3E98),
+    (0xC4F78, 3, 0x3E90),
+    (0xC4F95, 3, 0x3E94),
+    (0xC4FB0, 3, 0x3E9D),
+    (0xC4FB6, 3, 0x3E9C),
+    (0xC4FD9, 3, 0x3E9C),
+    (0xC4FE2, 3, 0x3E9C),
+    (0x3F36, 3, 0x3E98, 3),
+)
+H2K3_RELATIVE_RELOCS = (
+    (0xBED4C, 3, 0x3F2C, 1),
+    (0xC4F7D, 3, 0x3ED4, 1),
+    (0xC4F86, 3, 0x3F45, 1),
+    (0x3F41, 1, 0xC4FF0, 3),
+    (0x3F5B, 1, 0xBEDA0, 3),
+)
+
+# DOS/4GW's source-type-8 path crashes the GOG DOSBox host when these five
+# cross-object edges are installed, even though the loader contains a handler
+# for that record type.  Keep every branch relative only within its own LE
+# object, then cross the object boundary through PUSH imm32 / RET veneers whose
+# immediates use the field-tested source-type-7 loader path.
+H2K3_VENEER_CAVE_A_OBJECT_OFFSET = 0x8E913
+H2K3_VENEER_CAVE_A_SIZE = 0x0D
+H2K3_VENEER_CAVE_A_BEFORE = bytes.fromhex("FC E9 43 FF FF FF")
+H2K3_VENEER_CAVE_A_AFTER = bytes.fromhex("56 57 55")
+H2K3_VENEER_CAVE_B_OBJECT_OFFSET = 0x91F59
+H2K3_VENEER_CAVE_B_SIZE = 0x07
+H2K3_VENEER_CAVE_B_BEFORE = b"\xC3"
+H2K3_VENEER_CAVE_B_AFTER = bytes.fromhex("56 57 55")
+H2K3_O1_EDGE_VENEERS = (
+    (0xBED4C, 0xE9, H2K3_VENEER_CAVE_A_OBJECT_OFFSET, 3, 0x3F2C),
+    (0xC4F7D, 0xE8, H2K3_VENEER_CAVE_A_OBJECT_OFFSET + 6, 3, 0x3ED4),
+    (0xC4F86, 0xE8, H2K3_VENEER_CAVE_B_OBJECT_OFFSET, 3, 0x3F46),
+)
+H2K3_O3_PORTABLE_PATCH_OBJECT_OFFSET = 0x3F40
+H2K3_O3_PORTABLE_PATCH_SIZE = 0x24
+H2K3_O3_PORTABLE_SOURCE = bytes.fromhex(
+    "E9 AB 10 16 00 0F B6 47 0C C1 E0 04 83 C0 20 39 47 14 "
+    "75 0D 8D 1C 07 57 89 DE E8 41 AE 15 00 5F C3 B0 01 C3"
+)
+H2K3_O3_ABSOLUTE_TRANSFER_FIXUPS = (
+    (0x3F41, 1, 0xC4FF0),
+    (0x3F5C, 1, DESCRIPTOR_VALIDATOR_OBJECT_OFFSET),
+)
 
 
 class BuildError(RuntimeError):
@@ -388,6 +502,15 @@ class Fixup:
     record_bytes: bytes
 
 
+@dataclass(frozen=True)
+class FixupSpec:
+    source_object: int
+    source_offset: int
+    target_object: int
+    target_offset: int
+    src: int = 7
+
+
 
 @dataclass(frozen=True)
 class ClockState:
@@ -478,7 +601,12 @@ def raw_fixup_blobs(raw: bytes, image: LeImage) -> tuple[bytes, bytes]:
 
 
 
-def parse_raw_fixups(raw: bytes, image: LeImage) -> tuple[Fixup, ...]:
+def parse_raw_fixups(
+    raw: bytes,
+    image: LeImage,
+    *,
+    expected_rows: int | None = None,
+) -> tuple[Fixup, ...]:
     """Parse the candidate's real LE fixup graph, including 32-bit targets.
 
     The older CSV remains useful as a source-span cross-check, but it was made
@@ -508,7 +636,7 @@ def parse_raw_fixups(raw: bytes, image: LeImage) -> tuple[Fixup, ...]:
             require(pos + 4 <= page_end, "truncated LE fixup record header")
             src, flags = raw[pos], raw[pos + 1]
             pos += 2
-            require((src & 0x0F) == 7 and not (src & 0x20), "unsupported LE source form")
+            require((src & 0x0F) in (7, 8) and not (src & 0x20), "unsupported LE source form")
             require((flags & 3) == 0, "unsupported non-internal LE target")
             raw_source = struct.unpack_from("<H", raw, pos)[0]
             pos += 2
@@ -541,8 +669,154 @@ def parse_raw_fixups(raw: bytes, image: LeImage) -> tuple[Fixup, ...]:
                 raw[record_start:pos],
             ))
         require(pos == page_end, f"LE fixup page {logical} did not parse exactly")
-    require(len(rows) == EXPECTED_FIXUP_ROWS, "beta6 LE fixup row count changed")
+    if expected_rows is not None:
+        require(len(rows) == expected_rows, "LE fixup row count changed")
     return tuple(rows)
+
+
+def fixup_semantics(row: Fixup) -> tuple[int, int, int, int, int, int, bytes]:
+    """Return the loader-visible identity without the record's moving file offset."""
+
+    return (
+        row.source_object,
+        row.source_offset,
+        row.target_object,
+        row.target_offset,
+        row.src,
+        row.flags,
+        row.record_bytes,
+    )
+
+
+def _encode_internal_fixup(spec: FixupSpec, image: LeImage) -> bytes:
+    # This diagnostic build deliberately installs only ordinary 32-bit offset
+    # records.  The five cross-object rel32 operands below stay byte-identical
+    # to the known-launching source while we isolate the -05 startup crash.
+    require(spec.src == 7, "new LE fixup must be a 32-bit offset")
+    require(1 <= spec.source_object <= len(image.objects), "new LE fixup source object is invalid")
+    require(1 <= spec.target_object <= len(image.objects), "new LE fixup target object is invalid")
+    source_object = image.objects[spec.source_object - 1]
+    target_object = image.objects[spec.target_object - 1]
+    require(0 <= spec.source_offset and spec.source_offset + 4 <= source_object.virtual_size, "new LE fixup source escaped its object")
+    require(0 <= spec.target_offset < target_object.virtual_size, "new LE fixup target escaped its object")
+    source_in_page = spec.source_offset % image.page_size
+    require(source_in_page + 4 <= image.page_size, "new LE fixup source crosses an LE page")
+    flags = 0x10 if spec.target_offset > 0xFFFF else 0
+    target = struct.pack("<I" if flags else "<H", spec.target_offset)
+    return bytes((spec.src, flags)) + struct.pack("<H", source_in_page) + bytes((spec.target_object,)) + target
+
+
+def install_internal_fixups(
+    raw: bytes,
+    image: LeImage,
+    specs: Sequence[FixupSpec],
+) -> tuple[bytes, tuple[tuple[int, int], ...]]:
+    """Append internal LE fixups page-by-page without moving any data page.
+
+    The pinned executable has no imports and 331 zero bytes between the empty
+    import-procedure terminator and the first data page.  New records consume
+    only that slack.  Existing record bytes stay in their original order.
+    """
+
+    require(specs, "at least one LE fixup must be requested")
+    require(len(set(specs)) == len(specs), "duplicate new LE fixup requested")
+    le = image.le_offset
+    fixup_size_offset = le + 0x30
+    loader_size_offset = le + 0x38
+    page_table_rel = read_u32(raw, le + 0x68)
+    record_table_rel = read_u32(raw, le + 0x6C)
+    import_module_offset = le + 0x70
+    import_count_offset = le + 0x74
+    import_proc_offset = le + 0x78
+    checksum_table_offset = le + 0x7C
+    page_table = le + page_table_rel
+    record_base = le + record_table_rel
+    old_offsets = [read_u32(raw, page_table + index * 4) for index in range(image.page_count + 1)]
+    require(old_offsets[0] == 0 and all(a <= b for a, b in zip(old_offsets, old_offsets[1:])), "source LE fixup page table is invalid")
+    old_sentinel = old_offsets[-1]
+    old_record_end = record_base + old_sentinel
+    old_import_module = read_u32(raw, import_module_offset)
+    old_import_proc = read_u32(raw, import_proc_offset)
+    old_fixup_size = read_u32(raw, fixup_size_offset)
+    old_loader_size = read_u32(raw, loader_size_offset)
+    require(read_u32(raw, import_count_offset) == 0, "pinned executable unexpectedly imports modules")
+    require(read_u32(raw, checksum_table_offset) == 0, "pinned executable unexpectedly has page checksums")
+    require(old_import_module == old_import_proc == old_record_end - le, "empty import tables do not follow the fixup records")
+    require(page_table_rel + old_fixup_size == old_import_proc + 1, "fixup section end invariant changed")
+    require(image.object_table_offset + old_loader_size == old_import_proc + 1, "loader section end invariant changed")
+    require(raw[old_record_end] == 0, "empty import-procedure table lost its terminator")
+    require(not any(raw[old_record_end + 1:image.data_base]), "LE metadata slack is not zero-filled")
+
+    existing = parse_raw_fixups(raw, image, expected_rows=SOURCE_FIXUP_ROWS)
+    existing_keys = {
+        (row.source_object, row.source_offset, row.target_object, row.target_offset, row.src)
+        for row in existing
+    }
+    additions_by_page: dict[int, list[tuple[FixupSpec, bytes]]] = {}
+    for spec in specs:
+        key = (spec.source_object, spec.source_offset, spec.target_object, spec.target_offset, spec.src)
+        require(key not in existing_keys, "new LE fixup already exists")
+        source_object = image.objects[spec.source_object - 1]
+        logical_page = source_object.page_map_index + spec.source_offset // image.page_size
+        require(source_object.page_map_index <= logical_page < source_object.page_map_index + source_object.page_count, "new LE fixup page ownership failed")
+        additions_by_page.setdefault(logical_page, []).append((spec, _encode_internal_fixup(spec, image)))
+
+    new_records = bytearray()
+    new_offsets = [0]
+    encoded_additions: list[bytes] = []
+    for logical_page in range(1, image.page_count + 1):
+        start, end = old_offsets[logical_page - 1], old_offsets[logical_page]
+        new_records.extend(raw[record_base + start:record_base + end])
+        page_additions = sorted(additions_by_page.get(logical_page, ()), key=lambda item: item[0].source_offset)
+        for _spec, encoded in page_additions:
+            new_records.extend(encoded)
+            encoded_additions.append(encoded)
+        new_offsets.append(len(new_records))
+
+    growth = len(new_records) - old_sentinel
+    require(growth == sum(len(item) for item in encoded_additions) > 0, "LE fixup growth accounting failed")
+    new_record_end = record_base + len(new_records)
+    require(new_record_end + 1 <= image.data_base, "new LE fixups exhausted metadata slack")
+    require(not any(raw[old_record_end:image.data_base]), "LE metadata growth would overwrite nonzero bytes")
+
+    output = bytearray(raw)
+    for index, value in enumerate(new_offsets):
+        struct.pack_into("<I", output, page_table + index * 4, value)
+    output[record_base:new_record_end] = new_records
+    output[new_record_end] = 0
+    struct.pack_into("<I", output, fixup_size_offset, old_fixup_size + growth)
+    struct.pack_into("<I", output, loader_size_offset, old_loader_size + growth)
+    struct.pack_into("<I", output, import_module_offset, old_import_module + growth)
+    struct.pack_into("<I", output, import_proc_offset, old_import_proc + growth)
+    result = bytes(output)
+
+    candidate_image = LeImage(result)
+    require(candidate_image.data_base == image.data_base and len(result) == len(raw), "LE data pages moved while adding fixups")
+    candidate = parse_raw_fixups(result, candidate_image, expected_rows=SOURCE_FIXUP_ROWS + len(specs))
+    addition_keys = {
+        (spec.source_object, spec.source_offset, spec.target_object, spec.target_offset, spec.src)
+        for spec in specs
+    }
+    retained = [row for row in candidate if (row.source_object, row.source_offset, row.target_object, row.target_offset, row.src) not in addition_keys]
+    require([fixup_semantics(row) for row in retained] == [fixup_semantics(row) for row in existing], "an existing LE fixup changed")
+    added = [row for row in candidate if (row.source_object, row.source_offset, row.target_object, row.target_offset, row.src) in addition_keys]
+    require(len(added) == len(specs), "new LE fixup semantic set is incomplete")
+    require(result[image.data_base:] == raw[image.data_base:], "LE data page bytes changed while adding fixups")
+    require(read_u32(result, fixup_size_offset) == old_fixup_size + growth, "LE fixup size was not updated")
+    require(read_u32(result, loader_size_offset) == old_loader_size + growth, "LE loader size was not updated")
+    require(read_u32(result, import_module_offset) == old_import_module + growth, "LE import-module offset was not updated")
+    require(read_u32(result, import_proc_offset) == old_import_proc + growth, "LE import-procedure offset was not updated")
+    require(result[new_record_end] == 0 and not any(result[new_record_end + 1:image.data_base]), "remaining LE metadata slack is not zero")
+
+    changed_ranges = (
+        (fixup_size_offset, fixup_size_offset + 4),
+        (loader_size_offset, loader_size_offset + 4),
+        (import_module_offset, import_module_offset + 4),
+        (import_proc_offset, import_proc_offset + 4),
+        (page_table, page_table + (image.page_count + 1) * 4),
+        (record_base, new_record_end + 1),
+    )
+    return result, changed_ranges
 
 
 
@@ -674,6 +948,32 @@ def simulate_active_transition(
     if surface_available:
         return 0, "band"
     return active, "none"
+
+
+
+def next_stable_refresh_height(*, subtitle_published: bool) -> int:
+    """Model the data-only height consumed by the next Smacker refresh."""
+
+    return SUBTITLE_Y if subtitle_published else FULL_VIDEO_REFRESH_HEIGHT
+
+
+def simulate_data_height_frame(
+    prior_height: int,
+    *,
+    late_hook: bool,
+    subtitle_published: bool = False,
+) -> tuple[int, int]:
+    """Return the current inner height and state left for the next frame.
+
+    A skipped late hook deliberately exposes the one-frame stale-state bound:
+    no code runs that could replace the previous data value.  Any executed
+    late hook resets to full height unless it publishes a subtitle.
+    """
+
+    require(prior_height in (SUBTITLE_Y, FULL_VIDEO_REFRESH_HEIGHT), "invalid prior refresh height")
+    if not late_hook:
+        return prior_height, prior_height
+    return prior_height, next_stable_refresh_height(subtitle_published=subtitle_published)
 
 
 
@@ -831,7 +1131,7 @@ def verify_scaled_runtime_contract(runtime: bytes) -> dict[str, object]:
     """Pin the unchanged dual-ms/2x compositor used as the safe-runtime base."""
 
     require(identity(runtime) == CANONICAL_RUNTIME_ID, "canonical dual-ms 2x runtime changed")
-    require(runtime[:6] == b"\xEB\x04" + CODE_SIGNATURE, "canonical runtime signature changed")
+    require(runtime[:7] == b"\xEB\x05" + CODE_SIGNATURE + b"\0", "canonical runtime signature changed")
     require(runtime.count(b"\xEB\x04" + SCALE_SIGNATURE) == 1, "2x compositor marker changed")
     require(runtime.count(b"\xEB\x04" + REFRESH_CLIP_SIGNATURE) == 1, "refresh helper marker changed")
     require(runtime.count(struct.pack("<I", SUBTITLE_FONT_OBJECT)) == 2, "big-font runtime operands changed")
@@ -847,108 +1147,70 @@ def verify_scaled_runtime_contract(runtime: bytes) -> dict[str, object]:
     }
 
 
-def verify_safe_refresh_runtime_contract(runtime: bytes) -> dict[str, object]:
-    """Verify the isolated no-false-cave refresh-dispatch runtime."""
+def verify_stable_refresh_runtime_contract(runtime: bytes) -> dict[str, object]:
+    """Verify that the release runtime publishes only a refresh-height byte."""
 
     canonical = build_heap_runtime()
-    require(len(runtime) == len(canonical) == D_BOOTSTRAP_RUNTIME_PAYLOAD_LENGTH, "safe runtime length changed")
-    require(runtime[:6] == canonical[:6] == b"\xEB\x04" + CODE_SIGNATURE, "safe runtime entry signature changed")
-    require(runtime != canonical, "safe runtime did not change")
+    require(len(runtime) == len(canonical) == D_BOOTSTRAP_RUNTIME_PAYLOAD_LENGTH, "stable-height runtime length changed")
+    require(runtime[:7] == canonical[:7] == b"\xEB\x05" + CODE_SIGNATURE + b"\0", "stable-height runtime entry signature changed")
+    require(runtime != canonical, "stable-height runtime did not change")
+    require(identity(runtime) == STABLE_HEIGHT_RUNTIME_ID, "stable-height runtime identity changed")
 
-    helper_marker = b"\xEB\x04" + REFRESH_CLIP_SIGNATURE
     parser_marker = b"\x8B\xB5" + struct.pack("<I", CUE_SLOT_OFFSET)
-    require(runtime.count(helper_marker) == canonical.count(helper_marker) == 1, "safe refresh marker is not exact-one")
-    require(runtime.count(parser_marker) == canonical.count(parser_marker) == 1, "safe parser marker is not exact-one")
-    helper_entry = runtime.index(helper_marker) + len(helper_marker)
-    canonical_helper_entry = canonical.index(helper_marker) + len(helper_marker)
-    parser_offset = runtime.index(parser_marker)
-    canonical_parser_offset = canonical.index(parser_marker)
-
-    publish_prefix = b"\x8B\x85" + struct.pack("<I", CODE_SLOT_OFFSET) + b"\x05"
-    publish_at = runtime.find(publish_prefix)
-    require(publish_at >= 0 and runtime.count(publish_prefix) == 1, "safe dispatch publication is not exact-one")
-    encoded_helper_offset = struct.unpack_from("<I", runtime, publish_at + len(publish_prefix))[0]
-    publish_tail = b"\xA3" + struct.pack("<I", SAFE_REFRESH_DISPATCH_POINTER)
-    require(encoded_helper_offset == helper_entry, "safe dispatch helper offset is wrong")
+    require(runtime.count(parser_marker) == canonical.count(parser_marker) == 1, "stable-height parser marker is not exact-one")
+    require(runtime.index(parser_marker) == canonical.index(parser_marker), "stable-height state shifted the parser unexpectedly")
+    require(runtime.count(b"\xEB\x04" + REFRESH_CLIP_SIGNATURE) == 0, "heap refresh callback survived in the stable-height runtime")
     require(
-        runtime[publish_at + len(publish_prefix) + 4 : publish_at + len(publish_prefix) + 4 + len(publish_tail)]
-        == publish_tail,
-        "safe dispatch pointer publication changed",
+        runtime.count(b"\x8B\x85" + struct.pack("<I", CODE_SLOT_OFFSET) + b"\x05") == 0,
+        "stable runtime still computes a heap callback address",
     )
 
-    gate_prefix = (
-        b"\x50\x57\xA0" + struct.pack("<I", SCENE_BYTE)
-        + b"\x2C" + bytes((VIDEO_SCENE_MIN,))
-        + b"\x3C" + bytes((VIDEO_SCENE_MAX - VIDEO_SCENE_MIN,))
-    )
-    require(runtime[helper_entry : helper_entry + len(gate_prefix)] == gate_prefix, "safe refresh scene gate changed")
-    helper_region = runtime[helper_entry : len(runtime.rstrip(bytes((RUNTIME_PADDING_BYTE,))))]
-    require(helper_region.count(b"\x8B\x3D" + struct.pack("<I", BANK_CONTROL)) == 1, "safe refresh bank gate changed")
+    clipped_height = b"\xC6\x05" + struct.pack("<I", STABLE_REFRESH_HEIGHT_POINTER) + bytes((SUBTITLE_Y & 0xFF,))
+    full_height = b"\xC6\x05" + struct.pack("<I", STABLE_REFRESH_HEIGHT_POINTER) + bytes((FULL_VIDEO_REFRESH_HEIGHT & 0xFF,))
+    require(runtime.count(clipped_height) == 1, "subtitle refresh-height publication is not exact-one")
+    require(runtime.count(full_height) == 1, "full refresh-height restoration is not exact-one")
+    require(runtime.count(struct.pack("<I", STABLE_REFRESH_HEIGHT_POINTER)) == 2, "unexpected refresh-height operand survived")
+    require(runtime.index(clipped_height) < runtime.index(full_height), "refresh-height state order changed")
     require(
-        helper_region.count(b"\x80\xBF" + struct.pack("<I", ACTIVE_STATE_OFFSET) + b"\x01") == 1,
-        "safe refresh active-state gate changed",
+        runtime.count(b"\xC6\x85" + struct.pack("<I", ACTIVE_STATE_OFFSET)) == 0,
+        "obsolete heap active-state writes survived",
     )
-    require(
-        helper_region.count(b"\x8B\xBF" + struct.pack("<I", CLOCK_PRIMARY_OFFSET + CLOCK_GENERATION_FIELD)) == 1,
-        "safe refresh armed-generation load changed",
-    )
-    require(
-        runtime.count(b"\x89\x95" + struct.pack("<I", CLOCK_PRIMARY_OFFSET + CLOCK_GENERATION_FIELD)) == 1,
-        "safe runtime does not publish the primary generation exact-once",
-    )
-    require(helper_region.endswith(b"\x5F\x58\x68" + struct.pack("<I", RECT_REFRESH_ACTUAL) + b"\xC3"), "safe original refresh fallback changed")
-
-    # Everything from the cue parser through the refresh-helper signature is
-    # the canonical D timing/font/compositor byte stream except the two final
-    # publication-height immediates.  Dispatch publication and generation
-    # capture add exactly 32 bytes before the parser.
-    require(parser_offset == canonical_parser_offset + 32, "safe dispatch/generation state did not shift the parser by exactly 32 bytes")
-    canonical_slice = canonical[canonical_parser_offset : canonical_helper_entry]
     old_refresh = b"\x6A\x00\x6A" + bytes((SUBTITLE_HEIGHT,)) + b"\x31\xD2\xBB" + struct.pack("<I", SUBTITLE_Y)
-    safe_refresh = b"\x6A\x00\x6A" + bytes((SAFE_REFRESH_HEIGHT,)) + b"\x31\xD2\xBB" + struct.pack("<I", SUBTITLE_Y)
-    require(canonical_slice.count(old_refresh) == 2, "canonical late refresh-height sites changed")
-    expected_safe_slice = canonical_slice.replace(old_refresh, safe_refresh)
-    require(
-        runtime[parser_offset : helper_entry]
-        == expected_safe_slice,
-        "safe dispatch changed parser/font/compositor bytes outside the two publication heights",
-    )
-    require(runtime.count(struct.pack("<I", SUBTITLE_FONT_OBJECT)) == 2, "safe runtime font operands changed")
-    require(runtime.count(struct.pack("<I", TIMER_PROVIDER_POINTER)) == 1, "safe runtime timer sampling changed")
-    require(runtime.count(struct.pack("<I", PRIMARY_HANDLE)) == 2, "safe runtime primary clock/generation reads changed")
-    require(runtime.count(struct.pack("<I", SECONDARY_HANDLE)) == 1, "safe runtime secondary clock changed")
+    stable_refresh = b"\x6A\x00\x6A" + bytes((SAFE_REFRESH_HEIGHT,)) + b"\x31\xD2\xBB" + struct.pack("<I", SUBTITLE_Y)
+    require(canonical.count(old_refresh) == 2, "canonical late refresh-height sites changed")
+    require(runtime.count(stable_refresh) == 2 and runtime.count(old_refresh) == 0, "stable late publication heights changed")
+    require(runtime.count(struct.pack("<I", RECT_REFRESH_ACTUAL)) == 2, "stable runtime must call only the two late band refreshes")
+    require(runtime.count(struct.pack("<I", SUBTITLE_FONT_OBJECT)) == 2, "stable runtime font operands changed")
+    require(runtime.count(struct.pack("<I", TIMER_PROVIDER_POINTER)) == 1, "stable runtime timer sampling changed")
+    require(runtime.count(struct.pack("<I", PRIMARY_HANDLE)) == 1, "stable runtime primary clock reads changed")
+    require(runtime.count(struct.pack("<I", SECONDARY_HANDLE)) == 1, "stable runtime secondary clock reads changed")
 
     unpadded = runtime.rstrip(bytes((RUNTIME_PADDING_BYTE,)))
-    require(unpadded and unpadded[-1] == 0xC3, "safe runtime padding lacks a terminal RET")
-    require(runtime[len(unpadded) :] == bytes((RUNTIME_PADDING_BYTE,)) * (len(runtime) - len(unpadded)), "safe runtime NOP padding changed")
-    require(b"\0" not in bytes(value ^ RUNTIME_XOR_KEY for value in runtime), "safe encrypted runtime contains NUL")
+    require(unpadded and unpadded[-1] == 0xC3, "stable runtime padding lacks a terminal RET")
+    require(runtime[len(unpadded) :] == bytes((RUNTIME_PADDING_BYTE,)) * (len(runtime) - len(unpadded)), "stable runtime NOP padding changed")
+    require(b"\0" not in bytes(value ^ RUNTIME_XOR_KEY for value in runtime), "stable encrypted runtime contains NUL")
     return {
         "runtime_size": len(runtime),
         "runtime_sha256": sha256(runtime),
-        "canonical_parser_bytes_preserved": True,
-        "dispatch_pointer": f"0x{SAFE_REFRESH_DISPATCH_POINTER:X}",
-        "helper_offset": f"0x{helper_entry:X}",
-        "scene_gate": [f"0x{VIDEO_SCENE_MIN:02X}", f"0x{VIDEO_SCENE_MAX:02X}"],
-        "active_state_gate": f"B+0x{ACTIVE_STATE_OFFSET:X} == 1",
-        "active_generation_gate": f"B+0x{CLOCK_PRIMARY_OFFSET + CLOCK_GENERATION_FIELD:X} == PRIMARY_HANDLE+0x{SMACK_START_TICK_FIELD:X}",
+        "heap_callback_published": False,
+        "height_state_pointer": f"0x{STABLE_REFRESH_HEIGHT_POINTER:X}",
+        "cross_object_code_call": False,
         "late_publication_height": SAFE_REFRESH_HEIGHT,
-        "initial_original_refresh_fallback": f"0x{RECT_REFRESH_ACTUAL:X}",
         "encrypted_nul_free": True,
     }
 
 
 
-def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
+def build_heap_runtime(*, stable_refresh_height: bool = False) -> bytes:
     """Build the generic cue lookup, band-preserving draw, and refresh code.
 
-    ``safe_refresh_dispatch`` selects the released flicker-safe form.  It
-    publishes the heap-resident, active-state-gated clip helper through a
-    writable Object3 pointer.  The default remains available as a byte-exact
-    baseline for contract tests.
+    ``stable_refresh_height`` selects the heap-callback-free release form.
+    The runtime publishes only the low byte of a fixed refresh-height dword;
+    the original Smacker call context consumes that value directly.  The
+    default remains a byte-exact baseline for contract tests.
     """
     a = Assembler()
-    dispatch_helper_offset_patch: int | None = None
-    refresh_height = SAFE_REFRESH_HEIGHT if safe_refresh_dispatch else SUBTITLE_HEIGHT
+    refresh_height = SAFE_REFRESH_HEIGHT if stable_refresh_height else SUBTITLE_HEIGHT
 
     def emit_elapsed_ms(prefix: str, state_offset: int, handle_address: int) -> None:
         """Store uint32(shared-now-handle[0x490]) for one checked handle."""
@@ -956,30 +1218,47 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
         a.emit("8B 3D"); a.u32(handle_address)
         a.emit("85 FF"); a.branch8(0x74, done)
         a.emit("8B 97"); a.u32(SMACK_START_TICK_FIELD)
-        if safe_refresh_dispatch and handle_address == PRIMARY_HANDLE:
-            a.emit("89 95"); a.u32(CLOCK_PRIMARY_OFFSET + CLOCK_GENERATION_FIELD)
         a.emit("85 D2"); a.branch8(0x74, done)
         a.emit("89 F0 29 D0")                               # eax=(shared now-start) mod 2^32
         a.emit("89 85"); a.u32(state_offset + CLOCK_ELAPSED_MS_FIELD)
         a.emit("C6 85"); a.u32(state_offset + CLOCK_MS_VALID_FIELD); a.u8(1)
         a.label(done)
 
-    a.emit("EB 04")
+    a.emit("EB 05")
     a.emit(CODE_SIGNATURE)
+    a.u8(0)                                                # exact-once relocation flag
     a.label("entry")
     a.emit("1E 06 1E 07")                                  # save DS/ES; flat ES for REP MOVS
+    # EAX still points at this runtime's marker and EDI is the fixed Object3
+    # relocation table supplied by the LE-relocated bootstrap.  Patch every
+    # module address before the first one is dereferenced.  PUSHAD makes this
+    # idempotent prologue invisible to the established runtime ABI.
+    relocation_counts = (
+        STABLE_RUNTIME_RELOC_EXPECTED_COUNTS
+        if stable_refresh_height
+        else CANONICAL_RUNTIME_RELOC_EXPECTED_COUNTS
+    )
+    relocation_entry_count = sum(relocation_counts)
+    a.emit("80 78 06 01"); a.branch8(0x74, "runtime_reloc_ready")
+    a.emit("60 89 C6 8D 98")
+    relocation_list_offset_patch = a.offset
+    a.u32(0)
+    a.emit("B9"); a.u32(relocation_entry_count)
+    a.label("runtime_reloc_loop")
+    a.emit("0F B7 13")                                     # EDX=runtime operand offset
+    a.emit("0F B6 6B 02")                                  # EBP=Object3 table index
+    a.emit("8B 2C AF")                                     # EBP=loader-relocated address
+    a.emit("89 2C 16")                                     # patch dword [runtime+offset]
+    a.emit("83 C3 03")
+    a.branch8(0xE2, "runtime_reloc_loop")
+    a.emit("61")
+    # DOSBox's dynamic core may cache the current translated block.  End this
+    # call after self-modification so no freshly patched operand is executed
+    # until the next late hook enters a new block.
+    a.emit("C6 40 06 01 07 1F C3")
+    a.label("runtime_reloc_ready")
     a.emit("8B 2D"); a.u32(BANK_CONTROL)                 # mov ebp,[bank]
     a.emit("85 ED"); a.branch32(b"\x0F\x84", "done")
-    if safe_refresh_dispatch:
-        # The bootstrap has already replaced CODE_SLOT with this decoded
-        # runtime's entry address.  Publish the helper address without any
-        # self-modifying code; the patched Smacker CALL reaches it through a
-        # six-byte indirect-jump bridge in the proven bootstrap cave.
-        a.emit("8B 85"); a.u32(CODE_SLOT_OFFSET)
-        a.emit("05")
-        dispatch_helper_offset_patch = a.offset
-        a.u32(0)
-        a.emit("A3"); a.u32(SAFE_REFRESH_DISPATCH_POINTER)
     # Read the game's millisecond provider once so primary visual and secondary
     # voice clocks share one observation.  Reload the bank after the ABI call,
     # then fail each handle independently when it or its first-decode tick is
@@ -992,11 +1271,6 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
     a.emit("85 ED"); a.branch32(b"\x0F\x84", "done")
     a.emit("C6 85"); a.u32(CLOCK_PRIMARY_OFFSET + CLOCK_MS_VALID_FIELD); a.u8(0)
     a.emit("C6 85"); a.u32(CLOCK_SECONDARY_OFFSET + CLOCK_MS_VALID_FIELD); a.u8(0)
-    if safe_refresh_dispatch:
-        # Reuse the otherwise idle primary generation field as the identity of
-        # the video session that armed ACTIVE_STATE.  Clearing before sampling
-        # makes a missing handle fail closed.
-        a.emit("C7 85"); a.u32(CLOCK_PRIMARY_OFFSET + CLOCK_GENERATION_FIELD); a.u32(0)
     emit_elapsed_ms("primary", CLOCK_PRIMARY_OFFSET, PRIMARY_HANDLE)
     emit_elapsed_ms("secondary", CLOCK_SECONDARY_OFFSET, SECONDARY_HANDLE)
     a.emit("8B B5"); a.u32(CUE_SLOT_OFFSET)             # mov esi,[ebp+cue slot]
@@ -1128,7 +1402,12 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
     a.emit("8D B5"); a.u32(SCRATCH_OFFSET)
     a.emit("B9"); a.u32(SUBTITLE_BYTES // 4)
     a.emit("F3 A5")
-    a.emit("C6 85"); a.u32(ACTIVE_STATE_OFFSET); a.u8(1)
+    if stable_refresh_height:
+        # The next inner Smacker refresh may clip at the subtitle boundary.
+        # Only a frame that actually published a subtitle earns that state.
+        a.emit("C6 05"); a.u32(STABLE_REFRESH_HEIGHT_POINTER); a.u8(SUBTITLE_Y)
+    else:
+        a.emit("C6 85"); a.u32(ACTIVE_STATE_OFFSET); a.u8(1)
     a.branch8(0xEB, "done")
 
     # The inner Smacker refresh is clipped above this band once the runtime is
@@ -1145,9 +1424,14 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
     a.emit("B9"); a.u32(VIDEO_WIDTH)
     a.emit("BF"); a.u32(RECT_REFRESH_ACTUAL)
     a.emit("FF D7")
-    a.emit("8B 2D"); a.u32(BANK_CONTROL)
-    a.emit("85 ED"); a.branch8(0x74, "done")
-    a.emit("C6 85"); a.u32(ACTIVE_STATE_OFFSET); a.u8(0)
+    if stable_refresh_height:
+        # A no-match frame has just published the clean lower band.  Restore
+        # full-height refresh for the following Smacker frame.
+        a.emit("C6 05"); a.u32(STABLE_REFRESH_HEIGHT_POINTER); a.u8(FULL_VIDEO_REFRESH_HEIGHT)
+    else:
+        a.emit("8B 2D"); a.u32(BANK_CONTROL)
+        a.emit("85 ED"); a.branch8(0x74, "done")
+        a.emit("C6 85"); a.u32(ACTIVE_STATE_OFFSET); a.u8(0)
     a.label("done")
     a.emit("07 1F C3")                                     # restore ES/DS; return to wrapper
     main_runtime_length = a.offset
@@ -1280,56 +1564,46 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
     a.branch8(0x75, "scale_row")
     a.emit("C3")
 
-    # Tail-called in place of the Smacker wrapper's RECT_REFRESH.  Rectangles
-    # that overlap the subtitle band are clipped to its top edge; rectangles
-    # wholly inside the band are deferred completely.  The original ABI is
-    # retained (EAX surface, EDX/EBX/ECX x/y/width, three callee-clean stack
-    # arguments), and the late runtime owns the single band publication.
-    a.emit("EB 04")
-    a.emit(REFRESH_CLIP_SIGNATURE)
-    a.label("refresh_clip")
-    if safe_refresh_dispatch:
-        # Preserve RECT_REFRESH's EAX surface argument while gating the clip.
-        # Only a narrated scene with a valid bank and an already-active cue may
-        # suppress the clean subtitle band.  The first cue frame therefore
-        # takes the original publication path; subsequent cue frames are
-        # single-published by the late runtime.  A scene transition or cue end
-        # fails back to the original stateful function.
-        a.emit("50 57")
-        a.emit("A0"); a.u32(SCENE_BYTE)
-        a.emit("2C"); a.u8(VIDEO_SCENE_MIN)
-        a.emit("3C"); a.u8(VIDEO_SCENE_MAX - VIDEO_SCENE_MIN)
-        a.branch8(0x77, "refresh_clip_original")
-        a.emit("8B 3D"); a.u32(BANK_CONTROL)
-        a.emit("85 FF"); a.branch8(0x74, "refresh_clip_original")
-        a.emit("80 BF"); a.u32(ACTIVE_STATE_OFFSET); a.u8(1)
-        a.branch8(0x75, "refresh_clip_original")
-        a.emit("8B BF"); a.u32(CLOCK_PRIMARY_OFFSET + CLOCK_GENERATION_FIELD)
-        a.emit("85 FF"); a.branch8(0x74, "refresh_clip_original")
-        a.emit("A1"); a.u32(PRIMARY_HANDLE)
-        a.emit("85 C0"); a.branch8(0x74, "refresh_clip_original")
-        a.emit("8B 80"); a.u32(SMACK_START_TICK_FIELD)
-        a.emit("39 F8"); a.branch8(0x75, "refresh_clip_original")
-        a.emit("5F 58")
-    a.emit("81 FB"); a.u32(SUBTITLE_Y)
-    a.branch8(0x73, "refresh_clip_defer")
-    a.emit("57 BF"); a.u32(SUBTITLE_Y)                       # preserve EDI; top edge
-    a.emit("29 DF")                                         # available height = top - y
-    # RECT_REFRESH's first stack argument is height.  At helper entry it is
-    # [ESP+4]; preserving EDI moves it to [ESP+8].  The later two arguments
-    # are x/y destinations and must never be rewritten.
-    a.emit("39 7C 24 08")
-    a.branch8(0x76, "refresh_clip_forward")
-    a.emit("89 7C 24 08")
-    a.label("refresh_clip_forward")
-    a.emit("5F 68"); a.u32(RECT_REFRESH_ACTUAL); a.emit("C3")
-    a.label("refresh_clip_defer")
-    a.emit("C2 0C 00")
-    if safe_refresh_dispatch:
-        a.label("refresh_clip_original")
-        a.emit("5F 58 68"); a.u32(RECT_REFRESH_ACTUAL); a.emit("C3")
-    else:
-        a.emit("C3")                                         # unreachable identity terminator
+    if not stable_refresh_height:
+        # Byte-exact canonical baseline.  Production no longer publishes or
+        # enters this heap-resident callback.
+        a.emit("EB 04")
+        a.emit(REFRESH_CLIP_SIGNATURE)
+        a.label("refresh_clip")
+        a.emit("81 FB"); a.u32(SUBTITLE_Y)
+        a.branch8(0x73, "refresh_clip_defer")
+        a.emit("57 BF"); a.u32(SUBTITLE_Y)
+        a.emit("29 DF")
+        a.emit("39 7C 24 08")
+        a.branch8(0x76, "refresh_clip_forward")
+        a.emit("89 7C 24 08")
+        a.label("refresh_clip_forward")
+        a.emit("5F 68"); a.u32(RECT_REFRESH_ACTUAL); a.emit("C3")
+        a.label("refresh_clip_defer")
+        a.emit("C2 0C 00 C3")
+
+    # The relocation manifest is data after terminal RETs.  Each compact row
+    # is (uint16 runtime_operand_offset, uint8 Object3_table_index).
+    relocation_rows: list[tuple[int, int]] = []
+    runtime_body = bytes(a.code)
+    for table_index, ((name, _target_object, _target_offset, placeholder), expected_count) in enumerate(
+        zip(RUNTIME_RELOC_TARGETS, relocation_counts)
+    ):
+        needle = struct.pack("<I", placeholder)
+        matches = [offset for offset in range(len(runtime_body) - 3) if runtime_body.startswith(needle, offset)]
+        require(len(matches) == expected_count, f"runtime relocation operand count changed: {name}")
+        relocation_rows.extend((offset, table_index) for offset in matches)
+    relocation_rows.sort()
+    require(len(relocation_rows) == relocation_entry_count, "runtime relocation manifest count changed")
+    require(len({offset for offset, _index in relocation_rows}) == len(relocation_rows), "runtime relocation operands overlap")
+    a.emit(RUNTIME_RELOC_SIGNATURE)
+    a.u8(relocation_entry_count)
+    a.label("runtime_reloc_entries")
+    for operand_offset, table_index in relocation_rows:
+        require(0 <= operand_offset <= 0xFFFF, "runtime relocation operand exceeds uint16")
+        a.u16(operand_offset)
+        a.u8(table_index)
+    a.emit("C3")
 
     # The already field-tested D executable decrypts exactly 1,856 bytes.
     # Keep that bootstrap contract byte-exact while allowing the BIN-hosted
@@ -1339,15 +1613,15 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
     a.emit(bytes((RUNTIME_PADDING_BYTE,)) * (D_BOOTSTRAP_RUNTIME_PAYLOAD_LENGTH - a.offset))
 
     result_array = bytearray(a.finish())
-    if safe_refresh_dispatch:
-        require(dispatch_helper_offset_patch is not None, "safe refresh dispatch immediate was not emitted")
-        helper_offset = a.labels["refresh_clip"]
-        struct.pack_into("<I", result_array, dispatch_helper_offset_patch, helper_offset)
+    struct.pack_into("<I", result_array, relocation_list_offset_patch, a.labels["runtime_reloc_entries"])
     result = bytes(result_array)
-    require(result[:6] == b"\xEB\x04" + CODE_SIGNATURE, "heap runtime signature changed")
+    require(result[:7] == b"\xEB\x05" + CODE_SIGNATURE + b"\0", "heap runtime signature changed")
     require(main_runtime_length < 0x1000, "KSX2 main runtime unexpectedly exceeds one page")
     require(result[main_runtime_length : main_runtime_length + 6] == b"\xEB\x04" + SCALE_SIGNATURE, "2x helper marker changed")
-    require(result.count(b"\xEB\x04" + REFRESH_CLIP_SIGNATURE) == 1, "video refresh clip helper marker changed")
+    require(
+        result.count(b"\xEB\x04" + REFRESH_CLIP_SIGNATURE) == (0 if stable_refresh_height else 1),
+        "video refresh clip helper marker changed",
+    )
     require(len(result) == D_BOOTSTRAP_RUNTIME_PAYLOAD_LENGTH, "heap runtime no longer matches the D bootstrap payload length")
     require(TEXT_BUFFER_OFFSET + TEXT_BUFFER_LIMIT == CLOCK_PRIMARY_OFFSET, "clock state no longer follows text buffer")
     require(CLOCK_PRIMARY_OFFSET + CLOCK_STATE_SIZE <= CLOCK_SECONDARY_OFFSET, "primary/secondary clock state overlaps")
@@ -1370,8 +1644,8 @@ def build_heap_runtime(*, safe_refresh_dispatch: bool = False) -> bytes:
     require(SCALED_X >= SUBTITLE_OUTLINE_PIXELS and SCALED_X + SCALED_WIDTH + SUBTITLE_OUTLINE_PIXELS <= VIDEO_WIDTH, "subtitle outline escaped screen width")
     require(SCALED_Y - SUBTITLE_OUTLINE_PIXELS >= SUBTITLE_Y and SCALED_Y + SCALED_HEIGHT + SUBTITLE_OUTLINE_PIXELS <= SUBTITLE_Y + SUBTITLE_HEIGHT, "subtitle outline escaped saved band")
     require(LAYOUT_FLAG_OFFSET + 1 <= ALLOCATION_SIZE, "2x scratch/layout flag escaped allocation")
-    if safe_refresh_dispatch:
-        verify_safe_refresh_runtime_contract(result)
+    if stable_refresh_height:
+        verify_stable_refresh_runtime_contract(result)
     else:
         verify_scaled_runtime_contract(result)
     return result
@@ -1434,65 +1708,140 @@ def build_bootstrap(payload_length: int, xor_key: int) -> bytes:
 
 
 
-def build_safe_refresh_bootstrap(payload_length: int, xor_key: int) -> bytes:
-    """Build the D-equivalent bootstrap while reserving six bridge bytes.
+def build_stable_refresh_bootstrap(payload_length: int, xor_key: int) -> bytes:
+    """Build the late hook with loader-relocated state and runtime table input.
 
     The descriptor terminator is checked through ``[ESI+ECX]`` before any XOR
     mutation.  With ESI at ``marker+1`` and ECX at the exact payload length,
-    this preserves the original fail-before-mutation guard while saving three
-    instruction bytes.
+    this preserves the original fail-before-mutation guard.  EDI supplies the
+    heap runtime with Object3's loader-relocated address table.  Resetting the
+    refresh boundary before every scene/bank gate prevents a subtitle frame's
+    clipped value from surviving video teardown or an early-returning hook.
     """
 
     a = Assembler(CAVE_PREFERRED)
     a.call_absolute(ORIGINAL_POST_VIDEO_ROUTINE)
     a.emit("9C 60")
-    a.emit("A0"); a.u32(SCENE_BYTE)
+    a.emit("C6 05"); a.u32(OBJECT3_PREFERRED_BASE + STABLE_REFRESH_HEIGHT_OBJECT_OFFSET)
+    a.u8(FULL_VIDEO_REFRESH_HEIGHT)
+    a.emit("A0"); a.u32(OBJECT2_PREFERRED_BASE + 0x3B22D)
     a.emit("2C"); a.u8(VIDEO_SCENE_MIN)
     a.emit("3C"); a.u8(VIDEO_SCENE_MAX - VIDEO_SCENE_MIN)
     a.branch8(0x77, "restore")
-    a.emit("8B 1D"); a.u32(BANK_CONTROL)
+    a.emit("BF"); a.u32(OBJECT3_PREFERRED_BASE + RUNTIME_RELOC_TABLE_OBJECT_OFFSET)
+    a.emit("8B 1F 8B 1B")                               # ebx=*[table[bank_control]]
     a.emit("85 DB"); a.branch8(0x74, "restore")
     a.emit("8B 83"); a.u32(CODE_SLOT_OFFSET)
     a.emit("85 C0"); a.branch8(0x74, "restore")
     a.emit("80 38 40"); a.branch8(0x75, "already")
     a.emit("8D 70 01 B9"); a.u32(payload_length)
     a.emit("80 3C 0E 00"); a.branch8(0x75, "invalid")
-    a.emit("B2"); a.u8(xor_key)
     a.label("decode")
-    a.emit("30 16 46"); a.branch8(0xE2, "decode")
+    a.emit("80 36"); a.u8(xor_key); a.emit("46")
+    a.branch8(0xE2, "decode")
     a.emit("40 81 78 02"); a.emit(CODE_SIGNATURE)
     a.branch8(0x75, "invalid")
     a.emit("89 83"); a.u32(CODE_SLOT_OFFSET)
-    a.branch8(0xEB, "invoke")
-    a.label("already")
-    a.emit("81 78 02"); a.emit(CODE_SIGNATURE)
-    a.branch8(0x75, "invalid")
     a.label("invoke")
     a.emit("FF D0")
-    a.branch8(0xEB, "restore")
-    a.label("invalid")
-    a.emit("31 C0 89 83"); a.u32(CODE_SLOT_OFFSET)
     a.label("restore")
     a.emit("61 9D C3")
+    a.label("already")
+    a.emit("81 78 02"); a.emit(CODE_SIGNATURE)
+    a.branch8(0x74, "invoke")
+    a.label("invalid")
+    a.emit("31 C0 89 83"); a.u32(CODE_SLOT_OFFSET)
+    a.branch8(0xEB, "restore")
     result = a.finish()
     require(
-        len(result) <= CAVE_CAPACITY - SAFE_REFRESH_BRIDGE_SIZE,
-        f"safe bootstrap is {len(result)} bytes; only {CAVE_CAPACITY - SAFE_REFRESH_BRIDGE_SIZE} are available",
+        len(result) == CAVE_CAPACITY,
+        f"stable-height bootstrap is {len(result)} bytes; cave is {CAVE_CAPACITY}",
     )
     return result
 
 
 
-def build_safe_refresh_bridge() -> bytes:
-    """Return ``jmp dword ptr [dispatch]`` for the original Smacker CALL."""
+def build_stable_refresh_context() -> bytes:
+    """Keep the original Smacker ABI and redirect its shared CALL entry."""
 
-    result = b"\xFF\x25" + struct.pack("<I", SAFE_REFRESH_DISPATCH_POINTER)
-    require(len(result) == SAFE_REFRESH_BRIDGE_SIZE, "safe refresh bridge size changed")
+    a = Assembler(VIDEO_REFRESH_CONTEXT_PREFERRED)
+    a.emit(VIDEO_REFRESH_CALL_CONTEXT[:VIDEO_REFRESH_CALL_OBJECT_OFFSET - VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET])
+    # Object1:0x739E8 jumps to this exact opcode, so the CALL cannot move.
+    a.call_absolute(OBJECT1_PREFERRED_BASE + REFRESH_CLIP_CAVE_A_OBJECT_OFFSET)
+    result = a.finish()
+    expected = bytes.fromhex(
+        "6A 00 6A 00 68 DF 01 00 00 A1 70 AD 03 00 8B 40 46 "
+        "B9 7F 02 00 00 31 DB 31 D2 E8 53 1D 02 00"
+    )
+    require(result == expected and len(result) == len(VIDEO_REFRESH_CALL_CONTEXT), "shared refresh context bytes changed")
     return result
 
 
+def build_refresh_clip_fragments() -> tuple[bytes, bytes, bytes]:
+    """Build a fixed Object1-only clipper across three alignment gaps."""
+
+    cave_a = bytearray(b"\x57\x8B\x3D")
+    cave_a.extend(struct.pack("<I", OBJECT3_PREFERRED_BASE + STABLE_REFRESH_HEIGHT_OBJECT_OFFSET))
+    cave_a.extend(b"\x29\xDF\xEB")
+    after_a = OBJECT1_PREFERRED_BASE + REFRESH_CLIP_CAVE_A_OBJECT_OFFSET + REFRESH_CLIP_CAVE_A_SIZE
+    cave_a.append((OBJECT1_PREFERRED_BASE + REFRESH_CLIP_CAVE_B_OBJECT_OFFSET - after_a) & 0xFF)
+
+    cave_b = bytes.fromhex("76 12 39 7C 24 08 76 10 89 7C 24 08 EB 0A 90")
+
+    cave_c = bytearray(bytes.fromhex("5F C2 0C 00 5F E9"))
+    after_c_jump = OBJECT1_PREFERRED_BASE + REFRESH_CLIP_CAVE_C_OBJECT_OFFSET + 10
+    cave_c.extend(struct.pack("<i", OBJECT1_PREFERRED_BASE + RECT_REFRESH_OBJECT_OFFSET - after_c_jump))
+    cave_c.append(0x90)
+
+    result = (bytes(cave_a), cave_b, bytes(cave_c))
+    require(
+        tuple(map(len, result))
+        == (REFRESH_CLIP_CAVE_A_SIZE, REFRESH_CLIP_CAVE_B_SIZE, REFRESH_CLIP_CAVE_C_SIZE),
+        "fixed refresh clipper escaped its reviewed caves",
+    )
+    require(result == (
+        bytes.fromhex("57 8B 3D AC 3E 13 00 29 DF EB 71"),
+        bytes.fromhex("76 12 39 7C 24 08 76 10 89 7C 24 08 EB 0A 90"),
+        bytes.fromhex("5F C2 0C 00 5F E9 AA FC FE FF 90"),
+    ), "fixed refresh clipper bytes changed")
+    return result
+
+
+def build_portable_descriptor_validator() -> bytes:
+    """Resolve Object2-relative direct descriptors in fixed Object1 code."""
+
+    body = bytes.fromhex(
+        "8D 46 09 39 E8 77 52 89 F2 AD A9 03 FC FF FF 74 20 "
+        "3D 20 E9 02 00 72 41 3D 20 15 03 00 73 3A A8 03 75 36 "
+        "BF 00 00 0E 00 01 C7 89 3A AD 01 F8 EB 0B "
+        "8B 3D 98 3E 13 00 01 C7 89 3A AD 39 07 75 19 "
+        "80 3E 40 75 14 46 39 EE 73 0F 80 3E 00 75 F6 46 E2 AE "
+        "39 EE 75 03 31 C0 C3 B0 01 C3"
+    )
+    require(len(body) == 0x5C, "portable descriptor validator body size changed")
+    result = body + b"\x90" * (DESCRIPTOR_VALIDATOR_SIZE - len(body))
+    require(len(result) == DESCRIPTOR_VALIDATOR_SIZE, "portable descriptor validator escaped its fixed routine")
+    require(read_u32(result, 0x24) == OBJECT2_PREFERRED_BASE, "validator Object2 base operand moved")
+    require(
+        read_u32(result, 0x33) == OBJECT3_PREFERRED_BASE + 0x3E98,
+        "validator private-slot operand moved",
+    )
+    return result
+
+
+def simulate_refresh_clip(boundary: int, source_y: int, height: int) -> int | None:
+    """Model the fixed dispatcher's unsigned clamp; None means defer."""
+
+    require(0 <= boundary <= 0xFFFFFFFF, "refresh boundary must be uint32")
+    require(0 <= source_y <= 0xFFFFFFFF, "refresh source y must be uint32")
+    require(0 <= height <= 0xFFFFFFFF, "refresh height must be uint32")
+    if source_y >= boundary:
+        return None
+    return min(height, boundary - source_y)
+
+
 def build_subtitle_bank(source: bytes, cues: Sequence[Cue], encrypted_runtime: bytes) -> bytes:
-    """Append the KSX2 cue and KSXR code descriptors to beta6 KOREAN.BIN."""
+    """Build an Object-relative beta6 bank with KSX2/KSXR descriptors."""
 
     require(identity(source) == SOURCE_BANK_ID, "input is not the pinned beta6 KOREAN.BIN")
     require(len(encrypted_runtime) == D_BOOTSTRAP_RUNTIME_PAYLOAD_LENGTH, "runtime descriptor length changed")
@@ -1511,27 +1860,62 @@ def build_subtitle_bank(source: bytes, cues: Sequence[Cue], encrypted_runtime: b
     cue_blob = serialize_cues(cues)
     render_rows = [(row.prefix, row.token) for row in parsed.render_rows]
     render_rows.extend(((CUE_PREFIX, CUE_TOKEN), (CODE_PREFIX, CODE_TOKEN)))
-    descriptors = [(row.target, row.expected, row.encoded) for row in parsed.descriptors]
+    unit_rows = [
+        row for row in parsed.descriptors
+        if not token_allowed(row.target) and SOURCE_UNIT_TARGET_START <= row.target < SOURCE_UNIT_TARGET_END
+    ]
+    general_rows = [
+        row for row in parsed.descriptors
+        if not token_allowed(row.target) and SOURCE_GENERAL_TARGET_START <= row.target < SOURCE_GENERAL_TARGET_END
+    ]
+    token_rows = [row for row in parsed.descriptors if token_allowed(row.target)]
+    require(
+        (len(unit_rows), len(general_rows), len(token_rows))
+        == (NATIVE_UNIT_DESCRIPTOR_COUNT, PORTABLE_GENERAL_DESCRIPTOR_COUNT, OLD_RENDER_COUNT),
+        "beta6 descriptor ownership changed",
+    )
+    require(len(unit_rows) + len(general_rows) + len(token_rows) == OLD_DESCRIPTOR_COUNT, "beta6 direct descriptor escaped its reviewed ranges")
+    require(all(OBJECT3_ACTUAL_BASE <= row.expected < OBJECT3_ACTUAL_BASE + 0x4000 for row in unit_rows), "native unit expected pointer escaped Object3")
+    require(all(OBJECT2_ACTUAL_BASE <= row.expected < OBJECT2_ACTUAL_BASE + 0x45190 for row in general_rows), "general expected pointer escaped Object2")
+
+    descriptors: list[tuple[int, int, bytes]] = []
+    for row in parsed.descriptors:
+        if token_allowed(row.target):
+            descriptors.append((row.target, row.expected, row.encoded))
+        elif SOURCE_UNIT_TARGET_START <= row.target < SOURCE_UNIT_TARGET_END:
+            # These seven translations are byte-identical to the native O3
+            # strings already selected by the EXE's original LE fixups.
+            continue
+        else:
+            target_offset = row.target - OBJECT2_ACTUAL_BASE
+            expected_delta = (row.expected - row.target) & 0xFFFFFFFF
+            require(PORTABLE_GENERAL_TARGET_START <= target_offset < PORTABLE_GENERAL_TARGET_END, "general target offset escaped Object2")
+            descriptors.append((target_offset, expected_delta, row.encoded))
+    portable_existing = tuple(descriptors)
     descriptors.extend(((CUE_TOKEN, 0, cue_blob), (CODE_TOKEN, 0, encrypted_runtime)))
     output, _rows, _descriptors = serialize_bank(
         render_rows,
         descriptors,
         mapping_tag=MAPPING_TAG,
-        unit_start=PARSE_TARGET_START,
-        unit_end=PARSE_TARGET_END,
+        unit_start=PORTABLE_GENERAL_TARGET_START,
+        unit_end=PORTABLE_GENERAL_TARGET_END,
     )
     reparsed = parse_bank(
         output,
         expected_mapping_tag=MAPPING_TAG,
-        unit_start=PARSE_TARGET_START,
-        unit_end=PARSE_TARGET_END,
+        unit_start=PORTABLE_GENERAL_TARGET_START,
+        unit_end=PORTABLE_GENERAL_TARGET_END,
     )
     require(len(output) <= 0xFEFF, "subtitle bank exceeds the DOS one-read limit")
-    require((len(reparsed.descriptors), len(reparsed.render_rows)) == (180, 18), "subtitle bank shape changed")
     require(
-        [(row.target, row.expected, row.encoded) for row in reparsed.descriptors[:OLD_DESCRIPTOR_COUNT]]
-        == [(row.target, row.expected, row.encoded) for row in parsed.descriptors],
-        "an existing beta6 bank descriptor changed",
+        (len(reparsed.descriptors), len(reparsed.render_rows))
+        == (OLD_DESCRIPTOR_COUNT - NATIVE_UNIT_DESCRIPTOR_COUNT + 2, OLD_RENDER_COUNT + 2),
+        "subtitle bank shape changed",
+    )
+    require(
+        [(row.target, row.expected, row.encoded) for row in reparsed.descriptors[:len(portable_existing)]]
+        == list(portable_existing),
+        "portable beta6 descriptor transform changed",
     )
     require(
         [(row.prefix, row.token) for row in reparsed.render_rows[:OLD_RENDER_COUNT]]
@@ -1539,6 +1923,210 @@ def build_subtitle_bank(source: bytes, cues: Sequence[Cue], encrypted_runtime: b
         "an existing beta6 render row changed",
     )
     return output
+
+
+def verify_native_unit_fallbacks(source_exe: bytes, source_bank: bytes) -> tuple[tuple[int, int], ...]:
+    """Prove that the seven omitted unit rows already exist natively in O3."""
+
+    require(identity(source_exe) == SOURCE_EXE_ID and identity(source_bank) == SOURCE_BANK_ID, "native unit proof requires pinned beta6 inputs")
+    image = LeImage(source_exe)
+    fixups = parse_raw_fixups(source_exe, image, expected_rows=SOURCE_FIXUP_ROWS)
+    parsed = parse_bank(
+        source_bank,
+        expected_mapping_tag=MAPPING_TAG,
+        unit_start=PARSE_TARGET_START,
+        unit_end=PARSE_TARGET_END,
+    )
+    unit_rows = [
+        row for row in parsed.descriptors
+        if SOURCE_UNIT_TARGET_START <= row.target < SOURCE_UNIT_TARGET_END
+    ]
+    require(len(unit_rows) == NATIVE_UNIT_DESCRIPTOR_COUNT, "native unit descriptor count changed")
+    proof: list[tuple[int, int]] = []
+    for row in unit_rows:
+        target_offset = row.target - OBJECT2_ACTUAL_BASE
+        expected_offset = row.expected - OBJECT3_ACTUAL_BASE
+        owners = [
+            fixup for fixup in fixups
+            if fixup.source_object == 2 and fixup.source_offset == target_offset
+        ]
+        require(
+            len(owners) == 1
+            and owners[0].target_object == 3
+            and owners[0].target_offset == expected_offset
+            and owners[0].src == 7,
+            "native unit pointer is not owned by its original LE fixup",
+        )
+        native_file = image.object_to_file(3, expected_offset)
+        native = source_exe[native_file:native_file + len(row.encoded) + 2]
+        require(native == b"@" + row.encoded + b"\0", "native unit fallback text differs from the bank")
+        proof.append((target_offset, expected_offset))
+    require(len(set(proof)) == NATIVE_UNIT_DESCRIPTOR_COUNT, "native unit fallback proof is duplicated")
+    general_rows = [
+        row for row in parsed.descriptors
+        if SOURCE_GENERAL_TARGET_START <= row.target < SOURCE_GENERAL_TARGET_END
+    ]
+    require(len(general_rows) == PORTABLE_GENERAL_DESCRIPTOR_COUNT, "general descriptor count changed")
+    for row in general_rows:
+        target_offset = row.target - OBJECT2_ACTUAL_BASE
+        expected_offset = row.expected - OBJECT2_ACTUAL_BASE
+        owners = [
+            fixup for fixup in fixups
+            if fixup.source_object == 2 and fixup.source_offset == target_offset
+        ]
+        require(
+            len(owners) == 1
+            and owners[0].target_object == 2
+            and owners[0].target_offset == expected_offset
+            and owners[0].src == 7,
+            "general descriptor does not match its original Object2 LE fixup",
+        )
+    return tuple(sorted(proof))
+
+
+def _object_preferred_base(object_number: int) -> int:
+    return (OBJECT1_PREFERRED_BASE, OBJECT2_PREFERRED_BASE, OBJECT3_PREFERRED_BASE)[object_number - 1]
+
+
+def _object_observed_actual_base(object_number: int) -> int:
+    return (OBJECT1_ACTUAL_BASE, OBJECT2_ACTUAL_BASE, OBJECT3_ACTUAL_BASE)[object_number - 1]
+
+
+def build_runtime_relocation_table() -> bytes:
+    table = b"".join(
+        struct.pack("<I", _object_preferred_base(target_object) + target_offset)
+        for _name, target_object, target_offset, _placeholder in RUNTIME_RELOC_TARGETS
+    )
+    require(len(table) == RUNTIME_RELOC_TABLE_SIZE, "runtime relocation table size changed")
+    return table
+
+
+def _absolute_transfer_veneer(target_object: int, target_offset: int) -> bytes:
+    """Return a register-transparent absolute JMP/CALL continuation."""
+
+    return b"\x68" + struct.pack("<I", _object_preferred_base(target_object) + target_offset) + b"\xC3"
+
+
+def build_h2k3_portable_veneers() -> tuple[bytes, bytes]:
+    """Build three Object1 veneers while preserving unused alignment bytes."""
+
+    rows = tuple(
+        _absolute_transfer_veneer(target_object, target_offset)
+        for _source, _opcode, _veneer, target_object, target_offset in H2K3_O1_EDGE_VENEERS
+    )
+    require(all(len(row) == 6 for row in rows), "H2K3 absolute veneer size changed")
+    cave_a = rows[0] + rows[1] + b"\0"
+    cave_b = rows[2] + b"\0"
+    require(
+        (len(cave_a), len(cave_b))
+        == (H2K3_VENEER_CAVE_A_SIZE, H2K3_VENEER_CAVE_B_SIZE),
+        "H2K3 veneer cave layout changed",
+    )
+    return cave_a, cave_b
+
+
+def build_h2k3_o3_portable_patch() -> bytes:
+    """Replace two Object3->Object1 rel32 edges with type-7 immediates."""
+
+    patch = (
+        _absolute_transfer_veneer(1, 0xC4FF0)
+        + bytes.fromhex(
+            "0F B6 47 0C C1 E0 04 83 C0 20 39 47 14 75 D4 "
+            "8D 1C 07 57 89 DE B8"
+        )
+        + struct.pack("<I", OBJECT1_PREFERRED_BASE + DESCRIPTOR_VALIDATOR_OBJECT_OFFSET)
+        + bytes.fromhex("FF D0 5F C3")
+    )
+    require(len(patch) == H2K3_O3_PORTABLE_PATCH_SIZE, "H2K3 Object3 portable patch size changed")
+    # The shifted descriptor helper keeps MOVZX and therefore has no hidden
+    # dependency on the caller's upper EAX bits.  Its failure branch reuses the
+    # existing Object3:3F29 `mov al,1; ret` epilogue.
+    require(patch[6:10] == bytes.fromhex("0F B6 47 0C"), "H2K3 descriptor helper lost MOVZX")
+    require(patch[0x13:0x15] == bytes.fromhex("75 D4"), "H2K3 shared failure branch changed")
+    require(patch[0x1B] == 0xB8 and patch[0x20:0x22] == bytes.fromhex("FF D0"), "H2K3 absolute validator call changed")
+    return patch
+
+
+def _unique_u32_operand(code: bytes, value: int, name: str) -> int:
+    needle = struct.pack("<I", value)
+    offsets = [index for index in range(len(code) - 3) if code.startswith(needle, index)]
+    require(len(offsets) == 1, f"bootstrap {name} operand is not unique")
+    return offsets[0]
+
+
+def build_executable_fixup_specs(source: bytes, image: LeImage, bootstrap: bytes) -> tuple[FixupSpec, ...]:
+    """Describe every new loader relocation used by the portable subtitle path."""
+
+    specs: list[FixupSpec] = [
+        FixupSpec(1, REFRESH_CLIP_HEIGHT_FIXUP_SOURCE, 3, STABLE_REFRESH_HEIGHT_OBJECT_OFFSET),
+        FixupSpec(
+            1,
+            CAVE_OBJECT_OFFSET + _unique_u32_operand(
+                bootstrap,
+                OBJECT3_PREFERRED_BASE + STABLE_REFRESH_HEIGHT_OBJECT_OFFSET,
+                "refresh boundary reset",
+            ),
+            3,
+            STABLE_REFRESH_HEIGHT_OBJECT_OFFSET,
+        ),
+        FixupSpec(
+            1,
+            CAVE_OBJECT_OFFSET + _unique_u32_operand(bootstrap, OBJECT2_PREFERRED_BASE + 0x3B22D, "scene"),
+            2,
+            0x3B22D,
+        ),
+        FixupSpec(
+            1,
+            CAVE_OBJECT_OFFSET + _unique_u32_operand(
+                bootstrap,
+                OBJECT3_PREFERRED_BASE + RUNTIME_RELOC_TABLE_OBJECT_OFFSET,
+                "relocation table",
+            ),
+            3,
+            RUNTIME_RELOC_TABLE_OBJECT_OFFSET,
+        ),
+    ]
+    specs.extend(
+        FixupSpec(3, RUNTIME_RELOC_TABLE_OBJECT_OFFSET + index * 4, target_object, target_offset)
+        for index, (_name, target_object, target_offset, _placeholder) in enumerate(RUNTIME_RELOC_TARGETS)
+    )
+
+    for row in H2K3_ABSOLUTE_RELOCS:
+        source_offset, target_object, target_offset, *source_owner = row
+        source_object = source_owner[0] if source_owner else 1
+        source_file = image.object_to_file(source_object, source_offset)
+        observed = read_u32(source, source_file)
+        expected = _object_observed_actual_base(target_object) + target_offset
+        require(observed == expected, f"H2K3 absolute operand Object{source_object}:0x{source_offset:X} changed")
+        specs.append(FixupSpec(source_object, source_offset, target_object, target_offset, 7))
+
+    # Validate the five pre-existing cross-object rel32 edges.  The portable
+    # patch redirects the three Object1 edges to same-object veneers and
+    # rewrites the two Object3 edges as absolute transfers below; no source
+    # type 8 record is emitted.
+    for source_offset, target_object, target_offset, source_object in H2K3_RELATIVE_RELOCS:
+        source_file = image.object_to_file(source_object, source_offset)
+        displacement = struct.unpack_from("<i", source, source_file)[0]
+        observed_target = _object_observed_actual_base(source_object) + source_offset + 4 + displacement
+        expected_target = _object_observed_actual_base(target_object) + target_offset
+        require(observed_target == expected_target, f"H2K3 relative operand Object{source_object}:0x{source_offset:X} changed")
+
+    specs.extend(
+        FixupSpec(1, veneer_offset + 1, target_object, target_offset, 7)
+        for _source, _opcode, veneer_offset, target_object, target_offset in H2K3_O1_EDGE_VENEERS
+    )
+    specs.extend(
+        FixupSpec(3, source_offset, target_object, target_offset, 7)
+        for source_offset, target_object, target_offset in H2K3_O3_ABSOLUTE_TRANSFER_FIXUPS
+    )
+
+    specs.extend((
+        FixupSpec(1, DESCRIPTOR_VALIDATOR_O2_BASE_FIXUP_SOURCE, 2, 0, 7),
+        FixupSpec(1, DESCRIPTOR_VALIDATOR_SLOT_FIXUP_SOURCE, 3, 0x3E98, 7),
+    ))
+
+    require(len(specs) == 37 and len(set(specs)) == 37, "portable subtitle LE fixup set changed")
+    return tuple(specs)
 
 
 def _patch_file_ranges(source: bytes, image: LeImage) -> dict[str, tuple[int, int]]:
@@ -1554,8 +2142,19 @@ def _patch_file_ranges(source: bytes, image: LeImage) -> dict[str, tuple[int, in
         "frame_return": image.object_to_file(1, ORIGINAL_FRAME_RETURN_OBJECT_OFFSET),
         "cave": image.object_to_file(1, CAVE_OBJECT_OFFSET),
         "loader": image.object_to_file(1, H2K3_OBJECT_OFFSET),
+        "descriptor_validator": image.object_to_file(1, DESCRIPTOR_VALIDATOR_OBJECT_OFFSET),
         "false_cave": image.object_to_file(1, FALSE_CAVE_OBJECT_OFFSET),
-        "dispatch": image.object_to_file(3, SAFE_REFRESH_DISPATCH_OBJECT_OFFSET),
+        "height": image.object_to_file(3, STABLE_REFRESH_HEIGHT_OBJECT_OFFSET),
+        "clip_cave_a": image.object_to_file(1, REFRESH_CLIP_CAVE_A_OBJECT_OFFSET),
+        "clip_cave_b": image.object_to_file(1, REFRESH_CLIP_CAVE_B_OBJECT_OFFSET),
+        "clip_cave_c": image.object_to_file(1, REFRESH_CLIP_CAVE_C_OBJECT_OFFSET),
+        "h2k3_veneer_cave_a": image.object_to_file(1, H2K3_VENEER_CAVE_A_OBJECT_OFFSET),
+        "h2k3_veneer_cave_b": image.object_to_file(1, H2K3_VENEER_CAVE_B_OBJECT_OFFSET),
+        "h2k3_o1_edge_a": image.object_to_file(1, H2K3_O1_EDGE_VENEERS[0][0]),
+        "h2k3_o1_edge_b": image.object_to_file(1, H2K3_O1_EDGE_VENEERS[1][0]),
+        "h2k3_o1_edge_c": image.object_to_file(1, H2K3_O1_EDGE_VENEERS[2][0]),
+        "h2k3_o3_portable": image.object_to_file(3, H2K3_O3_PORTABLE_PATCH_OBJECT_OFFSET),
+        "runtime_reloc_table": image.object_to_file(3, RUNTIME_RELOC_TABLE_OBJECT_OFFSET),
     }
     offsets["malloc"] = offsets["loader"] + MALLOC_INSTRUCTION_OFFSET
     return {
@@ -1571,13 +2170,24 @@ def _patch_file_ranges(source: bytes, image: LeImage) -> dict[str, tuple[int, in
         "cave": (offsets["cave"], CAVE_CAPACITY),
         "loader": (offsets["loader"], H2K3_SIZE),
         "malloc": (offsets["malloc"], 5),
+        "descriptor_validator": (offsets["descriptor_validator"], DESCRIPTOR_VALIDATOR_SIZE),
         "false_cave": (offsets["false_cave"], FALSE_CAVE_SIZE),
-        "dispatch": (offsets["dispatch"], 4),
+        "height": (offsets["height"], 4),
+        "clip_cave_a": (offsets["clip_cave_a"], REFRESH_CLIP_CAVE_A_SIZE),
+        "clip_cave_b": (offsets["clip_cave_b"], REFRESH_CLIP_CAVE_B_SIZE),
+        "clip_cave_c": (offsets["clip_cave_c"], REFRESH_CLIP_CAVE_C_SIZE),
+        "h2k3_veneer_cave_a": (offsets["h2k3_veneer_cave_a"], H2K3_VENEER_CAVE_A_SIZE),
+        "h2k3_veneer_cave_b": (offsets["h2k3_veneer_cave_b"], H2K3_VENEER_CAVE_B_SIZE),
+        "h2k3_o1_edge_a": (offsets["h2k3_o1_edge_a"], 4),
+        "h2k3_o1_edge_b": (offsets["h2k3_o1_edge_b"], 4),
+        "h2k3_o1_edge_c": (offsets["h2k3_o1_edge_c"], 4),
+        "h2k3_o3_portable": (offsets["h2k3_o3_portable"], H2K3_O3_PORTABLE_PATCH_SIZE),
+        "runtime_reloc_table": (offsets["runtime_reloc_table"], RUNTIME_RELOC_TABLE_SIZE),
     }
 
 
 def patch_executable(source: bytes) -> bytes:
-    """Install the late hook and safe active-only refresh dispatcher."""
+    """Install a load-base-independent subtitle runtime and shared refresh clip."""
 
     require(identity(source) == SOURCE_EXE_ID, "input is not the pinned beta6 HEROES2.EXE")
     image = LeImage(source)
@@ -1588,9 +2198,33 @@ def patch_executable(source: bytes) -> bytes:
         start, length = spans[name]
         return source[start:start + length]
 
+    def require_cave_boundaries(name: str, before: bytes, after: bytes) -> None:
+        start, length = spans[name]
+        require(source_span(name) == b"\0" * length, f"{name} is not a zero-filled alignment gap")
+        require(source[start - len(before):start] == before, f"{name} preceding instruction boundary changed")
+        require(source[start + length:start + length + len(after)] == after, f"{name} following instruction boundary changed")
+
     require(source_span("late_call") == CALL_SITE_ORIGINAL, "late post-video CALL changed")
     require(source_span("video_call") == VIDEO_REFRESH_CALL_ORIGINAL, "Smacker refresh CALL changed")
     require(source_span("video_context") == VIDEO_REFRESH_CALL_CONTEXT, "Smacker refresh call ABI context changed")
+    require_cave_boundaries("clip_cave_a", REFRESH_CLIP_CAVE_A_BEFORE, REFRESH_CLIP_CAVE_A_AFTER)
+    require_cave_boundaries("clip_cave_b", REFRESH_CLIP_CAVE_B_BEFORE, REFRESH_CLIP_CAVE_B_AFTER)
+    require_cave_boundaries("clip_cave_c", REFRESH_CLIP_CAVE_C_BEFORE, REFRESH_CLIP_CAVE_C_AFTER)
+    require_cave_boundaries("h2k3_veneer_cave_a", H2K3_VENEER_CAVE_A_BEFORE, H2K3_VENEER_CAVE_A_AFTER)
+    require_cave_boundaries("h2k3_veneer_cave_b", H2K3_VENEER_CAVE_B_BEFORE, H2K3_VENEER_CAVE_B_AFTER)
+    require(source_span("h2k3_o3_portable") == H2K3_O3_PORTABLE_SOURCE, "H2K3 Object3 helper source changed")
+    for source_offset, opcode, _veneer, _target_object, _target_offset in H2K3_O1_EDGE_VENEERS:
+        opcode_file = image.object_to_file(1, source_offset - 1)
+        require(source[opcode_file] == opcode, f"H2K3 Object1 edge opcode 0x{source_offset - 1:X} changed")
+    require(source_span("runtime_reloc_table") == b"\0" * RUNTIME_RELOC_TABLE_SIZE, "runtime relocation table tail changed")
+    late_refresh_join_file = image.object_to_file(1, LATE_REFRESH_JOIN_BRANCH_OBJECT_OFFSET)
+    require(source[late_refresh_join_file:late_refresh_join_file + 2] == LATE_REFRESH_JOIN_BRANCH_BYTES, "Smacker shared-call inbound branch changed")
+    require(
+        LATE_REFRESH_JOIN_BRANCH_OBJECT_OFFSET + 2
+        + int.from_bytes(LATE_REFRESH_JOIN_BRANCH_BYTES[1:2], "little", signed=True)
+        == VIDEO_REFRESH_CALL_OBJECT_OFFSET,
+        "Smacker inbound branch no longer lands on the shared CALL",
+    )
     require(source_span("post_video") == ORIGINAL_POST_VIDEO_BYTES, "displaced post-video routine changed")
     require(source_span("primary_call") == PRIMARY_FRAME_CALL_BYTES, "primary frame CALL changed")
     require(source_span("secondary_call_a") == SECONDARY_FRAME_CALL_A_BYTES, "first secondary frame CALL changed")
@@ -1601,70 +2235,155 @@ def patch_executable(source: bytes) -> bytes:
         file_offset = image.object_to_file(1, offset)
         require(source[file_offset:file_offset + len(expected)] == expected, f"late merge branch 0x{offset:X} changed")
     require(sha256(source_span("cave")) == CAVE_SOURCE_SHA256, "reviewed bootstrap cave changed")
-    require(sha256(source_span("false_cave")) == FALSE_CAVE_SOURCE_SHA256, "startup metadata source span changed")
-    require(source_span("dispatch") == SAFE_REFRESH_DISPATCH_SOURCE, "safe dispatch ownership marker changed")
+    require(sha256(source_span("descriptor_validator")) == DESCRIPTOR_VALIDATOR_SOURCE_SHA256, "H2K3 descriptor validator source changed")
+    require(sha256(source_span("false_cave")) == FALSE_CAVE_SOURCE_SHA256, "Watcom runtime metadata span changed")
+    require(source_span("height") == STABLE_REFRESH_HEIGHT_SOURCE, "refresh boundary ownership marker changed")
     require(source_span("malloc") == MALLOC_BEFORE, "H2K3 allocation immediate changed")
     require(spans["cave"][0] + CAVE_CAPACITY == spans["loader"][0], "bootstrap cave no longer borders H2K3 loader")
 
-    fixups = parse_raw_fixups(source, image)
+    source_fixups = parse_raw_fixups(source, image, expected_rows=SOURCE_FIXUP_ROWS)
+    surface_fixups = [
+        row for row in source_fixups
+        if row.source_object == 1 and row.source_offset == VIDEO_REFRESH_SURFACE_FIXUP_SOURCE
+    ]
+    require(len(surface_fixups) == 1, "Smacker surface operand fixup is not unique")
+    surface_fixup = surface_fixups[0]
+    require(
+        surface_fixup.target_object == VIDEO_REFRESH_SURFACE_FIXUP_TARGET_OBJECT
+        and surface_fixup.target_offset == VIDEO_REFRESH_SURFACE_FIXUP_TARGET_OFFSET
+        and surface_fixup.src == 7 and surface_fixup.flags == 0x10,
+        "Smacker surface operand fixup contract changed",
+    )
+    require(
+        [row for row in source_fixups if row.source_object == 1 and VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET <= row.source_offset < VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET + len(VIDEO_REFRESH_CALL_CONTEXT)]
+        == [surface_fixup],
+        "Smacker context has an unexpected LE fixup source",
+    )
+
+    runtime = build_heap_runtime(stable_refresh_height=True)
+    require(identity(runtime) == STABLE_HEIGHT_RUNTIME_ID, "relocatable subtitle runtime identity changed")
+    bootstrap = build_stable_refresh_bootstrap(len(runtime), RUNTIME_XOR_KEY)
+    context = build_stable_refresh_context()
+    clip_fragments = build_refresh_clip_fragments()
+    descriptor_validator = build_portable_descriptor_validator()
+    relocation_table = build_runtime_relocation_table()
+    h2k3_veneer_caves = build_h2k3_portable_veneers()
+    h2k3_o3_portable = build_h2k3_o3_portable_patch()
+    fixup_specs = build_executable_fixup_specs(source, image, bootstrap)
+    require(len(bootstrap) == CAVE_CAPACITY and len(context) == len(VIDEO_REFRESH_CALL_CONTEXT), "portable EXE layout changed")
+
     patched_object_ranges = (
         (1, CALL_SITE_OBJECT_OFFSET, CALL_SITE_OBJECT_OFFSET + 5),
         (1, VIDEO_REFRESH_CALL_OBJECT_OFFSET, VIDEO_REFRESH_CALL_OBJECT_OFFSET + 5),
         (1, CAVE_OBJECT_OFFSET, CAVE_OBJECT_OFFSET + CAVE_CAPACITY),
         (1, H2K3_OBJECT_OFFSET + MALLOC_INSTRUCTION_OFFSET, H2K3_OBJECT_OFFSET + MALLOC_INSTRUCTION_OFFSET + 5),
-        (3, SAFE_REFRESH_DISPATCH_OBJECT_OFFSET, SAFE_REFRESH_DISPATCH_OBJECT_OFFSET + 4),
+        (1, DESCRIPTOR_VALIDATOR_OBJECT_OFFSET, DESCRIPTOR_VALIDATOR_OBJECT_OFFSET + DESCRIPTOR_VALIDATOR_SIZE),
+        (1, REFRESH_CLIP_CAVE_A_OBJECT_OFFSET, REFRESH_CLIP_CAVE_A_OBJECT_OFFSET + REFRESH_CLIP_CAVE_A_SIZE),
+        (1, REFRESH_CLIP_CAVE_B_OBJECT_OFFSET, REFRESH_CLIP_CAVE_B_OBJECT_OFFSET + REFRESH_CLIP_CAVE_B_SIZE),
+        (1, REFRESH_CLIP_CAVE_C_OBJECT_OFFSET, REFRESH_CLIP_CAVE_C_OBJECT_OFFSET + REFRESH_CLIP_CAVE_C_SIZE),
+        (1, H2K3_VENEER_CAVE_A_OBJECT_OFFSET, H2K3_VENEER_CAVE_A_OBJECT_OFFSET + H2K3_VENEER_CAVE_A_SIZE),
+        (1, H2K3_VENEER_CAVE_B_OBJECT_OFFSET, H2K3_VENEER_CAVE_B_OBJECT_OFFSET + H2K3_VENEER_CAVE_B_SIZE),
+        *((1, source_offset, source_offset + 4) for source_offset, _opcode, _veneer, _target_object, _target_offset in H2K3_O1_EDGE_VENEERS),
+        (3, H2K3_O3_PORTABLE_PATCH_OBJECT_OFFSET, H2K3_O3_PORTABLE_PATCH_OBJECT_OFFSET + H2K3_O3_PORTABLE_PATCH_SIZE),
+        (3, STABLE_REFRESH_HEIGHT_OBJECT_OFFSET, STABLE_REFRESH_HEIGHT_OBJECT_OFFSET + 4),
+        (3, RUNTIME_RELOC_TABLE_OBJECT_OFFSET, RUNTIME_RELOC_TABLE_OBJECT_OFFSET + RUNTIME_RELOC_TABLE_SIZE),
     )
     for owner, start, end in patched_object_ranges:
         require(
-            not any(row.source_object == owner and row.source_offset < end and start < row.source_offset + 4 for row in fixups),
-            f"EXE patch Object{owner}:0x{start:X} overlaps an LE fixup source",
+            not any(row.source_object == owner and row.source_offset < end and start < row.source_offset + 4 for row in source_fixups),
+            f"EXE patch Object{owner}:0x{start:X} overlaps an existing LE fixup source",
         )
-    require(
-        not any(row.target_object == 3 and row.target_offset == SAFE_REFRESH_DISPATCH_OBJECT_OFFSET for row in fixups),
-        "safe dispatch marker has an LE fixup consumer",
-    )
-    source_fixup_blobs = raw_fixup_blobs(source, image)
-
-    runtime = build_heap_runtime(safe_refresh_dispatch=True)
-    require(identity(runtime) == SAFE_RUNTIME_ID, "safe subtitle runtime identity changed")
-    safe_bootstrap = build_safe_refresh_bootstrap(len(runtime), RUNTIME_XOR_KEY)
-    bridge = build_safe_refresh_bridge()
-    prefix_capacity = CAVE_CAPACITY - len(bridge)
-    require(len(safe_bootstrap) == 106 and len(bridge) == 6, "safe bootstrap/bridge reviewed sizes changed")
-    cave = safe_bootstrap.ljust(prefix_capacity, bytes((RUNTIME_PADDING_BYTE,))) + bridge
-    require(len(cave) == CAVE_CAPACITY, "safe cave layout changed")
+        require(
+            not any(row.target_object == owner and start <= row.target_offset < end for row in source_fixups),
+            f"EXE patch Object{owner}:0x{start:X} has an existing LE fixup target",
+        )
 
     output = bytearray(source)
     late_call, _ = spans["late_call"]
     output[late_call:late_call + 5] = b"\xE8" + struct.pack("<i", CAVE_PREFERRED - (CALL_SITE_PREFERRED + 5))
-    video_call, _ = spans["video_call"]
-    output[video_call:video_call + 5] = b"\xE8" + struct.pack("<i", SAFE_REFRESH_BRIDGE_PREFERRED - (VIDEO_REFRESH_CALL_PREFERRED + 5))
+    video_context, _ = spans["video_context"]
+    output[video_context:video_context + len(context)] = context
     cave_file, _ = spans["cave"]
-    output[cave_file:cave_file + CAVE_CAPACITY] = cave
+    output[cave_file:cave_file + CAVE_CAPACITY] = bootstrap
     malloc_file, _ = spans["malloc"]
     output[malloc_file:malloc_file + 5] = MALLOC_AFTER
-    dispatch_file, _ = spans["dispatch"]
-    output[dispatch_file:dispatch_file + 4] = struct.pack("<I", RECT_REFRESH_ACTUAL)
-    result = bytes(output)
+    descriptor_validator_file, _ = spans["descriptor_validator"]
+    output[descriptor_validator_file:descriptor_validator_file + DESCRIPTOR_VALIDATOR_SIZE] = descriptor_validator
+    height_file, _ = spans["height"]
+    output[height_file:height_file + 4] = struct.pack("<I", FULL_VIDEO_REFRESH_HEIGHT)
+    for name, fragment in zip(("clip_cave_a", "clip_cave_b", "clip_cave_c"), clip_fragments):
+        file_offset, length = spans[name]
+        require(len(fragment) == length, f"{name} fragment length changed")
+        output[file_offset:file_offset + length] = fragment
+    for name, veneer_cave in zip(("h2k3_veneer_cave_a", "h2k3_veneer_cave_b"), h2k3_veneer_caves):
+        file_offset, length = spans[name]
+        require(len(veneer_cave) == length, f"{name} layout changed")
+        output[file_offset:file_offset + length] = veneer_cave
+    for index, (source_offset, _opcode, veneer_offset, _target_object, _target_offset) in enumerate(H2K3_O1_EDGE_VENEERS):
+        file_offset, length = spans[f"h2k3_o1_edge_{chr(ord('a') + index)}"]
+        require(length == 4, "H2K3 Object1 edge operand size changed")
+        output[file_offset:file_offset + length] = struct.pack("<i", veneer_offset - (source_offset + 4))
+    o3_portable_file, o3_portable_length = spans["h2k3_o3_portable"]
+    require(len(h2k3_o3_portable) == o3_portable_length, "H2K3 Object3 patch layout changed")
+    output[o3_portable_file:o3_portable_file + o3_portable_length] = h2k3_o3_portable
+    table_file, _ = spans["runtime_reloc_table"]
+    output[table_file:table_file + len(relocation_table)] = relocation_table
 
+    pre_fixup = bytes(output)
+    result, metadata_ranges = install_internal_fixups(pre_fixup, LeImage(pre_fixup), fixup_specs)
     allowed_file_ranges = tuple(
         (spans[name][0], spans[name][0] + spans[name][1])
-        for name in ("late_call", "video_call", "cave", "malloc", "dispatch")
-    )
+        for name in (
+            "late_call", "video_call", "cave", "malloc", "descriptor_validator", "height",
+            "clip_cave_a", "clip_cave_b", "clip_cave_c",
+            "h2k3_veneer_cave_a", "h2k3_veneer_cave_b",
+            "h2k3_o1_edge_a", "h2k3_o1_edge_b", "h2k3_o1_edge_c", "h2k3_o3_portable",
+            "runtime_reloc_table",
+        )
+    ) + metadata_ranges
     changed = [index for index, pair in enumerate(zip(source, result)) if pair[0] != pair[1]]
     require(len(result) == len(source) and changed, "patched EXE size/change contract failed")
     require(all(any(start <= index < end for start, end in allowed_file_ranges) for index in changed), "EXE byte escaped the patch allowlist")
-    require(result[spans["false_cave"][0]:spans["false_cave"][0] + FALSE_CAVE_SIZE] == source_span("false_cave"), "startup metadata source span was not byte-preserved")
-    require(raw_fixup_blobs(result, LeImage(result)) == source_fixup_blobs, "LE fixup metadata changed")
+    require(result[video_context:video_context + len(context)] == context, "shared refresh context changed")
+    call_index = VIDEO_REFRESH_CALL_OBJECT_OFFSET - VIDEO_REFRESH_CALL_CONTEXT_OBJECT_OFFSET
+    require(context[call_index] == 0xE8, "Smacker shared CALL opcode moved away from its inbound branch")
+    call_target = VIDEO_REFRESH_CONTEXT_PREFERRED + call_index + 5 + struct.unpack_from("<i", context, call_index + 1)[0]
+    require(call_target == OBJECT1_PREFERRED_BASE + REFRESH_CLIP_CAVE_A_OBJECT_OFFSET, "Smacker shared CALL does not enter the fixed clipper")
+    require(result[descriptor_validator_file:descriptor_validator_file + DESCRIPTOR_VALIDATOR_SIZE] == descriptor_validator, "portable descriptor validator changed")
+    for index, (source_offset, _opcode, veneer_offset, _target_object, _target_offset) in enumerate(H2K3_O1_EDGE_VENEERS):
+        edge_file, _ = spans[f"h2k3_o1_edge_{chr(ord('a') + index)}"]
+        displacement = struct.unpack_from("<i", result, edge_file)[0]
+        require(source_offset + 4 + displacement == veneer_offset, "H2K3 Object1 edge missed its same-object veneer")
+    require(result[o3_portable_file:o3_portable_file + o3_portable_length] == h2k3_o3_portable, "H2K3 Object3 absolute transfers changed")
+    require(result[spans["false_cave"][0]:spans["false_cave"][0] + FALSE_CAVE_SIZE] == source_span("false_cave"), "Watcom runtime metadata was not byte-preserved")
+
+    candidate_fixups = parse_raw_fixups(result, LeImage(result), expected_rows=SOURCE_FIXUP_ROWS + len(fixup_specs))
+    spec_keys = {
+        (spec.source_object, spec.source_offset, spec.target_object, spec.target_offset, spec.src)
+        for spec in fixup_specs
+    }
+    added = [
+        row for row in candidate_fixups
+        if (row.source_object, row.source_offset, row.target_object, row.target_offset, row.src) in spec_keys
+    ]
+    require(len(added) == len(fixup_specs), "portable subtitle LE fixups are incomplete")
+    retained = [
+        row for row in candidate_fixups
+        if (row.source_object, row.source_offset, row.target_object, row.target_offset, row.src) not in spec_keys
+    ]
+    require([fixup_semantics(row) for row in retained] == [fixup_semantics(row) for row in source_fixups], "an original LE fixup changed")
+    retained_surface = [row for row in retained if row.source_object == 1 and row.source_offset == VIDEO_REFRESH_SURFACE_FIXUP_SOURCE]
+    require(len(retained_surface) == 1 and fixup_semantics(retained_surface[0]) == fixup_semantics(surface_fixup), "Smacker surface fixup was not preserved")
     require(identity(result) == FINAL_EXE_ID, "patched EXE does not match the tested final identity")
     return result
 
 
 def build_artifacts(source_exe: bytes, source_bank: bytes) -> tuple[bytes, bytes, dict[str, object]]:
+    native_unit_proof = verify_native_unit_fallbacks(source_exe, source_bank)
     mapping = load_subtitle_mapping()
     cues, cue_meta = load_scene_cues(mapping=mapping)
-    runtime = build_heap_runtime(safe_refresh_dispatch=True)
-    require(identity(runtime) == SAFE_RUNTIME_ID, "safe runtime identity changed")
+    runtime = build_heap_runtime(stable_refresh_height=True)
+    require(identity(runtime) == STABLE_HEIGHT_RUNTIME_ID, "stable-height runtime identity changed")
     encrypted_runtime = bytes(value ^ RUNTIME_XOR_KEY for value in runtime)
     require(b"\0" not in encrypted_runtime, "safe encrypted runtime is not descriptor-safe")
     exe = patch_executable(source_exe)
@@ -1691,11 +2410,17 @@ def build_artifacts(source_exe: bytes, source_bank: bytes) -> tuple[bytes, bytes
         },
         "coverage": {"movies": 51, "scenes": 57, "cues": 388, "primary_ms": 27, "secondary_ms": 361},
         "safety": {
-            "startup_metadata_span_byte_preserved": True,
-            "le_fixup_metadata_byte_preserved": True,
-            "safe_dispatch_pointer": "0x182EAC",
-            "safe_dispatch_initial_target": "0x2A4409",
-            "active_and_generation_gated_flicker_suppression": True,
+            "native_unit_fallback_count": len(native_unit_proof),
+            "relative_object2_descriptor_count": PORTABLE_GENERAL_DESCRIPTOR_COUNT,
+            "watcom_runtime_metadata_byte_preserved": True,
+            "surface_fixup_preserved": True,
+            "loader_relocated_runtime_operands": True,
+            "heap_callback_published": False,
+            "heap_cross_object_callback_published": False,
+            "refresh_height_pointer": f"0x{STABLE_REFRESH_HEIGHT_POINTER:X}",
+            "fixed_code_refresh_clipper": True,
+            "cross_object_self_relative_fixups": 0,
+            "type7_absolute_transfer_veneers": 5,
         },
     }
     return exe, bank, report
@@ -1708,25 +2433,74 @@ def verify_artifacts(source_exe: bytes, source_bank: bytes, candidate_exe: bytes
     parsed = parse_bank(
         candidate_bank,
         expected_mapping_tag=MAPPING_TAG,
-        unit_start=PARSE_TARGET_START,
-        unit_end=PARSE_TARGET_END,
+        unit_start=PORTABLE_GENERAL_TARGET_START,
+        unit_end=PORTABLE_GENERAL_TARGET_END,
+    )
+    require(
+        (len(parsed.descriptors), len(parsed.render_rows))
+        == (OLD_DESCRIPTOR_COUNT - NATIVE_UNIT_DESCRIPTOR_COUNT + 2, OLD_RENDER_COUNT + 2),
+        "candidate relative bank shape changed",
+    )
+    direct_rows = [row for row in parsed.descriptors if not token_allowed(row.target)]
+    require(
+        len(direct_rows) == PORTABLE_GENERAL_DESCRIPTOR_COUNT
+        and all(PORTABLE_GENERAL_TARGET_START <= row.target < PORTABLE_GENERAL_TARGET_END for row in direct_rows),
+        "candidate direct descriptor is not Object2-relative",
     )
     by_target = {row.target: row for row in parsed.descriptors}
     require(CUE_TOKEN in by_target and CODE_TOKEN in by_target, "subtitle descriptors are missing")
     cues = parse_cues(by_target[CUE_TOKEN].encoded)
     require(len(cues) == 388, "candidate cue count changed")
     runtime = bytes(value ^ RUNTIME_XOR_KEY for value in by_target[CODE_TOKEN].encoded)
-    require(identity(runtime) == SAFE_RUNTIME_ID, "candidate runtime identity changed")
-    verify_safe_refresh_runtime_contract(runtime)
+    require(identity(runtime) == STABLE_HEIGHT_RUNTIME_ID, "candidate runtime identity changed")
+    verify_stable_refresh_runtime_contract(runtime)
 
     image = LeImage(candidate_exe)
     spans = _patch_file_ranges(candidate_exe, image)
-    video_call, _ = spans["video_call"]
-    displacement = struct.unpack_from("<i", candidate_exe, video_call + 1)[0]
-    target = VIDEO_REFRESH_CALL_PREFERRED + 5 + displacement
-    require(target == SAFE_REFRESH_BRIDGE_PREFERRED, "Smacker refresh CALL does not target the safe bridge")
-    dispatch_file, _ = spans["dispatch"]
-    require(candidate_exe[dispatch_file:dispatch_file + 4] == struct.pack("<I", RECT_REFRESH_ACTUAL), "safe dispatch pointer initializer changed")
+    video_context, _ = spans["video_context"]
+    require(candidate_exe[video_context:video_context + len(VIDEO_REFRESH_CALL_CONTEXT)] == build_stable_refresh_context(), "data-only refresh context changed")
+    height_file, _ = spans["height"]
+    require(candidate_exe[height_file:height_file + 4] == struct.pack("<I", FULL_VIDEO_REFRESH_HEIGHT), "refresh-height initializer changed")
+    cave_file, _ = spans["cave"]
+    bootstrap = build_stable_refresh_bootstrap(D_BOOTSTRAP_RUNTIME_PAYLOAD_LENGTH, RUNTIME_XOR_KEY)
+    require(candidate_exe[cave_file:cave_file + CAVE_CAPACITY] == bootstrap, "relocated bootstrap changed")
+    reset_state = b"\xC6\x05" + struct.pack("<I", OBJECT3_PREFERRED_BASE + STABLE_REFRESH_HEIGHT_OBJECT_OFFSET) + bytes((FULL_VIDEO_REFRESH_HEIGHT & 0xFF,))
+    require(bootstrap.count(reset_state) == 1, "bootstrap height reset changed")
+    validator_file, _ = spans["descriptor_validator"]
+    require(
+        candidate_exe[validator_file:validator_file + DESCRIPTOR_VALIDATOR_SIZE]
+        == build_portable_descriptor_validator(),
+        "portable descriptor validator changed",
+    )
+    false_cave_file, _ = spans["false_cave"]
+    source_image = LeImage(source_exe)
+    source_false_cave = source_image.object_to_file(1, FALSE_CAVE_OBJECT_OFFSET)
+    require(
+        candidate_exe[false_cave_file:false_cave_file + FALSE_CAVE_SIZE]
+        == source_exe[source_false_cave:source_false_cave + FALSE_CAVE_SIZE],
+        "Watcom runtime metadata changed",
+    )
+    veneer_caves = build_h2k3_portable_veneers()
+    for name, expected in zip(("h2k3_veneer_cave_a", "h2k3_veneer_cave_b"), veneer_caves):
+        file_offset, length = spans[name]
+        require(candidate_exe[file_offset:file_offset + length] == expected, f"{name} changed")
+    o3_portable_file, o3_portable_length = spans["h2k3_o3_portable"]
+    require(
+        candidate_exe[o3_portable_file:o3_portable_file + o3_portable_length]
+        == build_h2k3_o3_portable_patch(),
+        "H2K3 Object3 portable transfer patch changed",
+    )
+    candidate_fixups = parse_raw_fixups(
+        candidate_exe,
+        image,
+        expected_rows=SOURCE_FIXUP_ROWS + 37,
+    )
+    require(not any(row.src == 8 for row in candidate_fixups), "self-relative LE fixup survived")
+    for source_offset, _opcode, veneer_offset, _target_object, _target_offset in H2K3_O1_EDGE_VENEERS:
+        source_file = image.object_to_file(1, source_offset)
+        displacement = struct.unpack_from("<i", candidate_exe, source_file)[0]
+        require(source_offset + 4 + displacement == veneer_offset, "H2K3 edge is not same-object relative")
+    require(b"\xFF\x25" + struct.pack("<I", STABLE_REFRESH_HEIGHT_POINTER) not in candidate_exe, "heap indirect-jump bridge survived")
     report["verified"] = True
     return report
 

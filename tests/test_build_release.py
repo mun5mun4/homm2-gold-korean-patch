@@ -36,28 +36,28 @@ def herowind_payload(text: bytes = release.HEROWIND_KNOWLEDGE_ENGLISH) -> bytes:
 
 
 class HerowindKnowledgeTests(unittest.TestCase):
-    def test_beta9_core_targets_are_pinned(self) -> None:
+    def test_beta10_core_targets_are_pinned(self) -> None:
         self.assertEqual(
-            release.PINNED_BETA9_TARGETS,
+            release.PINNED_BETA10_TARGETS,
             {
                 Path("HEROES2.EXE"): {
                     "size": 1_523_420,
-                    "sha256": "B5416C793354122762B67973ACF86D985C8B5ACA26B74F29FE62E707E7A1548C",
+                    "sha256": "87B175EF0698C65893BAF6A0581E74BEA60CCECA0D8DF57E9DF7614B27DB2365",
                 },
                 Path("KOREAN.BIN"): {
-                    "size": 36_265,
-                    "sha256": "95EA660215425E34FCB7CFD37405F8D1869845EB2EAED245613D2FF8AAE1D20A",
+                    "size": 36_159,
+                    "sha256": "37FDC1F372627E7B637EEEBFC15610E26B427E66947D7AA699B46B807F7338DA",
                 },
             },
         )
 
-    def test_builder_rejects_beta8_before_reading_inputs(self) -> None:
-        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.9"):
+    def test_builder_rejects_beta9_before_reading_inputs(self) -> None:
+        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.10"):
             release.build(
                 Path("missing-original"),
                 Path("missing-patched"),
                 Path("missing-output"),
-                "v0.9.0-beta.8",
+                "v0.9.0-beta.9",
                 None,
             )
 
@@ -88,10 +88,15 @@ class HerowindKnowledgeTests(unittest.TestCase):
                 "upgrades/v0.9.0-beta.8-manifest.json",
                 {"size": 33_656, "sha256": "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5"},
             ),
+            (
+                "v0.9.0-beta.9",
+                "upgrades/v0.9.0-beta.9-manifest.json",
+                {"size": 34_263, "sha256": "CEB8E7D765DBFA2FBB6D955364E68A0D2A158B31BDA7DA70C1F04A85C37AEBDD"},
+            ),
         )
 
-        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.9")
-        self.assertEqual(release.RELEASE_DATE, "2026-08-27")
+        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.10")
+        self.assertEqual(release.RELEASE_DATE, "2026-08-28")
         self.assertEqual(len(release.UPGRADE_RELEASES), len(expected))
         for upgrade, (version, manifest_path, identity) in zip(release.UPGRADE_RELEASES, expected):
             with self.subTest(version=version):

@@ -1,5 +1,5 @@
 scene	track	start_ms	end_ms	text	campaign	block	timing_basis_movie	timing_status
-0x04	primary_ms	130	7450	모든 불행은 3년 전, 늙은 아이언피스트\n왕이 세상을 떠나면서 시작되었다.	succession	intro	INTRO.SMK	voice_aligned
+0x04	primary_ms	130	7450	모든 불행은 삼 년 전, 늙은 아이언피스트\n왕이 세상을 떠나면서 시작되었다.	succession	intro	INTRO.SMK	voice_aligned
 0x04	primary_ms	8590	10630	왕에게는 두 아들이 있었다.	succession	intro	INTRO.SMK	voice_aligned
 0x04	primary_ms	11810	15890	롤랜드는 선하고 친절했으며,\n명예를 아는 사람이었다.	succession	intro	INTRO.SMK	voice_aligned
 0x04	primary_ms	16510	20390	하지만 아치발드는 달랐다.	succession	intro	INTRO.SMK	voice_aligned
@@ -252,7 +252,7 @@ scene	track	start_ms	end_ms	text	campaign	block	timing_basis_movie	timing_status
 0x22	primary_ms	5620	6970	하지만 걱정 마라.	archibald	ending	PRISON.SMK	voice_aligned
 0x22	primary_ms	6970	13230	목숨은 살려 주기로 했고,\n서쪽 탑의 군주로 임명하겠다.	archibald	ending	PRISON.SMK	voice_aligned
 0x22	primary_ms	13490	19510	너는 위대한 제국의 지배자가 되어\n구석구석 모든 틈을 알게 될 것이다.	archibald	ending	PRISON.SMK	voice_aligned
-0x22	primary_ms	19810	21350	앞으로 10분 안에 말이지.	archibald	ending	PRISON.SMK	voice_aligned
+0x22	primary_ms	19810	21350	앞으로 십 분 안에 말이지.	archibald	ending	PRISON.SMK	voice_aligned
 0x22	primary_ms	21490	29230	귀한 쥐와 거미들을 접대하지 않을 때 찬란한\n궁정에 찾아가 주마. 하하하하!	archibald	ending	PRISON.SMK	voice_aligned
 0x23	secondary_ms	0	2000	군주를 선택하십시오.	succession	choose_lord	CHOOSEW.SMK	voice_aligned
 0x27	secondary_ms	30	4460	크리거 자작은 어린 시절의 벗이자\n제국 북부를 지키던 사령관입니다.	The Price of Loyalty	Intro	MIXPOL1.SMK	voice_aligned_split
@@ -321,21 +321,21 @@ scene	track	start_ms	end_ms	text	campaign	block	timing_basis_movie	timing_status
 0x30	secondary_ms	470	8830	여러 세대가 흐르는 동안 자르코나가 세운\n왕국은 자유롭게 성장하고 번영했습니다.	Descendants	After Winning Map 1	MIXDES10.SMK	voice_aligned
 0x30	secondary_ms	9170	14100	하지만 동쪽에서 하론데일 왕국이\n강대한 세력으로 일어났습니다.	Descendants	After Winning Map 1	MIXDES10.SMK	voice_aligned_split
 0x30	secondary_ms	14100	18390	두 왕국은 국경을 두고 치열하게\n다투기 시작했습니다.	Descendants	After Winning Map 1	MIXDES10.SMK	voice_aligned_split
-0x31	secondary_ms	250	8070	에타니아의 손자인 자르코나 3세는\n죽음을 앞두고 약해진 왕국의	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
+0x31	secondary_ms	250	8070	에타니아의 손자인 자르코나 삼세는\n죽음을 앞두고 약해진 왕국의	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
 0x31	secondary_ms	8070	11890	앞날을 걱정했습니다. 오랜\n전쟁으로 큰 피해를 입었고	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
 0x31	secondary_ms	12630	19610	왕국이 다시 번영하려면 먼\n친척의 도움이 필요했습니다.	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned
 0x31	secondary_ms	20390	32150	마지막으로 선택해야 했습니다. 전쟁광\n괴짜 이반 삼촌과 그의 야만인 부족을	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
 0x31	secondary_ms	32150	40630	부를 것인가 아니면 집을 떠난 아들이자\n이름난 마법사 조셉을 찾을 것인가.	Descendants	After Winning Map 2	MIXDES11.SMK	voice_aligned_split
-0x32	secondary_ms	90	5820	부족을 통일한 지 200년째\n되던 해 왕가가 힘든 시기를	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
+0x32	secondary_ms	90	5820	부족을 통일한 지 이백 년째\n되던 해 왕가가 힘든 시기를	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
 0x32	secondary_ms	5820	12850	보내던 때였습니다. 정찰병이 남쪽\n국경에서 다급히 말을 달려왔습니다.	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
 0x32	secondary_ms	13470	20250	야만인 무리가 전초 기지 여럿을\n점령하고 하나를 불태웠습니다.	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned
 0x32	secondary_ms	21190	24830	당시의 여왕 젤드리아는 잃은 도시를 되찾고	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
 0x32	secondary_ms	24830	28710	국경을 지키려 남쪽으로\n군대를 보냈습니다.	Descendants	After Winning Maps 3 & 4	MIXDES12.SMK	voice_aligned_split
 0x33	secondary_ms	50	8170	전쟁과 혼란이 자르코나 왕국을\n무너뜨리려던 때 큰 타격이 닥쳤습니다.	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned
 0x33	secondary_ms	8450	16030	하론데일 첩자의 배신으로 아이보리\n게이츠 성이 함락됐습니다.	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned
-0x33	secondary_ms	16970	24880	당시 통치자 에타니아 젤드리아\n2세는 엘프에게 도움을 청할지	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned_split
+0x33	secondary_ms	16970	24880	당시 통치자 에타니아 젤드리아\n이세는 엘프에게 도움을 청할지	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned_split
 0x33	secondary_ms	24880	29670	직접 성을 되찾을지 정해야 했습니다.	Descendants	After Winning Map 5	MIXDES13.SMK	voice_aligned_split
-0x34	secondary_ms	530	9550	이제 조상들이 시작한 일을 나\n자르코나 6세가 끝낼 차례입니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned
+0x34	secondary_ms	530	9550	이제 조상들이 시작한 일을 나\n자르코나 육세가 끝낼 차례입니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned
 0x34	secondary_ms	11350	18020	오래전 아이보리 게이츠를 되찾은\n뒤 우리 가문은 더 강해졌습니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned_split
 0x34	secondary_ms	18020	23090	하론데일은 다른 전선의 전투에서\n계속 운이 다하고 있습니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned_split
 0x34	secondary_ms	24330	31150	아침이면 하론데일의 본토를 향해\n대공세를 시작할 것입니다.	Descendants	After Winning Maps 6 & 7	MIXDES14.SMK	voice_aligned

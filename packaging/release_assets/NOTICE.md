@@ -8,7 +8,7 @@
 - 사용자는 적법하게 보유한 지원 GOG 영문 설치본을 직접 준비해야 합니다.
 - 바이너리 델타는 정확한 지원 원본 해시가 확인된 경우에만 적용됩니다.
 - 한국어 번역과 자막은 원작을 바탕으로 한 비공식 2차적 저작물이며 원작 권리를 대체하지 않습니다.
-- beta.9에서 기본 한글 글리프를 만드는 `IropkeBatangM.ttf`와 보완용 `NanumGothicCoding-Regular.ttf`를 동봉합니다. 두 파일은 SIL Open Font License 1.1을 따릅니다.
+- beta.10에서 기본 한글 글리프를 만드는 `IropkeBatangM.ttf`와 보완용 `NanumGothicCoding-Regular.ttf`를 동봉합니다. 두 파일은 SIL Open Font License 1.1을 따릅니다.
 - `INSTALL_CUSTOM_FONT.cmd`와 명령줄 옵션은 사용자가 보유한 로컬 TTF·OTF·TTC·OTC를 설치 시 읽지만, 선택 파일을 패치 폴더로 복사하거나 수집·업로드·배포하지 않습니다.
 - 설치기는 사용자 글꼴을 이름이나 라이선스로 차단하지 않으며 해당 파일을 사용할 권한은 사용자가 확인해야 합니다. 빠진 매핑 문자는 동봉한 나눔고딕코딩으로 보완합니다.
 - 이롭게 바탕체 원본 TTF는 동봉하지만 이 글꼴에서 미리 만든 고정 래스터나 완성 AGG는 포함하지 않습니다.

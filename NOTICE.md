@@ -9,7 +9,7 @@
 - 바이너리 델타는 정확한 지원 원본 해시가 확인된 경우에만 적용됩니다.
 - 한국어 번역과 자막은 원작을 바탕으로 한 비공식 2차적 저작물이며 원작 권리를 대체하지 않습니다.
 
-현재 배포 기준은 영상 자막과 동적 폰트 방식의 `v0.9.0-beta.9`입니다.
+현재 배포 기준은 영상 자막과 동적 폰트 방식의 `v0.9.0-beta.10`입니다.
 
 글리프 생성용으로 저장소와 배포 ZIP에 `IropkeBatangM.ttf`와 `NanumGothicCoding-Regular.ttf`를 포함하며 두 파일 모두 SIL Open Font License 1.1을 따릅니다. 기본 설치는 이롭게 바탕체를 사용하고 없는 매핑 문자는 나눔고딕코딩으로 보완합니다. 이롭게 바탕체의 고지는 `Copyright (c) 2016, 이롭게(iropke) (www.iropke.com | hello@iropke.com), with Reserved Font Name '이롭게 바탕체', 'iropke batang'.`입니다.
 

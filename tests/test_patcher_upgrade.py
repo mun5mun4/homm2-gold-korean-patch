@@ -18,7 +18,8 @@ BETA5_VERSION = "v0.9.0-beta.5"
 BETA6_VERSION = "v0.9.0-beta.6"
 BETA7_VERSION = "v0.9.0-beta.7"
 BETA8_VERSION = "v0.9.0-beta.8"
-CURRENT_VERSION = "v0.9.0-beta.9"
+BETA9_VERSION = "v0.9.0-beta.9"
+CURRENT_VERSION = "v0.9.0-beta.10"
 PREVIOUS_SHA256 = "A" * 64
 CURRENT_SHA256 = "B" * 64
 
@@ -514,13 +515,14 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertFalse((fixture.state / patcher.JOURNAL_NAME).exists())
             self.assertEqual((fixture.game / "DATA" / "A.BIN").read_bytes(), fixture.new_static)
 
-    def test_beta4_through_beta8_upgrade_to_iropke_default_without_reselection(self) -> None:
+    def test_beta4_through_beta9_upgrade_to_iropke_default_without_reselection(self) -> None:
         cases = (
             (PREVIOUS_VERSION, True),
             (BETA5_VERSION, False),
             (BETA6_VERSION, False),
             (BETA7_VERSION, False),
             (BETA8_VERSION, False),
+            (BETA9_VERSION, False),
         )
         for previous_version, previous_legacy in cases:
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
@@ -650,7 +652,7 @@ class PatcherUpgradeTests(unittest.TestCase):
         self.assertEqual(loaded["version"], PREVIOUS_VERSION)
         self.assertEqual(loaded_sha256, "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60")
 
-    def test_frozen_beta5_through_beta8_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
+    def test_frozen_beta5_through_beta9_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
         fixtures = (
             (
                 BETA5_VERSION,
@@ -676,6 +678,12 @@ class PatcherUpgradeTests(unittest.TestCase):
                 "A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5",
                 False,
             ),
+            (
+                BETA9_VERSION,
+                34_263,
+                "CEB8E7D765DBFA2FBB6D955364E68A0D2A158B31BDA7DA70C1F04A85C37AEBDD",
+                False,
+            ),
         )
         for version, expected_size, expected_sha256, historical_v2 in fixtures:
             with self.subTest(version=version):
@@ -683,9 +691,12 @@ class PatcherUpgradeTests(unittest.TestCase):
                 self.assertEqual(frozen.stat().st_size, expected_size)
                 self.assertEqual(patcher.sha256_file(frozen), expected_sha256)
                 document = patcher.json.loads(frozen.read_text(encoding="utf-8"))
-                patcher.validate_manifest_document(document, frozen_legacy=True)
-                with self.assertRaisesRegex(patcher.PatchError, "font_generation"):
+                if version == BETA9_VERSION:
                     patcher.validate_manifest_document(document)
+                else:
+                    patcher.validate_manifest_document(document, frozen_legacy=True)
+                    with self.assertRaisesRegex(patcher.PatchError, "font_generation"):
+                        patcher.validate_manifest_document(document)
 
                 historical_receipt = font_receipt(
                     b"historical-custom-font",
@@ -698,6 +709,32 @@ class PatcherUpgradeTests(unittest.TestCase):
                     nanum = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
                     beta8_default_receipt = font_receipt(nanum.read_bytes(), legacy=False)
                     patcher.validate_font_receipt(beta8_default_receipt, document)
+                if version == BETA9_VERSION:
+                    iropke = Path("packaging/release_assets/fonts/IropkeBatangM.ttf")
+                    beta9_default_receipt = font_receipt(iropke.read_bytes(), legacy=False)
+                    patcher.validate_font_receipt(beta9_default_receipt, document)
+
+                    current = {
+                        "game": document["game"],
+                        "upgrades": {
+                            "schema": "homm2-korean-upgrades-v1",
+                            "from": [
+                                {
+                                    "version": BETA9_VERSION,
+                                    "manifest_path": f"upgrades/{BETA9_VERSION}-manifest.json",
+                                    "manifest": patcher.file_identity(frozen),
+                                }
+                            ],
+                        },
+                    }
+                    loaded, loaded_sha256 = patcher.load_upgrade_manifest(
+                        Path("packaging/release_assets"),
+                        current,
+                        BETA9_VERSION,
+                        expected_sha256,
+                    )
+                    self.assertEqual(loaded["version"], BETA9_VERSION)
+                    self.assertEqual(loaded_sha256, expected_sha256)
 
     def test_current_receipt_rejects_impossible_bearing_layout_diagnostics(self) -> None:
         default_font = UpgradeFixture.default_font
