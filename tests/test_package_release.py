@@ -13,7 +13,7 @@ from tools.release import package_release
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "v0.9.0-beta.10"
+VERSION = "v0.9.0-beta.11"
 MANIFEST_PACKAGE_PATH = "patches/HEROES2.EXE.bsdiff"
 MAPPING_PACKAGE_PATH = "fonts/mapping874.fixed-interface-font.txt"
 DEFAULT_FONT_PACKAGE_PATH = "fonts/IropkeBatangM.ttf"
@@ -25,6 +25,7 @@ UPGRADE_MANIFEST_PACKAGE_PATHS = (
     "upgrades/v0.9.0-beta.7-manifest.json",
     "upgrades/v0.9.0-beta.8-manifest.json",
     "upgrades/v0.9.0-beta.9-manifest.json",
+    "upgrades/v0.9.0-beta.10-manifest.json",
 )
 FIXTURE_RAW = b"fixture\n"
 DEFAULT_FONT_RAW = (ROOT / "packaging" / "release_assets" / DEFAULT_FONT_PACKAGE_PATH).read_bytes()
@@ -144,6 +145,11 @@ def fixture_manifest(version: str = VERSION) -> dict[str, object]:
                     "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[5],
                     "manifest": dict(package_release.BETA9_MANIFEST_IDENTITY),
                 },
+                {
+                    "version": "v0.9.0-beta.10",
+                    "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[6],
+                    "manifest": dict(package_release.BETA10_MANIFEST_IDENTITY),
+                },
             ],
         },
     }
@@ -190,7 +196,7 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
         }
 
     def test_packages_exact_manifest_and_fixed_asset_allowlist(self) -> None:
-        self.assertEqual(package_release.FIXED_ZIP_TIME, (2026, 8, 28, 0, 0, 0))
+        self.assertEqual(package_release.FIXED_ZIP_TIME, (2026, 9, 7, 0, 0, 0))
         result = package_release.package(self.release, self.output, VERSION)
 
         zip_path = self.output / str(result["zip"]["name"])
@@ -271,13 +277,13 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
 
         self.assertFalse(self.output.exists())
 
-    def test_rejects_beta9_as_the_current_release(self) -> None:
-        manifest = fixture_manifest(version="v0.9.0-beta.9")
+    def test_rejects_beta10_as_the_current_release(self) -> None:
+        manifest = fixture_manifest(version="v0.9.0-beta.10")
 
-        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.10"):
-            package_release.expected_release_files(manifest, "v0.9.0-beta.9")
+        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.11"):
+            package_release.expected_release_files(manifest, "v0.9.0-beta.10")
 
-    def test_rejects_legacy_manifest_schema_for_beta10(self) -> None:
+    def test_rejects_legacy_manifest_schema_for_beta11(self) -> None:
         manifest = fixture_manifest()
         manifest["schema"] = "homm2-korean-release-manifest-v1"
 

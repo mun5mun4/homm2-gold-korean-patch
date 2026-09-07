@@ -21,6 +21,17 @@ LOCAL_CUSTOM_FONT_ENV = "HOMM2_TEST_CUSTOM_FONT"
 LOCAL_IROPKE_FONT_ENV = "HOMM2_TEST_IROPKE_FONT"
 WINDOWS_MALGUN_FONT = Path(r"C:\Windows\Fonts\malgun.ttf")
 IROPKE_FONT_SHA256 = "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69"
+# Independent bounds for the verified English fragments left by the previous
+# localization. Original frame pixels outside these seven tiny areas stay exact.
+SCULPTED_CLEANUP_ROIS = {
+    ("BTNMODEM.ICN", 2): (124, 14, 2, 34),
+    ("BTNNEWGM.ICN", 0): (124, 14, 2, 34),
+    ("BTNNEWGM.ICN", 1): (124, 14, 2, 34),
+    ("BTNNEWGM.ICN", 4): (36, 6, 64, 2),
+    ("BTNMCFG.ICN", 2): (124, 14, 2, 34),
+    ("OVERVIEW.ICN", 2): (91, 22, 3, 13),
+    ("OVERVIEW.ICN", 3): (91, 22, 3, 13),
+}
 
 LOCALIZED_BIN_RESOURCES = (
     "THIEFWIN.BIN",
@@ -1397,10 +1408,15 @@ class FontLayoutTests(unittest.TestCase):
                     ),
                 )
                 x0, y0, width, height = (int(value) for value in target["roi"])
+                extra_roi = SCULPTED_CLEANUP_ROIS.get((resource_name, sprite_index))
                 for y in range(before_decoded.height):
                     for x in range(before_decoded.width):
                         if x0 <= x < x0 + width and y0 <= y < y0 + height:
                             continue
+                        if extra_roi is not None:
+                            ex, ey, ew, eh = extra_roi
+                            if ex <= x < ex + ew and ey <= y < ey + eh:
+                                continue
                         offset = y * before_decoded.width + x
                         self.assertEqual(
                             after_decoded.pixels[offset],
@@ -2216,6 +2232,12 @@ class FontLayoutTests(unittest.TestCase):
                 "CAMPXTRE.ICN",
             },
         )
+        # Legacy flat-pass hashes are checked inside rebuild_agg_fonts. Pin the
+        # complete native result here, then verify each resource's edit bounds.
+        self.assertEqual(
+            font.sha256_bytes(rebuilt_raw),
+            "4550F92802CFADA59C443DB40E96665287E756A105CC4BEC813059D06E689FD9",
+        )
         before_cost = before.get(font.RECRUIT_COST_RESOURCE_NAME)
         after_cost = after.get(font.RECRUIT_COST_RESOURCE_NAME)
         self.assertEqual(len(before_cost.payload), font.RECRUIT_COST_SOURCE_SIZE)
@@ -2230,10 +2252,6 @@ class FontLayoutTests(unittest.TestCase):
             before_payload = before.get(resource_name).payload
             after_payload = after.get(resource_name).payload
             self.assertEqual((len(before_payload), font.sha256_bytes(before_payload)), source_identity)
-            self.assertEqual(
-                (len(after_payload), font.sha256_bytes(after_payload)),
-                font.IMAGE_UI_RESOURCE_OUTPUT_IDENTITIES[resource_name],
-            )
 
             before_icn = font.parse_icn(before_payload, label=f"local-gog-image-before:{resource_name}")
             after_icn = font.parse_icn(after_payload, label=f"local-gog-image-after:{resource_name}")
@@ -2287,10 +2305,6 @@ class FontLayoutTests(unittest.TestCase):
             before_payload = before.get(resource_name).payload
             after_payload = after.get(resource_name).payload
             self.assertEqual((len(before_payload), font.sha256_bytes(before_payload)), source_identity)
-            self.assertEqual(
-                (len(after_payload), font.sha256_bytes(after_payload)),
-                font.MENU132_RESOURCE_OUTPUT_IDENTITIES[resource_name],
-            )
 
             before_icn = font.parse_icn(before_payload, label=f"local-gog-menu132-before:{resource_name}")
             after_icn = font.parse_icn(after_payload, label=f"local-gog-menu132-after:{resource_name}")
@@ -2331,10 +2345,15 @@ class FontLayoutTests(unittest.TestCase):
                     ),
                 )
                 x0, y0, width, height = (int(value) for value in target["roi"])
+                extra_roi = SCULPTED_CLEANUP_ROIS.get((resource_name, sprite_index))
                 for y in range(before_decoded.height):
                     for x in range(before_decoded.width):
                         if x0 <= x < x0 + width and y0 <= y < y0 + height:
                             continue
+                        if extra_roi is not None:
+                            ex, ey, ew, eh = extra_roi
+                            if ex <= x < ex + ew and ey <= y < ey + eh:
+                                continue
                         offset = y * before_decoded.width + x
                         self.assertEqual(after_decoded.pixels[offset], before_decoded.pixels[offset])
                         self.assertEqual(after_decoded.transform[offset], before_decoded.transform[offset])
@@ -2344,7 +2363,7 @@ class FontLayoutTests(unittest.TestCase):
             after,
             {"CAMPXTRG.ICN", "CAMPXTRE.ICN"},
             font.CAMPAIGN_BUTTON_RESOURCE_SOURCE_IDENTITIES,
-            font.CAMPAIGN_BUTTON_RESOURCE_OUTPUT_IDENTITIES,
+            None,
             font.CAMPAIGN_BUTTON_TEXT_TARGETS,
             group_label="campaign",
         )
@@ -2359,20 +2378,21 @@ class FontLayoutTests(unittest.TestCase):
             after,
             set(font.GAME_BUTTON_RESOURCE_SOURCE_IDENTITIES),
             font.GAME_BUTTON_RESOURCE_SOURCE_IDENTITIES,
-            font.GAME_BUTTON_RESOURCE_OUTPUT_IDENTITIES,
+            None,
             font.GAME_BUTTON_TEXT_TARGETS,
             group_label="game-button",
         )
         self.assert_embedded_ui_resources_preserve_non_targets_and_roi_union_exterior(
             before,
             after,
+            canonical_output_identities=False,
         )
         self.assert_text_button_resources_preserve_non_targets_and_roi_exteriors(
             before,
             after,
             {font.TOWNWIND_RESOURCE_NAME},
             {font.TOWNWIND_RESOURCE_NAME: font.TOWNWIND_SOURCE_IDENTITY},
-            {font.TOWNWIND_RESOURCE_NAME: font.TOWNWIND_OUTPUT_IDENTITY},
+            None,
             (*font.TOWNWIND_COST_TARGETS, *font.TOWNWIND_BUTTON_TARGETS),
             group_label="townwind",
         )
@@ -2413,7 +2433,7 @@ class FontLayoutTests(unittest.TestCase):
             after,
             {font.TEXTBAR_RESOURCE_NAME},
             {font.TEXTBAR_RESOURCE_NAME: font.TEXTBAR_SOURCE_IDENTITY},
-            {font.TEXTBAR_RESOURCE_NAME: font.TEXTBAR_OUTPUT_IDENTITY},
+            None,
             font.TEXTBAR_TARGETS,
             group_label="textbar",
         )
@@ -2575,7 +2595,7 @@ class FontLayoutTests(unittest.TestCase):
             after,
             {"X_CMPBTN.ICN"},
             font.CAMPAIGN_BUTTON_RESOURCE_SOURCE_IDENTITIES,
-            font.CAMPAIGN_BUTTON_RESOURCE_OUTPUT_IDENTITIES,
+            None,
             font.CAMPAIGN_BUTTON_TEXT_TARGETS,
             group_label="campaign",
         )
@@ -2588,7 +2608,7 @@ class FontLayoutTests(unittest.TestCase):
             after,
             set(font.EXPANSION_MENU_RESOURCE_SOURCE_IDENTITIES),
             font.EXPANSION_MENU_RESOURCE_SOURCE_IDENTITIES,
-            font.EXPANSION_MENU_RESOURCE_OUTPUT_IDENTITIES,
+            None,
             font.EXPANSION_MENU_TEXT_TARGETS,
             group_label="expansion-menu",
         )
@@ -2611,7 +2631,7 @@ class FontLayoutTests(unittest.TestCase):
         self.assertEqual(len(rebuilt_raw), 2_981_224)
         self.assertEqual(
             font.sha256_bytes(rebuilt_raw),
-            "4FC7AAA812434ADCF6CCA4B19D5861C478D1E77BAA6761853A705E8A7A056EDD",
+            "922DE6FD764EF9A5C8B869C4DEF66CD79C7C63392AD4222D2EF18AEE9BAD5481",
         )
 
 

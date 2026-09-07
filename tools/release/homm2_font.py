@@ -14,7 +14,7 @@ import io
 import re
 import struct
 from bisect import bisect_left, bisect_right
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
@@ -4019,6 +4019,461 @@ def make_localized_font_base(
     return result
 
 
+def _sculpted_inside(x: int, y: int, roi: Sequence[int]) -> bool:
+    a, b, w, h = roi
+    return a <= x < a + w and b <= y < b + h
+
+
+def _sculpted_button_masks(
+    target: Mapping[str, Any],
+    normal_font_sprites: Sequence[Sprite],
+    small_font_sprites: Sequence[Sprite],
+    mapping: Sequence[MappingRow],
+) -> tuple[set[tuple[int, int]], set[tuple[int, int]]]:
+    """Reproduce existing glyph placement, solely to identify existing pixels."""
+    sprites = small_font_sprites if target["resource"] == "TEXTBAR.ICN" else normal_font_sprites
+    lx, ly, lw, lh = target.get("layout_roi", target["roi"])
+    lines = []
+    for line in target["text"].split("\n"):
+        glyphs = [_decode_sprite(sprites[_image_ui_glyph_index(c, mapping)], label="native-mask") for c in line]
+        origins, ink, cursor = [], [], 0
+        for c, g in zip(line, glyphs):
+            origins.append(cursor)
+            if c != " ":
+                ink.extend(
+                    (cursor + g.offset_x + k % g.width, g.offset_y + k // g.width)
+                    for k, flag in enumerate(g.transform)
+                    if flag == 0
+                )
+            cursor += g.width + 1
+        left, top = min(x for x, y in ink), min(y for x, y in ink)
+        iw, ih = max(x for x, y in ink) + 1 - left, max(y for x, y in ink) + 1 - top
+        lines.append((line, glyphs, origins, left, top, iw, ih))
+    shift = 1 if target["state"] == "pressed" else 0
+    gap = int(target.get("line_gap", 1))
+    bh = sum(line[6] for line in lines) + gap * (len(lines) - 1)
+    line_top = min(ly + (lh - bh) // 2 + shift, ly + lh - bh)
+    foreground, shadow = set(), set()
+    # Respect overwrite order: a later foreground can cover an earlier shadow.
+    all_pixels = {}
+    for text, glyphs, origins, left, top, iw, ih in lines:
+        ink_x = min(lx + (lw - iw) // 2 + shift, lx + lw - iw)
+        ox, oy = ink_x - left, line_top - top
+        for c, g, go in zip(text, glyphs, origins):
+            if c == " ":
+                continue
+            ascii_glyph = 0x20 <= ord(c) <= 0x7E
+            for k, flag in enumerate(g.transform):
+                if flag:
+                    continue
+                p = g.pixels[k]
+                is_fg = p <= 20 if ascii_glyph else p == FOREGROUND_PALETTE_INDEX
+                if target.get("skip_shadow", False) and not is_fg:
+                    continue
+                pt = (ox + go + g.offset_x + k % g.width, oy + g.offset_y + k // g.width)
+                require(_sculpted_inside(*pt, target["roi"]), (target, pt))
+                all_pixels[pt] = is_fg
+        line_top += ih + gap
+    for pt, is_fg in all_pixels.items():
+        (foreground if is_fg else shadow).add(pt)
+    return foreground, shadow
+
+
+def _sculpted_button_tones(interface: str, pressed: bool) -> tuple[int, int, int, int]:
+    """(dark stroke, interior midtone, bevel, isolated bevel sparkle)."""
+    if "evil" in interface:
+        tones = (32, 28, 14, 11) if not pressed else (33, 30, 18, 16)
+    elif interface == "town":
+        tones = (129, 126, 111, 109) if not pressed else (61, 128, 117, 113)
+    else:
+        tones = (56, 51, 39, 37) if not pressed else (59, 54, 43, 40)
+    return tones
+
+
+def _sculpted_button_sprite(
+    original_decoded: _DecodedSprite,
+    current_decoded: _DecodedSprite,
+    target: Mapping[str, Any],
+    normal_font_sprites: Sequence[Sprite],
+    small_font_sprites: Sequence[Sprite],
+    mapping: Sequence[MappingRow],
+) -> tuple[_DecodedSprite, dict[str, Any]]:
+    """Apply the approved indexed relief to existing generated glyph masks.
+
+    This never rasterizes a second font or scales a sprite. Additional edit
+    boxes are restricted to verified remnants of original English lettering.
+    """
+    variant = "sculpted"
+    before = current_decoded
+    org = original_decoded
+    require(
+        (before.width, before.height) == (org.width, org.height),
+        "Native button shape, palette, or edit-area contract failed",
+    )
+    roi = tuple(map(int, target["roi"]))
+    w, h = before.width, before.height
+    expected_fg, expected_sh = _sculpted_button_masks(target, normal_font_sprites, small_font_sprites, mapping)
+    palette_map = IMAGE_UI_PALETTE_MAPS[f"{target['interface']}_{target['state']}"]
+    old_fg = palette_map[FOREGROUND_PALETTE_INDEX]
+    old_sh = palette_map[SHADOW_PALETTE_INDEX]
+    mismatches = [
+        (x, y, old_fg, before.pixels[y * w + x])
+        for x, y in expected_fg
+        if before.transform[y * w + x] != 0 or before.pixels[y * w + x] != old_fg
+    ]
+    mismatches += [
+        (x, y, old_sh, before.pixels[y * w + x])
+        for x, y in expected_sh
+        if before.transform[y * w + x] != 0 or before.pixels[y * w + x] != old_sh
+    ]
+    if mismatches:
+        raise FontBuildError(
+            f"Current glyph identity mismatch {target['resource']}:{target['sprite']}: {len(mismatches)} pixels; first={mismatches[:3]}"
+        )
+    fg, sh = expected_fg, expected_sh
+    if target["interface"] == "plain_good":
+        return before, {
+            "resource": target["resource"],
+            "sprite": target["sprite"],
+            "text": target["text"],
+            "variant": variant,
+            "foreground_pixels": len(fg),
+            "shadow_pixels": len(sh),
+            "bevel_pixels": 0,
+            "glyph_mask_mismatches": 0,
+            "restored_glint_pixels": 0,
+            "changed_pixels": 0,
+            "outside_roi_changes": 0,
+            "transform_changes": 0,
+            "native_size": [w, h],
+            "palette_tones": [old_fg, old_fg, old_sh, old_sh],
+            "preserved_style": "flat dark original campaign caption; approved review keeps this treatment",
+            "foreground_bbox": [
+                min(x for x, y in fg),
+                min(y for x, y in fg),
+                max(x for x, y in fg) + 1,
+                max(y for x, y in fg) + 1,
+            ],
+        }
+    pixels = bytearray(before.pixels)
+    transform = before.transform
+    background = int(target["background"])
+    for x, y in fg | sh:
+        pixels[y * w + x] = background
+
+    # Recover only SHORT DIAGONAL CORNER components connected to the top edge.
+    # Pure white also occurs inside the original English lettering, so color
+    # or a dark-letter bounding box alone cannot distinguish it safely. Normal
+    # action-button English begins below this top-corner band. Donor sprites
+    # and compact controls are excluded because their source text is different.
+    glints = 0
+    if (
+        "donor_resource" not in target
+        and target["interface"] not in ("town", "plain_good", "embedded_evil")
+        and h >= 25
+    ):
+        pool = {(k % w, k // w) for k, p in enumerate(org.pixels) if p == 10 and org.transform[k] == 0}
+        while pool:
+            component = {pool.pop()}
+            todo = list(component)
+            while todo:
+                x, y = todo.pop()
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        pt = x + dx, y + dy
+                        if pt in pool:
+                            pool.remove(pt)
+                            component.add(pt)
+                            todo.append(pt)
+            xs, ys = [x for x, y in component], [y for x, y in component]
+            cw, ch = max(xs) - min(xs) + 1, max(ys) - min(ys) + 1
+            side_corner = max(xs) <= w // 4 or min(xs) >= 3 * w // 4
+            short_diagonal = 2 <= cw <= 16 and 2 <= ch <= 10 and len(component) <= 24 and min(ys) <= 4
+            if not (side_corner and short_diagonal):
+                continue
+            for x, y in component:
+                k = y * w + x
+                if (
+                    _sculpted_inside(x, y, roi)
+                    and before.transform[k] == 0
+                    and (x, y) not in fg | sh
+                    and pixels[k] != 10
+                ):
+                    pixels[k] = 10
+                    glints += 1
+
+    dark, mid, bevel, sparkle = _sculpted_button_tones(target["interface"], target["state"] == "pressed")
+    bevel_pixels = set()
+    # Original English uses a one-pixel lower-left ivory relief. Its direction
+    # is also visible in the approved mockups; restore the old lower-right
+    # shadow to the flat substrate and place the new bevel without changing
+    # the Korean foreground silhouette, button shape, or transparency.
+    for x, y in fg:
+        pt = (x - 1, y + 1)
+        if pt not in fg and _sculpted_inside(*pt, roi) and before.transform[pt[1] * w + pt[0]] == 0:
+            pixels[pt[1] * w + pt[0]] = bevel
+            bevel_pixels.add(pt)
+    for x, y in fg:
+        interior = (x - 1, y) in fg and (x, y - 1) in fg
+        pixels[y * w + x] = mid if interior else dark
+    if target["state"] != "pressed":
+        # Sparse bright corners on exposed bevels, never over a Korean stroke.
+        for x, y in bevel_pixels:
+            if (x - 1, y) not in bevel_pixels and (x, y + 1) not in bevel_pixels and (x + y) % 3 == 0:
+                pixels[y * w + x] = sparkle
+    additional_rois = []
+    artifact_pixels = []
+    fragment_cleanups = []
+    # The previous 132px menu localization stopped at x123, leaving the final
+    # original English letter's last two columns at x124..125. The approved
+    # clean previews omit this fragment. Recover only connected original text
+    # pixels with unchanged original identity, beside two confirmed flat face
+    # columns; the button's frame begins farther right and is never touched.
+    if target.get("visual_family") == "large_tan_132x62" and (w, h) == (132, 62):
+        pool = set()
+        for y in range(14, 48):
+            for x in (124, 125):
+                k = y * w + x
+                if (
+                    before.transform[k] == org.transform[k] == 0
+                    and before.pixels[k] == org.pixels[k]
+                    and before.pixels[k] != background
+                    and before.pixels[k] in ({10} | set(range(37, 63)))
+                ):
+                    pool.add((x, y))
+        while pool:
+            component = {pool.pop()}
+            todo = list(component)
+            while todo:
+                x, y = todo.pop()
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        pt = x + dx, y + dy
+                        if pt in pool:
+                            pool.remove(pt)
+                            component.add(pt)
+                            todo.append(pt)
+            has_dark_text = any(before.pixels[y * w + x] >= 46 for x, y in component)
+            # x127 is already the pressed-state bevel. The clean face is
+            # established by current x123 on the left and original+current
+            # x126 on the right; neither is modified by this cleanup.
+            flat_neighbor_evidence = all(
+                before.pixels[y * w + 123] == background
+                and before.transform[y * w + 123] == 0
+                and before.pixels[y * w + 126] == org.pixels[y * w + 126] == background
+                and before.transform[y * w + 126] == org.transform[y * w + 126] == 0
+                for x, y in component
+            )
+            if has_dark_text and flat_neighbor_evidence:
+                for x, y in component:
+                    pixels[y * w + x] = background
+                    artifact_pixels.append((x, y))
+        if artifact_pixels:
+            additional_rois = [[124, 14, 2, 34]]
+            fragment_cleanups.append(
+                {
+                    "roi": [124, 14, 2, 34],
+                    "pixels": len(artifact_pixels),
+                    "evidence": "Original English last columns match installed pixels beside clean face columns.",
+                }
+            )
+    narrow_fragment_roi = None
+    if target["resource"] == "BTNNEWGM.ICN" and target["sprite"] == 4:
+        # MULTI's two topmost rows were above the previous y=8 clear ROI.
+        narrow_fragment_roi = [36, 6, 64, 2]
+        require(
+            all(before.pixels[5 * w + x] == background and before.transform[5 * w + x] == 0 for x in range(36, 100)),
+            "Native button shape, palette, or edit-area contract failed",
+        )
+        require(
+            all(
+                before.pixels[y * w + x] == background and before.transform[y * w + x] == 0
+                for x in (35, 100)
+                for y in (6, 7)
+            ),
+            "Native button shape, palette, or edit-area contract failed",
+        )
+    elif target["resource"] == "OVERVIEW.ICN" and target["sprite"] in (2, 3):
+        # CASTLES' final S extended right of the old x=91 clear boundary.
+        # x94 is the pressed bevel, and remains strictly outside this box.
+        narrow_fragment_roi = [91, 22, 3, 13]
+        require(
+            all(before.pixels[y * w + 90] == background and before.transform[y * w + 90] == 0 for y in range(22, 35)),
+            "Native button shape, palette, or edit-area contract failed",
+        )
+    if narrow_fragment_roi:
+        cx, cy, cw, ch = narrow_fragment_roi
+        count = 0
+        for y in range(cy, cy + ch):
+            for x in range(cx, cx + cw):
+                k = y * w + x
+                if before.pixels[k] == background:
+                    continue
+                require(
+                    before.pixels[k] == org.pixels[k] and before.transform[k] == org.transform[k] == 0,
+                    ("Original English fragment identity mismatch", target["resource"], target["sprite"], x, y),
+                )
+                require(
+                    before.pixels[k] in ({10} | set(range(37, 63))), ("Unexpected fragment palette", before.pixels[k])
+                )
+                pixels[k] = background
+                artifact_pixels.append((x, y))
+                count += 1
+        if count:
+            additional_rois.append(narrow_fragment_roi)
+            fragment_cleanups.append(
+                {
+                    "roi": narrow_fragment_roi,
+                    "pixels": count,
+                    "evidence": "Unchanged original English pixels outside former text ROI; adjacent face is flat and original frame excluded.",
+                }
+            )
+    out = replace(before, pixels=bytes(pixels))
+    changed = [i for i, (a, b) in enumerate(zip(before.pixels, out.pixels)) if a != b]
+    allowed_rois = [roi] + additional_rois
+    require(
+        all(any(_sculpted_inside(i % w, i // w, box) for box in allowed_rois) for i in changed),
+        "Native button shape, palette, or edit-area contract failed",
+    )
+    require(out.transform == before.transform, "Native button shape, palette, or edit-area contract failed")
+    metrics = {
+        "resource": target["resource"],
+        "sprite": target["sprite"],
+        "text": target["text"],
+        "variant": variant,
+        "foreground_pixels": len(fg),
+        "shadow_pixels": len(sh),
+        "bevel_pixels": len(bevel_pixels),
+        "glyph_mask_mismatches": len(mismatches),
+        "restored_glint_pixels": glints,
+        "changed_pixels": len(changed),
+        "outside_roi_changes": len(artifact_pixels),
+        "outside_allowed_roi_changes": 0,
+        "transform_changes": 0,
+        "additional_rois": additional_rois,
+        "removed_original_english_fragment_pixels": len(artifact_pixels),
+        "fragment_cleanups": fragment_cleanups,
+        "native_size": [w, h],
+        "palette_tones": [dark, mid, bevel, sparkle],
+        "foreground_bbox": [
+            min(x for x, y in fg),
+            min(y for x, y in fg),
+            max(x for x, y in fg) + 1,
+            max(y for x, y in fg) + 1,
+        ],
+    }
+    return out, metrics
+
+
+SCULPTED_BUTTON_RENDERER_ID = "native-palette-lower-left-relief-v1"
+SCULPTED_BUTTON_TEXT_TARGETS = (
+    *IMAGE_UI_TEXT_TARGETS,
+    *(dict(target, visual_family="large_tan_132x62") for target in MENU132_TEXT_TARGETS),
+    *CAMPAIGN_BUTTON_TEXT_TARGETS,
+    *GAME_BUTTON_TEXT_TARGETS,
+    *EXPANSION_MENU_TEXT_TARGETS,
+    *EMBEDDED_UI_TEXT_TARGETS,
+    *TOWNWIND_BUTTON_TARGETS,
+    *TEXTBAR_TARGETS,
+)
+
+
+def _restyle_sculpted_button_resources(
+    original: "AggArchive",
+    localized: "AggArchive",
+    normal_font_sprites: Sequence[Sprite],
+    small_font_sprites: Sequence[Sprite],
+    mapping: Sequence[MappingRow],
+    *,
+    label: str,
+) -> dict[str, bytes]:
+    """Restyle every action-button state, then copy the existing embedded mirrors.
+
+    The earlier pass retains the historical text layout and source-identity
+    validation. This final pass replaces only generated text relief and small,
+    verified English leftovers. Flat expansion-campaign captions stay flat.
+    """
+    available = {entry.name.upper() for entry in localized.entries}
+    targets = [target for target in SCULPTED_BUTTON_TEXT_TARGETS if target["resource"] in available]
+    if not targets:
+        return {}
+    require(mapping, f"Native button glyph mapping is missing: {label}")
+    current_icns: dict[str, IcnArchive] = {}
+    original_icns: dict[str, IcnArchive] = {}
+    changed: dict[tuple[str, int], _DecodedSprite] = {}
+    direct_keys: set[tuple[str, int]] = set()
+
+    def decoded(resource: str, index: int, *, pristine: bool = False) -> _DecodedSprite:
+        cache = original_icns if pristine else current_icns
+        archive = original if pristine else localized
+        if resource not in cache:
+            cache[resource] = parse_icn(archive.get(resource).payload, label=f"{label}:{resource}")
+        return _decode_sprite(cache[resource].sprites[index], label=f"{label}:{resource}:{index}")
+
+    for target in targets:
+        resource, index = str(target["resource"]), int(target["sprite"])
+        key = resource, index
+        require(key not in direct_keys, f"Duplicate native button target: {label}:{key}")
+        before = decoded(*key)
+        after, metrics = _sculpted_button_sprite(
+            decoded(*key, pristine=True),
+            before,
+            target,
+            normal_font_sprites,
+            small_font_sprites,
+            mapping,
+        )
+        rois = [tuple(target["roi"]), *(tuple(roi) for roi in metrics.get("additional_rois", ()))]
+        _require_outside_rois_exact(before, after, rois, label=f"{label}:native:{key}")
+        require(before.transform == after.transform, f"Native button transparency changed: {label}:{key}")
+        changed[key] = after
+        direct_keys.add(key)
+
+    for mirror in (*EMBEDDED_UI_MIRRORS, IMAGE_UI_WELL_MIRROR):
+        source_key = str(mirror["source_resource"]), int(mirror["source_sprite"])
+        target_key = str(mirror["target_resource"]), int(mirror["target_sprite"])
+        # The recruit-cost mirror shares this table but is not a button.
+        if source_key not in direct_keys or target_key[0] not in available:
+            continue
+        donor = changed[source_key]
+        before = changed.get(target_key)
+        if before is None:
+            before = decoded(*target_key)
+        sx, sy, sw, sh = mirror["source_roi"]
+        tx, ty, tw, th = mirror["target_roi"]
+        require((sw, sh) == (tw, th), f"Native mirror dimensions differ: {label}:{target_key}")
+        pixels, transforms = bytearray(before.pixels), bytearray(before.transform)
+        for row in range(sh):
+            ss, ts = (sy + row) * donor.width + sx, (ty + row) * before.width + tx
+            pixels[ts : ts + tw] = donor.pixels[ss : ss + sw]
+            transforms[ts : ts + tw] = donor.transform[ss : ss + sw]
+        after = replace(before, pixels=bytes(pixels), transform=bytes(transforms))
+        _require_outside_roi_exact(
+            before, after, tuple(mirror["target_roi"]), label=f"{label}:native-mirror:{target_key}"
+        )
+        require(before.transform == after.transform, f"Native mirror transparency changed: {label}:{target_key}")
+        changed[target_key] = after
+
+    sprites_by_resource: dict[str, list[Sprite]] = {}
+    for (resource, index), sprite in changed.items():
+        if resource not in sprites_by_resource:
+            sprites_by_resource[resource] = list(current_icns[resource].sprites)
+        encoded = Sprite(
+            sprite.offset_x,
+            sprite.offset_y,
+            sprite.width,
+            sprite.height,
+            sprite.animation,
+            _encode_sprite_data(sprite.width, sprite.height, sprite.pixels, sprite.transform),
+        )
+        require(
+            _decode_sprite(encoded, label=f"{label}:native-roundtrip") == sprite,
+            f"Native sprite roundtrip failed: {label}:{resource}:{index}",
+        )
+        sprites_by_resource[resource][index] = encoded
+    return {resource: pack_icn(sprites) for resource, sprites in sprites_by_resource.items()}
+
+
 def rebuild_agg_fonts(
     base_raw: bytes,
     rendered: RenderedFont,
@@ -4250,4 +4705,8 @@ def rebuild_agg_fonts(
                 (len(payload), sha256_bytes(payload)) == TEXTBAR_OUTPUT_IDENTITY,
                 f"생성된 TEXTBAR 리소스 검증이 실패했습니다: {label}",
             )
-    return output
+    native_replacements = _restyle_sculpted_button_resources(
+        base, candidate, rebuilt_font_sprites["FONT.ICN"],
+        rebuilt_font_sprites["SMALFONT.ICN"], rendered.mapping, label=label,
+    )
+    return repack_agg(candidate, native_replacements)

@@ -34,8 +34,8 @@ DEFAULT_FONT_PACKAGE_PATH = Path("fonts/IropkeBatangM.ttf")
 FALLBACK_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
 DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt")
 FALLBACK_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.10"
-RELEASE_DATE = "2026-08-28"
+CURRENT_VERSION = "v0.9.0-beta.11"
+RELEASE_DATE = "2026-09-07"
 PINNED_DEFAULT_FONT = {
     "size": 3_202_516,
     "sha256": "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69",
@@ -44,6 +44,7 @@ PINNED_FALLBACK_FONT = {
     "size": 2_315_924,
     "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
 }
+# beta.11 changes button resources only; retain the beta.10 executable and bank.
 PINNED_BETA10_TARGETS = {
     Path("HEROES2.EXE"): {
         "size": 1_523_420,
@@ -101,6 +102,14 @@ UPGRADE_RELEASES = (
         "manifest": {
             "size": 34_263,
             "sha256": "CEB8E7D765DBFA2FBB6D955364E68A0D2A158B31BDA7DA70C1F04A85C37AEBDD",
+        },
+    },
+    {
+        "version": "v0.9.0-beta.10",
+        "manifest_path": Path("upgrades/v0.9.0-beta.10-manifest.json"),
+        "manifest": {
+            "size": 34_526,
+            "sha256": "EB45C0BCD986D2910069841C3A54B88D3C6413021FFE350E692B613972AE4476",
         },
     },
 )
