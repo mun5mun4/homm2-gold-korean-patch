@@ -96,9 +96,61 @@ class SculptedButtonTests(unittest.TestCase):
         target = dict(font.EXPANSION_MENU_TEXT_TARGETS[0])
         original, current, target = self.fixture(target, 132, 62)
         after, metrics = self.render(original, current, target)
-        self.assertEqual(after, current)
-        self.assertEqual(metrics["changed_pixels"], 0)
+        self.assertGreater(metrics["changed_pixels"], 0)
+        self.assertEqual(set(after.pixels), set(current.pixels))
+        ink = [i // after.width for i, pixel in enumerate(after.pixels) if pixel == 32]
+        self.assertLessEqual(abs((min(ink) + max(ink)) / 2 - 27.5), 0.5)
         self.assertTrue(metrics["preserved_style"])
+
+    def test_map_menu_text_is_centered_on_the_face_in_both_states(self):
+        for index in range(6):
+            target = next(t for t in font.SCULPTED_BUTTON_TEXT_TARGETS
+                          if t["resource"] == "X_MAPMNU.ICN" and t["sprite"] == index)
+            original, current, target = self.fixture(target, 132, 62)
+            after, metrics = self.render(original, current, target)
+            ink = [(i % after.width, i // after.width) for i, pixel in enumerate(after.pixels)
+                   if pixel in set(metrics["palette_tones"])]
+            with self.subTest(index=index):
+                self.assertEqual(metrics["vertical_alignment_shift"], -3)
+                self.assertEqual((min(y for x, y in ink) + max(y for x, y in ink)) / 2,
+                                 27.5 + index % 2)
+                self.assertEqual(after.transform, current.transform)
+                self.assertEqual((after.offset_x, after.offset_y), (current.offset_x, current.offset_y))
+                # The formerly painted lowest row is blank after moving upward.
+                self.assertTrue(all(after.pixels[(37 + index % 2) * 132 + x] == target["background"]
+                                    for x in range(8, 124)))
+
+    def test_two_line_menu_label_is_centered_as_one_block(self):
+        target = next(t for t in font.SCULPTED_BUTTON_TEXT_TARGETS
+                      if t["resource"] == "BTNMODEM.ICN" and t["sprite"] == 0)
+        original, current, target = self.fixture(target, 132, 62)
+        after, metrics = self.render(original, current, target)
+        ink_rows = [i // 132 for i, pixel in enumerate(after.pixels)
+                    if pixel in set(metrics["palette_tones"])]
+        self.assertLessEqual(abs((min(ink_rows) + max(ink_rows)) / 2 - 27.5), 0.5)
+        font._require_outside_roi_exact(current, after, tuple(target["roi"]), label="centered-two-line")
+
+    def test_recruit_maximum_text_uses_one_pressed_displacement(self):
+        masks = []
+        for index, expected_shift in ((4, -3), (5, -4)):
+            target = next(t for t in font.SCULPTED_BUTTON_TEXT_TARGETS
+                          if t["resource"] == "RECRUIT.ICN" and t["sprite"] == index)
+            frame_top = 21 + index % 2
+            marks = {(x, y): 45 + y - frame_top for y in range(frame_top, frame_top + 4)
+                     for x in range(8, 60)}
+            original, current, target = self.fixture(target, 66, 30, marks)
+            after, metrics = self.render(original, current, target)
+            ink = {(i % 66, i // 66) for i, pixel in enumerate(after.pixels)
+                   if pixel in set(metrics["palette_tones"])}
+            self.assertEqual(metrics["vertical_alignment_shift"], expected_shift)
+            self.assertLessEqual(abs((min(y for x, y in ink) + max(y for x, y in ink)) / 2
+                                     - (12 + index % 2)), 0.5)
+            font._require_outside_roi_exact(current, after, tuple(target["roi"]), label="centered-maximum")
+            for y in range(frame_top, frame_top + 4):
+                self.assertEqual(after.pixels[y * 66 + 8:y * 66 + 60],
+                                 original.pixels[y * 66 + 8:y * 66 + 60])
+            masks.append(ink)
+        self.assertEqual(masks[1], {(x + 1, y + 1) for x, y in masks[0]})
 
     def test_original_english_top_fragment_cleanup_does_not_touch_the_frame(self):
         target = next(t for t in font.SCULPTED_BUTTON_TEXT_TARGETS if t["resource"] == "BTNNEWGM.ICN" and t["sprite"] == 4)

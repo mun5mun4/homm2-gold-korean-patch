@@ -2236,7 +2236,7 @@ class FontLayoutTests(unittest.TestCase):
         # complete native result here, then verify each resource's edit bounds.
         self.assertEqual(
             font.sha256_bytes(rebuilt_raw),
-            "4550F92802CFADA59C443DB40E96665287E756A105CC4BEC813059D06E689FD9",
+            "A186FBC2758D64965923221EDF0E30B17E435D390EF520BF58D6BBCC255DB082",
         )
         before_cost = before.get(font.RECRUIT_COST_RESOURCE_NAME)
         after_cost = after.get(font.RECRUIT_COST_RESOURCE_NAME)
@@ -2631,7 +2631,7 @@ class FontLayoutTests(unittest.TestCase):
         self.assertEqual(len(rebuilt_raw), 2_981_224)
         self.assertEqual(
             font.sha256_bytes(rebuilt_raw),
-            "922DE6FD764EF9A5C8B869C4DEF66CD79C7C63392AD4222D2EF18AEE9BAD5481",
+            "F8088B8D1CC2695479B99DBAAB542C41D799805558066CDC4B3714F467CBF41E",
         )
 
 

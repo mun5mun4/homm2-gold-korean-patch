@@ -20,7 +20,8 @@ BETA7_VERSION = "v0.9.0-beta.7"
 BETA8_VERSION = "v0.9.0-beta.8"
 BETA9_VERSION = "v0.9.0-beta.9"
 BETA10_VERSION = "v0.9.0-beta.10"
-CURRENT_VERSION = "v0.9.0-beta.11"
+BETA11_VERSION = "v0.9.0-beta.11"
+CURRENT_VERSION = "v0.9.0-beta.12"
 PREVIOUS_SHA256 = "A" * 64
 CURRENT_SHA256 = "B" * 64
 
@@ -257,7 +258,7 @@ class UpgradeFixture:
             BETA6_VERSION,
             BETA7_VERSION,
         }
-        previous_frozen_legacy = previous_version not in {BETA9_VERSION, BETA10_VERSION}
+        previous_frozen_legacy = previous_version not in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION}
         self.previous_manifest = self.manifest(
             previous_version,
             [previous_static, previous_copy],
@@ -420,59 +421,60 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertEqual(result["original_file_count"], 1)
             self.assertEqual(result["font_mode"], "default")
 
-    def test_beta10_native_button_receipt_upgrades_from_pristine_and_uninstalls(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            fixture = UpgradeFixture(Path(temporary), previous_version=BETA10_VERSION, previous_legacy=False)
-            original_archives = {}
-            generated_archives = {}
-            for index, relative in enumerate(("DATA/HEROES2.AGG", "DATA/HEROES2X.AGG")):
-                original = f"pristine-archive-{index}".encode("ascii")
-                installed = f"beta10-with-approved-native-buttons-{index}".encode("ascii")
-                generated = f"beta11-generated-native-buttons-{index}".encode("ascii")
-                original_archives[relative] = original
-                generated_archives[relative] = generated
-                (fixture.game / relative).write_bytes(installed)
-                original_backup = patcher.backup_file_for(fixture.game, fixture.previous_run_id, "root", relative)
-                original_backup.parent.mkdir(parents=True, exist_ok=True)
-                original_backup.write_bytes(original)
-                row = fixture.row(relative, patcher.DYNAMIC_FONT_AGG_METHOD, generated)
-                row.update(source=identity(original), target=None, base_target=identity(original), keep_localized_resources=[])
-                fixture.previous_manifest["files"].append(copy.deepcopy(row))
-                fixture.current_manifest["files"].append(copy.deepcopy(row))
-                fixture.previous_receipt["records"].append({
-                    "path": relative,
-                    "root_before": identity(original),
-                    "root_backup": str(original_backup),
-                    "cloud_before": None,
-                    "cloud_backup": str(patcher.backup_file_for(fixture.game, fixture.previous_run_id, "cloud_saves", relative)),
-                    "installed": identity(installed),
-                    "committed": True,
-                })
-            (fixture.state / patcher.RECEIPT_NAME).write_bytes(patcher.canonical(fixture.previous_receipt))
-
-            def stage_with_archives(package, game, manifest, stage, font_plan, source_paths=None):
-                outputs, metadata = fixture.staged(package, game, manifest, stage, font_plan, source_paths)
-                for relative, generated in generated_archives.items():
-                    self.assertEqual(source_paths[relative].read_bytes(), original_archives[relative])
-                    (stage / relative).write_bytes(generated)
-                    outputs[relative] = identity(generated)
-                return outputs, metadata
-
-            blockers, game_info, previous_manifest, font_plan, stage_outputs = self.patches(fixture, stage_with_archives)
-            with blockers, game_info, previous_manifest, font_plan, stage_outputs:
-                result = patcher.install(fixture.game, fixture.package, fixture.current_manifest, CURRENT_SHA256)
-                self.assertEqual(result["version"], CURRENT_VERSION)
-                receipt = patcher.read_json(fixture.state / patcher.RECEIPT_NAME)
-                self.assertEqual(receipt["upgraded_from"]["version"], BETA10_VERSION)
-                for relative, generated in generated_archives.items():
-                    self.assertEqual((fixture.game / relative).read_bytes(), generated)
+    def test_beta10_and_beta11_native_button_receipts_upgrade_from_pristine_and_uninstall(self) -> None:
+        for previous_version in (BETA10_VERSION, BETA11_VERSION):
+            with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
+                fixture = UpgradeFixture(Path(temporary), previous_version=previous_version, previous_legacy=False)
+                original_archives = {}
+                generated_archives = {}
+                for index, relative in enumerate(("DATA/HEROES2.AGG", "DATA/HEROES2X.AGG")):
+                    original = f"pristine-archive-{index}".encode("ascii")
+                    installed = f"{previous_version}-with-approved-native-buttons-{index}".encode("ascii")
+                    generated = f"{CURRENT_VERSION}-generated-native-buttons-{index}".encode("ascii")
+                    original_archives[relative] = original
+                    generated_archives[relative] = generated
+                    (fixture.game / relative).write_bytes(installed)
                     original_backup = patcher.backup_file_for(fixture.game, fixture.previous_run_id, "root", relative)
-                    self.assertEqual(original_backup.read_bytes(), original_archives[relative])
-                patcher.verify(fixture.game, fixture.current_manifest, CURRENT_SHA256, quiet=True)
-                removed = patcher.uninstall(fixture.game, fixture.current_manifest, CURRENT_SHA256, fixture.package)
-                self.assertEqual(removed["status"], "uninstalled_and_restored")
-                for relative, original in original_archives.items():
-                    self.assertEqual((fixture.game / relative).read_bytes(), original)
+                    original_backup.parent.mkdir(parents=True, exist_ok=True)
+                    original_backup.write_bytes(original)
+                    row = fixture.row(relative, patcher.DYNAMIC_FONT_AGG_METHOD, generated)
+                    row.update(source=identity(original), target=None, base_target=identity(original), keep_localized_resources=[])
+                    fixture.previous_manifest["files"].append(copy.deepcopy(row))
+                    fixture.current_manifest["files"].append(copy.deepcopy(row))
+                    fixture.previous_receipt["records"].append({
+                        "path": relative,
+                        "root_before": identity(original),
+                        "root_backup": str(original_backup),
+                        "cloud_before": None,
+                        "cloud_backup": str(patcher.backup_file_for(fixture.game, fixture.previous_run_id, "cloud_saves", relative)),
+                        "installed": identity(installed),
+                        "committed": True,
+                    })
+                (fixture.state / patcher.RECEIPT_NAME).write_bytes(patcher.canonical(fixture.previous_receipt))
+
+                def stage_with_archives(package, game, manifest, stage, font_plan, source_paths=None):
+                    outputs, metadata = fixture.staged(package, game, manifest, stage, font_plan, source_paths)
+                    for relative, generated in generated_archives.items():
+                        self.assertEqual(source_paths[relative].read_bytes(), original_archives[relative])
+                        (stage / relative).write_bytes(generated)
+                        outputs[relative] = identity(generated)
+                    return outputs, metadata
+
+                blockers, game_info, previous_manifest, font_plan, stage_outputs = self.patches(fixture, stage_with_archives)
+                with blockers, game_info, previous_manifest, font_plan, stage_outputs:
+                    result = patcher.install(fixture.game, fixture.package, fixture.current_manifest, CURRENT_SHA256)
+                    self.assertEqual(result["version"], CURRENT_VERSION)
+                    receipt = patcher.read_json(fixture.state / patcher.RECEIPT_NAME)
+                    self.assertEqual(receipt["upgraded_from"]["version"], previous_version)
+                    for relative, generated in generated_archives.items():
+                        self.assertEqual((fixture.game / relative).read_bytes(), generated)
+                        original_backup = patcher.backup_file_for(fixture.game, fixture.previous_run_id, "root", relative)
+                        self.assertEqual(original_backup.read_bytes(), original_archives[relative])
+                    patcher.verify(fixture.game, fixture.current_manifest, CURRENT_SHA256, quiet=True)
+                    removed = patcher.uninstall(fixture.game, fixture.current_manifest, CURRENT_SHA256, fixture.package)
+                    self.assertEqual(removed["status"], "uninstalled_and_restored")
+                    for relative, original in original_archives.items():
+                        self.assertEqual((fixture.game / relative).read_bytes(), original)
 
     def test_failed_commit_rolls_back_every_file_to_beta4_and_recovery_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -571,7 +573,7 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertFalse((fixture.state / patcher.JOURNAL_NAME).exists())
             self.assertEqual((fixture.game / "DATA" / "A.BIN").read_bytes(), fixture.new_static)
 
-    def test_beta4_through_beta10_upgrade_to_iropke_default_without_reselection(self) -> None:
+    def test_beta4_through_beta11_upgrade_to_iropke_default_without_reselection(self) -> None:
         cases = (
             (PREVIOUS_VERSION, True),
             (BETA5_VERSION, False),
@@ -580,6 +582,7 @@ class PatcherUpgradeTests(unittest.TestCase):
             (BETA8_VERSION, False),
             (BETA9_VERSION, False),
             (BETA10_VERSION, False),
+            (BETA11_VERSION, False),
         )
         for previous_version, previous_legacy in cases:
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
@@ -709,7 +712,7 @@ class PatcherUpgradeTests(unittest.TestCase):
         self.assertEqual(loaded["version"], PREVIOUS_VERSION)
         self.assertEqual(loaded_sha256, "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60")
 
-    def test_frozen_beta5_through_beta10_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
+    def test_frozen_beta5_through_beta11_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
         fixtures = (
             (
                 BETA5_VERSION,
@@ -747,6 +750,12 @@ class PatcherUpgradeTests(unittest.TestCase):
                 "EB45C0BCD986D2910069841C3A54B88D3C6413021FFE350E692B613972AE4476",
                 False,
             ),
+            (
+                BETA11_VERSION,
+                34_790,
+                "13A63D6FACCD2FFD905632F8F8F9BD4C9035C83ED7ECC50F9751A76E8D5A4101",
+                False,
+            ),
         )
         for version, expected_size, expected_sha256, historical_v2 in fixtures:
             with self.subTest(version=version):
@@ -754,7 +763,7 @@ class PatcherUpgradeTests(unittest.TestCase):
                 self.assertEqual(frozen.stat().st_size, expected_size)
                 self.assertEqual(patcher.sha256_file(frozen), expected_sha256)
                 document = patcher.json.loads(frozen.read_text(encoding="utf-8"))
-                if version in {BETA9_VERSION, BETA10_VERSION}:
+                if version in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION}:
                     patcher.validate_manifest_document(document)
                 else:
                     patcher.validate_manifest_document(document, frozen_legacy=True)
@@ -772,7 +781,7 @@ class PatcherUpgradeTests(unittest.TestCase):
                     nanum = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
                     beta8_default_receipt = font_receipt(nanum.read_bytes(), legacy=False)
                     patcher.validate_font_receipt(beta8_default_receipt, document)
-                if version in {BETA9_VERSION, BETA10_VERSION}:
+                if version in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION}:
                     iropke = Path("packaging/release_assets/fonts/IropkeBatangM.ttf")
                     iropke_default_receipt = font_receipt(iropke.read_bytes(), legacy=False)
                     patcher.validate_font_receipt(iropke_default_receipt, document)

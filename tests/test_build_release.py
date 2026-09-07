@@ -51,13 +51,13 @@ class HerowindKnowledgeTests(unittest.TestCase):
             },
         )
 
-    def test_builder_rejects_beta10_before_reading_inputs(self) -> None:
-        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.11"):
+    def test_builder_rejects_beta11_before_reading_inputs(self) -> None:
+        with self.assertRaisesRegex(release.BuildError, "pinned to v0.9.0-beta.12"):
             release.build(
                 Path("missing-original"),
                 Path("missing-patched"),
                 Path("missing-output"),
-                "v0.9.0-beta.10",
+                "v0.9.0-beta.11",
                 None,
             )
 
@@ -98,9 +98,14 @@ class HerowindKnowledgeTests(unittest.TestCase):
                 "upgrades/v0.9.0-beta.10-manifest.json",
                 {"size": 34_526, "sha256": "EB45C0BCD986D2910069841C3A54B88D3C6413021FFE350E692B613972AE4476"},
             ),
+            (
+                "v0.9.0-beta.11",
+                "upgrades/v0.9.0-beta.11-manifest.json",
+                {"size": 34_790, "sha256": "13A63D6FACCD2FFD905632F8F8F9BD4C9035C83ED7ECC50F9751A76E8D5A4101"},
+            ),
         )
 
-        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.11")
+        self.assertEqual(release.CURRENT_VERSION, "v0.9.0-beta.12")
         self.assertEqual(release.RELEASE_DATE, "2026-09-07")
         self.assertEqual(len(release.UPGRADE_RELEASES), len(expected))
         for upgrade, (version, manifest_path, identity) in zip(release.UPGRADE_RELEASES, expected):

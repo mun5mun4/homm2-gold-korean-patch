@@ -1,8 +1,8 @@
-# beta.11 배포판 재포장
+# beta.12 배포판 재포장
 
-이 문서는 검증된 GOG 원본 트리와 현재 활성 한국어 패치 트리에서 `v0.9.0-beta.11` 패키지를 만드는 절차입니다. 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10을 직접 업그레이드 입력으로 지원합니다.
+이 문서는 검증된 GOG 원본 트리와 현재 활성 한국어 패치 트리에서 `v0.9.0-beta.12` 패키지를 만드는 절차입니다. 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11을 직접 업그레이드 입력으로 지원합니다.
 
-beta.11은 48개 고정 BSDIFF40 결과와 설치 시 선택 글꼴로 생성하는 2개 AGG를 manifest v2로 묶고, 직접 업그레이드 검증용으로 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10 manifest를 고정해 포함합니다. 완성 AGG와 미리 생성한 한글 래스터는 배포하지 않습니다. 배포 ZIP에는 기본 이롭게 바탕체, 보완 나눔고딕코딩과 로컬 파일 선택 진입점을 포함합니다.
+beta.12는 48개 고정 BSDIFF40 결과와 설치 시 선택 글꼴로 생성하는 2개 AGG를 manifest v2로 묶고, 직접 업그레이드 검증용으로 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11 manifest를 고정해 포함합니다. 완성 AGG와 미리 생성한 한글 래스터는 배포하지 않습니다. 배포 ZIP에는 기본 이롭게 바탕체, 보완 나눔고딕코딩과 로컬 파일 선택 진입점을 포함합니다.
 
 ## 준비물
 
@@ -11,7 +11,7 @@ beta.11은 48개 고정 BSDIFF40 결과와 설치 시 선택 글꼴로 생성하
 - Pillow 12.0.0
 - Windows 실행 파일을 다시 만들 경우 PyInstaller 6.15.0
 - 수정되지 않은 지원 GOG 영문판
-- beta.3 번역 기반에 검증된 beta.10 영상 자막 EXE/BIN과 beta.11 버튼 도트·렌더러 v3 동적 UI 입력을 적용한 활성 패치 트리
+- beta.3 번역 기반에 검증된 beta.10 영상 자막 EXE/BIN과 beta.12 버튼 도트·렌더러 v3 동적 UI 입력을 적용한 활성 패치 트리
 
 빌드 의존성은 다음 명령으로 설치할 수 있습니다.
 
@@ -23,9 +23,9 @@ python -m pip install -r requirements-build.txt
 
 ## beta.3 활성 pin의 역할
 
-`docs/ACTIVE_FILE_HASHES.json`은 `v0.9.0-beta.3` 번역 기반을 고정한 기존 source pin입니다. beta.11은 이 기반의 캠페인·AGG 현지화에 load-base 독립 영상 자막 EXE/BIN과 beta.10의 렌더러 v3 글꼴 계약과 beta.11 버튼 도트 생성을 적용합니다.
+`docs/ACTIVE_FILE_HASHES.json`은 `v0.9.0-beta.3` 번역 기반을 고정한 기존 source pin입니다. beta.12는 이 기반의 캠페인·AGG 현지화에 load-base 독립 영상 자막 EXE/BIN과 beta.10의 렌더러 v3 글꼴 계약과 beta.12 버튼 도트 생성을 적용합니다.
 
-이 파일은 beta.4~beta.11 출력 해시 목록이 아니므로 `ACTIVE_FILE_HASHES.json` 자체를 갱신하지 않습니다. beta.11의 최종 EXE/BIN은 release manifest가 고정하며, 설치 시 생성된 두 AGG의 실제 해시는 사용자 PC의 receipt가 보존합니다.
+이 파일은 beta.4~beta.12 출력 해시 목록이 아니므로 `ACTIVE_FILE_HASHES.json` 자체를 갱신하지 않습니다. beta.12의 최종 EXE/BIN은 release manifest가 고정하며, 설치 시 생성된 두 AGG의 실제 해시는 사용자 PC의 receipt가 보존합니다.
 
 ## beta.6 자막 빌더 입력을 만드는 중간 교정
 
@@ -42,13 +42,13 @@ python tools/localization/final_bank_hotfix.py apply ^
   --output "C:\path\to\empty-hotfix-candidate\KOREAN.BIN"
 ```
 
-출력 파일은 미리 존재하면 안 됩니다. 각 도구의 `verify`를 통과한 쌍은 `docs/ACTIVE_FILE_HASHES.json`에 고정된 beta.3 번역 기반을 재현하는 중간 입력입니다. 이 파일들을 beta.11 최종 활성 트리에 그대로 넣지 않습니다.
+출력 파일은 미리 존재하면 안 됩니다. 각 도구의 `verify`를 통과한 쌍은 `docs/ACTIVE_FILE_HASHES.json`에 고정된 beta.3 번역 기반을 재현하는 중간 입력입니다. 이 파일들을 beta.12 최종 활성 트리에 그대로 넣지 않습니다.
 
 중간 입력의 고정 주소 방식은 공개 beta.6의 `HEROES2.EXE` 1,523,420바이트·SHA-256 `52AE3BA15AE309327D698EDEE8844684F91B3BA056B9215854002265A9F6E3EF`와 `KOREAN.BIN` 11,286바이트·SHA-256 `DD30DD967E81BB179BC1D33903D0B8926FB799D969A3C36FFAA6CA3FA0C89AAF`을 재현하는 데만 사용합니다. 다음 절의 `h2_video_subtitles.py build`와 `verify`가 이 beta.6 쌍을 받아 load-base 독립 beta.10 최종 EXE/BIN을 만들며, 재포장에는 반드시 그 최종 쌍을 사용합니다.
 
 ## beta.10 영상 자막 입력 계약
 
-beta.11은 beta.10에서 검증된 다음 EXE/BIN을 그대로 유지합니다. beta.10은 PC마다 달라질 수 있는 DOS/4GW LE Object 로드 주소에 독립적인 중계 코드와 상대 descriptor 검증을 사용합니다. 기본 GOG 바로가기에서 게임 실행과 캠페인 자막 표시를 사용자 실기로 승인한 다음 파일 쌍이며, 재포장에 사용하는 활성 트리도 이 identity와 정확히 일치해야 합니다.
+beta.12는 beta.10에서 검증된 다음 EXE/BIN을 그대로 유지합니다. beta.10은 PC마다 달라질 수 있는 DOS/4GW LE Object 로드 주소에 독립적인 중계 코드와 상대 descriptor 검증을 사용합니다. 기본 GOG 바로가기에서 게임 실행과 캠페인 자막 표시를 사용자 실기로 승인한 다음 파일 쌍이며, 재포장에 사용하는 활성 트리도 이 identity와 정확히 일치해야 합니다.
 
 - `HEROES2.EXE`: 1,523,420바이트, SHA-256 `87B175EF0698C65893BAF6A0581E74BEA60CCECA0D8DF57E9DF7614B27DB2365`
 - `KOREAN.BIN`: 36,159바이트, SHA-256 `37FDC1F372627E7B637EEEBFC15610E26B427E66947D7AA699B46B807F7338DA`
@@ -57,11 +57,11 @@ beta.11은 beta.10에서 검증된 다음 EXE/BIN을 그대로 유지합니다. 
 
 위 EXE/BIN은 공개 beta.6 파일과 `translations/subtitles/scene_cues_ko.tsv`에서 `tools/localization/h2_video_subtitles.py`로 바이트 단위 재현할 수 있습니다. 입력·출력 해시, 빌드·검증 명령과 선택형 통합 검사는 [docs/VIDEO_SUBTITLES_KO.md](docs/VIDEO_SUBTITLES_KO.md)를 확인하세요.
 
-## beta.11 AGG 기반 생성 규칙
+## beta.12 AGG 기반 생성 규칙
 
 빌더는 beta.3 활성 AGG에서 기존 고정 폰트와 시험 이미지 UI를 배포 기반으로 넘기지 않습니다. 대신 `HEROWIND.BIN`의 고정 슬롯 교정을 추가합니다.
 
-| 대상 | beta.11의 폰트 없는 기반 |
+| 대상 | beta.12의 폰트 없는 기반 |
 |---|---|
 | `DATA/HEROES2.AGG` | GOG 원본에 번역된 BIN 8개(`HEROWIND.BIN`, `THIEFWIN.BIN`, `WELLWIND.BIN`, `RECRUIT0.BIN`, `RECRUIT1.BIN`, `RECRUIQ0.BIN`, `RECRUIQ1.BIN`, `TRADPOST.BIN`)만 유지 |
 | `DATA/HEROES2X.AGG` | GOG 원본과 동일 |
@@ -70,11 +70,22 @@ beta.11은 beta.10에서 검증된 다음 EXE/BIN을 그대로 유지합니다. 
 
 beta.3의 고정 바탕체 `FONT.ICN`·`SMALFONT.ICN`과 시험 이미지 UI는 기반에서 제거됩니다. 설치 시 기본 이롭게 바탕체 또는 사용자가 선택한 로컬 글꼴에서 새 `FONT.ICN`·`SMALFONT.ICN`과 한글 버튼 글씨를 생성해 두 AGG에 넣습니다. 선택 글꼴에 없는 매핑 문자는 나눔고딕코딩으로 보완합니다. 메인 메뉴 배경·장식은 원본을 유지하고 선언된 버튼 글씨 ROI만 바꿉니다. 오리지널 `HEROES2.AGG`에서는 순정 `RECRBKG.ICN` identity를 먼저 확인한 뒤 sprite 0의 고정 ROI에 같은 작은 글꼴로 `병력당 비용:`을 생성합니다. 자세한 배열은 [docs/DYNAMIC_FONT_KO.md](docs/DYNAMIC_FONT_KO.md)를 확인하세요.
 
-## beta.11 버튼 도트 생성
+## beta.11 입체 글씨 스타일 유지
 
-글꼴의 셀·기준선 계약은 v3를 유지하고, 한글 버튼에 원본 팔레트 기반의 입체 표현을 추가합니다. 56개 문구·254개 버튼 상태를 처리하며 원본이 평면인 확장 캠페인 이름 5개는 그대로 유지합니다. 배경에 포함된 41개 버튼 복사 위치도 동일한 결과를 사용합니다.
+beta.11에서 도입한 원본 팔레트 기반의 입체 표현과 글꼴 v3 셀·기준선 계약을 유지합니다. 56개 문구·254개 버튼 상태를 처리하며 확장 캠페인 이름 5개는 평면 글씨 표현을 유지합니다. 배경에 포함된 41개 버튼 복사 위치도 같은 스타일을 사용합니다.
 
-현재 사용자 실기 승인본의 기본 글꼴 결과와 설치 시 생성 결과가 바이트 단위로 같은지 확인합니다. 비교 대상은 `DATA/HEROES2.AGG`의 SHA-256 `197AC2C3F854CFF481356E5FF7B146511B47F780E29822A1114B833107EF6E51`과 `DATA/HEROES2X.AGG`의 SHA-256 `B68C0C431D6A5214A970C322A236C8B30D083E2E57AF838A85C86399B82CC06F`입니다. 이 값은 기본 글꼴 회귀 검증용이며 사용자 글꼴 결과의 고정 해시로 강제하지 않습니다.
+## beta.12 버튼 중앙 배치
+
+132×62 큰 메뉴 버튼 89개 상태는 실제 평면의 일반 상태 y=4..51(중심 27.5), 눌린 상태 y=5..52(중심 28.5)에 보이는 글씨 전체를 맞춥니다. 왼쪽 아래 1픽셀 입체 가장자리를 포함한 범위를 기준으로 하므로 기본 글꼴 결과의 89개 상태는 beta.11보다 3픽셀 위로 이동합니다. `RECRUIT.ICN:4/5`의 `최대`는 일반 상태 평면 y=4..20과 1픽셀 아래로 이동한 눌림 평면을 사용하며 각각 3·4픽셀 올립니다. 이전 글씨·그림자가 덮었던 아래쪽 경사 테두리는 순정 픽셀로 복원합니다.
+
+변경 범위는 91개 상태·16개 리소스(기본 AGG 13개, 확장 AGG 3개)입니다. 나머지 163개 버튼 상태와 글리프·팔레트 색조·EXE·문자열 은행은 beta.11과 같습니다. 소스 회귀검사와 격리된 fixture에서 배치·보존 범위를 확인했습니다.
+
+기본 이롭게 바탕체의 beta.12 fixture 생성 결과는 다음과 같습니다. 두 값은 기본 글꼴 회귀 검증용이며 사용자 글꼴 결과의 고정 해시로 강제하지 않습니다.
+
+| 파일 | 크기 | SHA-256 |
+|---|---:|---|
+| `DATA/HEROES2.AGG` | 44,674,434 | `C079776BE70664711B2BFD8327AB68287991A8F0EE4DABB21036143811000535` |
+| `DATA/HEROES2X.AGG` | 2,980,478 | `66ADE108AD29DAFDA7F85B2D7D18765CD7109F100AB5904B13C6427D58BB57E2` |
 
 ## 렌더러 v3 고정 계약
 
@@ -105,15 +116,15 @@ pyinstaller --noconfirm --clean --onefile ^
   tools/release/homm2_ko_patcher.py
 ```
 
-## 2. beta.11 배포 디렉터리 생성
+## 2. beta.12 배포 디렉터리 생성
 
 ```text
 python tools/release/build_release.py ^
   --original-root "C:\path\to\clean-gog" ^
-  --patched-root "C:\path\to\beta11-active-korean-tree" ^
+  --patched-root "C:\path\to\beta12-active-korean-tree" ^
   --patcher-exe "dist\homm2-ko-patcher.exe" ^
-  --output "release_output\homm2-ko-v0.9.0-beta.11" ^
-  --version "v0.9.0-beta.11"
+  --output "release_output\homm2-ko-v0.9.0-beta.12" ^
+  --version "v0.9.0-beta.12"
 ```
 
 출력 폴더는 미리 존재하면 안 됩니다. 빌더는 GOG 원본 50개를 고정 해시로 확인하고 다음 구성을 만듭니다.
@@ -122,7 +133,7 @@ python tools/release/build_release.py ^
 - 동적 AGG 행 2개: 원본에서 폰트 없는 기반으로 가는 BSDIFF40과 설치 시 글꼴 ICN·한글 버튼·모집 비용 명패를 재구성하는 계약
 - 프로젝트 파일 복사 1개: `KOREAN.BIN`
 - 874자 매핑, 기본 `IropkeBatangM.ttf`, 보완 `NanumGothicCoding-Regular.ttf`, `INSTALL_CUSTOM_FONT.cmd`, 동적 폰트 빌더와 두 OFL 1.1 고지
-- 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10의 고정 manifest `upgrades/v0.9.0-beta.4-manifest.json`, `upgrades/v0.9.0-beta.5-manifest.json`, `upgrades/v0.9.0-beta.6-manifest.json`, `upgrades/v0.9.0-beta.7-manifest.json`, `upgrades/v0.9.0-beta.8-manifest.json`, `upgrades/v0.9.0-beta.9-manifest.json`, `upgrades/v0.9.0-beta.10-manifest.json`
+- 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11의 고정 manifest `upgrades/v0.9.0-beta.4-manifest.json`, `upgrades/v0.9.0-beta.5-manifest.json`, `upgrades/v0.9.0-beta.6-manifest.json`, `upgrades/v0.9.0-beta.7-manifest.json`, `upgrades/v0.9.0-beta.8-manifest.json`, `upgrades/v0.9.0-beta.9-manifest.json`, `upgrades/v0.9.0-beta.10-manifest.json`, `upgrades/v0.9.0-beta.11-manifest.json`
 - schema `homm2-korean-release-manifest-v2`의 `manifest.json`
 
 고정 upgrade manifest는 다음 공개 자산과 바이트 단위로 같아야 합니다. 빌더·패키저·설치기 중 어느 단계든 identity가 다르면 중단합니다.
@@ -134,6 +145,7 @@ python tools/release/build_release.py ^
 - beta.8: 33,656바이트, SHA-256 `A6D0DC07FD27ADC73D3925C76CFBC01CBFE7B6727029EACD87A570132E5B5BB5`
 - beta.9: 34,263바이트, SHA-256 `CEB8E7D765DBFA2FBB6D955364E68A0D2A158B31BDA7DA70C1F04A85C37AEBDD`
 - beta.10: 34,526바이트, SHA-256 `EB45C0BCD986D2910069841C3A54B88D3C6413021FFE350E692B613972AE4476`
+- beta.11: 34,790바이트, SHA-256 `13A63D6FACCD2FFD905632F8F8F9BD4C9035C83ED7ECC50F9751A76E8D5A4101`
 
 설치되는 게임 파일 수는 합계 51개입니다. 정적 49개는 manifest의 고정 target 해시로 검증하고, 설치 시 생성되는 두 AGG는 구조 검증 후 실제 해시를 receipt에 기록합니다.
 
@@ -141,9 +153,9 @@ python tools/release/build_release.py ^
 
 ```text
 python tools/release/package_release.py ^
-  --release-dir "release_output\homm2-ko-v0.9.0-beta.11" ^
-  --output-dir "release_output\github-assets-v0.9.0-beta.11" ^
-  --version "v0.9.0-beta.11"
+  --release-dir "release_output\homm2-ko-v0.9.0-beta.12" ^
+  --output-dir "release_output\github-assets-v0.9.0-beta.12" ^
+  --version "v0.9.0-beta.12"
 ```
 
 이 단계는 고정 ZIP 시간과 정렬된 파일 순서로 ZIP, 독립 manifest와 `SHA256SUMS.txt`를 생성한 뒤 모든 ZIP 항목을 원본 배포 디렉터리와 다시 대조합니다.
@@ -166,9 +178,11 @@ git diff --check
 7. 공개 beta.8 설치본에서 두 설치 진입점 각각 직접 업그레이드, 실패 주입 시 beta.8 롤백, 제거 시 최초 GOG 원본 복원
 8. 공개 beta.9 설치본에서 두 설치 진입점 각각 직접 업그레이드, 실패 주입 시 beta.9 롤백, 제거 시 최초 GOG 원본 복원
 9. 공개 beta.10 기본·사용자 글꼴 설치본에서 직접 업그레이드, 실패 시 beta.10 롤백, 제거 시 최초 GOG 원본 복원
-10. 오리지널 모집 창의 `Cost per troop:`이 `병력당 비용:`으로 바뀌고 지정 ROI 밖 픽셀·transform과 다른 AGG 엔트리가 보존되는지 확인
-11. 메인 메뉴 배경·장식과 비대상 ROI가 원본과 같고 선언된 버튼 글씨만 선택 글꼴로 바뀌는지 확인
+10. 공개 beta.11 설치본에서 직접 업그레이드, 실패 시 beta.11 롤백, 제거 시 최초 GOG 원본 복원
+11. 오리지널 모집 창의 `Cost per troop:`이 `병력당 비용:`으로 바뀌고 지정 ROI 밖 픽셀·transform과 다른 AGG 엔트리가 보존되는지 확인
+12. 메인 메뉴 배경·장식과 비대상 ROI가 원본과 같고 선언된 버튼 글씨만 선택 글꼴로 바뀌는지 확인
+13. beta.12 중앙 배치 91개 상태의 보이는 글씨 중심·테두리 복원과 나머지 163개 상태의 보존을 기본·사용자 글꼴 fixture에서 확인
 
-beta.1~beta.3 직접 업그레이드는 지원하지 않으며 이전 버전을 제거한 GOG 원본에서 시험합니다. 일곱 upgrade manifest는 크기와 SHA-256이 고정된 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10 manifest와 정확히 일치해야 합니다. 최종 ZIP의 글꼴 allowlist는 `IropkeBatangM.ttf`와 `NanumGothicCoding-Regular.ttf` 두 파일로 고정합니다. 다른 TTF·OTF·TTC·OTC나 미리 생성한 래스터·AGG를 임의로 추가하면 fail-closed 패키징이 중단되어야 합니다.
+beta.1~beta.3 직접 업그레이드는 지원하지 않으며 이전 버전을 제거한 GOG 원본에서 시험합니다. 여덟 upgrade manifest는 크기와 SHA-256이 고정된 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11 manifest와 정확히 일치해야 합니다. 최종 ZIP의 글꼴 allowlist는 `IropkeBatangM.ttf`와 `NanumGothicCoding-Regular.ttf` 두 파일로 고정합니다. 다른 TTF·OTF·TTC·OTC나 미리 생성한 래스터·AGG를 임의로 추가하면 fail-closed 패키징이 중단되어야 합니다.
 
-이 도구는 번역 개발 전 과정을 GOG 원본부터 반복하는 통합 현지화 빌더가 아니라, 검증된 활성 번역 트리를 beta.11 배포 형식으로 재포장하는 도구입니다.
+이 도구는 번역 개발 전 과정을 GOG 원본부터 반복하는 통합 현지화 빌더가 아니라, 검증된 활성 번역 트리를 beta.12 배포 형식으로 재포장하는 도구입니다.

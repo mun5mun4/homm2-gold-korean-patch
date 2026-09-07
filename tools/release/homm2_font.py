@@ -4090,6 +4090,59 @@ def _sculpted_button_tones(interface: str, pressed: bool) -> tuple[int, int, int
     return tones
 
 
+def _center_sculpted_button_text(
+    sprite: _DecodedSprite,
+    original: _DecodedSprite,
+    target: Mapping[str, Any],
+    ink: set[tuple[int, int]],
+) -> tuple[_DecodedSprite, int]:
+    """Center lettering on verified faces, excluding their bottom frames.
+
+    The 132x62 menu face spans rows 4..51, or 5..52 when pressed.
+    Center the visible ink including its lower-left relief, rather than the
+    old layout box (rows 8..53), while retaining the historical glyph layout.
+    """
+    if (sprite.width, sprite.height) == (132, 62):
+        face_top, face_height = 4, 48
+    elif (target["resource"] == "RECRUIT.ICN" and target["sprite"] in (4, 5)
+          and (sprite.width, sprite.height) == (66, 30)):
+        # The recruitment maximum button has the same oversized layout box.
+        # Its pressed ROI already moves down once; center on its actual face
+        # so the glyphs do not receive that displacement a second time.
+        face_top, face_height = 4, 17
+    else:
+        return sprite, 0
+    background = int(target["background"])
+    ink = {point for point in ink if sprite.pixels[point[1] * sprite.width + point[0]] != background}
+    require(ink, "Menu button has no visible lettering")
+    top, bottom = min(y for _, y in ink), max(y for _, y in ink)
+    face_top += int(target["state"] == "pressed")
+    delta_y = face_top + (face_height - (bottom - top + 1)) // 2 - top
+    shifted = {(x, y + delta_y) for x, y in ink}
+    require(
+        all(_sculpted_inside(x, y, target["roi"]) and sprite.transform[y * sprite.width + x] == 0
+            for x, y in shifted),
+        f"Centered menu lettering exceeds its edit area: {target['resource']}:{target['sprite']}",
+    )
+    pixels = bytearray(sprite.pixels)
+    for x, y in ink:
+        pixels[y * sprite.width + x] = background
+    for x, y in ink:
+        pixels[(y + delta_y) * sprite.width + x] = sprite.pixels[y * sprite.width + x]
+    if face_height == 17:
+        # Old maximum-button glyphs and their erased shadow crossed the lower
+        # bevel. These rows contain only the pristine frame, never English ink.
+        # Restore the complete narrow strip so neither old ink nor flat-colored
+        # holes remain after moving the label onto the face.
+        require(all(face_top <= y < face_top + face_height for _, y in shifted),
+                "Centered maximum-button lettering crosses its frame")
+        rx, ry, rw, rh = target["roi"]
+        for y in range(face_top + face_height, ry + rh):
+            start = y * sprite.width + rx
+            pixels[start:start + rw] = original.pixels[start:start + rw]
+    return replace(sprite, pixels=bytes(pixels)), delta_y
+
+
 def _sculpted_button_sprite(
     original_decoded: _DecodedSprite,
     current_decoded: _DecodedSprite,
@@ -4132,7 +4185,9 @@ def _sculpted_button_sprite(
         )
     fg, sh = expected_fg, expected_sh
     if target["interface"] == "plain_good":
-        return before, {
+        centered, delta_y = _center_sculpted_button_text(before, org, target, fg | sh)
+        fg = {(x, y + delta_y) for x, y in fg}
+        return centered, {
             "resource": target["resource"],
             "sprite": target["sprite"],
             "text": target["text"],
@@ -4142,7 +4197,8 @@ def _sculpted_button_sprite(
             "bevel_pixels": 0,
             "glyph_mask_mismatches": 0,
             "restored_glint_pixels": 0,
-            "changed_pixels": 0,
+            "changed_pixels": sum(a != b for a, b in zip(before.pixels, centered.pixels)),
+            "vertical_alignment_shift": delta_y,
             "outside_roi_changes": 0,
             "transform_changes": 0,
             "native_size": [w, h],
@@ -4328,7 +4384,8 @@ def _sculpted_button_sprite(
                     "evidence": "Unchanged original English pixels outside former text ROI; adjacent face is flat and original frame excluded.",
                 }
             )
-    out = replace(before, pixels=bytes(pixels))
+    out, delta_y = _center_sculpted_button_text(replace(before, pixels=bytes(pixels)), org, target, fg | bevel_pixels)
+    fg = {(x, y + delta_y) for x, y in fg}
     changed = [i for i, (a, b) in enumerate(zip(before.pixels, out.pixels)) if a != b]
     allowed_rois = [roi] + additional_rois
     require(
@@ -4341,6 +4398,7 @@ def _sculpted_button_sprite(
         "sprite": target["sprite"],
         "text": target["text"],
         "variant": variant,
+        "vertical_alignment_shift": delta_y,
         "foreground_pixels": len(fg),
         "shadow_pixels": len(sh),
         "bevel_pixels": len(bevel_pixels),
