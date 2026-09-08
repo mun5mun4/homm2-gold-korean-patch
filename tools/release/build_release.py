@@ -15,8 +15,9 @@ from typing import Any
 import bsdiff4
 
 try:
-    from . import homm2_font
+    from . import approved_main_menu, homm2_font
 except ImportError:
+    import approved_main_menu
     import homm2_font
 
 
@@ -34,8 +35,8 @@ DEFAULT_FONT_PACKAGE_PATH = Path("fonts/IropkeBatangM.ttf")
 FALLBACK_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
 DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt")
 FALLBACK_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.12"
-RELEASE_DATE = "2026-09-07"
+CURRENT_VERSION = "v0.9.0-beta.13"
+RELEASE_DATE = "2026-09-08"
 PINNED_DEFAULT_FONT = {
     "size": 3_202_516,
     "sha256": "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69",
@@ -44,7 +45,7 @@ PINNED_FALLBACK_FONT = {
     "size": 2_315_924,
     "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
 }
-# beta.12 changes button resources only; retain the beta.10 executable and bank.
+# beta.13 adds approved menu artwork; retain the beta.10 executable and bank.
 PINNED_BETA10_TARGETS = {
     Path("HEROES2.EXE"): {
         "size": 1_523_420,
@@ -118,6 +119,14 @@ UPGRADE_RELEASES = (
         "manifest": {
             "size": 34_790,
             "sha256": "13A63D6FACCD2FFD905632F8F8F9BD4C9035C83ED7ECC50F9751A76E8D5A4101",
+        },
+    },
+    {
+        "version": "v0.9.0-beta.12",
+        "manifest_path": Path("upgrades/v0.9.0-beta.12-manifest.json"),
+        "manifest": {
+            "size": 35_054,
+            "sha256": "F854F23FBA999D06B2C9A7A46F6F64B275564AFA721DAD96E4211184885432B3",
         },
     },
 )
@@ -222,18 +231,23 @@ HEROES2X_DYNAMIC_FONT_RESOURCES = (
     "X_LOADCM.ICN",
     "X_MAPMNU.ICN",
 )
+# This painted menu is approved artwork shared by default and custom-font
+# installations. It is reconstructed from original-dependent ICN deltas,
+# then carried by the existing AGG base deltas rather than generated fonts.
+HEROES2_FIXED_MENU_RESOURCES = ("BTNSHNGL.ICN", "HEROES.ICN")
+HEROES2X_FIXED_MENU_RESOURCES = ("HEROES.ICN",)
+HEROES2_BASE_RESOURCES = (*HEROES2_LOCALIZED_BIN_RESOURCES, *HEROES2_FIXED_MENU_RESOURCES)
+HEROES2X_BASE_RESOURCES = HEROES2X_FIXED_MENU_RESOURCES
 HEROES2_EXPECTED_PATCHED_RESOURCES = (
     *HEROES2_DYNAMIC_FONT_RESOURCES,
-    *HEROES2_LOCALIZED_BIN_RESOURCES,
+    *HEROES2_BASE_RESOURCES,
 )
-HEROES2X_EXPECTED_PATCHED_RESOURCES = HEROES2X_DYNAMIC_FONT_RESOURCES
+HEROES2X_EXPECTED_PATCHED_RESOURCES = (*HEROES2X_DYNAMIC_FONT_RESOURCES, *HEROES2X_BASE_RESOURCES)
 
 # These image resources intentionally remain byte-exact originals.  They are
 # named here as a release-policy guard even though the exact changed-resource
 # allowlists above would also reject them.
-ORIGINAL_MENU_AND_CAMPAIGN_BACKGROUND_RESOURCES = (
-    "BTNSHNGL.ICN",
-    "HEROES.ICN",
+ORIGINAL_CAMPAIGN_BACKGROUND_RESOURCES = (
     "CAMPBKGG.ICN",
     "CAMPBKGE.ICN",
     "X_CMPBKG.ICN",
@@ -440,22 +454,33 @@ def validate_dynamic_font_agg_contracts() -> None:
         f"extra={sorted(heroes2x_explicit - heroes2x_declared)}",
     )
 
-    protected = {name.upper() for name in ORIGINAL_MENU_AND_CAMPAIGN_BACKGROUND_RESOURCES}
-    declared_protected = {
-        str(homm2_font.FANCY_MAIN_MENU_BUTTON_RESOURCE_NAME).upper(),
-        str(homm2_font.FANCY_MAIN_MENU_HEROES_RESOURCE_NAME).upper(),
-        *(str(name).upper() for name in homm2_font.CAMP_PROGRESS_RESOURCE_SOURCE_IDENTITIES),
-    }
+    protected = {name.upper() for name in ORIGINAL_CAMPAIGN_BACKGROUND_RESOURCES}
+    declared_protected = {str(name).upper() for name in homm2_font.CAMP_PROGRESS_RESOURCE_SOURCE_IDENTITIES}
     require(
         protected == declared_protected
         and not protected.intersection(heroes2_explicit | heroes2x_explicit),
-        f"original menu/campaign-background policy drifted: {sorted(protected)}",
+        f"original campaign-background policy drifted: {sorted(protected)}",
     )
 
-    keep = {name.upper() for name in HEROES2_LOCALIZED_BIN_RESOURCES}
+    require(
+        HEROES2_FIXED_MENU_RESOURCES == approved_main_menu.ARCHIVE_RESOURCES["HEROES2.AGG"]
+        and HEROES2X_FIXED_MENU_RESOURCES == approved_main_menu.ARCHIVE_RESOURCES["HEROES2X.AGG"]
+        and set(HEROES2_FIXED_MENU_RESOURCES)
+        == {homm2_font.FANCY_MAIN_MENU_BUTTON_RESOURCE_NAME, homm2_font.FANCY_MAIN_MENU_HEROES_RESOURCE_NAME},
+        "approved main-menu ownership drifted",
+    )
+    require(
+        HEROES2_BASE_RESOURCES == (*HEROES2_LOCALIZED_BIN_RESOURCES, *HEROES2_FIXED_MENU_RESOURCES)
+        and HEROES2X_BASE_RESOURCES == HEROES2X_FIXED_MENU_RESOURCES,
+        "static AGG base resource list drifted",
+    )
+    keep = {name.upper() for name in HEROES2_BASE_RESOURCES}
+    keep_expansion = {name.upper() for name in HEROES2X_BASE_RESOURCES}
     heroes2_patched = {name.upper() for name in HEROES2_EXPECTED_PATCHED_RESOURCES}
     heroes2x_patched = {name.upper() for name in HEROES2X_EXPECTED_PATCHED_RESOURCES}
-    require(not keep.intersection(heroes2_explicit), "HEROES2 BIN keep list overlaps dynamic raster resources")
+    require(not keep.intersection(heroes2_explicit), "HEROES2 static keep list overlaps dynamic raster resources")
+    require(not keep_expansion.intersection(heroes2x_explicit), "HEROES2X static keep list overlaps dynamic raster resources")
+    require(not protected.intersection(keep | keep_expansion), "campaign background entered static keep list")
     require(
         len(heroes2_patched) == len(HEROES2_EXPECTED_PATCHED_RESOURCES)
         and heroes2_patched == heroes2_explicit | keep,
@@ -463,7 +488,7 @@ def validate_dynamic_font_agg_contracts() -> None:
     )
     require(
         len(heroes2x_patched) == len(HEROES2X_EXPECTED_PATCHED_RESOURCES)
-        and heroes2x_patched == heroes2x_explicit,
+        and heroes2x_patched == heroes2x_explicit | keep_expansion,
         "HEROES2X patched-resource allowlist drifted",
     )
 
@@ -471,9 +496,9 @@ def validate_dynamic_font_agg_contracts() -> None:
 def font_agg_contract(relative: Path) -> tuple[tuple[str, ...], tuple[str, ...]]:
     validate_dynamic_font_agg_contracts()
     if relative == Path("DATA/HEROES2.AGG"):
-        return HEROES2_EXPECTED_PATCHED_RESOURCES, HEROES2_LOCALIZED_BIN_RESOURCES
+        return HEROES2_EXPECTED_PATCHED_RESOURCES, HEROES2_BASE_RESOURCES
     if relative == Path("DATA/HEROES2X.AGG"):
-        return HEROES2X_EXPECTED_PATCHED_RESOURCES, ()
+        return HEROES2X_EXPECTED_PATCHED_RESOURCES, HEROES2X_BASE_RESOURCES
     raise BuildError(f"dynamic font AGG contract missing: {relative}")
 
 
@@ -627,6 +652,9 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
     if patcher_exe is not None:
         require(patcher_exe.is_file(), f"patcher executable missing: {patcher_exe}")
 
+    # Reconstruct and validate the three approved menu payloads before any
+    # release output is staged. No raw ICNs or extra assets enter the ZIP.
+    menu_resources = approved_main_menu.reconstruct_resources(original)
     stage = Path(tempfile.mkdtemp(prefix=f".{output.name}.stage-", dir=output.parent))
     try:
         rows: list[dict[str, Any]] = []
@@ -645,6 +673,10 @@ def build(original: Path, patched: Path, output: Path, version: str, patcher_exe
             if relative == Path("DATA/HEROES2.AGG"):
                 target = localize_herowind_knowledge_agg(target, label=f"{relative.as_posix()}:patched")
             if relative in FONT_AGG_PATHS:
+                # A beta.12 tree still has pristine menu resources. Also
+                # accept an already merged approved tree, but reject other
+                # menu experiments rather than silently replacing them.
+                target = approved_main_menu.apply_to_archive(target, relative.name, menu_resources)
                 expected_changes, keep_localized_resources = font_agg_contract(relative)
                 actual_changes = homm2_font.changed_agg_resources(source, target, label=relative.as_posix())
                 require(

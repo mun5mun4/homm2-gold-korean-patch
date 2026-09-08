@@ -1,0 +1,57 @@
+{
+  "schema": "homm2-approved-main-menu-v1",
+  "approved_date": "2026-09-08",
+  "resources": [
+    {
+      "archive": "HEROES2.AGG",
+      "resource": "BTNSHNGL.ICN",
+      "source": {
+        "size": 89377,
+        "sha256": "63EADA2F70756BC49CE256F9C3C1BA21330C564A23E345B53649E983F94A61C7"
+      },
+      "target": {
+        "size": 96428,
+        "sha256": "4B4AC170B417149BB48B15FEFB6894051C6CD3E0AC1A6ADAF60C0235A126CD28"
+      },
+      "delta": {
+        "path": "heroes2-btnshngl.bsdiff",
+        "size": 27932,
+        "sha256": "008F7CC0432B89284BACB083A25D05B8567F50B0D0D2BEEADB0F49E9A2C0B584"
+      }
+    },
+    {
+      "archive": "HEROES2.AGG",
+      "resource": "HEROES.ICN",
+      "source": {
+        "size": 288082,
+        "sha256": "0F5F01D354E5E38CB646C0CBC08DBD7D0E1050505B21923EA53A8CBE87F26721"
+      },
+      "target": {
+        "size": 310580,
+        "sha256": "9CE77CBEC2D830F795513B68805B9D21FB1391E2D5058F70DA2AD13E4159F0C4"
+      },
+      "delta": {
+        "path": "heroes2-heroes.bsdiff",
+        "size": 38843,
+        "sha256": "91EC92CB7053CA9F8F1C2A60FCA88C235C458CBCC8286C77E4749CED4129007D"
+      }
+    },
+    {
+      "archive": "HEROES2X.AGG",
+      "resource": "HEROES.ICN",
+      "source": {
+        "size": 287946,
+        "sha256": "98E2233F7108842C93513915324E2D91C2AC85AEEE4A16496DC2A9D253B41534"
+      },
+      "target": {
+        "size": 310580,
+        "sha256": "E9301B5BD4EC879B09C26163255787D40D2596E55244FDE72040B27ED1998310"
+      },
+      "delta": {
+        "path": "heroes2x-heroes.bsdiff",
+        "size": 38927,
+        "sha256": "58330F2B96F8B50AD125F3C4ABF9A1F6F4576B597FA38F9AF7DB28DD30B784C2"
+      }
+    }
+  ]
+}

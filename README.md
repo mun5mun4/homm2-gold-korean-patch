@@ -4,21 +4,21 @@ Heroes of Might and Magic II Gold GOG DOS 영문판을 위한 비공식 한국�
 
 ## 배포 상태
 
-- 현재 배포 기준은 `v0.9.0-beta.12`입니다.
-- 큰 메뉴와 모집 창의 `최대` 버튼 글씨가 아래로 치우치던 문제를 고쳤습니다. 버튼 91개 상태의 글씨를 실제 평면 중앙에 맞추고, 기존 글씨가 덮었던 아래쪽 테두리를 원본으로 복원했습니다.
-- beta.11의 원본 팔레트·입체 글씨 스타일과 beta.10의 영상 자막, 이롭게 바탕체·렌더러 v3·사용자 글꼴 선택 기능을 유지합니다. beta.12의 중앙 배치는 소스 회귀검사와 격리된 fixture에서 확인했습니다.
-- 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11 설치본은 beta.12로 직접 업그레이드할 수 있습니다.
+- 현재 배포 기준은 `v0.9.0-beta.13`입니다.
+- 메인 메뉴의 `새 게임`, `불러오기`, `최고 기록`, `제작진`, `종료`를 검토된 한글 그래픽으로 교체합니다. 금갈색 명암과 부드러운 가장자리, 나무 이음선 옆의 글자 획을 다듬고 일부 픽셀이 애니메이션과 함께 발광하던 문제를 고쳤습니다.
+- beta.12의 일반 버튼 중앙 정렬, beta.11의 입체 글씨 스타일, beta.10의 영상 자막·렌더러 v3·사용자 글꼴 선택을 유지합니다.
+- 공개 beta.4~beta.12 설치본에서 직접 업그레이드할 수 있습니다.
 
 배포판은 게임 실행 파일이나 원작 리소스 전체를 포함하지 않고, 사용자가 보유한 정확한 GOG 원본에 바이너리 델타를 적용합니다.
 
-## beta.12 설치와 업그레이드
+## beta.13 설치와 업그레이드
 
-깨끗한 GOG 원본이나 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11 설치본에서 기본 이롭게 바탕체를 쓰려면 `INSTALL.cmd`, 사용자가 보유한 다른 글꼴을 쓰려면 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다. 지원되는 이전 버전을 먼저 제거할 필요는 없지만, 사용자 글꼴 경로는 저장하지 않으므로 사용자 글꼴 설치·업그레이드 때마다 파일을 다시 선택합니다.
+깨끗한 GOG 원본이나 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12 설치본에서 기본 이롭게 바탕체를 쓰려면 `INSTALL.cmd`, 사용자가 보유한 다른 글꼴을 쓰려면 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다. 지원되는 이전 버전을 먼저 제거할 필요는 없지만, 사용자 글꼴 경로는 저장하지 않으므로 사용자 글꼴 설치·업그레이드 때마다 파일을 다시 선택합니다.
 
-beta.1~beta.3은 직접 업그레이드 대상이 아닙니다. 해당 버전 배포 폴더의 `UNINSTALL.cmd`로 GOG 원본을 복구한 뒤 beta.12를 설치하세요. 이전 배포 폴더가 없다면 같은 버전 ZIP을 다시 받아 제거할 수 있습니다.
+beta.1~beta.3은 직접 업그레이드 대상이 아닙니다. 해당 버전 배포 폴더의 `UNINSTALL.cmd`로 GOG 원본을 복구한 뒤 beta.13을 설치하세요. 이전 배포 폴더가 없다면 같은 버전 ZIP을 다시 받아 제거할 수 있습니다.
 
 1. GOG Galaxy, Heroes II, DOSBox를 모두 종료합니다.
-2. GitHub Releases에서 `homm2-ko-v0.9.0-beta.12-win-gog.zip`을 받습니다.
+2. GitHub Releases에서 `homm2-ko-v0.9.0-beta.13-win-gog.zip`을 받습니다.
 3. ZIP을 모두 푼 뒤 기본 글꼴은 `INSTALL.cmd`, 사용자 글꼴은 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다.
 
 기본 설치 경로는 다음과 같습니다.
@@ -35,13 +35,19 @@ homm2-ko-patcher.exe install --game-dir "C:\Program Files (x86)\GOG Galaxy\Games
 
 지원 대상은 GOG gameId `1207658785`, buildId `52745329670822422`, English 설치본입니다.
 
+## beta.13 메인 메뉴
+
+방패·나무판·두루마리 위의 메뉴 5종과 4개 밝기 상태, 기본판·확장판 배경에 포함된 메뉴를 함께 반영합니다. 글자 모양과 위치는 사용자가 확인한 최종 시안이며, 색이 순환하는 팔레트를 배제해 일부 획이 주변 애니메이션과 함께 반짝이지 않도록 했습니다.
+
+저장소의 `translations/interface/main_menu/`에는 정확한 GOG 원본 리소스에 적용할 BSDIFF40 델타와 해시만 포함합니다. 배포 ZIP은 이 결과를 기존 두 AGG 기반 델타에 담습니다. 원작 이미지·완성 ICN·AGG·검토 캡처는 배포하지 않습니다. 제작·검증 범위는 [메인 메뉴 설계](docs/MAIN_MENU_KO.md)를 참고하세요.
+
 ## beta.12 버튼 중앙 배치
 
 132×62 큰 메뉴 버튼 89개 상태의 글씨를 밝은 왼쪽 아래 가장자리까지 포함해 3픽셀 올렸습니다. 모집 창의 `최대` 버튼은 일반 상태를 3픽셀, 눌린 상태를 4픽셀 올렸습니다. 기본 글꼴 결과에서 총 91개 상태·16개 리소스가 바뀌며 나머지 163개 버튼 상태, 글리프 모양·색조·EXE·문자열 은행은 beta.11과 같습니다. 정확한 중심 좌표와 변경 범위는 [동적 폰트 설계](docs/DYNAMIC_FONT_KO.md)에 설명했습니다.
 
-## beta.12 글꼴 방식
+## beta.13 글꼴 방식
 
-배포 ZIP에는 SIL Open Font License 1.1의 `Iropke Batang Medium`과 `NanumGothicCoding Regular`를 동봉합니다. `INSTALL.cmd`는 기본 `fonts/IropkeBatangM.ttf`에서 874자 한글 글리프, 한글 버튼과 모집 창의 `병력당 비용:`을 설치 시 생성합니다. 이롭게 바탕체에 없는 매핑 문자는 `fonts/NanumGothicCoding-Regular.ttf`로 보완합니다. 완성된 글리프·버튼 래스터나 AGG는 배포하지 않습니다.
+배포 ZIP에는 SIL Open Font License 1.1의 `Iropke Batang Medium`과 `NanumGothicCoding Regular`를 동봉합니다. `INSTALL.cmd`는 기본 `fonts/IropkeBatangM.ttf`에서 874자 한글 글리프, 일반 한글 버튼과 모집 창의 `병력당 비용:`을 설치 시 생성합니다. 메인 메뉴 5종은 선택 글꼴과 관계없이 검토된 전용 그래픽을 사용합니다. 이롭게 바탕체에 없는 매핑 문자는 `fonts/NanumGothicCoding-Regular.ttf`로 보완합니다. 완성된 글리프·버튼 래스터나 AGG는 배포하지 않습니다.
 
 명령줄에서는 `--font-file`로 파일을 직접 지정하고 TTC·OTC의 face는 0부터 시작하는 `--font-index`로 고를 수 있습니다. 선택한 파일은 설치 시 이 PC에서만 읽으며 패치 폴더로 복사하거나 저장소·배포 ZIP에 수집하지 않습니다. 설치기는 글꼴 이름이나 라이선스로 선택을 막지 않으므로 해당 글꼴을 사용할 권한은 사용자가 확인해야 합니다.
 
@@ -52,11 +58,11 @@ homm2-ko-patcher.exe install --font-file "C:\path\to\Collection.ttc" --font-inde
 
 렌더러 v3는 일반 글꼴을 13x14 셀·advance 13, 작은 글꼴을 11x12 셀·advance 11로 고정합니다. 선택 글꼴과 보완 글꼴이 담당하는 모든 한글의 실제 bearing 범위를 합쳐 셀에 들어가는 가장 큰 공통 정수 픽셀 크기와 기준선을 정하고, 각 글리프는 `baseline + glyph.top` 위치에 놓습니다. 따라서 글자마다 따로 확대·축소하거나 셀 바닥에 강제로 붙이지 않으며, 이롭게 바탕체처럼 글자별 crop 높이가 다른 글꼴도 원래의 수직 관계를 보존합니다.
 
-폰트 없는 `HEROES2.AGG` 기반에는 번역 BIN 8개를 유지합니다. `HEROWIND.BIN`은 고정 10바이트 `Knowledge` 슬롯만 `지력`으로 교정합니다. 설치 시 한글화하는 버튼 글씨와 모집 창의 `Cost per troop:`을 바꾼 `병력당 비용:`은 같은 선택 글꼴에서 동적으로 그립니다. 메인 메뉴의 원본 배경·장식과 선언된 글씨 영역 밖 픽셀은 보존합니다. 버튼의 어두운 본체와 밝은 왼쪽 아래 가장자리는 버튼 재질과 눌림 상태에 맞춰 원본 팔레트로 생성합니다. 정확한 ICN 배열과 AGG 생성 방식은 [동적 폰트 설계](docs/DYNAMIC_FONT_KO.md)에 설명했습니다.
+폰트 없는 `HEROES2.AGG` 기반에는 번역 BIN 8개를 유지합니다. `HEROWIND.BIN`은 고정 10바이트 `Knowledge` 슬롯만 `지력`으로 교정합니다. 설치 시 한글화하는 버튼 글씨와 모집 창의 `Cost per troop:`을 바꾼 `병력당 비용:`은 같은 선택 글꼴에서 동적으로 그립니다. 메인 메뉴는 원본에 적용하는 리소스별 델타로 전용 한글 그래픽을 재현하며, 그림 제목·배경과 버튼 외곽 장식은 유지합니다. 버튼의 어두운 본체와 밝은 왼쪽 아래 가장자리는 버튼 재질과 눌림 상태에 맞춰 원본 팔레트로 생성합니다. 정확한 ICN 배열과 AGG 생성 방식은 [동적 폰트 설계](docs/DYNAMIC_FONT_KO.md)에 설명했습니다.
 
 기본 이롭게 바탕체는 874자 생성, 공통 기준선과 전경 잘림 0을 검증한 원본 TTF를 수정하지 않고 동봉합니다. 저작권·Reserved Font Name 고지는 `Copyright (c) 2016, 이롭게(iropke) (www.iropke.com | hello@iropke.com), with Reserved Font Name '이롭게 바탕체', 'iropke batang'.`입니다. OFL 1.1 전문은 `THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt`에 함께 들어갑니다.
 
-직접 업그레이드는 동봉한 고정 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11 manifest와 기존 receipt를 모두 검증합니다. 중간에 실패하면 업그레이드 직전 버전으로 롤백하고, 업그레이드된 beta.12를 제거하면 이전 베타가 아니라 최초 GOG 원본을 복원합니다.
+직접 업그레이드는 동봉한 고정 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12 manifest와 기존 receipt를 모두 검증합니다. 중간에 실패하면 업그레이드 직전 버전으로 롤백하고, 업그레이드된 beta.13을 제거하면 이전 베타가 아니라 최초 GOG 원본을 복원합니다.
 
 ## 번역 범위
 
@@ -82,7 +88,7 @@ homm2-ko-patcher.exe install --font-file "C:\path\to\Collection.ttc" --font-inde
 
 내부 분석 로그, DOSBox 제어 실험, 캡처, 후보·복구 산출물은 저장소에 포함하지 않습니다. 배포 재포장 방법은 [BUILD_KO.md](BUILD_KO.md), 소스 범위는 [docs/SOURCE_LAYOUT_KO.md](docs/SOURCE_LAYOUT_KO.md), 영상 자막 재현 방법은 [docs/VIDEO_SUBTITLES_KO.md](docs/VIDEO_SUBTITLES_KO.md)에 설명했습니다.
 
-`docs/ACTIVE_FILE_HASHES.json`은 beta.3 번역 기반을 고정한 기존 source pin입니다. beta.12의 실행 파일·자막 은행 결과는 새 release manifest에서 별도로 고정하며, 설치 시 생성된 두 AGG의 실제 해시는 로컬 receipt에 기록합니다.
+`docs/ACTIVE_FILE_HASHES.json`은 beta.3 번역 기반을 고정한 기존 source pin입니다. beta.13의 실행 파일·자막 은행 결과는 새 release manifest에서 별도로 고정하며, 설치 시 생성된 두 AGG의 실제 해시는 로컬 receipt에 기록합니다.
 
 ## 원작 파일 미포함
 
