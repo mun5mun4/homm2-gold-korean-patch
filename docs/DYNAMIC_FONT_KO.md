@@ -1,8 +1,8 @@
-# beta.13 동적 폰트·버튼·모집 비용 명패·업그레이드 설계
+# beta.14 동적 폰트·버튼·모집 비용 명패·업그레이드 설계
 
-공개 beta.13의 설계 기록입니다. 이후 작업 브랜치의 검토용 v4 보정은 [이롭게 바탕체 높이 보정](IROPKE_OPTICAL_ALIGNMENT_KO.md)에 따로 기록합니다.
+beta.14는 아래에 기록된 v3 공통 기준선을 유지하고 확인된 이롭게 바탕체 음절만 1픽셀 올리는 v4를 사용합니다. 보정 범위는 [이롭게 바탕체 높이 보정](IROPKE_OPTICAL_ALIGNMENT_KO.md)에 기록합니다.
 
-이 문서는 `v0.9.0-beta.13`의 설치 시 글리프·버튼·모집 비용 명패 생성과 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12에서 직접 업그레이드하는 계약을 설명합니다. beta.12는 beta.10의 글꼴 렌더러 v3 계약과 beta.11의 버튼 색·입체 표현을 유지하면서 아래로 치우친 버튼 글씨를 실제 평면 중앙에 맞춥니다.
+이 문서는 `v0.9.0-beta.14`의 설치 시 글리프·버튼·모집 비용 명패 생성과 공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12·beta.13에서 직접 업그레이드하는 계약을 설명합니다. beta.12는 beta.10의 글꼴 렌더러 v3 계약과 beta.11의 버튼 색·입체 표현을 유지하면서 아래로 치우친 버튼 글씨를 실제 평면 중앙에 맞춥니다.
 
 ## 전환 목적
 
@@ -120,7 +120,7 @@ GOG 원본을 기준으로 다음 번역 BIN 8개와 승인 메뉴 `BTNSHNGL.ICN
 
 ## manifest와 receipt 검증
 
-beta.13 manifest schema는 `homm2-korean-release-manifest-v2`입니다.
+beta.14 manifest schema는 `homm2-korean-release-manifest-v2`입니다.
 
 - 48개 파일은 고정 BSDIFF40과 고정 target 해시를 사용합니다.
 - 두 AGG는 `bsdiff40_font_agg_v1`으로 폰트 없는 기반을 만든 뒤 네 폰트 ICN과 한글 버튼 글씨를 동적으로 재구성합니다. 오리지널 AGG에서는 순정 identity를 고정한 `RECRBKG.ICN:0`의 모집 비용 명패도 함께 생성합니다.
@@ -134,18 +134,19 @@ beta.13 manifest schema는 `homm2-korean-release-manifest-v2`입니다.
 - `upgrades/v0.9.0-beta.10-manifest.json`은 공개 beta.10 manifest의 크기 34,526바이트와 SHA-256 `EB45C0BCD986D2910069841C3A54B88D3C6413021FFE350E692B613972AE4476`을 고정한 직접 업그레이드 입력입니다.
 - `upgrades/v0.9.0-beta.11-manifest.json`은 공개 beta.11 manifest의 크기 34,790바이트와 SHA-256 `13A63D6FACCD2FFD905632F8F8F9BD4C9035C83ED7ECC50F9751A76E8D5A4101`을 고정한 직접 업그레이드 입력입니다.
 - `upgrades/v0.9.0-beta.12-manifest.json`은 공개 beta.12의 35,054바이트·SHA-256 `F854F23FBA999D06B2C9A7A46F6F64B275564AFA721DAD96E4211184885432B3`을 고정합니다.
-- beta.4~beta.12 업그레이드 manifest는 총 9개이며 전체 설치 파일은 51개입니다.
+- `upgrades/v0.9.0-beta.13-manifest.json`은 공개 beta.13의 35,396바이트·SHA-256 `94646DA92062ECD4CC73BD9EF9EE52D99BFF7584BCEF1E52BC46143EE41AE150`을 고정합니다.
+- beta.4~beta.13 업그레이드 manifest는 총 10개이며 전체 설치 파일은 51개입니다.
 
 폰트 없는 AGG 기반의 해시는 manifest에 고정돼 있습니다. 설치기는 기본 이롭게 바탕체와 사용자가 선택한 글꼴로 임시 생성한 AGG의 구조와 변경 리소스 범위를 검사합니다. 기본 이롭게 바탕체는 원본 TTF 해시와 렌더러 규칙을 고정하고, 기본·사용자 글꼴 모드 모두 source identity, sprite 구조, ROI·transform 보존과 허용 변경 리소스 집합을 강제합니다. 최종 두 AGG의 실제 크기와 SHA-256은 두 모드 모두 `_homm2_ko_install/receipt.json`에 기록합니다.
 
 `VERIFY.cmd`는 이 receipt와 현재 파일을 대조합니다. `UNINSTALL.cmd`도 현재 파일이 설치 당시 동적 해시와 같을 때만 백업 원본으로 복구하므로, 사용자가 별도로 수정한 AGG를 덮어쓰지 않습니다.
 
-`docs/ACTIVE_FILE_HASHES.json`은 beta.3 활성 번역 트리의 기존 source pin입니다. beta.4~beta.12 출력 해시 문서가 아니므로 파일 자체를 변경하지 않습니다. 설치 시 생성된 AGG 해시는 이 고정 문서가 아니라 각 설치 receipt의 책임입니다.
+`docs/ACTIVE_FILE_HASHES.json`은 beta.3 활성 번역 트리의 기존 source pin입니다. beta.4~beta.13 출력 해시 문서가 아니므로 파일 자체를 변경하지 않습니다. 설치 시 생성된 AGG 해시는 이 고정 문서가 아니라 각 설치 receipt의 책임입니다.
 
 ## 이전 버전에서 이동
 
-공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12은 beta.13 직접 업그레이드를 지원합니다. 기본 이롭게 바탕체로 만들 때는 `INSTALL.cmd`, 사용자 글꼴로 만들 때는 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다. 이전 receipt는 사용자 글꼴 전체 경로를 저장하지 않으므로 사용자 글꼴 업그레이드에서는 파일을 다시 선택합니다.
+공개 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12·beta.13은 beta.14 직접 업그레이드를 지원합니다. 기본 이롭게 바탕체로 만들 때는 `INSTALL.cmd`, 사용자 글꼴로 만들 때는 `INSTALL_CUSTOM_FONT.cmd`를 실행합니다. 이전 receipt는 사용자 글꼴 전체 경로를 저장하지 않으므로 사용자 글꼴 업그레이드에서는 파일을 다시 선택합니다.
 
-업그레이드는 동봉한 고정 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12 manifest, 이전 receipt와 현재 설치 파일을 검증한 뒤 최초 GOG 원본 백업에서 beta.13 후보를 만듭니다. 실패하면 교체 전 베타 상태로 롤백합니다. 성공한 beta.13의 `UNINSTALL.cmd`는 최초 GOG 원본을 복원합니다.
+업그레이드는 동봉한 고정 beta.4·beta.5·beta.6·beta.7·beta.8·beta.9·beta.10·beta.11·beta.12·beta.13 manifest, 이전 receipt와 현재 설치 파일을 검증한 뒤 최초 GOG 원본 백업에서 beta.14 후보를 만듭니다. 실패하면 교체 전 베타 상태로 롤백합니다. 성공한 beta.14의 `UNINSTALL.cmd`는 최초 GOG 원본을 복원합니다.
 
 beta.1~beta.3은 직접 업그레이드를 지원하지 않습니다. 먼저 설치에 사용한 이전 버전의 `UNINSTALL.cmd`로 원본을 복구해야 합니다. 이전 배포 폴더가 없다면 같은 버전 ZIP을 다시 받아 제거할 수 있습니다.

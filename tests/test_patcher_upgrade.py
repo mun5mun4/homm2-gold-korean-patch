@@ -22,7 +22,8 @@ BETA9_VERSION = "v0.9.0-beta.9"
 BETA10_VERSION = "v0.9.0-beta.10"
 BETA11_VERSION = "v0.9.0-beta.11"
 BETA12_VERSION = "v0.9.0-beta.12"
-CURRENT_VERSION = "v0.9.0-beta.13"
+BETA13_VERSION = "v0.9.0-beta.13"
+CURRENT_VERSION = "v0.9.0-beta.14"
 PREVIOUS_SHA256 = "A" * 64
 CURRENT_SHA256 = "B" * 64
 
@@ -243,7 +244,7 @@ class UpgradeFixture:
             BETA7_VERSION,
         }
         previous_historical_v3 = not previous_legacy and not previous_historical_v2
-        previous_frozen_legacy = previous_version not in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION}
+        previous_frozen_legacy = previous_version not in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION, BETA13_VERSION}
         self.previous_manifest = self.manifest(
             previous_version,
             [previous_static, previous_copy],
@@ -410,8 +411,8 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertEqual(result["original_file_count"], 1)
             self.assertEqual(result["font_mode"], "default")
 
-    def test_beta10_through_beta12_native_button_receipts_upgrade_from_pristine_and_uninstall(self) -> None:
-        for previous_version in (BETA10_VERSION, BETA11_VERSION, BETA12_VERSION):
+    def test_beta10_through_beta13_native_button_receipts_upgrade_from_pristine_and_uninstall(self) -> None:
+        for previous_version in (BETA10_VERSION, BETA11_VERSION, BETA12_VERSION, BETA13_VERSION):
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
                 fixture = UpgradeFixture(Path(temporary), previous_version=previous_version, previous_legacy=False)
                 original_archives = {}
@@ -562,7 +563,7 @@ class PatcherUpgradeTests(unittest.TestCase):
             self.assertFalse((fixture.state / patcher.JOURNAL_NAME).exists())
             self.assertEqual((fixture.game / "DATA" / "A.BIN").read_bytes(), fixture.new_static)
 
-    def test_beta4_through_beta12_upgrade_to_iropke_default_without_reselection(self) -> None:
+    def test_beta4_through_beta13_upgrade_to_iropke_default_without_reselection(self) -> None:
         cases = (
             (PREVIOUS_VERSION, True),
             (BETA5_VERSION, False),
@@ -573,6 +574,7 @@ class PatcherUpgradeTests(unittest.TestCase):
             (BETA10_VERSION, False),
             (BETA11_VERSION, False),
             (BETA12_VERSION, False),
+            (BETA13_VERSION, False),
         )
         for previous_version, previous_legacy in cases:
             with self.subTest(previous_version=previous_version), tempfile.TemporaryDirectory() as temporary:
@@ -702,7 +704,7 @@ class PatcherUpgradeTests(unittest.TestCase):
         self.assertEqual(loaded["version"], PREVIOUS_VERSION)
         self.assertEqual(loaded_sha256, "D623C611962CE7F94CC3806DA81B00EDAD7809FB87E489001FE9F0ADF39BAC60")
 
-    def test_frozen_beta5_through_beta12_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
+    def test_frozen_beta5_through_beta13_manifests_and_receipts_keep_renderer_compatibility(self) -> None:
         fixtures = (
             (
                 BETA5_VERSION,
@@ -752,6 +754,12 @@ class PatcherUpgradeTests(unittest.TestCase):
                 "F854F23FBA999D06B2C9A7A46F6F64B275564AFA721DAD96E4211184885432B3",
                 False,
             ),
+            (
+                BETA13_VERSION,
+                35_396,
+                "94646DA92062ECD4CC73BD9EF9EE52D99BFF7584BCEF1E52BC46143EE41AE150",
+                False,
+            ),
         )
         for version, expected_size, expected_sha256, historical_v2 in fixtures:
             with self.subTest(version=version):
@@ -777,7 +785,7 @@ class PatcherUpgradeTests(unittest.TestCase):
                     nanum = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
                     beta8_default_receipt = font_receipt(nanum.read_bytes(), legacy=False, historical_v3=True)
                     patcher.validate_font_receipt(beta8_default_receipt, document)
-                if version in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION}:
+                if version in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION, BETA13_VERSION}:
                     iropke = Path("packaging/release_assets/fonts/IropkeBatangM.ttf")
                     iropke_default_receipt = font_receipt(iropke.read_bytes(), legacy=False, historical_v3=True)
                     patcher.validate_font_receipt(iropke_default_receipt, document)

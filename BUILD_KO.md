@@ -1,6 +1,6 @@
-# beta.13 배포판 재포장
+# beta.14 배포판 재포장
 
-검증된 GOG 원본과 최신 한국어 패치 트리에서 `v0.9.0-beta.13`을 만듭니다. beta.12의 일반 버튼 중앙 정렬·렌더러 v3·영상 자막을 유지하고 승인된 메인 메뉴를 원본 의존 델타에서 재현합니다. 공개 beta.4~beta.12에서 직접 업그레이드할 수 있습니다.
+검증된 GOG 원본과 최신 한국어 패치 트리에서 `v0.9.0-beta.14`을 만듭니다. beta.13의 한글 메인 메뉴와 기존 버튼 정렬·영상 자막을 유지하며, v4 렌더러로 이롭게 바탕체의 아래로 처진 글자를 보정합니다. 공개 beta.4~beta.13에서 직접 업그레이드할 수 있습니다.
 
 ## 입력과 의존성
 
@@ -13,7 +13,7 @@
 python -m pip install -r requirements-build.txt
 ```
 
-`docs/ACTIVE_FILE_HASHES.json`은 beta.3 번역 기반의 역사적 source pin입니다. 현재 결과 목록으로 바꾸지 않습니다. beta.10에서 승인된 다음 EXE·은행을 beta.13에서도 사용합니다.
+`docs/ACTIVE_FILE_HASHES.json`은 beta.3 번역 기반의 역사적 source pin입니다. 현재 결과 목록으로 바꾸지 않습니다. beta.10에서 승인된 다음 EXE·은행을 beta.14에서도 사용합니다.
 
 | 파일 | 크기 | SHA-256 |
 |---|---:|---|
@@ -35,12 +35,12 @@ BIN 8개는 `HEROWIND.BIN`, `THIEFWIN.BIN`, `WELLWIND.BIN`, `RECRUIT0.BIN`, `REC
 
 이 기반을 기존 `bsdiff40_font_agg_v1` 두 행에 담습니다. 설치 시 `FONT.ICN`·`SMALFONT.ICN`, 일반 버튼과 `병력당 비용:`은 선택 글꼴에서 생성하며 메인 메뉴는 그대로 보존합니다. ZIP에 새 메뉴 PNG·ICN·AGG를 추가하지 않습니다.
 
-기본 이롭게 바탕체의 기대 결과는 beta.12 생성본에 승인 메뉴 3개 리소스만 병합해 독립적으로 계산했습니다.
+기본 이롭게 바탕체의 기대 결과는 공개 beta.13의 동일한 폰트 없는 기반과 v4 렌더러로 계산하고, 로컬 게임 및 검토 패키지에서 일치를 확인했습니다.
 
 | 파일 | 크기 | SHA-256 |
 |---|---:|---|
-| `DATA/HEROES2.AGG` | 44,703,983 | `778C30BE6D7A9F99110438FFAF3B6503E55E9926271A0471D42D000E334D11FE` |
-| `DATA/HEROES2X.AGG` | 3,003,112 | `7D4BFD242FC65904534F48E363DC35A4138A4450BA29A61D00F0D62C2B3EE2A9` |
+| `DATA/HEROES2.AGG` | 44,704,652 | `8FA1B61D8DB2EA01836775D4FA0A143B21F6C3550CC3EA06B01559B2A58CCC7F` |
+| `DATA/HEROES2X.AGG` | 3,003,781 | `F38620A361531726941A5414E0009AA13CD492F6AEC973B5AA392030FF4000C0` |
 
 사용자 글꼴 AGG에 이 해시를 강제하지 않고 실제 결과를 receipt에 기록합니다. 사용자 글꼴에서도 메인 메뉴 3개 payload는 같아야 합니다.
 
@@ -53,7 +53,7 @@ pyinstaller --noconfirm --clean --onefile ^
   tools/release/homm2_ko_patcher.py
 ```
 
-beta.13은 기존 설치기·글꼴 모듈의 동작을 바꾸지 않고 AGG 기반에 메뉴를 반영합니다. 소스와 의존성이 바이트 단위로 같은 경우 검증된 beta.12 설치기 EXE를 재사용할 수 있습니다. 최종 ZIP의 EXE로 격리 설치 검사를 수행합니다.
+beta.14는 v4 글꼴 모듈과 과거 v3 설치 기록 호환성을 포함한 새 설치기 EXE가 필요합니다. 같은 소스·의존성으로 생성해 이미 검증한 높이 보정 검토본 EXE를 재사용할 수 있으며, 최종 배포 디렉터리의 EXE로 공개 beta.13 업그레이드·검증·제거를 검사합니다.
 
 ## 배포 디렉터리 생성
 
@@ -62,21 +62,21 @@ python tools/release/build_release.py ^
   --original-root "C:\path\to\clean-gog" ^
   --patched-root "C:\path\to\approved-beta12-tree" ^
   --patcher-exe "dist\homm2-ko-patcher.exe" ^
-  --output "release_output\homm2-ko-v0.9.0-beta.13" ^
-  --version "v0.9.0-beta.13"
+  --output "release_output\homm2-ko-v0.9.0-beta.14" ^
+  --version "v0.9.0-beta.14"
 ```
 
-출력 폴더는 미리 존재하면 안 됩니다. 지원 원본 50개를 고정 해시로 검사한 뒤 고정 BSDIFF40 48개(EXE·캠페인), 메인 메뉴를 포함한 동적 AGG 기반 델타 2개, `KOREAN.BIN` 1개로 51개 설치 행을 만듭니다. 874자 매핑·OFL 글꼴 2개·설치 도구·고정 업그레이드 manifest 9개와 manifest v2를 함께 포함합니다.
+출력 폴더는 미리 존재하면 안 됩니다. 지원 원본 50개를 고정 해시로 검사한 뒤 고정 BSDIFF40 48개(EXE·캠페인), 메인 메뉴를 포함한 동적 AGG 기반 델타 2개, `KOREAN.BIN` 1개로 51개 설치 행을 만듭니다. 874자 매핑·OFL 글꼴 2개·설치 도구·고정 업그레이드 manifest 10개와 manifest v2를 함께 포함합니다.
 
-beta.12 업그레이드 manifest는 공개 자산과 같은 35,054바이트·SHA-256 `F854F23FBA999D06B2C9A7A46F6F64B275564AFA721DAD96E4211184885432B3`입니다. 기존 beta.4~beta.11 pin은 바꾸지 않습니다.
+beta.13 업그레이드 manifest는 공개 자산과 같은 35,396바이트·SHA-256 `94646DA92062ECD4CC73BD9EF9EE52D99BFF7584BCEF1E52BC46143EE41AE150`입니다. 기존 beta.4~beta.12 pin은 바꾸지 않습니다.
 
 ## GitHub 자산 생성
 
 ```text
 python tools/release/package_release.py ^
-  --release-dir "release_output\homm2-ko-v0.9.0-beta.13" ^
-  --output-dir "release_output\github-assets-v0.9.0-beta.13" ^
-  --version "v0.9.0-beta.13"
+  --release-dir "release_output\homm2-ko-v0.9.0-beta.14" ^
+  --output-dir "release_output\github-assets-v0.9.0-beta.14" ^
+  --version "v0.9.0-beta.14"
 ```
 
 정렬된 항목과 고정 ZIP 시간 `2026-09-08 00:00:00`으로 설치 ZIP, 독립 manifest, `SHA256SUMS.txt`를 만듭니다. 모든 항목을 대조하며 허용하지 않은 파일을 거부합니다. 글꼴 allowlist는 `IropkeBatangM.ttf`와 `NanumGothicCoding-Regular.ttf`입니다.
@@ -88,12 +88,12 @@ python -m unittest discover -s tests -v
 git diff --check
 ```
 
-1. 메뉴 3개 payload와 설치 결과의 일치 및 beta.12의 나머지 AGG 리소스·EXE·은행·캠페인 보존을 검사합니다.
+1. 메뉴 3개 payload와 설치 결과의 일치 및 beta.13의 글꼴 보정 대상 밖 AGG 리소스·EXE·은행·캠페인 보존을 검사합니다.
 2. 원본 배경·장식과 20개 상태에서 순환 팔레트 배제를 검사합니다. 최종 메뉴 모습은 사용자 게임 확인을 거쳤습니다.
 3. 새 GOG fixture에서 기본·사용자 글꼴 설치·검증·제거를 수행합니다. 기본 설치는 51개 기대 파일과 같아야 합니다.
-4. 공개 beta.12를 먼저 실제 설치한 fixture에서 기본·사용자 글꼴 업그레이드·검증·제거를 수행합니다.
+4. 공개 beta.13을 먼저 실제 설치한 fixture에서 기본·사용자 글꼴 업그레이드·검증·제거를 수행합니다.
 5. 업그레이드의 두 번째 AGG 교체 실패를 주입해 이전 51개 파일·receipt 복원과 재시도를 검사합니다.
-6. beta.4~beta.12 manifest·receipt 호환성, 잘못된 입력 거부, 일반 버튼 중앙 정렬은 소스 회귀검사를 유지합니다.
+6. beta.4~beta.13 manifest·receipt 호환성, 잘못된 입력 거부, 일반 버튼 중앙 정렬은 소스 회귀검사를 유지합니다.
 7. 제거 시 최초 GOG 원본 50개 복원과 개인 저장 파일 sentinel 보존을 확인합니다.
 
 실제 게임 실행과 설치 검사는 별개입니다. 격리 fixture에서 설치기를 실행하며 사용자의 본 게임 디렉터리를 검사 대상으로 사용하지 않습니다.

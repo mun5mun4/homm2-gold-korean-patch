@@ -13,7 +13,7 @@ from tools.release import package_release
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "v0.9.0-beta.13"
+VERSION = "v0.9.0-beta.14"
 MANIFEST_PACKAGE_PATH = "patches/HEROES2.EXE.bsdiff"
 MAPPING_PACKAGE_PATH = "fonts/mapping874.fixed-interface-font.txt"
 DEFAULT_FONT_PACKAGE_PATH = "fonts/IropkeBatangM.ttf"
@@ -28,6 +28,7 @@ UPGRADE_MANIFEST_PACKAGE_PATHS = (
     "upgrades/v0.9.0-beta.10-manifest.json",
     "upgrades/v0.9.0-beta.11-manifest.json",
     "upgrades/v0.9.0-beta.12-manifest.json",
+    "upgrades/v0.9.0-beta.13-manifest.json",
 )
 FIXTURE_RAW = b"fixture\n"
 DEFAULT_FONT_RAW = (ROOT / "packaging" / "release_assets" / DEFAULT_FONT_PACKAGE_PATH).read_bytes()
@@ -162,6 +163,11 @@ def fixture_manifest(version: str = VERSION) -> dict[str, object]:
                     "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[8],
                     "manifest": dict(package_release.BETA12_MANIFEST_IDENTITY),
                 },
+                {
+                    "version": "v0.9.0-beta.13",
+                    "manifest_path": UPGRADE_MANIFEST_PACKAGE_PATHS[9],
+                    "manifest": dict(package_release.BETA13_MANIFEST_IDENTITY),
+                },
             ],
         },
     }
@@ -289,13 +295,13 @@ class PackageReleaseAllowlistTests(unittest.TestCase):
 
         self.assertFalse(self.output.exists())
 
-    def test_rejects_beta12_as_the_current_release(self) -> None:
-        manifest = fixture_manifest(version="v0.9.0-beta.12")
+    def test_rejects_beta13_as_the_current_release(self) -> None:
+        manifest = fixture_manifest(version="v0.9.0-beta.13")
 
-        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.13"):
-            package_release.expected_release_files(manifest, "v0.9.0-beta.12")
+        with self.assertRaisesRegex(package_release.PackageError, "pinned to beta.14"):
+            package_release.expected_release_files(manifest, "v0.9.0-beta.13")
 
-    def test_rejects_legacy_manifest_schema_for_beta13(self) -> None:
+    def test_rejects_legacy_manifest_schema_for_beta14(self) -> None:
         manifest = fixture_manifest()
         manifest["schema"] = "homm2-korean-release-manifest-v1"
 

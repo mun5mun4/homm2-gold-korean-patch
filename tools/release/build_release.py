@@ -35,7 +35,7 @@ DEFAULT_FONT_PACKAGE_PATH = Path("fonts/IropkeBatangM.ttf")
 FALLBACK_FONT_PACKAGE_PATH = Path("fonts/NanumGothicCoding-Regular.ttf")
 DEFAULT_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/IROPKE_BATANG_OFL.txt")
 FALLBACK_FONT_LICENSE_PATH = Path("THIRD_PARTY_LICENSES/NANUM_GOTHIC_CODING_OFL.txt")
-CURRENT_VERSION = "v0.9.0-beta.13"
+CURRENT_VERSION = "v0.9.0-beta.14"
 RELEASE_DATE = "2026-09-08"
 PINNED_DEFAULT_FONT = {
     "size": 3_202_516,
@@ -45,7 +45,7 @@ PINNED_FALLBACK_FONT = {
     "size": 2_315_924,
     "sha256": "787EFFD7EFED2ABCA88ADE231FAA8191F4E9FCF85B1805A13EE1DC3724B72089",
 }
-# beta.13 adds approved menu artwork; retain the beta.10 executable and bank.
+# beta.14 adjusts Iropke alignment; retain the beta.10 executable and bank.
 PINNED_BETA10_TARGETS = {
     Path("HEROES2.EXE"): {
         "size": 1_523_420,
@@ -127,6 +127,14 @@ UPGRADE_RELEASES = (
         "manifest": {
             "size": 35_054,
             "sha256": "F854F23FBA999D06B2C9A7A46F6F64B275564AFA721DAD96E4211184885432B3",
+        },
+    },
+    {
+        "version": "v0.9.0-beta.13",
+        "manifest_path": Path("upgrades/v0.9.0-beta.13-manifest.json"),
+        "manifest": {
+            "size": 35_396,
+            "sha256": "94646DA92062ECD4CC73BD9EF9EE52D99BFF7584BCEF1E52BC46143EE41AE150",
         },
     },
 )
