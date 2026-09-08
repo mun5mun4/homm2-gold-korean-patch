@@ -14,7 +14,7 @@ import io
 import re
 import struct
 from bisect import bisect_left, bisect_right
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
@@ -40,11 +40,17 @@ SHADOW_PALETTE_INDEX = 21
 SHADOW_OFFSET_X = 1
 SHADOW_OFFSET_Y = 1
 MINIMUM_PIXEL_SIZE = 4
-RENDERER_ID = "pillow-freetype-monochrome-v3-typographic-baseline"
-BASELINE_POLICY = "logical-cell-preserve-glyph-bearing-common-baseline-v3"
+RENDERER_ID = "pillow-freetype-monochrome-v4-iropke-optical-alignment"
+BASELINE_POLICY = "logical-cell-bearing-with-iropke-optical-offset-v4"
 FIT_POLICY = "largest-common-integer-pixel-size-ink-union-fit-v3"
 CROP_POLICY = "tight-mask-preserve-logical-cell-offset-v1"
 SHADOW_POLICY = "clip-at-logical-cell-edge-v1"
+# Iropke's low-resolution hinting puts a few whole syllables a full pixel
+# below the central half-pixel band occupied by most of its Hangul. Keep
+# the original outline and bearing, and lift only those outliers by one dot.
+# Naturally higher, compact syllables such as 호/초 remain in place.
+IROPKE_OPTICAL_ALIGNMENT_SHA256 = "5910F97BAED6C6E0B8538E40D326B169E0A510357E20DD9003ABABCE2CE1CC69"
+IROPKE_OPTICAL_CENTER_Y2 = {14: -12, 11: -10}  # Twice the center, relative to the baseline.
 # The fixed raster identities below describe the historical Nanum default.
 # Other pinned or user-selected fonts receive the same structural/ROI checks,
 # while their exact generated identities are recorded in the install receipt.
@@ -1541,14 +1547,18 @@ class _FaceLayout:
     union_right: int
     union_bottom: int
     glyphs: Mapping[int, _GlyphMask]
+    optical_offsets: Mapping[int, int] = field(default_factory=dict)
+
+    def glyph_offset_y(self, codepoint: int) -> int:
+        return self.baseline_y + self.glyphs[codepoint].top + self.optical_offsets.get(codepoint, 0)
 
     def shadow_edge_clip_count(self) -> int:
         clipped = 0
-        for glyph in self.glyphs.values():
+        for codepoint, glyph in self.glyphs.items():
             occupied_width = min(self.cell_width, glyph.mask.width + SHADOW_OFFSET_X)
             offset_x = (self.cell_width - occupied_width) // 2
             width = self.cell_width - offset_x
-            offset_y = self.baseline_y + glyph.top
+            offset_y = self.glyph_offset_y(codepoint)
             height = self.cell_height - offset_y
             for y in range(glyph.mask.height):
                 for x in range(glyph.mask.width):
@@ -1601,6 +1611,23 @@ def _load_freetype(face: FontFace, pixel_size: int) -> ImageFont.FreeTypeFont:
     )
 
 
+def _iropke_optical_offsets(
+    face: FontFace, pixel_size: int, glyphs: Mapping[int, _GlyphMask]
+) -> dict[int, int]:
+    """Translate measured Iropke Hangul outliers; never resize or reshape ink."""
+    center_y2 = IROPKE_OPTICAL_CENTER_Y2.get(pixel_size)
+    if face.sha256 != IROPKE_OPTICAL_ALIGNMENT_SHA256 or face.face_index != 0 or center_y2 is None:
+        return {}
+    offsets = {}
+    for codepoint, glyph in glyphs.items():
+        if not 0xAC00 <= codepoint <= 0xD7A3:
+            continue
+        actual_y2 = glyph.top + glyph.bottom - 1
+        if actual_y2 > center_y2 + 1:
+            offsets[codepoint] = -1
+    return offsets
+
+
 def _build_face_layout(
     face: FontFace,
     characters: Mapping[int, str],
@@ -1649,6 +1676,7 @@ def _build_face_layout(
                 union_right,
                 union_bottom,
                 glyphs,
+                _iropke_optical_offsets(face, pixel_size, glyphs),
             )
 
         require(
@@ -1716,6 +1744,7 @@ def _build_common_face_layouts(
                     union_right,
                     union_bottom,
                     layout.glyphs,
+                    layout.optical_offsets,
                 )
                 for name, layout in concrete.items()
             }
@@ -1731,7 +1760,7 @@ def _render_sprite(layout: _FaceLayout, codepoint: int) -> Sprite:
     glyph = layout.glyphs[codepoint]
     occupied_width = min(layout.cell_width, glyph.mask.width + SHADOW_OFFSET_X)
     offset_x = (layout.cell_width - occupied_width) // 2
-    offset_y = layout.baseline_y + glyph.top
+    offset_y = layout.glyph_offset_y(codepoint)
     width = layout.cell_width - offset_x
     height = layout.cell_height - offset_y
     require(

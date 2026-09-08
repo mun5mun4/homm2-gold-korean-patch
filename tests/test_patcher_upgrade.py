@@ -45,9 +45,11 @@ def font_face(raw: bytes, file_name: str = "Fixture.ttf") -> dict[str, int | str
     }
 
 
-def renderer(*, legacy: bool, historical_v2: bool = False) -> dict[str, object]:
+def renderer(*, legacy: bool, historical_v2: bool = False, historical_v3: bool = False) -> dict[str, object]:
     if historical_v2:
         return copy.deepcopy(patcher.HISTORICAL_V2_RENDERER)
+    if historical_v3:
+        return copy.deepcopy(patcher.HISTORICAL_V3_RENDERER)
     if legacy:
         return {
             "id": "pillow-freetype-monochrome-v1",
@@ -78,6 +80,7 @@ def generation(
     fallback_font_raw: bytes | None = None,
     legacy: bool,
     historical_v2: bool = False,
+    historical_v3: bool = False,
     frozen_legacy: bool = False,
 ) -> dict[str, object]:
     value: dict[str, object] = {
@@ -90,7 +93,7 @@ def generation(
             "face_index": 0,
             "license_path": "licenses/FONT.txt",
         },
-        "renderer": renderer(legacy=legacy, historical_v2=historical_v2),
+        "renderer": renderer(legacy=legacy, historical_v2=historical_v2, historical_v3=historical_v3),
         "layout": {
             "legacy_sprite_count": homm2_font.LEGACY_SPRITE_COUNT,
             "filler_sprite_count": homm2_font.FILLER_SPRITE_COUNT,
@@ -142,18 +145,14 @@ def font_receipt(
     legacy: bool,
     mode: str = "default",
     historical_v2: bool = False,
+    historical_v3: bool = False,
 ) -> dict[str, object]:
     selected_raw = font_raw if mode == "default" else b"custom-font"
+    contract = renderer(legacy=legacy, historical_v2=historical_v2, historical_v3=historical_v3)
     value: dict[str, object] = {
         "schema": "homm2-generated-font-receipt-v1",
         "mode": mode,
-        "renderer": (
-            "pillow-freetype-monochrome-v1"
-            if legacy
-            else patcher.HISTORICAL_V2_RENDERER["id"]
-            if historical_v2
-            else homm2_font.RENDERER_ID
-        ),
+        "renderer": contract["id"],
         "normal_pixel_size": 14,
         "small_pixel_size": 12,
         "mapping_glyph_count": homm2_font.KOREAN_GLYPH_COUNT,
@@ -171,26 +170,10 @@ def font_receipt(
                 "normal_cell": {"width": homm2_font.NORMAL_CELL_WIDTH, "height": homm2_font.NORMAL_CELL_HEIGHT},
                 "small_cell": {"width": homm2_font.SMALL_CELL_WIDTH, "height": homm2_font.SMALL_CELL_HEIGHT},
                 "shadow_offset": [homm2_font.SHADOW_OFFSET_X, homm2_font.SHADOW_OFFSET_Y],
-                "baseline_policy": (
-                    patcher.HISTORICAL_V2_RENDERER["baseline_policy"]
-                    if historical_v2
-                    else homm2_font.BASELINE_POLICY
-                ),
-                "fit_policy": (
-                    patcher.HISTORICAL_V2_RENDERER["fit_policy"]
-                    if historical_v2
-                    else homm2_font.FIT_POLICY
-                ),
-                "crop_policy": (
-                    patcher.HISTORICAL_V2_RENDERER["crop_policy"]
-                    if historical_v2
-                    else homm2_font.CROP_POLICY
-                ),
-                "shadow_policy": (
-                    patcher.HISTORICAL_V2_RENDERER["shadow_policy"]
-                    if historical_v2
-                    else homm2_font.SHADOW_POLICY
-                ),
+                "baseline_policy": contract["baseline_policy"],
+                "fit_policy": contract["fit_policy"],
+                "crop_policy": contract["crop_policy"],
+                "shadow_policy": contract["shadow_policy"],
                 "resolved_faces": {
                     "primary": {
                         "normal": resolved_face(
@@ -259,12 +242,14 @@ class UpgradeFixture:
             BETA6_VERSION,
             BETA7_VERSION,
         }
+        previous_historical_v3 = not previous_legacy and not previous_historical_v2
         previous_frozen_legacy = previous_version not in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION}
         self.previous_manifest = self.manifest(
             previous_version,
             [previous_static, previous_copy],
             legacy=previous_legacy,
             historical_v2=previous_historical_v2,
+            historical_v3=previous_historical_v3,
             frozen_legacy=previous_frozen_legacy,
         )
         self.current_manifest = self.manifest(CURRENT_VERSION, [current_static, current_copy], legacy=False)
@@ -274,6 +259,7 @@ class UpgradeFixture:
             legacy=previous_legacy,
             mode="custom" if custom else "default",
             historical_v2=previous_historical_v2,
+            historical_v3=previous_historical_v3,
         )
         records = [
             {
@@ -324,6 +310,7 @@ class UpgradeFixture:
         *,
         legacy: bool,
         historical_v2: bool = False,
+        historical_v3: bool = False,
         frozen_legacy: bool = False,
     ) -> dict[str, object]:
         return {
@@ -335,6 +322,7 @@ class UpgradeFixture:
                 fallback_font_raw=None if frozen_legacy else self.fallback_font,
                 legacy=legacy,
                 historical_v2=historical_v2,
+                historical_v3=historical_v3,
                 frozen_legacy=frozen_legacy,
             ),
             "files": files,
@@ -771,27 +759,27 @@ class PatcherUpgradeTests(unittest.TestCase):
                 self.assertEqual(frozen.stat().st_size, expected_size)
                 self.assertEqual(patcher.sha256_file(frozen), expected_sha256)
                 document = patcher.json.loads(frozen.read_text(encoding="utf-8"))
-                if version in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION}:
+                patcher.validate_manifest_document(document, frozen_legacy=True)
+                with self.assertRaisesRegex(patcher.PatchError, "font_generation|renderer"):
                     patcher.validate_manifest_document(document)
-                else:
-                    patcher.validate_manifest_document(document, frozen_legacy=True)
-                    with self.assertRaisesRegex(patcher.PatchError, "font_generation"):
-                        patcher.validate_manifest_document(document)
+                if not historical_v2:
+                    self.assertEqual(document["font_generation"]["renderer"], patcher.HISTORICAL_V3_RENDERER)
 
                 historical_receipt = font_receipt(
                     b"historical-custom-font",
                     legacy=False,
                     mode="custom",
                     historical_v2=historical_v2,
+                    historical_v3=not historical_v2,
                 )
                 patcher.validate_font_receipt(historical_receipt, document)
                 if version == BETA8_VERSION:
                     nanum = Path("packaging/release_assets/fonts/NanumGothicCoding-Regular.ttf")
-                    beta8_default_receipt = font_receipt(nanum.read_bytes(), legacy=False)
+                    beta8_default_receipt = font_receipt(nanum.read_bytes(), legacy=False, historical_v3=True)
                     patcher.validate_font_receipt(beta8_default_receipt, document)
                 if version in {BETA9_VERSION, BETA10_VERSION, BETA11_VERSION, BETA12_VERSION}:
                     iropke = Path("packaging/release_assets/fonts/IropkeBatangM.ttf")
-                    iropke_default_receipt = font_receipt(iropke.read_bytes(), legacy=False)
+                    iropke_default_receipt = font_receipt(iropke.read_bytes(), legacy=False, historical_v3=True)
                     patcher.validate_font_receipt(iropke_default_receipt, document)
 
                     current = {
@@ -815,6 +803,77 @@ class PatcherUpgradeTests(unittest.TestCase):
                     )
                     self.assertEqual(loaded["version"], version)
                     self.assertEqual(loaded_sha256, expected_sha256)
+
+    def test_historical_v3_generation_is_frozen_only_and_keeps_schema_specific_fonts(self) -> None:
+        for legacy_schema in (True, False):
+            with self.subTest(legacy_schema=legacy_schema):
+                historical = generation(
+                    UpgradeFixture.default_font,
+                    fallback_font_raw=None if legacy_schema else UpgradeFixture.fallback_font,
+                    legacy=False,
+                    historical_v3=True,
+                    frozen_legacy=legacy_schema,
+                )
+                self.assertEqual(
+                    len(patcher.validate_font_generation(historical, frozen_legacy=True)),
+                    2 if legacy_schema else 3,
+                )
+                with self.assertRaisesRegex(patcher.PatchError, "font_generation|renderer"):
+                    patcher.validate_font_generation(historical)
+
+                malformed = copy.deepcopy(historical)
+                if legacy_schema:
+                    malformed["fallback_font"] = copy.deepcopy(historical["default_font"])
+                else:
+                    del malformed["fallback_font"]
+                with self.assertRaisesRegex(patcher.PatchError, "대체 글꼴"):
+                    patcher.validate_font_generation(malformed, frozen_legacy=True)
+
+                for key, replacement in (
+                    ("baseline_policy", patcher.HISTORICAL_V2_RENDERER["baseline_policy"]),
+                    ("fit_policy", patcher.HISTORICAL_V2_RENDERER["fit_policy"]),
+                    ("normal_cell", {"width": 14, "height": 14}),
+                    ("shadow_offset", [0, 1]),
+                    ("foreground_palette_index", 11),
+                    ("unknown_policy", True),
+                ):
+                    with self.subTest(contract_field=key):
+                        malformed = copy.deepcopy(historical)
+                        malformed["renderer"][key] = replacement
+                        with self.assertRaisesRegex(patcher.PatchError, "renderer"):
+                            patcher.validate_font_generation(malformed, frozen_legacy=True)
+
+    def test_historical_v3_receipt_requires_bearing_baseline_and_exact_contract(self) -> None:
+        historical = generation(
+            UpgradeFixture.default_font,
+            fallback_font_raw=UpgradeFixture.fallback_font,
+            legacy=False,
+            historical_v3=True,
+        )
+        manifest = {"font_generation": historical}
+        receipt = font_receipt(UpgradeFixture.default_font, legacy=False, historical_v3=True)
+        patcher.validate_font_receipt(receipt, manifest)
+
+        for kind, height in (("normal", 14), ("small", 12)):
+            with self.subTest(kind=kind):
+                malformed = copy.deepcopy(receipt)
+                malformed["resolved_faces"]["primary"][kind]["baseline_y"] = height
+                with self.assertRaisesRegex(patcher.PatchError, "bearing 기준선"):
+                    patcher.validate_font_receipt(malformed, manifest)
+
+        for key in ("baseline_policy", "fit_policy"):
+            with self.subTest(receipt_field=key):
+                malformed = copy.deepcopy(receipt)
+                malformed[key] = patcher.HISTORICAL_V2_RENDERER[key]
+                with self.assertRaises(patcher.PatchError):
+                    patcher.validate_font_receipt(malformed, manifest)
+
+        malformed_manifest = copy.deepcopy(manifest)
+        malformed_manifest["font_generation"]["renderer"]["baseline_policy"] = "unrecognized-baseline"
+        malformed_receipt = copy.deepcopy(receipt)
+        malformed_receipt["baseline_policy"] = "unrecognized-baseline"
+        with self.assertRaisesRegex(patcher.PatchError, "renderer"):
+            patcher.validate_font_receipt(malformed_receipt, malformed_manifest)
 
     def test_current_receipt_rejects_impossible_bearing_layout_diagnostics(self) -> None:
         default_font = UpgradeFixture.default_font

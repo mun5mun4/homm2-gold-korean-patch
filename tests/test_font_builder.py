@@ -140,7 +140,7 @@ class MappingAndDefaultFontTests(unittest.TestCase):
         self.assertIsNone(plan.fallback)
         self.assertEqual(metadata["mode"], "default")
         self.assertEqual(metadata["renderer"], font.RENDERER_ID)
-        self.assertEqual(metadata["renderer"], "pillow-freetype-monochrome-v3-typographic-baseline")
+        self.assertEqual(metadata["renderer"], "pillow-freetype-monochrome-v4-iropke-optical-alignment")
         self.assertEqual(
             metadata["normal_cell"],
             {"width": font.NORMAL_CELL_WIDTH, "height": font.NORMAL_CELL_HEIGHT},

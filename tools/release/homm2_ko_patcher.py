@@ -59,6 +59,20 @@ HISTORICAL_V2_RENDERER = {
     "foreground_palette_index": 10,
     "shadow_palette_index": 21,
 }
+HISTORICAL_V3_RENDERER = {
+    "id": "pillow-freetype-monochrome-v3-typographic-baseline",
+    "normal_pixel_size": 14,
+    "small_pixel_size": 12,
+    "normal_cell": {"width": 13, "height": 14},
+    "small_cell": {"width": 11, "height": 12},
+    "shadow_offset": [1, 1],
+    "baseline_policy": "logical-cell-preserve-glyph-bearing-common-baseline-v3",
+    "fit_policy": "largest-common-integer-pixel-size-ink-union-fit-v3",
+    "crop_policy": "tight-mask-preserve-logical-cell-offset-v1",
+    "shadow_policy": "clip-at-logical-cell-edge-v1",
+    "foreground_palette_index": 10,
+    "shadow_palette_index": 21,
+}
 
 
 class PatchError(RuntimeError):
@@ -134,8 +148,13 @@ def validate_identity(value: Any, label: str, *, allow_md5: bool = False) -> Non
 
 def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list[str]:
     require(isinstance(value, dict), "font_generation 형식이 잘못됐습니다")
-    expected_schema = "homm2-font-generation-v1" if frozen_legacy else "homm2-font-generation-v2"
-    require(value.get("schema") == expected_schema, "지원하지 않는 font_generation 형식입니다")
+    schema = value.get("schema")
+    require(
+        schema == "homm2-font-generation-v2"
+        or (frozen_legacy and schema == "homm2-font-generation-v1"),
+        "지원하지 않는 font_generation 형식입니다",
+    )
+    legacy_schema = schema == "homm2-font-generation-v1"
     mapping = value.get("mapping")
     require(isinstance(mapping, dict) and set(mapping) == {"package_path", "package"}, "폰트 매핑 선언이 잘못됐습니다")
     require(isinstance(mapping["package_path"], str), "폰트 매핑 패키지 경로가 잘못됐습니다")
@@ -157,7 +176,7 @@ def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list
 
     default_font = validate_font_descriptor(value.get("default_font"), "기본")
     fallback_font = None
-    if frozen_legacy:
+    if legacy_schema:
         require("fallback_font" not in value, "이전 배포판의 font_generation에 대체 글꼴이 있으면 안 됩니다")
     else:
         fallback_font = validate_font_descriptor(value.get("fallback_font"), "대체")
@@ -186,7 +205,13 @@ def validate_font_generation(value: Any, *, frozen_legacy: bool = False) -> list
     renderer = value.get("renderer")
     require(
         renderer == expected_renderer
-        or (frozen_legacy and renderer in (legacy_v1_renderer, HISTORICAL_V2_RENDERER)),
+        or (
+            frozen_legacy
+            and (
+                renderer == HISTORICAL_V3_RENDERER
+                or (legacy_schema and renderer in (legacy_v1_renderer, HISTORICAL_V2_RENDERER))
+            )
+        ),
         "폰트 renderer 규칙이 설치기와 다릅니다",
     )
     expected_layout = {
@@ -734,10 +759,9 @@ def load_upgrade_manifest(
         font_schema in {"homm2-font-generation-v1", "homm2-font-generation-v2"},
         "upgrade manifest의 font_generation 형식이 잘못됐습니다",
     )
-    validate_manifest_document(
-        previous,
-        frozen_legacy=font_schema == "homm2-font-generation-v1",
-    )
+    # Public v3 releases span both font-generation schemas. Only this
+    # identity-checked historical path may accept their frozen renderer.
+    validate_manifest_document(previous, frozen_legacy=True)
     require(previous.get("version") == previous_version, "upgrade manifest 버전이 설치 기록과 다릅니다")
     require(previous.get("game") == current_manifest.get("game"), "upgrade manifest의 게임 대상이 현재 배포판과 다릅니다")
     return previous, actual_sha256
@@ -906,7 +930,9 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
     renderer_id = renderer.get("id")
     current_renderer = renderer_id == homm2_font.RENDERER_ID
     historical_v2_renderer = renderer == HISTORICAL_V2_RENDERER
-    structured_renderer = current_renderer or historical_v2_renderer
+    historical_v3_renderer = renderer == HISTORICAL_V3_RENDERER
+    bearing_renderer = current_renderer or historical_v3_renderer
+    structured_renderer = bearing_renderer or historical_v2_renderer
     resolved_glyph_counts: dict[str, int] = {}
     if structured_renderer:
         require(set(value) == base_keys | structured_keys, "설치 기록의 구조화 글꼴 필드가 잘못됐습니다")
@@ -964,7 +990,7 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
                 requested=renderer["normal_pixel_size"],
                 width=renderer["normal_cell"]["width"],
                 height=renderer["normal_cell"]["height"],
-                bearing_baseline=current_renderer,
+                bearing_baseline=bearing_renderer,
             )
             small_count = validate_resolved_font_face(
                 resolved["small"],
@@ -972,7 +998,7 @@ def validate_font_receipt(value: Any, manifest: dict[str, Any]) -> None:
                 requested=renderer["small_pixel_size"],
                 width=renderer["small_cell"]["width"],
                 height=renderer["small_cell"]["height"],
-                bearing_baseline=current_renderer,
+                bearing_baseline=bearing_renderer,
             )
             require(normal_count == small_count, f"{face_label} 일반/작은 글꼴의 글립 수가 다릅니다")
             resolved_glyph_counts[face_label] = normal_count
